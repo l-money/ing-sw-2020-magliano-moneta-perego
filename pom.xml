@@ -22,7 +22,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>sample.Main</mainClass>
+                    <mainClass>santorini.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
