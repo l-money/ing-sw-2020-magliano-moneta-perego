@@ -2,8 +2,6 @@ package santorini.model;
 
 import java.io.Serializable;
 
-
-
 public class Bag implements Serializable {
     private Brick brick;
     private int[] counterBrick;
@@ -25,18 +23,19 @@ public class Bag implements Serializable {
        /** if result is not 0 return true, else return false*/
     }
 
-    public Brick extractionBrick (int levelBrick){
+    public int extractionBrick (int levelBrick){
         boolean exist = controlExistBrick(levelBrick);
         if (exist) {
-            counterBrick[levelBrick-1]--;
-            return brick = new Brick(levelBrick);
+            counterBrick[levelBrick-1] = counterBrick[levelBrick-1]-1;
+            return levelBrick;
         } else{
-            return null; /** choose a kind of exception to return*/
+            return -10;
         }
     }
 
     public void reinsertBrick (int levelBrick){
-        counterBrick[levelBrick-1]++;
+
+        counterBrick[levelBrick-1] = counterBrick[levelBrick-1]+1;
     }
 }
 
