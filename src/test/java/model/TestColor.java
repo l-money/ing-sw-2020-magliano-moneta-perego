@@ -7,7 +7,17 @@ import santorini.model.utils.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class TestCOlor
+ * @author G. Perego
+ */
+
 public class TestColor {
+
+    /**
+     *method that tests the method fromColor
+     */
+
     @Test
     public void testFromColor(){
     Assert.assertEquals(0, Color.fromColor(Color.BLUE));
@@ -16,8 +26,12 @@ public class TestColor {
         Assert.assertEquals(3, Color.fromColor(Color.YELLOW));
         Assert.assertEquals(4, Color.fromColor(Color.PURPLE));
         Assert.assertEquals(5, Color.fromColor(Color.WHITE));
-        Assert.assertEquals(-1, Color.fromColor(null));
+        Assert.assertEquals(-10, Color.fromColor(null));
     }
+
+    /**
+     * method that tests the method fromAbbreviation
+     */
 
     @Test
     public void testFromAbbreviation(){
@@ -30,6 +44,10 @@ public class TestColor {
         Assert.assertNull(Color.fromAbbreviation("Z"));
     }
 
+    /**
+     * method that tests the method getAbbreviation
+     */
+
     @Test
     public void testGetAbbreviation(){
         Assert.assertEquals("G", Color.GREEN.getAbbreviation());
@@ -40,6 +58,10 @@ public class TestColor {
         Assert.assertEquals("W", Color.WHITE.getAbbreviation());
     }
 
+    /**
+     * method that tests the method getAllAbbreviations
+     */
+
     @Test
     public void testGetAllAbbreviations(){
         List<String> result = new ArrayList<String>();
@@ -49,7 +71,11 @@ public class TestColor {
         result.add("P");
         result.add("R");
         result.add("W");
-        Assert.assertTrue(result.containsAll(Color.getAbbreviations()) && Color.getAbbreviations().containsAll(result));
+        Assert.assertTrue(
+                result.containsAll (Color.getAbbreviations())
+                &&
+                Color.getAbbreviations().containsAll(result)
+                );
     }
 }
 

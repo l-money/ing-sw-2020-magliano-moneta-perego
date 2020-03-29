@@ -6,19 +6,36 @@ import santorini.model.Brick;
 
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Class TestBrick
+ * @author G. Perego
+ */
+
 public class TestBrick {
-    public Brick b;
+    private  Brick b;
 
     @Before
     public void before(){
         b = new Brick(1);
     }
 
+    /**
+     * method that tests getLevel method
+     * it returns level of the brick
+     * it checks the getLevel provides some desired value
+     */
+
     @Test
     public void testGetBrick(){
         int x = b.getLevel();
         assertTrue(x==1);
     }
+
+    /**
+     * method that tests setLevel method
+     * the input parameter is the  level of the brick
+     * it checks the setlevel sets some desired value into level of the brick
+     */
 
     @Test
     public void testSetBrick(){

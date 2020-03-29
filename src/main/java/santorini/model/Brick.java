@@ -2,21 +2,34 @@ package santorini.model;
 
 import java.io.Serializable;
 
+/**
+ * Class Brick
+ * @author G. Perego
+ */
+
 public class Brick  implements Serializable {
     private int level;
 
-
-    /**set new level of the brick*/
+    /**
+     * constructor of class Brick
+     * @param level level of the Brick in height
+     */
     public Brick(int level) {
         this.level = level;
     }
 
-    /** metode getLevel*/
+    /**
+     * method getLevel
+     * @return level of the brick
+     */
     public int getLevel() {
         return level;
     }
 
-    /**metode setLevel, change the level of the brick*/
+    /**
+     * method setLevel
+     * @param newLevel new level of the brick in height
+     * */
     public void setLevel(int newLevel){
         level = newLevel;
     }
