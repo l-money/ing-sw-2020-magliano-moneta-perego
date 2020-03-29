@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"santorini.model","l":"Bag"},{"p":"santorini.model","l":"Brick"},{"p":"santorini.model.utils","l":"Color"},{"p":"santorini","l":"Main"},{"p":"model","l":"TestBag"},{"p":"model","l":"TestBrick"},{"p":"model","l":"TestColor"}]
