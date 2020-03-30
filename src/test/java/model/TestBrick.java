@@ -43,4 +43,6 @@ public class TestBrick {
         int x = b.getLevel();
         assertTrue(x==4);
     }
+
+
 }
