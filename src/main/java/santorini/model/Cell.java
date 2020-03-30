@@ -5,7 +5,7 @@ public class Cell {
     private int level;
     private boolean free;
     private boolean complete;
-    private Pawn pawn; //domani con il pawn committato
+//    private Pawn pawn; //domani con il pawn committato
 
 //    public void buildCell (int levelBuild){
 //        if(free){
