@@ -7,7 +7,7 @@ public class Table {
         int x, y;
         for (x = 0; x < matrix.length; x++) {
             for (y = 0; y < matrix[x].length; y++){
-                matrix[x][y]
+                matrix[x][y]= Cell;
             }
         }
     }
