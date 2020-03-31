@@ -16,6 +16,10 @@ public class TestPawn {
         pawn = new Pawn(1,1,0,0,1,0,Color.BLUE);
     }
 
+
+    /**
+     * method that tests getIdPawn
+     */
     @Test
     public void testGetIdPawn(){
         int x = pawn.getIdPawn();
@@ -23,6 +27,10 @@ public class TestPawn {
         pawn.setIdPawn(0);
         assertTrue(pawn.getIdPawn()==0);
     }
+
+    /**
+     * method that tests getIdGamer
+     */
 
     @Test
     public void testGetIdGamer(){
@@ -32,6 +40,10 @@ public class TestPawn {
         assertTrue(pawn.getIdGamer()==0);
     }
 
+    /**
+     * method that tests rowPawn
+     */
+
     @Test
     public void testRowPawn(){
         int x = pawn.getRowPawn();
@@ -40,6 +52,10 @@ public class TestPawn {
         assertTrue(pawn.getRowPawn()==1);
     }
 
+    /**
+     * method that tests columnPawn
+     */
+
     @Test
     public void testColumnPawn(){
         int x = pawn.getColumnPawn();
@@ -47,6 +63,10 @@ public class TestPawn {
         pawn.setColumnPawn(1);
         assertTrue(pawn.getColumnPawn()==1);
     }
+
+    /**
+     * method that tests pastLevel and presentLevel
+     */
 
     @Test
     public void testLevelsPawn(){
@@ -60,6 +80,10 @@ public class TestPawn {
         assertTrue(pawn.getPresentLevel()==2);
     }
 
+    /**
+     * method that test colorPawn, the team of the pawn
+     */
+
     @Test
     public void testColorPawn(){
         Color c = pawn.getColorPawn();
@@ -68,13 +92,17 @@ public class TestPawn {
         assertTrue(pawn.getColorPawn()==Color.GREEN);
     }
 
+    /**
+     * method that tests positionPawn
+     */
+
     @Test
     public void testPositionPawn(){
         int[] p;
         p = pawn.positionPawn();
-            int l = p.length;
-            assertTrue(l==2);
-            assertTrue(p[0]==pawn.getRowPawn());
-            assertTrue(p[1]==pawn.getColumnPawn());
+        int l = p.length;
+        assertTrue(l==2);
+        assertTrue(p[0]==pawn.getRowPawn());
+        assertTrue(p[1]==pawn.getColumnPawn());
     }
 }
