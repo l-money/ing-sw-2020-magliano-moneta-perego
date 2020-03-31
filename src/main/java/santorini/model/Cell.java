@@ -18,6 +18,7 @@ public class Cell {
         return Y;
     }
 
+
     public Cell(int x, int y, Bag b) {
         this.level = 0;
         this.free = true;
@@ -52,6 +53,23 @@ public class Cell {
 //        }
 //    }
 
+    /**
+     * method setX
+     *
+     * @param newX the new coordinate x of the cell
+     */
+    public void setX(int newX) {
+        X = newX;
+    }
+
+    /**
+     * methos setY
+     *
+     * @param newY the new coordinate y of the cell
+     */
+    public void setY(int newY) {
+        Y = newY;
+    }
 
     public int getLevel() {
         return level;

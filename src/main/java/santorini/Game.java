@@ -1,9 +1,12 @@
 package santorini;
 
+import santorini.model.God;
+
 import java.util.ArrayList;
 
 public class Game implements  Runnable{
     ArrayList<Gamer> giocatori = new ArrayList<Gamer>();
+    ArrayList<God> godCards = new ArrayList<God>();
 
     /**
      * Initialize game with 2 players
@@ -31,7 +34,7 @@ public class Game implements  Runnable{
      * Starts the game in new thread
      */
     public void startPlay(){
-        new Thread(this);
+        new Thread(this).start();
     }
 
     public void run() {
