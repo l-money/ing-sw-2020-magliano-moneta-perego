@@ -1,7 +1,7 @@
 package santorini.model;
 
 public class Table {
-    public static void main (String[] args) {
+   /** public static void main (String[] args) {
 
         int[][] matrix = new int[5][5];
         int x, y;
@@ -10,5 +10,5 @@ public class Table {
                 matrix[x][y]= Cell;
             }
         }
-    }
+    }*/
 }

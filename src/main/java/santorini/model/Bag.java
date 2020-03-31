@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 
 public class Bag implements Serializable {
-    private Brick brick;
+    /**private Brick brick;*/
     private int[] counterBrick;
 
     /**
