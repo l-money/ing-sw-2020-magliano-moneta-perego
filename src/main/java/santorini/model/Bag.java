@@ -46,19 +46,20 @@ public class Bag implements Serializable {
 
     /**
      * method extractionBrick
+     *
      * @param levelBrick level of the brick to extract
      * @return the level of the brick if the counter of that level brick is not empty, else return -10
      * the method: controls the existence of the brick, substracts one from the brick level counter,
      * returns the level of the brick
      */
 
-    public int extractionBrick (int levelBrick){
+    public boolean extractionBrick(int levelBrick) {
         boolean exist = controlExistBrick(levelBrick);
         if (exist) {
-            counterBrick[levelBrick-1] = counterBrick[levelBrick-1]-1;
-            return levelBrick;
-        } else{
-            return -10;
+            counterBrick[levelBrick - 1] = counterBrick[levelBrick - 1] - 1;
+            return true;
+        } else {
+            return false;
         }
     }
 

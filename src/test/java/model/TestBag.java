@@ -70,13 +70,13 @@ public class TestBag {
     @Test
     public void testExtractionBrick () {
         int pastCounterBrick = bag.getCounterBrick()[1];
-        int controlNewBrick;
+        boolean controlNewBrick;
         controlNewBrick = bag.extractionBrick(2);
-        assertTrue((pastCounterBrick)==(bag.getCounterBrick()[1]+1));
-        assertTrue (controlNewBrick == 2);
-        bag.getCounterBrick()[1]=0;
+        assertTrue((pastCounterBrick) == (bag.getCounterBrick()[1] + 1));
+        assertTrue(controlNewBrick == true);
+        bag.getCounterBrick()[1] = 0;
         controlNewBrick = bag.extractionBrick(2);
-        assertTrue(controlNewBrick == -10);
+        assertTrue(controlNewBrick == false);
     }
 
     /**
