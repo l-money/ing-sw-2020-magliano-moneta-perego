@@ -1,14 +1,30 @@
 package santorini.model;
 
-public class Table {
-   /** public static void main (String[] args) {
+import java.util.ArrayList;
 
-        int[][] matrix = new int[5][5];
-        int x, y;
-        for (x = 0; x < matrix.length; x++) {
-            for (y = 0; y < matrix[x].length; y++){
-                matrix[x][y]= Cell;
+public class Table {
+
+    private final int width = 5, height = 5; //valori definiti di larghezza e altezza tabella
+    private Cell[][] tabella = new Cell[width][height]; //matrice tabella del gioco 5x5
+
+
+    //costruttore per inizializzazione del gioco
+    public Table() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                tabella[i][j] = new Cell();
             }
         }
-    }*/
+    }
+    //costruzione metodo celle adiacenti
+    public ArrayList<Cell>(
+    int x, int y)
+
+    {
+
+
+    }
+
+    //metodo movimento tra le celle adiacenti
+    public void
 }
