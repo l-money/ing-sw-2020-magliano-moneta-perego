@@ -12,29 +12,26 @@ import java.io.Serializable;
 public class Pawn implements Serializable {
     private int idPawn;
     private int idGamer;
-    private int rowPawn;
-    private int columnPawn;
     private int presentLevel;
     private int pastLevel;
     private Color color;
+    private Cell position;
 
     /**
      * constructor of class Pawn
      * @param idPawn identification number of the pawn
      * @param idGamer identification number of the gamer
-     * @param rowPawn row where the pawn is located
-     * @param columnPawn column where the pawn is located
+     * @param position the position of the pawn
      * @param  presentLevel the present level of the building of the pawn
      * @param pastLevel the past level of the building of the pawn
      * @param color the team of the pawn
      */
 
 
-    public Pawn(int idPawn, int idGamer, int rowPawn, int columnPawn, int presentLevel, int pastLevel, Color color) {
+    public Pawn(int idPawn, int idGamer, Cell position, int presentLevel, int pastLevel, Color color) {
         this.idPawn = idPawn;
         this.idGamer = idGamer;
-        this.rowPawn = rowPawn;
-        this.columnPawn = columnPawn;
+        this.position = position;
         this.presentLevel = presentLevel;
         this.pastLevel = pastLevel;
         this.color = color;
@@ -86,31 +83,12 @@ public class Pawn implements Serializable {
     }
 
     /**
-     * method getRowPawn
-     * @return the row of the pawn
-     */
-
-    public int getRowPawn(){
-        return rowPawn;
-    }
-
-    /**
-     * method getColumnPawn
-     * @return the column of the pawn
-     */
-
-    public int getColumnPawn(){
-        return columnPawn;
-    }
-
-    /**
      * method setIdPawn
-     * @param newIddPawn .
+     * @param newIddPawn the identification number of the pawn
      */
 
     public void setIdPawn(int newIddPawn){
         idPawn = newIddPawn;
-
     }
 
     /**
@@ -122,40 +100,17 @@ public class Pawn implements Serializable {
         idGamer = newIdGamer;
     }
 
-    /**
-     * method setRowPaen
-     * @param newRowPawn .
-     */
-
-    public void setRowPawn(int newRowPawn){
-        rowPawn = newRowPawn;
-    }
-
-    /**
-     * method setColumnPaw
-     * @param newColumnPawn .
-     */
-
-    public void setColumnPawn(int newColumnPawn){
-        columnPawn = newColumnPawn;
-    }
-
-    /**
-     * method setPresentLevel
-     * @param newPresentLevel .
-     */
-
     public void setPresentLevel (int newPresentLevel){
         presentLevel = newPresentLevel;
     }
 
     /**
      * method setPastLevel
-     * @param pastLevel .
+     * @param newPastLevel .
      */
 
-    public void setPastLevel(int pastLevel) {
-        this.pastLevel = pastLevel;
+    public void setPastLevel(int newPastLevel) {
+        pastLevel = newPastLevel;
     }
 
     /**
@@ -168,15 +123,22 @@ public class Pawn implements Serializable {
     }
 
     /**
-     * method positionPawn
-     * @return the position[row][column] of the pawn
+     * method getPositionPawn
+     * @return the position (cell) of the pawn
      */
-
-    public int[] positionPawn(){
-        int[] position;
-        position = new int[2];
-        position[0]= getRowPawn();
-        position[1]= getColumnPawn();
+    public Cell getPositionPawn() {
         return position;
     }
+
+    /**
+     * method setPositionPawn
+     *
+     * @param newCell the new position (cell) of the pawn
+     */
+
+    public void setPositionPawn(Cell newCell) {
+        position.setX(newCell.getX());
+        position.setY(newCell.getY());
+    }
+
 }
