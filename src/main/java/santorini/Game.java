@@ -19,7 +19,7 @@ public class Game implements  Runnable{
     }
 
     /**
-     * Initialize game with 2 players
+     * Initialize game with 3 players
      * @param gamer1 first player
      * @param gamer2 second player
      * @param gamer3 third player

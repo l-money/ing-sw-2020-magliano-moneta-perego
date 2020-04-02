@@ -20,6 +20,10 @@ public class Cell {
 
 
     public Cell(int x, int y, Bag b) {
+
+        /**La bag non va messa nella cella, così facendo ogni cella ha una propria bag che invece deve essere unica e inizializzata solo nel Game
+         *Mettere la bag nella cella significa che ogni cella ha 22 mattoni di livello 1, 18 di livello 2 ecc...
+         */
         this.level = 0;
         this.free = true;
         this.complete = false;
@@ -55,7 +59,6 @@ public class Cell {
 
     /**
      * method setX
-     *
      * @param newX the new coordinate x of the cell
      */
     public void setX(int newX) {
@@ -63,8 +66,7 @@ public class Cell {
     }
 
     /**
-     * methos setY
-     *
+     * method setY
      * @param newY the new coordinate y of the cell
      */
     public void setY(int newY) {

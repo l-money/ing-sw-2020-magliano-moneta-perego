@@ -1,9 +1,10 @@
 package santorini.model;
 
-import santorini.Game;
 import santorini.Gamer;
 
-public abstract class God {
+import java.io.Serializable;
+
+public abstract class God implements Serializable {
     protected Gamer owner;
 
     public God(Gamer gamer) {
