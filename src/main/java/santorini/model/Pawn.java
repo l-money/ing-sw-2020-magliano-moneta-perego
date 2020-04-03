@@ -15,23 +15,15 @@ public class Pawn implements Serializable {
     private int presentLevel;
     private int pastLevel;
     private Color color;
-    private Cell position;
 
     /**
      * constructor of class Pawn
-     * @param idPawn identification number of the pawn
-     * @param idGamer identification number of the gamer
-     * @param position the position of the pawn
-     * @param  presentLevel the present level of the building of the pawn
-     * @param pastLevel the past level of the building of the pawn
-     * @param color the team of the pawn
      */
 
 
-    public Pawn(int idPawn, int idGamer, Cell position, int presentLevel, int pastLevel, Color color) {
+    public Pawn() {
         this.idPawn = idPawn;
         this.idGamer = idGamer;
-        this.position = position;
         this.presentLevel = presentLevel;
         this.pastLevel = pastLevel;
         this.color = color;
@@ -120,25 +112,6 @@ public class Pawn implements Serializable {
 
     public void setColorPawn (Color newColor){
         color = newColor;
-    }
-
-    /**
-     * method getPositionPawn
-     * @return the position (cell) of the pawn
-     */
-    public Cell getPositionPawn() {
-        return position;
-    }
-
-    /**
-     * method setPositionPawn
-     *
-     * @param newCell the new position (cell) of the pawn
-     */
-
-    public void setPositionPawn(Cell newCell) {
-        position.setX(newCell.getX());
-        position.setY(newCell.getY());
     }
 
 }

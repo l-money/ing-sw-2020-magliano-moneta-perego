@@ -13,11 +13,10 @@ import static org.junit.Assert.assertTrue;
 public class TestPawn {
     private Pawn pawn;
     private Bag bag = new Bag();
-    private Cell position = new Cell(10, 0, bag);
 
     @Before
     public void before() {
-        pawn = new Pawn(1, 1, position, 1, 0, Color.BLUE);
+        pawn = new Pawn();
     }
 
     /**
@@ -68,19 +67,5 @@ public class TestPawn {
         assertTrue(c == Color.BLUE);
         pawn.setColorPawn(Color.GREEN);
         assertTrue(pawn.getColorPawn()==Color.GREEN);
-    }
-
-    /**
-     * method that tests the positionPawn
-     */
-
-    @Test
-    public void testPositionPawn(){
-        Cell p1 = pawn.getPositionPawn();
-        assertTrue(p1 == position);
-        Cell p2 = new Cell(2, 1, bag);
-        pawn.setPositionPawn(p2);
-        p1 = pawn.getPositionPawn();
-        assertTrue(p1 == position);
     }
 }

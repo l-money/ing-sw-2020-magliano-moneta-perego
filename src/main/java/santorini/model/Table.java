@@ -16,15 +16,7 @@ public class Table {
             }
         }
     }
-    //costruzione metodo celle adiacenti
-    public ArrayList<Cell>(
-    int x, int y)
-
-    {
 
 
-    }
 
-    //metodo movimento tra le celle adiacenti
-    public void
 }
