@@ -2,16 +2,17 @@ package santorini.model;
 
 import santorini.Gamer;
 
-public class Artemis extends God {
+public class Athena extends God {
 
 
     /*Salvare la cella di partenza per impedirne il ritorno*/
-    public Artemis(Gamer gamer) {
+    public Athena(Gamer gamer) {
         super(gamer);
     }
 
     /**
      * Initialize owner game variables
+     *
      * @param g player owner of card
      */
     public void initializeOwner(Gamer g) {
@@ -51,3 +52,4 @@ public class Artemis extends God {
     }
 
 }
+
