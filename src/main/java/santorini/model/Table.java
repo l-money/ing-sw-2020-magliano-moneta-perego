@@ -2,6 +2,7 @@ package santorini.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Table implements Serializable {
     private int row = 5;
@@ -28,24 +29,19 @@ public class Table implements Serializable {
 
     /**
      * @param pointCell
-     * @return
+     * @return searchCell
      */
     //metodo per riconoscere le celle adiacenti
-    public Cell[] nearCell(Cell pointCell) {
-        int k = 0;
+    public List<Cell> searchCells(Cell pointCell) {
         int x, y, i, j;
-        Cell[] searchCell;
-        searchCell = new Cell[k];
+        List<Cell> searchCell = new ArrayList<Cell>();
         x = pointCell.getX();
         y = pointCell.getY();
         for (i = x - 1; i < x + 2; i++) {
             for (j = y - 1; j < y + 2; j++) {
-                if ((i != x) && (j != y) || (i >= 0) || (i <= 4) || (j >= 0) || (j <= 4)) {
-                    searchCell[k] = getTableCell(i, j);
-                } else {
-                    searchCell[k] = null;
+                if ((i != x) && (j != y) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
+                    searchCell.add(getTableCell(i, j));
                 }
-                k++;
             }
         }
         return searchCell;

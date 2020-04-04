@@ -183,11 +183,11 @@ button {
     font-size:12px;
 }
 .subNav {
-    background-color:#dee3e9;
-    float:left;
-    width:100%;
-    overflow:hidden;
-    font-size:12px;
+    background-color: #dee3e9;
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    font-size: 12px;
 }
 
 .subNav div {
@@ -231,10 +231,11 @@ ul.subNavList li {
     float: left;
     padding-top: 10px;
 }
+
 .topNav a:link, .topNav a:active, .topNav a:visited, .bottomNav a:link, .bottomNav a:active, .bottomNav a:visited {
-    color:#FFFFFF;
-    text-decoration:none;
-    text-transform:uppercase;
+    color: #FFFFFF;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 .topNav a:hover, .bottomNav a:hover {
     text-decoration:none;
@@ -316,14 +317,15 @@ body.class-declaration .summary .inheritedList h2 {
     margin: 0 0 6px -8px;
     padding: 7px 5px;
 }
+
 /*
  * Styles for page layout containers.
  */
 .contentContainer, .sourceContainer, .classUseContainer, .serializedFormContainer, .constantValuesContainer,
 .allClassesContainer, .allPackagesContainer {
-    clear:both;
-    padding:10px 20px;
-    position:relative;
+    clear: both;
+    padding: 10px 20px;
+    position: relative;
 }
 .indexContainer {
     margin:10px;
@@ -368,7 +370,7 @@ body.class-declaration .summary .inheritedList h2 {
  * Styles for lists.
  */
 li.circle {
-    list-style:circle;
+    list-style: circle;
 }
 
 ul.horizontal li {
@@ -400,6 +402,7 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     margin-top: 0;
     margin-bottom: 1px;
 }
+
 /*
  * Styles for tables.
  */
@@ -636,7 +639,7 @@ div.memberSignature span.typeParameters {
 h1.hidden {
     visibility: hidden;
     overflow: hidden;
-    font-size:10px;
+    font-size: 10px;
 }
 .block {
     display:block;
@@ -800,7 +803,7 @@ ul.ui-autocomplete  li {
     color:red;
 }
 .moduleGraph span {
-    display:none;
+    display: none;
     position: absolute;
 }
 

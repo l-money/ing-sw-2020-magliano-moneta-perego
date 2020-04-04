@@ -219,7 +219,8 @@ function rankMatch(match, category) {
     return leftBoundaryMatch + periferalMatch + (delta / 200);
 
 }
-$(function() {
+
+$(function () {
     $("#search").catcomplete({
         minLength: 1,
         delay: 300,

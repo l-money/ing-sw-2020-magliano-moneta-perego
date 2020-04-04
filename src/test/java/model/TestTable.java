@@ -34,5 +34,22 @@ public class TestTable implements Serializable {
         }
     }
 
+    @Test
+    public void testNearCell() {
+        Cell nearCell;
+        nearCell = new Cell();
+        int i, j, x, y;
+        for (i = x - 1; i < x + 2; i++) {
+            for (j = y - 1; j < y + 2; j++) {
+                if ((i != x) && (j != y) || (i >= 0) || (i <= 4) || (j >= 0) || (j <= 4)) {
+                    nearCell = table.getTableCell(i, j);
+                    assertArrayEquals(nearCell.getX());
+                    assertArrayEquals(nearCell.getY());
+                } else {
+
+                }
+            }
+        }
+    }
 
 }
