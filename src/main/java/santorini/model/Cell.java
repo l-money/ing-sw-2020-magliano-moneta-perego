@@ -22,32 +22,6 @@ public class Cell {
         this.y = y;
     }
 
-
-//    private Pawn pawn; //domani con il pawn committato
-
-//    public void buildCell (int levelBuild){
-//        if(free){
-//            levelBuild = 0;
-//            if(levelBuild == 0){
-//               this.level = levelBuild;
-//            }
-//        }else{
-//            levelBuild = 1;
-//            if(levelBuild == 1){
-//                this.level = levelBuild;
-//            }
-//            levelBuild = 2;
-//            if(levelBuild == 2) {
-//                this.level = levelBuild;
-//            }
-//            levelBuild = 3;
-//            if(levelBuild == 3) {
-//                this.level = levelBuild;
-//            }
-//
-//        }
-//    }
-
     /**
      * method get level
      *
@@ -107,6 +81,7 @@ public class Cell {
         free = true;
         complete = false;
     }
+
 
     public int getX() {
         return x;
