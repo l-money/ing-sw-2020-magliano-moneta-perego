@@ -33,5 +33,11 @@ public class TestCell {
         assertTrue(false == cell.isComplete());
     }
 
+    @Test
+    public void testCell() {
+
+    }
+
+
 
 }

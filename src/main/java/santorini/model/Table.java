@@ -1,22 +1,29 @@
 package santorini.model;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Table {
+public class Table implements Serializable {
+    private int row = 5;
+    private int column = 5;
+    private Cell[][] cells;
 
-    private final int width = 5, height = 5; //valori definiti di larghezza e altezza tabella
-    private Cell[][] tabella = new Cell[width][height]; //matrice tabella del gioco 5x5
 
-
-    //costruttore per inizializzazione del gioco
     public Table() {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                tabella[i][j] = new Cell();
+        //Start set of the table
+        cells = new Cell[row][column];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                cells[i][j] = new Cell();
+                cells[i][j].setX(i);
+                cells[i][j].setY(j);
+                cells[i][j].setLevel(0);
+                cells[i][j].setFree(true);
+                cells[i][j].setComplete(false);
             }
         }
     }
 
-
-
+    public Cell getTableCell(int x, int y) {
+        return cells[x][y];
+    }
 }

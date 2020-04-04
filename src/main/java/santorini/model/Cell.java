@@ -7,6 +7,9 @@ public class Cell {
     private int level;
     private boolean free;
     private boolean complete;
+    private int x;
+    private int y;
+
 
     /**
      * Cell with param x,y,b that i will use to initialize
@@ -15,6 +18,8 @@ public class Cell {
         this.level = 0;
         this.free = true;
         this.complete = false;
+        this.x = x;
+        this.y = y;
     }
 
 
@@ -64,14 +69,7 @@ public class Cell {
         if (level == 4) {
             setComplete(true);
         }
-
     }
-
-    /**
-     * @return
-     * @throws TableException
-     */
-
     /**
      * method isFree
      *
@@ -108,6 +106,22 @@ public class Cell {
         level = 0;
         free = true;
         complete = false;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int newX) {
+        x = newX;
+    }
+
+    public void setY(int newY) {
+        y = newY;
     }
 }
 

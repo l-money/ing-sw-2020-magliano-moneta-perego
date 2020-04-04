@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class Pawn implements Serializable {
     private int idPawn;
     private int idGamer;
+    private Cell cell;
     private int presentLevel;
     private int pastLevel;
     private Color color;
@@ -24,6 +25,7 @@ public class Pawn implements Serializable {
     public Pawn() {
         this.idPawn = idPawn;
         this.idGamer = idGamer;
+        cell = new Cell();
         this.presentLevel = presentLevel;
         this.pastLevel = pastLevel;
         this.color = color;
@@ -112,6 +114,25 @@ public class Pawn implements Serializable {
 
     public void setColorPawn (Color newColor){
         color = newColor;
+    }
+
+    /**
+     * method getPawnCell
+     *
+     * @return the pawn's cell position
+     */
+    public Cell getPawnCell() {
+        return cell;
+    }
+
+    /**
+     * method setPawnNewCell
+     *
+     * @param newCell the new pawn's cell position
+     */
+
+    public void setPawnNewCell(Cell newCell) {
+        cell = newCell;
     }
 
 }
