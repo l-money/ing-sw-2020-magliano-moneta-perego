@@ -9,7 +9,9 @@ public class Table implements Serializable {
     private int column = 5;
     private Cell[][] cells;
 
-
+    /**
+     * Table builder for all 25 cells in the table.
+     */
     public Table() {
         //Start set of the table
         cells = new Cell[row][column];
@@ -23,13 +25,18 @@ public class Table implements Serializable {
         }
     }
 
+    /**
+     * @param x cell with coordinate x.
+     * @param y cell with coordinate y.
+     * @return all the cell with specific coordinates.
+     */
     public Cell getTableCell(int x, int y) {
         return cells[x][y];
     }
 
     /**
-     * @param pointCell
-     * @return searchCell
+     * @param pointCell is the parameter that find where my pawn is in the cell.
+     * @return searchCell that is all near cells from cell where my pawn is.
      */
     //metodo per riconoscere le celle adiacenti
     public List<Cell> searchCells(Cell pointCell) {
@@ -47,5 +54,18 @@ public class Table implements Serializable {
         return searchCell;
     }
 
+    /**
+     * @param c1 is the cell c1(x1,y1).
+     * @param c2 is the cell c2(x2,y2).
+     * @return the max module between the difference of every coordinate (x,y) when i must
+     * move my pawn.
+     */
+    public int walkNearCell(Cell c1, Cell c2) {
+        int x1 = c1.getX();
+        int y1 = c1.getY();
+        int x2 = c2.getX();
+        int y2 = c2.getY();
+        return Math.max(Math.abs(x2 - x1), Math.abs(y2 - y1));
+    }
 
 }

@@ -90,11 +90,9 @@ table tr td dt code {
     vertical-align:top;
     padding-top:4px;
 }
-
 sup {
     font-size: 8px;
 }
-
 button {
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
     font-size: 14px;
@@ -189,14 +187,12 @@ button {
     overflow: hidden;
     font-size: 12px;
 }
-
 .subNav div {
     clear: left;
     float: left;
     padding: 0 0 5px 6px;
     text-transform: uppercase;
 }
-
 .subNav .navList {
     padding-top: 5px;
 }
@@ -220,18 +216,15 @@ ul.navList li {
     padding: 5px 6px;
     clear: none;
 }
-
 .navListSearch label {
     position: relative;
     right: -16px;
 }
-
 ul.subNavList li {
     list-style: none;
     float: left;
     padding-top: 10px;
 }
-
 .topNav a:link, .topNav a:active, .topNav a:visited, .bottomNav a:link, .bottomNav a:active, .bottomNav a:visited {
     color: #FFFFFF;
     text-decoration: none;
@@ -308,7 +301,6 @@ body.module-declaration .blockList h2 {
     padding: 0;
     margin: 15px 0;
 }
-
 body.class-declaration .summary h3,
 body.class-declaration .details h3,
 body.class-declaration .summary .inheritedList h2 {
@@ -317,7 +309,6 @@ body.class-declaration .summary .inheritedList h2 {
     margin: 0 0 6px -8px;
     padding: 7px 5px;
 }
-
 /*
  * Styles for page layout containers.
  */
@@ -372,37 +363,30 @@ body.class-declaration .summary .inheritedList h2 {
 li.circle {
     list-style: circle;
 }
-
 ul.horizontal li {
     display: inline;
     font-size: 0.9em;
 }
-
 div.inheritance {
     margin: 0;
     padding: 0;
 }
-
 div.inheritance div.inheritance {
     margin-left: 2em;
 }
-
 ul.blockList {
     margin: 10px 0 10px 0;
     padding: 0;
 }
-
 ul.blockList li.blockList {
     list-style: none;
     margin-bottom: 15px;
     line-height: 1.4;
 }
-
 table tr td dl, table tr td dl dt, table tr td dl dd {
     margin-top: 0;
     margin-bottom: 1px;
 }
-
 /*
  * Styles for tables.
  */
@@ -414,11 +398,9 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     border-right: 1px solid #EEE;
     border-bottom: 1px solid #EEE;
 }
-
 .overviewSummary table, .memberSummary table, .requiresSummary table, .packagesSummary table, .providesSummary table, .usesSummary table {
     padding: 0px;
 }
-
 .overviewSummary caption, .memberSummary caption, .typeSummary caption,
 .useSummary caption, .constantsSummary caption, .deprecatedSummary caption,
 .requiresSummary caption, .packagesSummary caption, .providesSummary caption, .usesSummary caption {
@@ -435,12 +417,10 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     margin: 0px;
     white-space: pre;
 }
-
 .constantsSummary caption a:link, .constantsSummary caption a:visited,
 .useSummary caption a:link, .useSummary caption a:visited {
     color: #1f389c;
 }
-
 .overviewSummary caption a:link, .memberSummary caption a:link, .typeSummary caption a:link,
 .deprecatedSummary caption a:link,
 .requiresSummary caption a:link, .packagesSummary caption a:link, .providesSummary caption a:link,
@@ -474,7 +454,6 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     border: none;
     height:16px;
 }
-
 .overviewSummary .tabEnd, .memberSummary .tabEnd, .typeSummary .tabEnd,
 .useSummary .tabEnd, .constantsSummary .tabEnd, .deprecatedSummary .tabEnd,
 .requiresSummary .tabEnd, .packagesSummary .tabEnd, .providesSummary .tabEnd, .usesSummary .tabEnd {
@@ -484,7 +463,6 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     float: left;
     background-color: #F8981D;
 }
-
 .overviewSummary [role=tablist] button, .memberSummary [role=tablist] button,
 .typeSummary [role=tablist] button, .packagesSummary [role=tablist] button {
     border: none;
@@ -493,23 +471,19 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     font-weight: bold;
     margin-right: 3px;
 }
-
 .overviewSummary [role=tablist] .activeTableTab, .memberSummary [role=tablist] .activeTableTab,
 .typeSummary [role=tablist] .activeTableTab, .packagesSummary [role=tablist] .activeTableTab {
     background: #F8981D;
     color: #253441;
 }
-
 .overviewSummary [role=tablist] .tableTab, .memberSummary [role=tablist] .tableTab,
 .typeSummary [role=tablist] .tableTab, .packagesSummary [role=tablist] .tableTab {
     background: #4D7A97;
     color: #FFFFFF;
 }
-
 .rowColor th, .altColor th {
     font-weight: normal;
 }
-
 .overviewSummary td, .memberSummary td, .typeSummary td,
 .useSummary td, .constantsSummary td, .deprecatedSummary td,
 .requiresSummary td, .packagesSummary td, .providesSummary td, .usesSummary td {
@@ -557,7 +531,6 @@ td.colSecond, th.colSecond, td.colLast, th.colConstructorName, th.colDeprecatedI
 .packagesSummary th.colLast, .packagesSummary td.colLast {
     white-space:normal;
 }
-
 td.colFirst a:link, td.colFirst a:visited,
 td.colSecond a:link, td.colSecond a:visited,
 th.colFirst a:link, th.colFirst a:visited,
@@ -591,31 +564,25 @@ th.colDeprecatedItemName a:link, th.colDeprecatedItemName a:visited,
 .docSummary {
     padding:0;
 }
-
 div.block {
     font-size: 14px;
     font-family: 'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
 }
-
 td.colLast div {
     padding-top: 0px;
 }
-
 td.colLast a {
     padding-bottom: 3px;
 }
-
 div.memberSignature {
     font-family: 'DejaVu Sans Mono', monospace;
     font-size: 14px;
     margin: 14px 0;
     white-space: pre-wrap;
 }
-
 div.memberSignature span.annotations {
     white-space: pre-wrap;
 }
-
 div.memberSignature span.typeParametersLong,
 div.memberSignature span.arguments,
 div.memberSignature span.exceptions {
@@ -623,11 +590,9 @@ div.memberSignature span.exceptions {
     vertical-align: top;
     white-space: pre;
 }
-
 div.memberSignature span.typeParameters {
     white-space: normal;
 }
-
 /*
  * Styles for formatting effect.
  */
@@ -635,7 +600,6 @@ div.memberSignature span.typeParameters {
     color: green;
     padding: 0 30px 0 0;
 }
-
 h1.hidden {
     visibility: hidden;
     overflow: hidden;
@@ -806,32 +770,26 @@ ul.ui-autocomplete  li {
     display: none;
     position: absolute;
 }
-
 .moduleGraph:hover span {
     display: block;
     margin: -100px 0 0 100px;
     z-index: 1;
 }
-
 .methodSignature {
     white-space: normal;
 }
-
 .inheritedList {
     margin: 10px 0 10px 0;
 }
-
 section.description {
     line-height: 1.4;
 }
-
 .summary section[class$="Summary"], .details section[class$="Details"],
 .classUses .detail, .serializedClassDetails {
     padding: 0px 20px 5px 10px;
     border: 1px solid #ededed;
     background-color: #f8f8f8;
 }
-
 .inheritedList, section[class$="Details"] .detail {
     padding: 0 0 5px 8px;
     background-color: #ffffff;

@@ -12,7 +12,7 @@ public class Cell {
 
 
     /**
-     * Cell with param x,y,b that i will use to initialize
+     * Cell with param x,y that i will use to initialize
      */
     public Cell() {
         this.level = 0;
@@ -24,7 +24,6 @@ public class Cell {
 
     /**
      * method get level
-     *
      * @return level of the brick
      */
     public int getLevel() {
@@ -32,11 +31,10 @@ public class Cell {
     }
 
     /**
-     * method set level
+     * method setLevel
+     * this method see if the level is 4 is completed
      *
-     * @param newLevel that set level
-     * @throws TableException the class where there are exception if the level
-     *                        is up 3 or under 0
+     * @param newLevel
      */
     public void setLevel(int newLevel) {
         level = newLevel;
@@ -46,7 +44,6 @@ public class Cell {
     }
     /**
      * method isFree
-     *
      * @return if the cell is free
      */
     public boolean isFree() {
@@ -55,7 +52,6 @@ public class Cell {
 
     /**
      * method set free
-     *
      * @param free free taked current state
      */
     public void setFree(boolean free) {
@@ -63,7 +59,7 @@ public class Cell {
     }
 
     /**
-     * @return
+     * @return comlete
      */
     public boolean isComplete() {
         return complete;

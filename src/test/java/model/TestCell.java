@@ -6,6 +6,10 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 import santorini.model.Cell;
+import santorini.model.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,7 +24,8 @@ public class TestCell {
     }
 
     /**
-     * method that tests the level and if te cell is complete
+     * method that tests if the level is 1
+     * and if the level is 4 the cell is complete.
      */
     @Test
     public void testLevelCell() {
@@ -32,7 +37,7 @@ public class TestCell {
     }
 
     /**
-     * method that tests if the test is 0 at start and the cell is free or complete
+     * method that tests the Cell with level 0 at start and if the cell is free or complete.
      */
     @Test
     public void testStartCell() {
@@ -40,11 +45,6 @@ public class TestCell {
         assertEquals(0, cell.getLevel());
         assertTrue(true == cell.isFree());
         assertTrue(false == cell.isComplete()); //stavo pensando ma in realtà la cella non dovrebbe essere not free?
-    }
-
-    @Test
-    public void testCell() {
-
     }
 
 

@@ -58,15 +58,15 @@ function loadScripts(doc, tag) {
             });
         });
     $.get(pathtoroot + "type-search-index.zip")
-            .done(function() {
-                JSZipUtils.getBinaryContent(pathtoroot + "type-search-index.zip", function(e, data) {
-                    JSZip.loadAsync(data).then(function (zip) {
-                        zip.file("type-search-index.json").async("text").then(function (content) {
-                            typeSearchIndex = JSON.parse(content);
-                        });
+        .done(function () {
+            JSZipUtils.getBinaryContent(pathtoroot + "type-search-index.zip", function (e, data) {
+                JSZip.loadAsync(data).then(function (zip) {
+                    zip.file("type-search-index.json").async("text").then(function (content) {
+                        typeSearchIndex = JSON.parse(content);
                     });
                 });
             });
+        });
     $.get(pathtoroot + "member-search-index.zip")
             .done(function() {
                 JSZipUtils.getBinaryContent(pathtoroot + "member-search-index.zip", function(e, data) {
