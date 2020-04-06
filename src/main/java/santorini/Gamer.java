@@ -46,6 +46,10 @@ public class Gamer {
         mycard.initializeOwner(this);
     }
 
+    public God getGod() {
+        return mycard;
+    }
+
     /**
      * method getIdGamer
      *
@@ -112,13 +116,11 @@ public class Gamer {
     public void moveMyPawn() {
         mycard.beforeOwnerMoving();
         mycard.afterOwnerMoving();
-        return;
     }
 
     public void buildBrick() {
         mycard.afterOwnerBuilding();
         mycard.beforeOwnerBuilding();
-        return;
     }
 
 }

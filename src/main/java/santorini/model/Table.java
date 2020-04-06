@@ -46,7 +46,7 @@ public class Table implements Serializable {
         y = pointCell.getY();
         for (i = x - 1; i < x + 2; i++) {
             for (j = y - 1; j < y + 2; j++) {
-                if ((i != x) && (j != y) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
+                if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
                     searchCell.add(getTableCell(i, j));
                 }
             }

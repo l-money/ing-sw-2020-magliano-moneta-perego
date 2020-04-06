@@ -1,6 +1,3 @@
-/**
- * @author Magliano
- */
 package model;
 
 import org.junit.Before;
@@ -9,10 +6,15 @@ import santorini.model.Cell;
 import santorini.model.Table;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+
+/**
+ * Class TestTable
+ *
+ * @author Magliano
+ */
 
 public class TestTable implements Serializable {
     private Table table;
@@ -30,14 +32,14 @@ public class TestTable implements Serializable {
     @Test
     public void testSetCellsInTable() {
         Cell position;
-        position = new Cell();
+        //position = new Cell();
         int i, j;
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
                 position = table.getTableCell(i, j);
                 assertEquals(position.getX(), i);
                 assertEquals(position.getY(), j);
-                assertEquals(position.getLevel(), 0);
+                assertEquals(0, position.getLevel());
                 assertTrue(position.isFree());
                 assertFalse(position.isComplete());
             }
@@ -50,15 +52,15 @@ public class TestTable implements Serializable {
      */
     @Test
     public void testNearCell1() {
-        List<Cell> nearCell = new ArrayList<Cell>();
+        List<Cell> nearCell;
         Cell myCell;
         myCell = table.getTableCell(0, 0);
         nearCell = table.searchCells(myCell);
         int lenght = nearCell.size();
-        assertTrue(lenght == 3);
-        assertTrue(nearCell.get(0) == table.getTableCell(0, 1));
-        assertTrue(nearCell.get(1) == table.getTableCell(1, 0));
-        assertTrue(nearCell.get(2) == table.getTableCell(1, 1));
+        assertEquals(3, lenght);
+        assertEquals(nearCell.get(0), table.getTableCell(0, 1));
+        assertEquals(nearCell.get(1), table.getTableCell(1, 0));
+        assertEquals(nearCell.get(2), table.getTableCell(1, 1));
     }
 
     //11 lunghezza 8
@@ -70,20 +72,20 @@ public class TestTable implements Serializable {
      */
     @Test
     public void testNearCell2() {
-        List<Cell> nearCell = new ArrayList<Cell>();
+        List<Cell> nearCell; //= new ArrayList<Cell>();
         Cell myCell;
         myCell = table.getTableCell(1, 1);
         nearCell = table.searchCells(myCell);
         int lenght = nearCell.size();
-        assertTrue(lenght == 8);
-        assertTrue(nearCell.get(0) == table.getTableCell(0, 0));
-        assertTrue(nearCell.get(1) == table.getTableCell(0, 1));
-        assertTrue(nearCell.get(2) == table.getTableCell(0, 2));
-        assertTrue(nearCell.get(3) == table.getTableCell(1, 0));
-        assertTrue(nearCell.get(4) == table.getTableCell(1, 2));
-        assertTrue(nearCell.get(5) == table.getTableCell(2, 0));
-        assertTrue(nearCell.get(6) == table.getTableCell(2, 1));
-        assertTrue(nearCell.get(7) == table.getTableCell(2, 2));
+        assertEquals(8, lenght);
+        assertEquals(nearCell.get(0), table.getTableCell(0, 0));
+        assertEquals(nearCell.get(1), table.getTableCell(0, 1));
+        assertEquals(nearCell.get(2), table.getTableCell(0, 2));
+        assertEquals(nearCell.get(3), table.getTableCell(1, 0));
+        assertEquals(nearCell.get(4), table.getTableCell(1, 2));
+        assertEquals(nearCell.get(5), table.getTableCell(2, 0));
+        assertEquals(nearCell.get(6), table.getTableCell(2, 1));
+        assertEquals(nearCell.get(7), table.getTableCell(2, 2));
     }
 
     //34
@@ -95,17 +97,17 @@ public class TestTable implements Serializable {
      */
     @Test
     public void testNearCell3() {
-        List<Cell> nearCell = new ArrayList<Cell>();
+        List<Cell> nearCell; // = new ArrayList<Cell>();
         Cell myCell;
         myCell = table.getTableCell(3, 4);
         nearCell = table.searchCells(myCell);
         int lenght = nearCell.size();
-        assertTrue(lenght == 5);
-        assertTrue(nearCell.get(0) == table.getTableCell(2, 3));
-        assertTrue(nearCell.get(1) == table.getTableCell(2, 4));
-        assertTrue(nearCell.get(2) == table.getTableCell(3, 3));
-        assertTrue(nearCell.get(3) == table.getTableCell(4, 3));
-        assertTrue(nearCell.get(4) == table.getTableCell(4, 4));
+        assertEquals(5, lenght);
+        assertEquals(nearCell.get(0), table.getTableCell(2, 3));
+        assertEquals(nearCell.get(1), table.getTableCell(2, 4));
+        assertEquals(nearCell.get(2), table.getTableCell(3, 3));
+        assertEquals(nearCell.get(3), table.getTableCell(4, 3));
+        assertEquals(nearCell.get(4), table.getTableCell(4, 4));
     }
 
     /**

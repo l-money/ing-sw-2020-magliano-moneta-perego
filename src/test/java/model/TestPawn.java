@@ -4,9 +4,16 @@ import org.junit.Before;
 import org.junit.Test;
 import santorini.model.Cell;
 import santorini.model.Pawn;
+import santorini.model.Table;
 import santorini.model.utils.Color;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
+/**
+ * Class TestPawn
+ *
+ * @author G. Perego
+ */
 
 
 public class TestPawn {
@@ -23,9 +30,9 @@ public class TestPawn {
     @Test
     public void testGetIdPawn(){
         int x = pawn.getIdPawn();
-        assertTrue(x==1);
+        assertEquals(1,x);
         pawn.setIdPawn(0);
-        assertTrue(pawn.getIdPawn()==0);
+        assertEquals(0, pawn.getIdPawn());
     }
 
     /**
@@ -35,9 +42,9 @@ public class TestPawn {
     @Test
     public void testGetIdGamer(){
         int x = pawn.getIdGamer();
-        assertTrue(x==1);
+        assertEquals(1,x);
         pawn.setIdGamer(0);
-        assertTrue(pawn.getIdGamer()==0);
+        assertEquals(0, pawn.getIdGamer());
     }
     /**
      * method that tests pastLevel and presentLevel
@@ -47,12 +54,12 @@ public class TestPawn {
     public void testLevelsPawn(){
         int x = pawn.getPastLevel();
         int y = pawn.getPresentLevel();
-        assertTrue(x==0);
-        assertTrue(y==1);
+        assertEquals(0, x);
+        assertEquals(1,y);
         pawn.setPastLevel(2);
         pawn.setPresentLevel(2);
-        assertTrue(pawn.getPastLevel()==2);
-        assertTrue(pawn.getPresentLevel()==2);
+        assertEquals(2, pawn.getPastLevel());
+        assertEquals(2, pawn.getPresentLevel());
     }
 
     /**
@@ -61,22 +68,35 @@ public class TestPawn {
     @Test
     public void testColorPawn(){
         Color c = pawn.getColorPawn();
-        assertTrue(c == Color.BLUE);
+        assertEquals(Color.BLUE,c);
         pawn.setColorPawn(Color.GREEN);
-        assertTrue(pawn.getColorPawn()==Color.GREEN);
+        assertEquals(Color.GREEN, pawn.getColorPawn());
     }
 
     /**
      * method that tests the pawn's position
      */
     @Test
-    public void testPawnCell() {
-        Cell position;
-        position = new Cell();
-        position.setX(0);
-        position.setX(0);
-        pawn.setPawnNewCell(position);
-        assertTrue(pawn.getPawnCell().getX() == position.getX());
-        assertTrue(pawn.getPawnCell().getY() == position.getY());
+    public void testPawnPosition() {
+        pawn.setRow(0);
+        pawn.setColumn(0);
+        assertEquals(0, pawn.getRow());
+        assertEquals(0, pawn.getColumn());
+
+    }
+
+    /**
+     * method that tests if the pawn fills a new position
+     */
+
+    @Test
+    public void testSetCellNotFree() {
+        pawn.setRow(2);
+        pawn.setColumn(2);
+        Table table = new Table();
+        Cell myCell;
+        myCell = table.getTableCell(2, 2);
+        pawn.setCellNotFree(myCell);
+        assertFalse(myCell.isFree());
     }
 }

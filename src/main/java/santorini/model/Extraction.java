@@ -52,4 +52,5 @@ public class Extraction implements Serializable {
         }
         return cards;
     }
+
 }

@@ -6,17 +6,13 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 import santorini.model.Cell;
-import santorini.model.Table;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TestCell {
 
-    Cell cell;
+    private Cell cell;
 
     @Before
     public void before() {

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import santorini.model.Brick;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Class TestBrick
@@ -28,7 +28,7 @@ public class TestBrick {
     @Test
     public void testGetBrick(){
         int x = b.getLevel();
-        assertTrue(x==1);
+        assertEquals(1, x);
     }
 
     /**
@@ -41,7 +41,7 @@ public class TestBrick {
     public void testSetBrick(){
         b.setLevel(4);
         int x = b.getLevel();
-        assertTrue(x==4);
+        assertEquals(4, x);
     }
 
 

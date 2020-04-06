@@ -12,7 +12,8 @@ import java.io.Serializable;
 public class Pawn implements Serializable {
     private int idPawn;
     private int idGamer;
-    private Cell cell;
+    private int row;
+    private int column;
     private int presentLevel;
     private int pastLevel;
     private Color color;
@@ -23,12 +24,9 @@ public class Pawn implements Serializable {
 
 
     public Pawn() {
-        this.idPawn = idPawn;
-        this.idGamer = idGamer;
-        cell = new Cell();
-        this.presentLevel = presentLevel;
-        this.pastLevel = pastLevel;
-        this.color = color;
+        this.presentLevel = 0;
+        this.pastLevel = 0;
+
     }
 
     /**
@@ -117,22 +115,47 @@ public class Pawn implements Serializable {
     }
 
     /**
-     * method getPawnCell
-     *
-     * @return the pawn's cell position
+     * method getRow
+     * @return the row position of the pawn
      */
-    public Cell getPawnCell() {
-        return cell;
+    public int getRow() {
+        return row;
     }
 
     /**
-     * method setPawnNewCell
+     * method getColumn
      *
-     * @param newCell the new pawn's cell position
+     * @return the column position of the pawn
      */
+    public int getColumn() {
+        return column;
+    }
 
-    public void setPawnNewCell(Cell newCell) {
-        cell = newCell;
+    /**
+     * method setRow
+     * @param newRow the new row position of the pawn
+     */
+    public void setRow(int newRow) {
+        row = newRow;
+    }
+
+    /**
+     * method setColumn
+     * @param newColumn the new column position of the pawn
+     */
+    public void setColumn(int newColumn) {
+        column = newColumn;
+    }
+
+    /**
+     * method setCellNotFree
+     *
+     * @param cell the new position of the pawn
+     */
+    public void setCellNotFree(Cell cell) {
+        if ((cell.getX() == getRow()) && (cell.getY() == getColumn())) {
+            cell.setFree(false);
+        }
     }
 
 }

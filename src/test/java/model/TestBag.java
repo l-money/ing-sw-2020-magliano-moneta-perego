@@ -3,10 +3,8 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 import santorini.model.Bag;
-import santorini.model.Brick;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Class TestBag
@@ -15,14 +13,14 @@ import static org.junit.Assert.assertTrue;
 
 public class TestBag {
     private Bag bag;
-    private Brick brick;
-    private int y=2;
+    //private Brick brick;
+
 
     @Before
     public void before()
     {
         bag = new Bag();
-        brick = new Brick(y);
+        //brick = new Brick(y);
     }
 
     /**
@@ -34,11 +32,11 @@ public class TestBag {
     @Test
     public void testBagConstructionCounterArray() {
         int lenghtBagCounterBrick = bag.getCounterBrick().length;
-        assertTrue(lenghtBagCounterBrick == 4);
-        assertTrue(bag.getCounterBrick()[0]==22);
-        assertTrue(bag.getCounterBrick()[1]==18);
-        assertTrue(bag.getCounterBrick()[2]==14);
-        assertTrue(bag.getCounterBrick()[3]==18);
+        assertEquals(4, lenghtBagCounterBrick);
+        assertEquals(22, bag.getCounterBrick()[0]);
+        assertEquals(18, bag.getCounterBrick()[1]);
+        assertEquals(14, bag.getCounterBrick()[2]);
+        assertEquals(18, bag.getCounterBrick()[3]);
     }
 
     /**
@@ -72,11 +70,11 @@ public class TestBag {
         int pastCounterBrick = bag.getCounterBrick()[1];
         boolean controlNewBrick;
         controlNewBrick = bag.extractionBrick(2);
-        assertTrue((pastCounterBrick) == (bag.getCounterBrick()[1] + 1));
-        assertTrue(controlNewBrick == true);
+        assertEquals((pastCounterBrick), (bag.getCounterBrick()[1] + 1));
+        assertTrue(controlNewBrick);
         bag.getCounterBrick()[1] = 0;
         controlNewBrick = bag.extractionBrick(2);
-        assertTrue(controlNewBrick == false);
+        assertFalse(controlNewBrick);
     }
 
     /**
@@ -89,7 +87,7 @@ public class TestBag {
     @Test
     public void testInsertionBrick(){
         int pastCounterBrick = bag.getCounterBrick()[1];
-        bag.reinsertBrick(y);
-        assertTrue((pastCounterBrick+1)==(bag.getCounterBrick()[1]));
+        bag.reinsertBrick(2);
+        assertEquals((pastCounterBrick + 1), (bag.getCounterBrick()[1]));
     }
 }

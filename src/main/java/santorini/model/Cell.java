@@ -42,6 +42,7 @@ public class Cell {
             setComplete(true);
         }
     }
+
     /**
      * method isFree
      * @return if the cell is free
