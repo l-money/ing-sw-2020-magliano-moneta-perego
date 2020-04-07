@@ -1,10 +1,6 @@
-package santorini;
+package santorini.model;
 
-import santorini.model.God;
-import santorini.model.Pawn;
 import santorini.model.utils.Color;
-
-import java.util.ArrayList;
 
 
 public class Gamer {
@@ -18,8 +14,39 @@ public class Gamer {
     private Pawn[] pawn;
     private int idGamer;
     private Color colorGamer;
-    private ArrayList<God> otherGods = new ArrayList<God>();
+    private boolean winner = false;
 
+    public boolean isWinner() {
+        return winner;
+    }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
+    }
+
+    public int getSteps() {
+        return steps;
+    }
+
+    public int getLevels_up() {
+        return levels_up;
+    }
+
+    public int getLevel_down() {
+        return level_down;
+    }
+
+    public boolean isOverwrite() {
+        return overwrite;
+    }
+
+    public int getBuilds() {
+        return builds;
+    }
+
+    public God getMycard() {
+        return mycard;
+    }
 
     public void setSteps(int steps) {
         this.steps = steps;
@@ -113,14 +140,48 @@ public class Gamer {
     }
 
 
-    public void moveMyPawn() {
+    /*public void moveMyPawn(Pawn pedina, Cell to) {
         mycard.beforeOwnerMoving();
+        baseMove(pedina, to);
         mycard.afterOwnerMoving();
     }
 
-    public void buildBrick() {
+    public void buildBrick(Cell on) {
         mycard.afterOwnerBuilding();
+        baseBuild(on);
         mycard.beforeOwnerBuilding();
+    }
+*/
+    /**
+     * Moves player pawn from cell to another
+     * @param pedina pawn to move
+     * @param to target cell
+     */
+    /*private void baseMove(Pawn pedina, Cell to){
+        Cell from = pedina.getCell();
+        //Controllo che to sia tra le 8 attorno a from
+        //Controlla Distanza in passi tra le 2 celle e compara con steps
+        if(to.getLevel()-from.getLevel()<=levels_up || from.getLevel()-to.getLevel()<=level_down){
+            //Livello inacessibile con le permission correnti
+        }
+        if(!to.isFree() && !overwrite){
+            //cella non libera e non si può sovrascrivere
+        }
+    }*/
+
+    /**
+     * Builds a new block upon a cell
+     *
+     * @param on cell to build
+     * @return operation validation
+     */
+    private boolean baseBuild(Cell on) {
+        if (on.isFree() && !on.isComplete()) {
+            /*Metodo build ancora mancante
+            on.build();*/
+            return true;
+        }
+        return false;
     }
 
 }

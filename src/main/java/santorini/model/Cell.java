@@ -9,7 +9,12 @@ public class Cell {
     private boolean complete;
     private int x;
     private int y;
+    private Table table;
+    private final int MAX_LEVEL = 3;
 
+    public Table getTable() {
+        return table;
+    }
 
     /**
      * Cell with param x,y that i will use to initialize
@@ -18,12 +23,11 @@ public class Cell {
         this.level = 0;
         this.free = true;
         this.complete = false;
-        this.x = x;
-        this.y = y;
     }
 
     /**
      * method get level
+     *
      * @return level of the brick
      */
     public int getLevel() {
@@ -45,6 +49,7 @@ public class Cell {
 
     /**
      * method isFree
+     *
      * @return if the cell is free
      */
     public boolean isFree() {
@@ -53,6 +58,7 @@ public class Cell {
 
     /**
      * method set free
+     *
      * @param free free taked current state
      */
     public void setFree(boolean free) {
@@ -73,10 +79,22 @@ public class Cell {
         this.complete = complete;
     }
 
-    public void startCell() {
+    public void initCell() {
         level = 0;
         free = true;
         complete = false;
+    }
+
+    public boolean build() {
+        if (isFree() && !isComplete()) {
+            this.level++;
+        } else {
+            return false;
+        }
+        if (level == MAX_LEVEL) {
+            setComplete(true);
+        }
+        return true;
     }
 
 

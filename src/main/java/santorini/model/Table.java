@@ -20,7 +20,6 @@ public class Table implements Serializable {
                 cells[i][j] = new Cell();
                 cells[i][j].setX(i);
                 cells[i][j].setY(j);
-                cells[i][j].startCell();
             }
         }
     }
@@ -39,9 +38,9 @@ public class Table implements Serializable {
      * @return searchCell that is all near cells from cell where my pawn is.
      */
     //metodo per riconoscere le celle adiacenti
-    public List<Cell> searchCells(Cell pointCell) {
+    public ArrayList<Cell> searchAdjacentCells(Cell pointCell) {
         int x, y, i, j;
-        List<Cell> searchCell = new ArrayList<Cell>();
+        ArrayList<Cell> searchCell = new ArrayList<Cell>();
         x = pointCell.getX();
         y = pointCell.getY();
         for (i = x - 1; i < x + 2; i++) {

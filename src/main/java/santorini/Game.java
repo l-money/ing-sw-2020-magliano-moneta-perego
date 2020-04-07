@@ -1,43 +1,49 @@
 package santorini;
 
-import santorini.model.God;
+import santorini.model.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Game implements  Runnable{
-    ArrayList<Gamer> giocatori = new ArrayList<Gamer>();
-    ArrayList<God> godCards = new ArrayList<God>();
-
-    /**
-     * Initialize game with 2 players
-     * @param gamer1 first player
-     * @param gamer2 second player
-     */
-    public Game(Gamer gamer1, Gamer gamer2){
-        giocatori.add(gamer1);
-        giocatori.add(gamer2);
-    }
+public class Game implements Runnable {
+    private ArrayList<Gamer> giocatori = new ArrayList<Gamer>();
+    /*god cards sono quelle attive nella partita
+     * passa una copia di questa lista al turno
+     * rifai la classe extraction con la shuffle della collection*/
+    private ArrayList<God> godCards = new ArrayList<God>();
+    private Table table = new Table();
 
     /**
-     * Initialize game with 3 players
-     * @param gamer1 first player
-     * @param gamer2 second player
-     * @param gamer3 third player
+     * Game initialization
+     *
+     * @param gamers player list.  Number handled by connection manager
      */
-    public Game(Gamer gamer1, Gamer gamer2, Gamer gamer3){
-        giocatori.add(gamer1);
-        giocatori.add(gamer2);
-        giocatori.add(gamer3);
+    public Game(Gamer... gamers) {
+        giocatori.addAll(Arrays.asList(gamers));
     }
+
+    /*Inizializzare con estrazione le carte dininità*/
+
 
     /**
-     * Starts the game in new thread
+     * Generates a new game in a new Thread
      */
-    public void startPlay(){
-        new Thread(this).start();
-    }
-
     public void run() {
-
+        while (true) {
+            for (Gamer g : giocatori) {
+                ArrayList<God> gods = new ArrayList<God>();
+                gods.addAll(godCards);
+                Thread t = new Thread(new Turno(gods, g, table));
+                t.start();
+                try {
+                    t.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (g.isWinner()) {
+                    //handle winning
+                }
+            }
+        }
     }
 }

@@ -17,6 +17,15 @@ public class Pawn implements Serializable {
     private int presentLevel;
     private int pastLevel;
     private Color color;
+    /*private Cell cell;
+
+    public void setCell(Cell cell) {
+        this.cell = cell;
+    }
+
+    public Cell getCell() {
+        return cell;
+    }*/
 
     /**
      * constructor of class Pawn

@@ -55,7 +55,7 @@ public class TestTable implements Serializable {
         List<Cell> nearCell;
         Cell myCell;
         myCell = table.getTableCell(0, 0);
-        nearCell = table.searchCells(myCell);
+        nearCell = table.searchAdjacentCells(myCell);
         int lenght = nearCell.size();
         assertEquals(3, lenght);
         assertEquals(nearCell.get(0), table.getTableCell(0, 1));
@@ -75,7 +75,7 @@ public class TestTable implements Serializable {
         List<Cell> nearCell; //= new ArrayList<Cell>();
         Cell myCell;
         myCell = table.getTableCell(1, 1);
-        nearCell = table.searchCells(myCell);
+        nearCell = table.searchAdjacentCells(myCell);
         int lenght = nearCell.size();
         assertEquals(8, lenght);
         assertEquals(nearCell.get(0), table.getTableCell(0, 0));
@@ -100,7 +100,7 @@ public class TestTable implements Serializable {
         List<Cell> nearCell; // = new ArrayList<Cell>();
         Cell myCell;
         myCell = table.getTableCell(3, 4);
-        nearCell = table.searchCells(myCell);
+        nearCell = table.searchAdjacentCells(myCell);
         int lenght = nearCell.size();
         assertEquals(5, lenght);
         assertEquals(nearCell.get(0), table.getTableCell(2, 3));

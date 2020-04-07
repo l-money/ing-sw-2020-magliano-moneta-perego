@@ -1,6 +1,6 @@
 package santorini.model;
 
-import santorini.Gamer;
+import santorini.model.Gamer;
 
 public class Apollo extends God {
 
@@ -16,7 +16,6 @@ public class Apollo extends God {
      * @param g player owner of card
      */
     public void initializeOwner(Gamer g) {
-        this.owner.setSteps(2);
     }
 
     public void beforeOwnerMoving() {

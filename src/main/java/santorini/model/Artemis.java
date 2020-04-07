@@ -1,6 +1,6 @@
 package santorini.model;
 
-import santorini.Gamer;
+import santorini.model.Gamer;
 
 public class Artemis extends God {
 

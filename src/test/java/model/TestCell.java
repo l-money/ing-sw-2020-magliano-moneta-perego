@@ -37,7 +37,7 @@ public class TestCell {
      */
     @Test
     public void testStartCell() {
-        cell.startCell();
+        cell.initCell();
         assertEquals(0, cell.getLevel());
         assertTrue(true == cell.isFree());
         assertTrue(false == cell.isComplete()); //stavo pensando ma in realtà la cella non dovrebbe essere not free?

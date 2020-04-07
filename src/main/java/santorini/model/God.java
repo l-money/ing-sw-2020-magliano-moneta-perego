@@ -1,11 +1,12 @@
 package santorini.model;
 
-import santorini.Gamer;
+import santorini.model.Gamer;
 
 import java.io.Serializable;
 
 public abstract class God implements Serializable {
     protected Gamer owner;
+    protected String name, description;
 
     public God(Gamer gamer) {
         this.owner = gamer;
@@ -54,12 +55,22 @@ public abstract class God implements Serializable {
 
     /**
      * Features added by card before other player starts building
+     *
      * @param other player to customize
      */
     public abstract void beforeOtherBuilding(Gamer other);
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof God)) return false;
+        God god = (God) o;
+        return name.equalsIgnoreCase(god.name);
+    }
+
     /**
      * Features added by card before other player starts building
+     *
      * @param other player to customize
      */
     public abstract void afterOtherBuilding(Gamer other);
