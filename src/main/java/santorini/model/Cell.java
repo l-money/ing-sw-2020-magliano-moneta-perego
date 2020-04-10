@@ -1,8 +1,8 @@
 package santorini.model;
 
-import santorini.model.utils.Exception.TableException;
+import java.io.Serializable;
 
-public class Cell {
+public class Cell implements Serializable {
 
     private int level;
     private boolean free;
@@ -11,6 +11,7 @@ public class Cell {
     private int y;
     private Table table;
     private final int MAX_LEVEL = 3;
+    private Pawn pawn = null;
 
     public Table getTable() {
         return table;
@@ -57,16 +58,35 @@ public class Cell {
     }
 
     /**
-     * method set free
-     *
-     * @param free free taked current state
+     * free this cell deleting pawn reference
      */
-    public void setFree(boolean free) {
-        this.free = free;
+    public void free() {
+        this.free = true;
+        pawn = null;
     }
 
     /**
-     * @return comlete
+     * Puts a pawn in this cell if free and sets it not free
+     *
+     * @param pawn pawn to put in this cell
+     * @return operation success or failure
+     */
+    public boolean setPawn(Pawn pawn) {
+        if (isFree() && !isComplete()) {
+            this.pawn = pawn;
+            this.free = false;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Pawn getPawn() {
+        return pawn;
+    }
+
+    /**
+     * @return complete
      */
     public boolean isComplete() {
         return complete;
@@ -116,19 +136,3 @@ public class Cell {
 }
 
 
-/**
- * public boolean build() throws TableException {
- * if (this.level + 1 > 3 || !isFree()) {
- * throw new TableException();
- * } else if (this.level + 1 == 3) {
- * complete = true;
- * }
- * if (blocchi.extractionBrick(this.level + 1)) { //controllo della cella
- * this.level++;
- * return true;
- * } else {
- * return false;
- * }
- * <p>
- * }
- */

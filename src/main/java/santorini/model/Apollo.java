@@ -1,5 +1,6 @@
 package santorini.model;
 
+import santorini.Turno;
 import santorini.model.Gamer;
 
 public class Apollo extends God {
@@ -18,19 +19,19 @@ public class Apollo extends God {
     public void initializeOwner(Gamer g) {
     }
 
-    public void beforeOwnerMoving() {
+    public void beforeOwnerMoving(Turno turno) {
 
     }
 
-    public void afterOwnerMoving() {
+    public void afterOwnerMoving(Turno turno) {
 
     }
 
-    public void beforeOwnerBuilding() {
+    public void beforeOwnerBuilding(Turno turno) {
 
     }
 
-    public void afterOwnerBuilding() {
+    public void afterOwnerBuilding(Turno turno) {
 
     }
 

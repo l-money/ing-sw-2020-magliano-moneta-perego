@@ -32,25 +32,32 @@ public class Turno implements Runnable {
      * all god cards features
      */
     public void run() {
-        gamer.getMycard().beforeOwnerMoving();
+        mossa();
+        costruzione();
+    }
+
+    public void mossa() {
+        gamer.getMycard().beforeOwnerMoving(this);
         for (God card : otherCards) {
             card.beforeOtherMoving(gamer);
         }
         //mossaBase()
-        gamer.getMycard().afterOwnerMoving();
+        gamer.getMycard().afterOwnerMoving(this);
         for (God card : otherCards) {
             card.afterOtherMoving(gamer);
         }
-        gamer.getMycard().beforeOwnerBuilding();
+    }
+
+    public void costruzione() {
+        gamer.getMycard().beforeOwnerBuilding(this);
         for (God card : otherCards) {
             card.beforeOtherBuilding(gamer);
         }
         //costruzioneBase();
-        gamer.getMycard().afterOwnerBuilding();
+        gamer.getMycard().afterOwnerBuilding(this);
         for (God card : otherCards) {
             card.afterOtherBuilding(gamer);
         }
-
     }
 
     /**
@@ -78,10 +85,10 @@ public class Turno implements Runnable {
         if (from.getLevel() - to.getLevel() > gamer.getLevel_down()) {
             return false;
         }
-        from.setFree(true);
+        from.free();
         p.setRow(to.getX());
         p.setColumn(to.getY());
-        from.setFree(false);
+        to.setPawn(p);
         return true;
     }
 

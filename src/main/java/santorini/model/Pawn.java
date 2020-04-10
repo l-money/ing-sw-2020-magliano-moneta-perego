@@ -163,7 +163,7 @@ public class Pawn implements Serializable {
      */
     public void setCellNotFree(Cell cell) {
         if ((cell.getX() == getRow()) && (cell.getY() == getColumn())) {
-            cell.setFree(false);
+            //cell.setFree(false);
         }
     }
 

@@ -12,14 +12,16 @@ public class Game implements Runnable {
      * rifai la classe extraction con la shuffle della collection*/
     private ArrayList<God> godCards = new ArrayList<God>();
     private Table table = new Table();
+    private NetworkHandlerServer handler;
 
     /**
      * Game initialization
      *
      * @param gamers player list.  Number handled by connection manager
      */
-    public Game(Gamer... gamers) {
-        giocatori.addAll(Arrays.asList(gamers));
+    public Game(ArrayList<Gamer> gamers, NetworkHandlerServer networkHandlerServer) {
+        giocatori = gamers;
+        this.handler = networkHandlerServer;
     }
 
     /*Inizializzare con estrazione le carte dininità*/

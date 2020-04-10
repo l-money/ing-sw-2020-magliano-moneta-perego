@@ -2,10 +2,18 @@ package santorini.model;
 
 import santorini.model.utils.Color;
 
+import java.net.Socket;
+
 
 public class Gamer {
     private String name;
     private God mycard;
+    private int id;
+
+    public String getName() {
+        return name;
+    }
+
     private int steps = 1;
     private int levels_up = 1;
     private int level_down = 5;
@@ -15,6 +23,17 @@ public class Gamer {
     private int idGamer;
     private Color colorGamer;
     private boolean winner = false;
+    private Socket socket;
+
+    public Gamer(Socket socket, String name, int id) {
+        this.socket = socket;
+        this.name = name;
+        this.id = id;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
 
     public boolean isWinner() {
         return winner;
