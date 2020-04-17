@@ -31,4 +31,5 @@ public class Mossa implements Serializable {
     public Pawn getPawn() {
         return pawn;
     }
+
 }

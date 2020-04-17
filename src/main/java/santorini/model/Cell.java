@@ -9,13 +9,9 @@ public class Cell implements Serializable {
     private boolean complete;
     private int x;
     private int y;
-    private Table table;
     private final int MAX_LEVEL = 3;
     private Pawn pawn = null;
 
-    public Table getTable() {
-        return table;
-    }
 
     /**
      * Cell with param x,y that i will use to initialize
@@ -55,6 +51,10 @@ public class Cell implements Serializable {
      */
     public boolean isFree() {
         return free;
+    }
+
+    public void setFree(boolean free) {
+        this.free = free;
     }
 
     /**
@@ -97,12 +97,6 @@ public class Cell implements Serializable {
      */
     public void setComplete(boolean complete) {
         this.complete = complete;
-    }
-
-    public void initCell() {
-        level = 0;
-        free = true;
-        complete = false;
     }
 
     public boolean build() {

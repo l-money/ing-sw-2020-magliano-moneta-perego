@@ -1,4 +1,4 @@
-package santorini;
+/**package santorini;
 
 import santorini.model.Gamer;
 
@@ -26,7 +26,9 @@ public class NetworkHandlerServer implements Runnable {
      * Starts listening for clients
      * after 30*1000 milliseconds starts game
      */
-    public void run() {
+
+/**
+ public void run() {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -48,7 +50,9 @@ public class NetworkHandlerServer implements Runnable {
      * - A name
      * - A progress id (created from i)
      */
-    private void initGameConnections() {
+
+/**
+ private void initGameConnections() {
         for (int i = 0; i < 3; i++) {
             try {
                 Socket s = serverSocket.accept();
@@ -66,16 +70,21 @@ public class NetworkHandlerServer implements Runnable {
      * Starts a new game and becomes handler for socket and
      * network data transmissions
      */
-    public void startGame() {
-        if (players.size() == 2 || players.size() == 3) {
-            game = new Game(players, this);
-        }
-    }
 
-    /**
-     * Sends field status to all players as Object Stream
-     */
-    public void updateField() {
+/**
+ public void startGame() {
+ if (players.size() == 2 || players.size() == 3) {
+ game = new Game(players, this);
+ }
+ }
 
-    }
+ /**
+ * Sends field status to all players as Object Stream
+ */
+
+/**
+ public void updateField() {
+
+ }
 }
+ */

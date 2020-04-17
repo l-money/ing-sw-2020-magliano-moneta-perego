@@ -1,7 +1,6 @@
 package santorini.model;
 
-import santorini.model.utils.Color;
-
+import java.awt.*;
 import java.io.Serializable;
 
 /**

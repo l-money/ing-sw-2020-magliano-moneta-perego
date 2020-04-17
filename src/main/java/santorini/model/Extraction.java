@@ -1,5 +1,7 @@
 package santorini.model;
 
+import santorini.model.godCards.*;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,25 +18,21 @@ public class Extraction implements Serializable {
 
     public Extraction() {
         gods = new ArrayList<God>();
-        gods.add(new Apollo(null));
-        gods.add(new Artemis(null));
-        gods.add(new Athena(null));
-        gods.add(new Atlas(null));
-        /**
+        gods.add(new Apollo());
+        gods.add(new Pan());
+        gods.add(new Artemis());
+        gods.add(new Athena());
+        gods.add(new Atlas());
          gods.add(new Demeter());
          gods.add(new Hephaestus());
          gods.add(new Minotaur());
-         gods.add(new Pan());
          gods.add(new Prometheus());
-         gods.add(new Zeus());
-         gods.add(new Demeter());
-         gods.add(new Hephaestus());
-         gods.add(new Zeus());
+        /**gods.add(new Zeus());
          gods.add(new Poseidon());
          gods.add(new Hera());
          gods.add(new Triton());
-         gods.add(new Ares());
-         */
+         gods.add(new Ares());*/
+
     }
 
     /**

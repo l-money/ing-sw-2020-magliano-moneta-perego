@@ -1,6 +1,6 @@
 package santorini.model;
 
-import santorini.model.utils.Color;
+import java.awt.*;
 
 import java.net.Socket;
 
@@ -9,15 +9,10 @@ public class Gamer {
     private String name;
     private God mycard;
     private int id;
-
-    public String getName() {
-        return name;
-    }
-
     private int steps = 1;
-    private int levels_up = 1;
-    private int level_down = 5;
-    private boolean overwrite = false;
+    private int levelsUp = 1;
+    private int levelsDown = 3;
+    private boolean looser = false;
     private int builds = 1;
     private Pawn[] pawn;
     private int idGamer;
@@ -31,14 +26,25 @@ public class Gamer {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Socket getSocket() {
         return socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 
     public boolean isWinner() {
         return winner;
     }
-
     public void setWinner(boolean winner) {
         this.winner = winner;
     }
@@ -46,45 +52,37 @@ public class Gamer {
     public int getSteps() {
         return steps;
     }
-
-    public int getLevels_up() {
-        return levels_up;
-    }
-
-    public int getLevel_down() {
-        return level_down;
-    }
-
-    public boolean isOverwrite() {
-        return overwrite;
-    }
-
-    public int getBuilds() {
-        return builds;
-    }
-
-    public God getMycard() {
-        return mycard;
-    }
-
     public void setSteps(int steps) {
         this.steps = steps;
     }
 
-    public void setLevels_up(int levels_up) {
-        this.levels_up = levels_up;
+    public int getLevelsUp() {
+        return levelsUp;
     }
 
-    public void setLevel_down(int level_down) {
-        this.level_down = level_down;
+    public void setLevelsUp(int newLevelsUp) {
+        this.levelsUp = newLevelsUp;
     }
 
-    public void setOverwrite(boolean overwrite) {
-        this.overwrite = overwrite;
+    public int getLevelsDown() {
+        return levelsDown;
     }
 
-    public void setBuilds(int builds) {
-        this.builds = builds;
+    public void setLevelsDown(int newLevelsDown) {
+        this.levelsDown = newLevelsDown;
+    }
+
+    public boolean isLooser() {
+        return looser;
+    }
+
+    public void setLooser(boolean looser) {
+        this.looser = looser;
+    }
+
+
+    public God getMyGodCard() {
+        return mycard;
     }
 
     public void setGod(God newGodCard) {
@@ -92,8 +90,12 @@ public class Gamer {
         mycard.initializeOwner(this);
     }
 
-    public God getGod() {
-        return mycard;
+    public int getBuilds() {
+        return builds;
+    }
+
+    public void setBuilds(int builds) {
+        this.builds = builds;
     }
 
     /**
@@ -132,6 +134,10 @@ public class Gamer {
         this.colorGamer = newColorGamer;
     }
 
+    public Pawn[] getmyPawn() {
+        return pawn;
+    }
+
     /**
      * method getIdPawn
      *
@@ -150,57 +156,14 @@ public class Gamer {
      *                   It sets the number identification and the color of the two pawns of the gamer
      */
     public void setPawn(int idGamer, Color colorGamer) {
-        pawn = new Pawn[2];
         for (int i = 0; i < 2; i++) {
-            pawn[i].setIdPawn(i);
-            pawn[i].setIdGamer(idGamer);
-            pawn[i].setColorPawn(colorGamer);
+            this.pawn[i].setIdPawn(i);
+            this.pawn[i].setIdGamer(idGamer);
+            this.pawn[i].setColorPawn(colorGamer);
+            this.pawn[i].setPastLevel(0);
+            this.pawn[i].setPresentLevel(0);
         }
-    }
-
-
-    /*public void moveMyPawn(Pawn pedina, Cell to) {
-        mycard.beforeOwnerMoving();
-        baseMove(pedina, to);
-        mycard.afterOwnerMoving();
-    }
-
-    public void buildBrick(Cell on) {
-        mycard.afterOwnerBuilding();
-        baseBuild(on);
-        mycard.beforeOwnerBuilding();
-    }
-*/
-    /**
-     * Moves player pawn from cell to another
-     * @param pedina pawn to move
-     * @param to target cell
-     */
-    /*private void baseMove(Pawn pedina, Cell to){
-        Cell from = pedina.getCell();
-        //Controllo che to sia tra le 8 attorno a from
-        //Controlla Distanza in passi tra le 2 celle e compara con steps
-        if(to.getLevel()-from.getLevel()<=levels_up || from.getLevel()-to.getLevel()<=level_down){
-            //Livello inacessibile con le permission correnti
-        }
-        if(!to.isFree() && !overwrite){
-            //cella non libera e non si può sovrascrivere
-        }
-    }*/
-
-    /**
-     * Builds a new block upon a cell
-     *
-     * @param on cell to build
-     * @return operation validation
-     */
-    private boolean baseBuild(Cell on) {
-        if (on.isFree() && !on.isComplete()) {
-            /*Metodo build ancora mancante
-            on.build();*/
-            return true;
-        }
-        return false;
     }
 
 }
+

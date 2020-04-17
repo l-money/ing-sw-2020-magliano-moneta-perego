@@ -5,9 +5,11 @@ import org.junit.Test;
 import santorini.model.Cell;
 import santorini.model.Pawn;
 import santorini.model.Table;
-import santorini.model.utils.Color;
 
-import static org.junit.Assert.*;
+import java.awt.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Class TestPawn
@@ -29,8 +31,6 @@ public class TestPawn {
      */
     @Test
     public void testGetIdPawn(){
-        int x = pawn.getIdPawn();
-        assertEquals(1,x);
         pawn.setIdPawn(0);
         assertEquals(0, pawn.getIdPawn());
     }
@@ -41,8 +41,6 @@ public class TestPawn {
 
     @Test
     public void testGetIdGamer(){
-        int x = pawn.getIdGamer();
-        assertEquals(1,x);
         pawn.setIdGamer(0);
         assertEquals(0, pawn.getIdGamer());
     }
@@ -52,14 +50,12 @@ public class TestPawn {
 
     @Test
     public void testLevelsPawn(){
+        pawn.setPastLevel(0);
+        pawn.setPresentLevel(2);
         int x = pawn.getPastLevel();
         int y = pawn.getPresentLevel();
         assertEquals(0, x);
-        assertEquals(1,y);
-        pawn.setPastLevel(2);
-        pawn.setPresentLevel(2);
-        assertEquals(2, pawn.getPastLevel());
-        assertEquals(2, pawn.getPresentLevel());
+        assertEquals(2, y);
     }
 
     /**
@@ -67,10 +63,9 @@ public class TestPawn {
      */
     @Test
     public void testColorPawn(){
-        Color c = pawn.getColorPawn();
-        assertEquals(Color.BLUE,c);
         pawn.setColorPawn(Color.GREEN);
-        assertEquals(Color.GREEN, pawn.getColorPawn());
+        Color c = pawn.getColorPawn();
+        assertEquals(Color.GREEN, c);
     }
 
     /**

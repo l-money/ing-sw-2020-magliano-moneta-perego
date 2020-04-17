@@ -1,20 +1,25 @@
 package santorini.model;
 
 import santorini.Turno;
-import santorini.model.Gamer;
 
 import java.io.Serializable;
 
 public abstract class God implements Serializable {
     protected Gamer owner;
     protected String name, description;
+    protected Table table;
 
-    public God(Gamer gamer) {
-        this.owner = gamer;
-    }
 
     public Gamer getOwner() {
         return owner;
+    }
+
+    public void setOwner(Gamer newOwner) {
+        this.owner = newOwner;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
     }
 
     /**

@@ -3,9 +3,12 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 import santorini.model.Cell;
+import santorini.model.Pawn;
 import santorini.model.Table;
 
+import java.awt.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -42,6 +45,7 @@ public class TestTable implements Serializable {
                 assertEquals(0, position.getLevel());
                 assertTrue(position.isFree());
                 assertFalse(position.isComplete());
+                assertNull(position.getPawn());
             }
         }
     }
@@ -141,4 +145,99 @@ public class TestTable implements Serializable {
         distance = table.walkNearCell(c1, c2);
         assertEquals(1, distance);
     }
+
+    @Test
+    public void testICanMove() {
+        Cell myCell;
+        Pawn myPawn = new Pawn();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                table.getTableCell(i, j).setPawn(null);
+                table.getTableCell(i, j).setFree(true);
+                table.getTableCell(i, j).setComplete(false);
+                table.getTableCell(i, j).setLevel(2);
+            }
+        }
+        table.getTableCell(2, 2).setX(2);
+        table.getTableCell(2, 2).setY(2);
+        table.getTableCell(2, 2).setLevel(0);
+        table.getTableCell(2, 2).setFree(false);
+        table.getTableCell(2, 2).setComplete(false);
+        table.getTableCell(2, 2).setPawn(myPawn);
+        myCell = table.getTableCell(2, 2);
+        myPawn.setRow(myCell.getX());
+        myPawn.setColumn(myCell.getY());
+        myPawn.setPastLevel(myCell.getLevel() - 1);
+        myPawn.setPresentLevel(myCell.getLevel());
+        myPawn.setIdGamer(0);
+        myPawn.setColorPawn(Color.BLUE);
+        ArrayList<Cell> nearCells = table.searchAdjacentCells(myCell);
+        boolean result = table.iCanMove(table.getTableCell(2, 2));
+        assertFalse(result);
+        table.getTableCell(2, 2).setLevel(1);
+        result = table.iCanMove(table.getTableCell(2, 2));
+        assertTrue(result);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                table.getTableCell(i, j).setLevel(0);
+            }
+        }
+        table.getTableCell(2, 2).setLevel(3);
+        result = table.iCanMove(table.getTableCell(2, 2));
+        assertTrue(result);
+    }
+
+    @Test
+    public void testICanBuild() {
+        Cell myCell = new Cell();
+        Pawn myPawn = new Pawn();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                table.getTableCell(i, j).setPawn(null);
+                table.getTableCell(i, j).setFree(true);
+                table.getTableCell(i, j).setComplete(true);
+                table.getTableCell(i, j).setLevel(3);
+            }
+        }
+        table.getTableCell(2, 2).setX(2);
+        table.getTableCell(2, 2).setY(2);
+        table.getTableCell(2, 2).setLevel(1);
+        table.getTableCell(2, 2).setFree(false);
+        table.getTableCell(2, 2).setComplete(false);
+        table.getTableCell(2, 2).setPawn(myPawn);
+        ArrayList<Cell> nearCells = table.searchAdjacentCells(myCell);
+        boolean result = table.iCanMove(table.getTableCell(2, 2));
+        assertFalse(result);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                table.getTableCell(i, j).setPawn(null);
+                table.getTableCell(i, j).setFree(true);
+                table.getTableCell(i, j).setComplete(false);
+                table.getTableCell(i, j).setLevel(2);
+            }
+        }
+        nearCells = table.searchAdjacentCells(myCell);
+        result = table.iCanMove(table.getTableCell(2, 2));
+        assertTrue(result);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                table.getTableCell(i, j).setPawn(null);
+                table.getTableCell(i, j).setFree(true);
+                table.getTableCell(i, j).setComplete(true);
+                table.getTableCell(i, j).setLevel(2);
+            }
+        }
+        nearCells = table.searchAdjacentCells(myCell);
+        result = table.iCanMove(table.getTableCell(2, 2));
+        assertFalse(result);
+    }
+
+    @Test
+    public void testControlBaseMovement() {
+
+
+    }
+
+
+
 }

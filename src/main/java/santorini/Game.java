@@ -1,9 +1,10 @@
 package santorini;
 
-import santorini.model.*;
+import santorini.model.Gamer;
+import santorini.model.God;
+import santorini.model.Table;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Game implements Runnable {
     private ArrayList<Gamer> giocatori = new ArrayList<Gamer>();
@@ -12,17 +13,17 @@ public class Game implements Runnable {
      * rifai la classe extraction con la shuffle della collection*/
     private ArrayList<God> godCards = new ArrayList<God>();
     private Table table = new Table();
-    private NetworkHandlerServer handler;
+    //private NetworkHandlerServer handler;
 
     /**
      * Game initialization
      *
      * @param gamers player list.  Number handled by connection manager
      */
-    public Game(ArrayList<Gamer> gamers, NetworkHandlerServer networkHandlerServer) {
-        giocatori = gamers;
-        this.handler = networkHandlerServer;
-    }
+    // public Game(ArrayList<Gamer> gamers, NetworkHandlerServer networkHandlerServer) {
+    //  giocatori = gamers;
+    //  this.handler = networkHandlerServer;
+    //}
 
     /*Inizializzare con estrazione le carte dininità*/
 
