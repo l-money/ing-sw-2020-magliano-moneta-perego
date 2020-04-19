@@ -1,7 +1,9 @@
 package santorini;
 
+import org.junit.runner.manipulation.NoTestsRemainException;
 import santorini.model.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Turno implements Runnable {
@@ -10,6 +12,7 @@ public class Turno implements Runnable {
     private Table table;
     private Pawn pawn;
     private Mossa move;
+    private NetworkHandlerServer gameHandler;
 
     /**
      * Turn initialization for a specified player
@@ -18,7 +21,7 @@ public class Turno implements Runnable {
      * @param gamer player that has to play
      * @param table game field
      */
-    public Turno(ArrayList<God> cards, Gamer gamer, Table table) {
+    public Turno(ArrayList<God> cards, Gamer gamer, Table table, NetworkHandlerServer handler) {
         for (God g : cards) {
             if (g.equals(gamer.getMyGodCard())) {
                 cards.remove(g);
@@ -27,6 +30,7 @@ public class Turno implements Runnable {
         this.otherCards = cards;
         this.gamer = gamer;
         this.table = table;
+        this.gameHandler = handler;
     }
 
     public Table getTable() {
@@ -58,8 +62,22 @@ public class Turno implements Runnable {
         costruzione();
     }
 
+    private Mossa leggiMossa(Mossa.Azione action) {
+        try {
+            return gameHandler.richiediMossa(action, gamer);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void sendFailed() {
+        gameHandler.sendFailed(gamer);
+    }
+
     //TODO metto controllo di steps, builds per mossa base e costruzione base
     public void mossa() {
+        Mossa m = leggiMossa(Mossa.Azione.MOVE);
         gamer.getMyGodCard().beforeOwnerMoving(this);
         for (God card : otherCards) {
             card.beforeOtherMoving(gamer);
@@ -72,6 +90,7 @@ public class Turno implements Runnable {
     }
 
     public void costruzione() {
+        Mossa m = leggiMossa(Mossa.Azione.BUILD);
         gamer.getMyGodCard().beforeOwnerBuilding(this);
         for (God card : otherCards) {
             card.beforeOtherBuilding(gamer);

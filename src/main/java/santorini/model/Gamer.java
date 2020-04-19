@@ -2,6 +2,9 @@ package santorini.model;
 
 import java.awt.*;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 
@@ -19,11 +22,27 @@ public class Gamer {
     private Color colorGamer;
     private boolean winner = false;
     private Socket socket;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
 
-    public Gamer(Socket socket, String name, int id) {
+    public God getMycard() {
+        return mycard;
+    }
+
+    public ObjectOutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    public ObjectInputStream getInputStream() {
+        return inputStream;
+    }
+
+    public Gamer(Socket socket, String name, int id, ObjectInputStream ois, ObjectOutputStream oos) {
         this.socket = socket;
         this.name = name;
         this.id = id;
+        this.outputStream = oos;
+        this.inputStream = ois;
     }
 
     public String getName() {

@@ -1,45 +1,32 @@
-/**package santorini;
+package santorini;
 
 import santorini.model.Gamer;
+import santorini.model.God;
+import santorini.model.Mossa;
+import santorini.model.Mossa.Azione;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class NetworkHandlerServer implements Runnable {
     private ServerSocket serverSocket;
-    private final int PORT = 3467;
     private ArrayList<Gamer> players = new ArrayList<Gamer>();
     private Game game;
+    private ObjectInputStream inputStream;
+    private ObjectOutputStream outputStream;
 
     public NetworkHandlerServer() throws IOException {
-        serverSocket = new ServerSocket(PORT);
+        serverSocket = new ServerSocket(Parameters.PORT);
     }
 
     /**
      * Starts listening for clients
      * after 30*1000 milliseconds starts game
      */
-
-/**
- public void run() {
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    serverSocket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                startGame();
-            }
-        }, 30 * 1000);
+    public void run() {
         initGameConnections();
     }
 
@@ -50,41 +37,89 @@ public class NetworkHandlerServer implements Runnable {
      * - A name
      * - A progress id (created from i)
      */
-
-/**
- private void initGameConnections() {
-        for (int i = 0; i < 3; i++) {
-            try {
-                Socket s = serverSocket.accept();
-                ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-                players.add(new Gamer(s, ois.readObject().toString(), i));
-                ois.close();
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-                break;
+    private void initGameConnections() {
+        try {
+            int i = 0;
+            Socket s = serverSocket.accept();
+            inputStream = new ObjectInputStream(s.getInputStream());
+            outputStream = new ObjectOutputStream(s.getOutputStream());
+            players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
+            i++;
+            outputStream.writeObject(Parameters.command.SET_PLAYERS_NUMBER);
+            outputStream.flush();
+            int max = Integer.parseInt((String) inputStream.readObject());
+            for (; i < max; i++) {
+                s = serverSocket.accept();
+                inputStream = new ObjectInputStream(s.getInputStream());
+                outputStream = new ObjectOutputStream(s.getOutputStream());
+                players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
             }
+            startGame();
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
+
     }
 
     /**
      * Starts a new game and becomes handler for socket and
      * network data transmissions
      */
+    public void startGame() {
+        if (players.size() == 2 || players.size() == 3) {
+            game = new Game(players, this);
+            new Thread(game).start();
+        }
+    }
 
-/**
- public void startGame() {
- if (players.size() == 2 || players.size() == 3) {
- game = new Game(players, this);
- }
- }
+    /**
+     * Sends field status to a specific player
+     *
+     * @param gamer player to send field
+     */
+    public void updateField(Gamer gamer) {
+        outputStream = gamer.getOutputStream();
+        try {
+            outputStream.writeObject(game.getTable());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
- /**
- * Sends field status to all players as Object Stream
- */
+    public God chooseCard(ArrayList<God> cards, Gamer player) throws IOException, ClassNotFoundException {
+        outputStream = player.getOutputStream();
+        outputStream.writeObject(cards);
+        outputStream.flush();
+        inputStream = player.getInputStream();
+        God g = (God) inputStream.readObject();
+        return g;
+    }
 
-/**
- public void updateField() {
+    public Mossa richiediMossa(Azione tipo, Gamer gamer) throws IOException, ClassNotFoundException {
+        outputStream = gamer.getOutputStream();
+        Parameters.command command = null;
+        switch (tipo) {
+            case MOVE:
+                command = Parameters.command.MOVE;
+                break;
+            case BUILD:
+                command = Parameters.command.BUILD;
+                break;
+        }
+        outputStream.writeObject(command);
+        outputStream.flush();
+        inputStream = gamer.getInputStream();
+        Mossa mossa = (Mossa) inputStream.readObject();
+        return mossa;
+    }
 
- }
+    public void sendFailed(Gamer gamer) {
+        outputStream = gamer.getOutputStream();
+        try {
+            outputStream.writeObject(Parameters.command.FAILED);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
- */

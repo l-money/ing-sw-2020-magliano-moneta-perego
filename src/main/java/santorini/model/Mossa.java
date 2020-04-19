@@ -3,7 +3,7 @@ package santorini.model;
 import java.io.Serializable;
 
 public class Mossa implements Serializable {
-    public enum Azione {
+    public static enum Azione {
         MOVE,
         BUILD
     }
