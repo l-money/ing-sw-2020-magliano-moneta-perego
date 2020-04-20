@@ -1,6 +1,5 @@
 package santorini;
 
-import org.junit.runner.manipulation.NoTestsRemainException;
 import santorini.model.*;
 
 import java.io.IOException;
@@ -10,8 +9,11 @@ public class Turno implements Runnable {
     private ArrayList<God> otherCards;
     private Gamer gamer;
     private Table table;
-    private Pawn pawn;
+    private int idPawnOfMovement;
     private Mossa move;
+    private boolean validationMove;
+    private boolean validationBuild;
+    private boolean panEffect;
     private NetworkHandlerServer gameHandler;
 
     /**
@@ -45,8 +47,12 @@ public class Turno implements Runnable {
         return move;
     }
 
-    public Pawn getPawn() {
-        return pawn;
+    public int getIdPawnOfMovement() {
+        return idPawnOfMovement;
+    }
+
+    public NetworkHandlerServer getGameHandler() {
+        return gameHandler;
     }
 
     /**
@@ -54,15 +60,15 @@ public class Turno implements Runnable {
      * all god cards features
      */
     public void run() {
-        //Devo avere un oggetto mossa di tipo move da controllare
-        mossa();
-        winner();
-        //Prima di lanciare un altro turno far controllare che il giocatore non abbia vinto
-        //Se non ha vinto devo avere un oggetto mossa di tipo build da controllare
-        costruzione();
+        validationMove = false;
+        validationBuild = false;
+        panEffect = false;
+        myMovement();
+        win();
+        myBuilding();
     }
 
-    private Mossa leggiMossa(Mossa.Azione action) {
+    private Mossa giveMeMossa(Mossa.Action action) {
         try {
             return gameHandler.richiediMossa(action, gamer);
         } catch (IOException | ClassNotFoundException e) {
@@ -75,65 +81,98 @@ public class Turno implements Runnable {
         gameHandler.sendFailed(gamer);
     }
 
-    //TODO metto controllo di steps, builds per mossa base e costruzione base
-    public void mossa() {
-        Mossa m = leggiMossa(Mossa.Azione.MOVE);
+
+    public void myMovement() {
+        boolean startValidation = false;
+        move = giveMeMossa(Mossa.Action.MOVE);
+        do {
+            startValidation = getStartParameter(move);
+            if (!startValidation) {
+                sendFailed();
+                move = giveMeMossa(Mossa.Action.MOVE);
+            }
+        } while (!startValidation);
+        idPawnOfMovement = move.getIdPawn();
         gamer.getMyGodCard().beforeOwnerMoving(this);
         for (God card : otherCards) {
             card.beforeOtherMoving(gamer);
         }
-        boolean step1 = baseMovement(getMove().getPawn(), getMove().getTarget());
+
+        validationMove = false;
+        do {
+            baseMovement(move);
+            getValidationMove();
+        } while (!validationMove);
+        getGamer().setSteps(0);
+
         gamer.getMyGodCard().afterOwnerMoving(this);
         for (God card : otherCards) {
             card.afterOtherMoving(gamer);
         }
     }
 
-    public void costruzione() {
-        Mossa m = leggiMossa(Mossa.Azione.BUILD);
+    public void win() {
+        baseWin();
+    }
+
+    public void myBuilding() {
+        move = giveMeMossa(Mossa.Action.BUILD);
         gamer.getMyGodCard().beforeOwnerBuilding(this);
         for (God card : otherCards) {
             card.beforeOtherBuilding(gamer);
         }
-        boolean step2 = baseBuilding(getMove().getPawn(), getMove().getTarget());
+
+        validationBuild = false;
+        do {
+            baseBuilding(move);
+            getValidationBuild();
+        } while (!validationBuild);
+        getGamer().setBuilds(0);
+
         gamer.getMyGodCard().afterOwnerBuilding(this);
         for (God card : otherCards) {
             card.afterOtherBuilding(gamer);
         }
     }
 
-    public void winner() {
-        baseWinner(getMove().getPawn());
-    }
-
     /**
      * Standard move
-     *
-     * @param p  pawn to be moved
-     * @param destination target cell
-     * @return move result
      */
-    public boolean baseMovement(Pawn p, Cell destination) {
+    public void baseMovement(Mossa move) {
+        Pawn p = getGamer().getPawn(move.getIdPawn());
+        Cell destination = table.getTableCell(move.getTargetX(), move.getTargetY());
         Cell myCell = table.getTableCell(p.getRow(), p.getColumn());
-        if (!table.iCanMove(myCell)) {
-            gamer.setLooser(true);
-            return false;
+        if (move.getIdPawn() != idPawnOfMovement) {
+            validationMove = false;
         } else {
-            if ((!table.controlBaseMovement(myCell, destination))) {
-                return false;
+            if (!table.iCanMove(myCell)) {
+                getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
+                gamer.setLoser(amILocked());
+                validationMove = false;
             } else {
-                if (gamer.getSteps() == 1) {
-                    myCell.getPawn().setPastLevel(myCell.getLevel());
-                    myCell.getPawn().setPresentLevel(destination.getLevel());
-                    destination.setPawn(p);
-                    destination.setFree(false);
-                    destination.getPawn().setRow(destination.getX());
-                    destination.getPawn().setColumn(destination.getY());
-                    myCell.setPawn(null);
-                    myCell.setFree(true);
-                    return true;
+                if ((!table.controlBaseMovement(myCell, destination))) {
+                    validationMove = false;
                 } else {
-                    return false;
+                    if ((gamer.getSteps() == 1)) {
+                        int x1 = myCell.getX();
+                        int y1 = myCell.getY();
+                        int x2 = destination.getX();
+                        int y2 = destination.getY();
+                        if ((gamer.getLevelsUp() != 1) &&
+                                (destination.getLevel() - myCell.getLevel() == 1)) {
+                            validationMove = false;
+                        } else {
+                            getTable().getTableCell(x1, y1).getPawn().setPastLevel(myCell.getLevel());
+                            getTable().getTableCell(x1, y1).getPawn().setPresentLevel(destination.getLevel());
+                            getTable().getTableCell(x2, y2).setPawn(p);
+                            getTable().getTableCell(x2, y2).setFree(false);
+                            getTable().getTableCell(x2, y2).getPawn().setRow(destination.getX());
+                            getTable().getTableCell(x2, y2).getPawn().setColumn(destination.getY());
+                            getTable().getTableCell(x1, y1).setPawn(null);
+                            getTable().getTableCell(x1, y1).setFree(true);
+                            validationMove = true;
+                        }
+                    }
                 }
             }
         }
@@ -142,94 +181,121 @@ public class Turno implements Runnable {
 
     /**
      * Standard build on game field
-     *
-     * @param p           reference pawn
-     * @param destination target cell to build on
-     * @return build result
      */
 
-    private boolean baseBuilding(Pawn p, Cell destination) {
+    private void baseBuilding(Mossa move) {
+        Pawn p = getGamer().getPawn(move.getIdPawn());
+        int idP = move.getIdPawn();
+        Cell destination = table.getTableCell(move.getTargetX(), move.getTargetY());
         Cell myCell = table.getTableCell(p.getRow(), p.getColumn());
-        if (!table.iCanBuild(myCell)) {
-            gamer.setLooser(true);
-            return false;
+        if (idP != idPawnOfMovement) {
+            validationBuild = false;
         } else {
-            if (!table.controlBaseBuilding(myCell, destination)) {
-                return false;
+            if (!table.iCanBuild(myCell)) {
+                getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
+                gamer.setLoser(amILocked());
+                validationBuild = false;
             } else {
-                if (gamer.getBuilds() == 1) {
-                    int newLevel = destination.getLevel() + 1;
-                    if (newLevel > 3) {
-                        destination.setLevel(3);
-                        destination.setComplete(true);
-                        return true;
-                    } else {
-                        destination.setLevel(newLevel);
-                        return true;
-                    }
+                if (!table.controlBaseBuilding(myCell, destination)) {
+                    validationBuild = false;
                 } else {
-                    return false;
+                    if (gamer.getBuilds() == 1) {
+                        int x2 = destination.getX();
+                        int y2 = destination.getY();
+                        validationBuild = getTable().build(getTable().getTableCell(x2, y2));
+                    } else {
+                        validationBuild = false;
+                    }
                 }
             }
         }
     }
 
-    public void baseWinner(Pawn p) {
-        if ((p.getPastLevel() == 2) && (p.getPresentLevel() == 3) && (getMove().getPawn() == p)) {
-            gamer.setWinner(true);
+    /**
+     * Standard win
+     */
+    public void baseWin() {
+        Pawn myPawn = getGamer().getPawn(move.getIdPawn());
+        //if(panEffect){ getGamer().setWinner(true);}
+        if ((myPawn.getPastLevel() == 2) && (myPawn.getPresentLevel()) == 3) {
+            getGamer().setWinner(true);
         } else {
-            gamer.setWinner(false);
+            getGamer().setWinner(false);
         }
     }
 
-    /*Aggiungere un metodo che controlla la vittoria standard per il giocatore corrente*/
+    /**
+     * method amILocked
+     *
+     * @return true if at least one pawn can move and  build, otherwise false
+     */
+
+    public boolean amILocked() {
+        Pawn p0 = gamer.getPawn(0);
+        Pawn p1 = gamer.getPawn(1);
+        if ((!p0.getICanPlay()) && (!p1.getICanPlay())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * method getValidationMove
+     * Control if the movement is valid
+     */
+
+    public void getValidationMove() {
+        if (!validationMove) {
+            sendFailed();
+            move = giveMeMossa(Mossa.Action.MOVE);
+        }
+    }
+
+    /**
+     * method isValidationMove for the Godcards
+     *
+     * @return the global attribute validationMove
+     */
+    public boolean isValidationMove() {
+        return validationMove;
+    }
+
+    /**
+     * method getValidationBuild
+     * Control if the building is valid
+     */
+    public void getValidationBuild() {
+        if (!validationBuild) {
+            sendFailed();
+            move = giveMeMossa(Mossa.Action.BUILD);
+        }
+    }
+
+    /**
+     * method isValidationBuild for the Godcards
+     *
+     * @return the global attribute validationBuild
+     */
+    public boolean isValidationBuild() {
+        return validationBuild;
+    }
+
+    /**
+     * method getStartParameter
+     *
+     * @return true if the parameters are valid, or return false
+     */
+    public boolean getStartParameter(Mossa movement) {
+        if ((movement.getIdPawn() < 0) || (movement.getIdPawn() > 1) ||
+                (movement.getTargetX() < 0) || (movement.getTargetX() > 5) ||
+                (movement.getTargetY() < 0) || (movement.getTargetY() > 5)
+        ) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
 }
-
-/**
- * private boolean mossaBase(Pawn p, Cell to) {
- * Cell from = table.getTableCell(p.getRow(), p.getColumn());
- * ArrayList<Cell> adiacenti = table.searchAdjacentCells(table.getTableCell(p.getRow(), p.getColumn()));
- * if (!adiacenti.contains(to)) {
- * return false;
- * }
- * if (table.walkNearCell(from, to) > gamer.getSteps()) {
- * return false;
- * }
- * if (!to.isFree() && !gamer.isOverwrite()) {
- * return false;
- * }
- * if (to.getLevel() - from.getLevel() > gamer.getLevelsUp()) {
- * return false;
- * }
- * if (from.getLevel() - to.getLevel() > gamer.getLevelsDown()) {
- * return false;
- * }
- * from.free();
- * p.setRow(to.getX());
- * p.setColumn(to.getY());
- * to.setPawn(p);
- * return true;
- * }
- * private boolean costruzioneBase(Pawn p, Cell on) {
- * ArrayList<Cell> adiacenti = table.searchAdjacentCells(table.getTableCell(p.getRow(), p.getColumn()));
- * if (!adiacenti.contains(on)) {
- * return false;
- * }
- * if (on.isFree() && !on.isComplete()) {
- * return on.build();
- * }
- * return false;
- * }
- */
-
-/**
- private boolean costruzioneBase(Pawn p, Cell on) {
- ArrayList<Cell> adiacenti = table.searchAdjacentCells(table.getTableCell(p.getRow(), p.getColumn()));
- if (!adiacenti.contains(on)) {
- return false;
- }
- if (on.isFree() && !on.isComplete()) {
- return on.build();
- }
- return false;
- }*/

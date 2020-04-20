@@ -1,10 +1,7 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
-import santorini.model.Cell;
-import santorini.model.Gamer;
-import santorini.model.God;
-import santorini.model.Pawn;
+import santorini.model.*;
 
 import java.util.ArrayList;
 
@@ -14,6 +11,7 @@ public class Apollo extends God {
     Pawn myPawn;
     Pawn otherPawn;
     boolean apolloEffect;
+    boolean validationApolloMove = false;
 
 
     /**
@@ -31,21 +29,31 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        apolloEffect = false;
-        //Prendo in ingresso mossa con un movimento
-        myPawn = turno.getMove().getPawn();
+        validationApolloMove = false;
+        int x2 = turno.getMove().getTargetX();
+        int y2 = turno.getMove().getTargetY();
+        int idP = turno.getMove().getIdPawn();
+        end = turno.getTable().getTableCell(x2, y2);
+        otherPawn = turno.getTable().getTableCell(x2, y2).getPawn();
+        myPawn = turno.getGamer().getPawn(idP);
         start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
-        end = turno.getMove().getTarget();
-        otherPawn = turno.getTable().getTableCell(end.getX(), end.getY()).getPawn();
         ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
-        if ((nearCells.contains(end)) && (otherPawn.getIdGamer() != myPawn.getIdGamer())) {
-            end.setPawn(null);
-            end.setFree(true);
+        if ((nearCells.contains(end)) &&
+                (turno.getTable().getTableCell(x2, y2).getPawn() != null) &&
+                (otherPawn.getIdGamer() != turno.getGamer().getIdGamer())) {
+            turno.getTable().getTableCell(x2, y2).setFree(true);
+            turno.getTable().getTableCell(x2, y2).setPawn(null);
             apolloEffect = true;
         } else {
             apolloEffect = false;
         }
-
+        if (apolloEffect) {
+            do {
+                turno.baseMovement(turno.getMove());
+                turno.getValidationMove();
+            } while (!turno.isValidationMove()); //theoretically baseMovement accepts the movement at first strike,so I can remove the do-while
+            turno.getGamer().setSteps(0);
+        }
     }
 
     /**
@@ -54,17 +62,13 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        if (!apolloEffect) {
-        } else {
-            int x = start.getX();
-            int y = start.getY();
-            turno.getTable().getTableCell(x, y).setFree(false);
-            otherPawn.setRow(x);
-            otherPawn.setColumn(y);
-            otherPawn.setPastLevel(start.getLevel());
-            otherPawn.setPresentLevel(end.getLevel());
-            turno.getTable().getTableCell(x, y).setPawn(otherPawn);
-            apolloEffect = false;
+        if ((apolloEffect) && (turno.isValidationMove())) {
+            turno.getTable().getTableCell(start.getX(), start.getY()).setPawn(otherPawn);
+            turno.getTable().getTableCell(start.getX(), start.getY()).setFree(false);
+            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setRow(start.getX());
+            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setColumn(start.getY());
+            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setPastLevel(end.getLevel());
+            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setPastLevel(start.getLevel());
         }
     }
 
@@ -83,6 +87,7 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void afterOwnerBuilding(Turno turno) {
+        turno.getGamer().setSteps(1);
 
     }
 

@@ -1,126 +1,251 @@
 package santorini.model;
 
 import java.awt.*;
-
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 
 public class Gamer {
+    private final ObjectOutputStream outputStream;
+    private final ObjectInputStream inputStream;
     private String name;
-    private God mycard;
+    private God myCard;
     private int id;
     private int steps = 1;
     private int levelsUp = 1;
     private int levelsDown = 3;
-    private boolean looser = false;
     private int builds = 1;
-    private Pawn[] pawn;
+    private boolean loser = false;
+    private Pawn pawn0;
+    private Pawn pawn1;
     private int idGamer;
     private Color colorGamer;
     private boolean winner = false;
     private Socket socket;
-    private ObjectOutputStream outputStream;
-    private ObjectInputStream inputStream;
 
-    public God getMycard() {
-        return mycard;
-    }
-
-    public ObjectOutputStream getOutputStream() {
-        return outputStream;
-    }
-
-    public ObjectInputStream getInputStream() {
-        return inputStream;
-    }
-
+    /**
+     * constructor of gamer
+     *
+     * @param socket socket of the gamer
+     * @param name   of the gamer
+     * @param id     number identification of the gamer
+     * @param ois    ObjectInputStream of the gamer
+     * @param oos    ObjectOutputStream of the gamer
+     */
     public Gamer(Socket socket, String name, int id, ObjectInputStream ois, ObjectOutputStream oos) {
         this.socket = socket;
         this.name = name;
         this.id = id;
         this.outputStream = oos;
         this.inputStream = ois;
+        pawn0 = new Pawn();
+        pawn1 = new Pawn();
+        switch (id) {
+            case 0:
+                this.colorGamer = Color.YELLOW;
+                break;
+            case 1:
+                this.colorGamer = Color.RED;
+                break;
+            case 2:
+                this.colorGamer = Color.BLUE;
+                break;
+            default:
+                this.colorGamer = null;
+                break;
+        }
+        pawn0.setIdPawn(0);
+        pawn0.setIdGamer(this.id);
+        pawn0.setColorPawn(getColorGamer());
+        pawn0.setRow(-1);
+        pawn0.setColumn(-1);
+        pawn0.setPastLevel(0);
+        pawn0.setPresentLevel(0);
+        pawn1.setIdPawn(1);
+        pawn1.setIdGamer(this.id);
+        pawn1.setColorPawn(getColorGamer());
+        pawn1.setRow(-1);
+        pawn1.setColumn(-1);
+        pawn1.setPastLevel(0);
+        pawn1.setPresentLevel(0);
+        myCard = null;
     }
 
+    /**
+     * method getOutputStream
+     *
+     * @return outputStream
+     */
+    public ObjectOutputStream getOutputStream() {
+        return outputStream;
+    }
+
+    /**
+     * method getInputStream
+     *
+     * @return inputStream
+     */
+    public ObjectInputStream getInputStream() {
+        return inputStream;
+    }
+
+    /**
+     * method getname
+     *
+     * @return name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * method setName
+     *
+     * @param name of the gamer
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    public Socket getSocket() {
-        return socket;
+    /**
+     * method getMyGodCard
+     *
+     * @return myCard
+     */
+    public God getMyGodCard() {
+        return myCard;
     }
 
-    public void setSocket(Socket socket) {
-        this.socket = socket;
+    /**
+     * method setMyGodCard
+     *
+     * @param myCard the godcard of the gamer
+     */
+    public void setMyGodCard(God myCard) {
+        this.myCard = myCard;
     }
 
-    public boolean isWinner() {
-        return winner;
-    }
-    public void setWinner(boolean winner) {
-        this.winner = winner;
+    /**
+     * method getId
+     *
+     * @return the identification number of the gamer
+     */
+    public int getId() {
+        return id;
     }
 
+    /**
+     * method setId
+     *
+     * @param id the identification number of the gamer
+     */
+    public void setId(int id) {
+        this.id = id;
+        switch (id) {
+            case 0:
+                this.colorGamer = Color.YELLOW;
+                break;
+            case 1:
+                this.colorGamer = Color.RED;
+                break;
+            case 2:
+                this.colorGamer = Color.BLUE;
+                break;
+            default:
+                this.colorGamer = null;
+                break;
+        }
+    }
+
+    /**
+     * method getSteps
+     * @return steps
+     */
     public int getSteps() {
         return steps;
     }
+
+    /**
+     * method setSteps
+     * @param steps of the gamer
+     */
     public void setSteps(int steps) {
         this.steps = steps;
     }
 
+    /**
+     * method getLevelsUp
+     * @return levelsUp
+     */
     public int getLevelsUp() {
         return levelsUp;
     }
 
-    public void setLevelsUp(int newLevelsUp) {
-        this.levelsUp = newLevelsUp;
+    /**
+     * method setLevelsUp
+     *
+     * @param levelsUp of the gamer
+     */
+    public void setLevelsUp(int levelsUp) {
+        this.levelsUp = levelsUp;
     }
 
+    /**
+     * method getLevelsDown
+     * @return levelsDown
+     */
     public int getLevelsDown() {
         return levelsDown;
     }
 
-    public void setLevelsDown(int newLevelsDown) {
-        this.levelsDown = newLevelsDown;
+    /**
+     * method setLevelsDown
+     *
+     * @param levelsDown of the gamer
+     */
+    public void setLevelsDown(int levelsDown) {
+        this.levelsDown = levelsDown;
     }
 
-    public boolean isLooser() {
-        return looser;
+    /**
+     * method getLoser
+     *
+     * @return loser
+     */
+    public boolean getLoser() {
+        return loser;
     }
 
-    public void setLooser(boolean looser) {
-        this.looser = looser;
+    /**
+     * method setLoser
+     *
+     * @param loser if the gamer can't move or build, he loses
+     */
+
+    public void setLoser(boolean loser) {
+        this.loser = loser;
     }
 
-
-    public God getMyGodCard() {
-        return mycard;
-    }
-
-    public void setGod(God newGodCard) {
-        this.mycard = newGodCard;
-        mycard.initializeOwner(this);
-    }
-
+    /**
+     * method getBuilds
+     * @return builds
+     */
     public int getBuilds() {
         return builds;
     }
 
+    /**
+     * method setBuilds
+     * @param builds of the gamer
+     */
     public void setBuilds(int builds) {
         this.builds = builds;
     }
 
     /**
      * method getIdGamer
-     *
-     * @return the identification number of the gamer
+     * @return idGamer
      */
     public int getIdGamer() {
         return idGamer;
@@ -128,33 +253,59 @@ public class Gamer {
 
     /**
      * method setIdGamer
-     *
-     * @param newIdGamer the identification number of the gamer
+     * @param idGamer of the gamer
      */
-    public void setIdGamer(int newIdGamer) {
-        this.idGamer = newIdGamer;
+    public void setIdGamer(int idGamer) {
+        this.idGamer = idGamer;
     }
 
     /**
      * method getColorGamer
-     *
-     * @return the color (team) of the gamer
+     * @return colorGamer
      */
     public Color getColorGamer() {
         return colorGamer;
     }
 
     /**
-     * method setIdColorGamer
-     *
-     * @param newColorGamer It sets the color (team) of the gamer
+     * method setColorGamer
+     * @param colorGamer the color of the gamer
      */
-    public void setColorGamer(Color newColorGamer) {
-        this.colorGamer = newColorGamer;
+    //public void setColorGamer(Color colorGamer){this.colorGamer = colorGamer;}
+
+    /**
+     * method isWinner
+     * @return winner
+     */
+    public boolean isWinner() {
+        return winner;
     }
 
-    public Pawn[] getmyPawn() {
-        return pawn;
+    /**
+     * method setWinner
+     *
+     * @param winner if the gamer wins the game
+     */
+    public void setWinner(boolean winner) {
+        this.winner = winner;
+    }
+
+    /**
+     * method getSocket
+     *
+     * @return
+     */
+    public Socket getSocket() {
+        return socket;
+    }
+
+    /**
+     * method setSocket
+     *
+     * @param socket of the gamer
+     */
+    public void setSocket(Socket socket) {
+        this.socket = socket;
     }
 
     /**
@@ -163,24 +314,15 @@ public class Gamer {
      * @param idPawn choose the number of the pawn, pawn1 and pawn2
      * @return pawn1 or pawn2
      */
-    public Pawn getIdPawn(int idPawn) {
-        return pawn[idPawn];
-    }
-
-    /**
-     * method setPawn
-     *
-     * @param idGamer    the number identification of the gamer
-     * @param colorGamer the color (team) of the gamer
-     *                   It sets the number identification and the color of the two pawns of the gamer
-     */
-    public void setPawn(int idGamer, Color colorGamer) {
-        for (int i = 0; i < 2; i++) {
-            this.pawn[i].setIdPawn(i);
-            this.pawn[i].setIdGamer(idGamer);
-            this.pawn[i].setColorPawn(colorGamer);
-            this.pawn[i].setPastLevel(0);
-            this.pawn[i].setPresentLevel(0);
+    public Pawn getPawn(int idPawn) {
+        if (idPawn == 0) {
+            return pawn0;
+        } else {
+            if (idPawn == 1) {
+                return pawn1;
+            } else {
+                return null;
+            }
         }
     }
 

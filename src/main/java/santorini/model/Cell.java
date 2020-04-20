@@ -99,18 +99,6 @@ public class Cell implements Serializable {
         this.complete = complete;
     }
 
-    public boolean build() {
-        if (isFree() && !isComplete()) {
-            this.level++;
-        } else {
-            return false;
-        }
-        if (level == MAX_LEVEL) {
-            setComplete(true);
-        }
-        return true;
-    }
-
 
     public int getX() {
         return x;

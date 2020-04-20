@@ -3,7 +3,7 @@ package santorini;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
-import santorini.model.Mossa.Azione;
+import santorini.model.Mossa.Action;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -96,7 +96,7 @@ public class NetworkHandlerServer implements Runnable {
         return g;
     }
 
-    public Mossa richiediMossa(Azione tipo, Gamer gamer) throws IOException, ClassNotFoundException {
+    public Mossa richiediMossa(Action tipo, Gamer gamer) throws IOException, ClassNotFoundException {
         outputStream = gamer.getOutputStream();
         Parameters.command command = null;
         switch (tipo) {

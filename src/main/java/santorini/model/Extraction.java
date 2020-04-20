@@ -45,7 +45,7 @@ public class Extraction implements Serializable {
      * @return an array of god card
      */
     public ArrayList<God> extractionGods(int players) {
-        ArrayList<God> cards = new ArrayList<>();
+        ArrayList<God> cards = new ArrayList<God>();
         for (int i = 0; i < players; i++) {
             cards.add(gods.get(i));
         }

@@ -3,9 +3,7 @@ package santorini;
 import santorini.model.God;
 import santorini.model.Table;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -58,10 +56,10 @@ public class NetworkHandlerClient implements Runnable {
                     Parameters.command cmd = (Parameters.command) o;
                     switch (cmd) {
                         case BUILD:
-                            /*Chiedi una nuova costruzione*/
+                            /*Chiedi una nuova myBuilding*/
                             break;
                         case MOVE:
-                            /*Chiedi una nuova mossa*/
+                            /*Chiedi una nuova myMovement*/
                             break;
                         case SET_PLAYERS_NUMBER:
                             /*Chiedi il numero di giocatori*/
@@ -92,4 +90,5 @@ public class NetworkHandlerClient implements Runnable {
             Fallo in questo thread*/
         }).start();
     }
+
 }

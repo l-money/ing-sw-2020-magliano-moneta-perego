@@ -16,6 +16,7 @@ public class Pawn implements Serializable {
     private int presentLevel;
     private int pastLevel;
     private Color color;
+    private boolean iCanPlay = true;
     /*private Cell cell;
 
     public void setCell(Cell cell) {
@@ -83,9 +84,30 @@ public class Pawn implements Serializable {
     }
 
     /**
+     * method getICanPlay
+     *
+     * @return true if the pawn can move or build, else false
+     */
+
+    public boolean getICanPlay() {
+        return iCanPlay;
+    }
+
+    /**
+     * method setICanPlay
+     *
+     * @param iCanPlay boolean tells to me if my pawn can move
+     */
+
+    public void setICanPlay(boolean iCanPlay) {
+        this.iCanPlay = iCanPlay;
+    }
+
+    /**
      * method setIdPawn
      * @param newIddPawn the identification number of the pawn
      */
+
 
     public void setIdPawn(int newIddPawn){
         idPawn = newIddPawn;

@@ -1,12 +1,13 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
+import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
-import santorini.model.Pawn;
 
 public class Athena extends God {
-    boolean athenaLevelUp = false;
+    private Cell start;
+    private boolean athenaEffect;
 
     /**
      * Initialize player variables with card
@@ -23,7 +24,9 @@ public class Athena extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
-        athenaLevelUp = false;
+        int x1 = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
+        int y1 = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
+        start = turno.getTable().getTableCell(x1, y1);
     }
 
     /**
@@ -32,10 +35,15 @@ public class Athena extends God {
      * @param turno
      */
     public void afterOwnerMoving(Turno turno) {
-        Pawn myPawn;
-        myPawn = turno.getMove().getPawn();
-        if (myPawn.getPastLevel() == (myPawn.getPresentLevel() - 1)) {
-            athenaLevelUp = true;
+        athenaEffect = false;
+        int x2 = turno.getMove().getTargetX();
+        int y2 = turno.getMove().getTargetY();
+        Cell end = turno.getTable().getTableCell(x2, y2);
+        if (((end.getLevel() - start.getLevel()) == 1) &&
+                (end.getPawn() == turno.getTable().getTableCell(x2, y2).getPawn()) &&
+                (end.getPawn() == turno.getGamer().getPawn(turno.getIdPawnOfMovement()))
+        ) {
+            athenaEffect = true;
         }
     }
 
@@ -63,10 +71,9 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void beforeOtherMoving(Gamer other) {
-        if (athenaLevelUp) {
+        if (athenaEffect) {
             other.setLevelsUp(0);
         }
-
     }
 
     /**

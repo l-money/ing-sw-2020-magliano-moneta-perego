@@ -165,4 +165,17 @@ public class Table implements Serializable {
         return result;
     }
 
+    public boolean build(Cell cell) {
+        int myLevel = cell.getLevel();
+        cell.setLevel(myLevel + 1);
+        int newLevel = cell.getLevel();
+        if (newLevel > 3) {
+            cell.setLevel(3);
+            cell.setComplete(true);
+        } else {
+            cell.setLevel(newLevel);
+        }
+        return true;
+    }
+
 }

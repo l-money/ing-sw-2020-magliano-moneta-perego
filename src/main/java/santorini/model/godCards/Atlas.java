@@ -1,12 +1,10 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
-import santorini.model.*;
-
-import java.util.ArrayList;
+import santorini.model.Gamer;
+import santorini.model.God;
 
 public class Atlas extends God {
-    private boolean atlasEffect;
 
     /**
      * Initialize player variables with card
@@ -23,8 +21,6 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        atlasEffect = false;
-
     }
 
     /**
@@ -42,27 +38,6 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-        Pawn myPawn;
-        Cell myPosition;
-        Cell myDestination;
-        myPawn = turno.getMove().getPawn();
-        myPosition = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
-        myDestination = turno.getMove().getTarget();
-        if (turno.getMove().getAction() == Mossa.Azione.BUILD) {
-            ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(myPosition);
-            for (Cell nearCell : nearCells) {
-                if ((myDestination == nearCell) &&
-                        (nearCell.isFree()) &&
-                        (nearCell.getLevel() <= 3) &&
-                        (nearCell.getLevel() >= 0) &&
-                        (!nearCell.isComplete())) {
-                    turno.getTable().getTableCell(nearCell.getX(), nearCell.getY()).setComplete(true);
-                    turno.getTable().getTableCell(nearCell.getX(), nearCell.getY()).setFree(false);
-                    atlasEffect = true;
-                    turno.getGamer().setBuilds(0);
-                }
-            }
-        }
     }
 
     /**

@@ -6,7 +6,6 @@ import santorini.model.God;
 import santorini.model.Table;
 
 import java.io.IOException;
-import java.lang.management.GarbageCollectorMXBean;
 import java.util.ArrayList;
 
 public class Game implements Runnable {
@@ -49,7 +48,7 @@ public class Game implements Runnable {
         for (Gamer g : giocatori) {
             try {
                 God god = this.handler.chooseCard(cards, g);
-                g.setGod(god);
+                g.setMyGodCard(god);
                 cards.remove(god);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("problema con cast della carta o con la trasmissione");

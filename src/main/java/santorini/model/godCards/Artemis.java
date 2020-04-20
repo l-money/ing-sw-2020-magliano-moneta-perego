@@ -1,13 +1,18 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
-import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
+import santorini.model.Mossa;
+
+import java.io.IOException;
 
 public class Artemis extends God {
-    private Cell startPosition;
-    private boolean artemisEffect = false;
+    private int startX;
+    private int startY;
+    private boolean artemisValidation;
+    private boolean artemisEffect;
+    private Mossa move2;
 
     /**
      * Initialize player variables with card
@@ -24,7 +29,8 @@ public class Artemis extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
-        startPosition = turno.getMove().getTarget();//MI salvo la cella del primo movimento
+        startX = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
+        startY = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
     }
 
     /**
@@ -33,20 +39,33 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        switch (turno.getMove().getAction()) {
-            case MOVE:
-                //Controllo che la cella di partenza non sia uguale a quella di arrivo
-                //Se non lo è: movimento base e rimando esito booleano per poi vedere se è corretta la mossa base o no
-                //Se lo è: rimando booleano false per fargli ripetere la mossa
-
-                break;
-            case BUILD:
-                //Faccio la costruzione base qui bloccando l'altra fuori dall'afterOwnerMoving: builds = 0
-                break;
-            default:
-                break;
-
-        }
+        turno.getGamer().setSteps(1);
+        do {
+            artemisEffect = false;
+            artemisValidation = false;
+            try {
+                move2 = turno.getGameHandler().richiediMossa(Mossa.Action.MOVE, getOwner());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if ((startX == move2.getTargetX()) &&
+                    (startY == move2.getTargetY())) { //if the pawn comes back to the first position, starts artemis effect
+                artemisEffect = true;
+            } else {
+                artemisEffect = false;
+            }
+            if ((move2.getTargetX() < 0) || (move2.getTargetY() < 0)) {
+                artemisValidation = true;
+            } else {
+                if (!artemisEffect) {
+                    turno.baseMovement(move2);
+                    turno.getValidationMove();
+                    artemisValidation = turno.isValidationMove();
+                }
+            }
+        } while (!artemisValidation);
     }
 
     /**
@@ -64,6 +83,7 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void afterOwnerBuilding(Turno turno) {
+        turno.getGamer().setSteps(1);
     }
 
     /**

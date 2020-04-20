@@ -3,33 +3,37 @@ package santorini.model;
 import java.io.Serializable;
 
 public class Mossa implements Serializable {
-    public static enum Azione {
+    public static enum Action {
         MOVE,
         BUILD
     }
 
-    private Azione action;
-    private Cell target;
-    private Pawn pawn;
-    //private int coordX, coordY, idPlayer, idPawn;
+    private Action action;
+    private int targetX;
+    private int targetY;
+    private int idPawn;
 
 
-    public Mossa(Azione action, Cell target, Pawn pawn) {
+    public Mossa(Action action, int targetX, int targetY, int idPawn) {
         this.action = action;
-        this.target = target;
-        this.pawn = pawn;
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.idPawn = idPawn;
     }
 
-    public Azione getAction() {
+    public Action getAction() {
         return action;
     }
 
-    public Cell getTarget() {
-        return target;
+    public int getTargetX() {
+        return targetX;
     }
 
-    public Pawn getPawn() {
-        return pawn;
+    public int getTargetY() {
+        return targetY;
     }
 
+    public int getIdPawn() {
+        return idPawn;
+    }
 }

@@ -2,7 +2,6 @@ package santorini.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import santorini.model.Gamer;
 
 import java.awt.*;
 import java.io.Serializable;
@@ -19,7 +18,8 @@ public class TestGamer implements Serializable {
         Socket socket = new Socket();
         String name = "Ajeje Brazorf";
         int id = 0;
-        gamer = new Gamer(socket, name, id);
+        gamer = new Gamer(socket, name, id, null, null);
+
     }
 
     @Test
@@ -60,17 +60,45 @@ public class TestGamer implements Serializable {
 
     @Test
     public void testMyGodCard() {
-        //TODO da completare
+        //TODO to complete
     }
 
     @Test
     public void testColorGamer() {
-        gamer.setColorGamer(Color.BLUE);
+        gamer.setId(0);
+        assertEquals(Color.YELLOW, gamer.getColorGamer());
+        gamer.setId(1);
+        assertEquals(Color.RED, gamer.getColorGamer());
+        gamer.setId(2);
         assertEquals(Color.BLUE, gamer.getColorGamer());
+        gamer.setId(3);
+        assertNull(gamer.getColorGamer());
+        gamer.setId(-1);
+        assertNull(gamer.getColorGamer());
     }
 
     @Test
     public void testPawns() {
-        //TODO da completare e sistemare in gamer
+        int id1 = gamer.getPawn(0).getIdPawn();
+        int id2 = gamer.getPawn(1).getIdPawn();
+        assertEquals(0, id1);
+        assertEquals(1, id2);
+        assertEquals(gamer.getIdGamer(), gamer.getPawn(0).getIdGamer());
+        assertEquals(gamer.getIdGamer(), gamer.getPawn(1).getIdGamer());
+        assertEquals(gamer.getColorGamer(), gamer.getPawn(0).getColorPawn());
+        assertEquals(gamer.getColorGamer(), gamer.getPawn(1).getColorPawn());
+        assertNull(gamer.getPawn(2));
+        assertEquals(-1, gamer.getPawn(0).getRow());
+        assertEquals(-1, gamer.getPawn(0).getColumn());
+        assertEquals(0, gamer.getPawn(0).getPastLevel());
+        assertEquals(0, gamer.getPawn(0).getPresentLevel());
+        assertEquals(-1, gamer.getPawn(1).getRow());
+        assertEquals(-1, gamer.getPawn(1).getColumn());
+        assertEquals(0, gamer.getPawn(1).getPastLevel());
+        assertEquals(0, gamer.getPawn(1).getPresentLevel());
+        gamer.getPawn(0).setPresentLevel(1);
+        gamer.getPawn(1).setPresentLevel(1);
+        assertEquals(1, gamer.getPawn(0).getPresentLevel());
+        assertEquals(1, gamer.getPawn(1).getPresentLevel());
     }
 }
