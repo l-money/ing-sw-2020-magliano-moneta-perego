@@ -1,3 +1,6 @@
+/**
+ * @author Magliano
+ */
 package santorini.model;
 
 import java.io.Serializable;

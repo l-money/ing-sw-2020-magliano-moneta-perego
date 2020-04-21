@@ -67,8 +67,6 @@ public class TestTable implements Serializable {
         assertEquals(nearCell.get(2), table.getTableCell(1, 1));
     }
 
-    //11 lunghezza 8
-
     /**
      * methods that test the near cells from the cell where my pawn stay.
      * In this case i'm testing the cell (1,1) and the nearest cell are c1(0,0), c2(0,1), c3(0,2)
