@@ -16,16 +16,7 @@ public class Pawn implements Serializable {
     private int presentLevel;
     private int pastLevel;
     private Color color;
-    private boolean iCanPlay = true;
-    /*private Cell cell;
-
-    public void setCell(Cell cell) {
-        this.cell = cell;
-    }
-
-    public Cell getCell() {
-        return cell;
-    }*/
+    private boolean iCanPlay;
 
     /**
      * constructor of class Pawn
@@ -33,9 +24,9 @@ public class Pawn implements Serializable {
 
 
     public Pawn() {
+        this.iCanPlay = true;
         this.presentLevel = 0;
         this.pastLevel = 0;
-
     }
 
     /**
@@ -175,17 +166,6 @@ public class Pawn implements Serializable {
      */
     public void setColumn(int newColumn) {
         column = newColumn;
-    }
-
-    /**
-     * method setCellNotFree
-     *
-     * @param cell the new position of the pawn
-     */
-    public void setCellNotFree(Cell cell) {
-        if ((cell.getX() == getRow()) && (cell.getY() == getColumn())) {
-            //cell.setFree(false);
-        }
     }
 
 }

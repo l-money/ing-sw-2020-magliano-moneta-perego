@@ -3,8 +3,16 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Gamer;
 import santorini.model.God;
+import santorini.model.Mossa;
+
+import java.io.IOException;
 
 public class Demeter extends God {
+    private int startX;
+    private int startY;
+    private boolean demeterValidation;
+    private boolean demeterEffect;
+    private Mossa move2;
 
     /**
      * Initialize player variables with card
@@ -38,6 +46,8 @@ public class Demeter extends God {
      * @param turno
      */
     public void beforeOwnerBuilding(Turno turno) {
+        startX = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
+        startY = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
     }
 
     /**
@@ -46,6 +56,38 @@ public class Demeter extends God {
      * @param turno
      */
     public void afterOwnerBuilding(Turno turno) {
+        turno.getGamer().setBuilds(1);
+        do {
+            demeterEffect = true;
+            demeterValidation = false;
+            try {
+                move2 = turno.getGameHandler().richiediMossa(Mossa.Action.MOVE, getOwner());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (move2.getIdPawn() != turno.getIdPawnOfMovement()) {
+                demeterEffect = false;
+            } else {
+                if ((move2.getTargetX() < 0) || (move2.getTargetY() < 0)) {
+                    demeterEffect = false;
+                } else {
+                    if ((startX == move2.getTargetX()) &&
+                            (startY == move2.getTargetY())) { //if the pawn comes back to the first position, starts artemis effect
+                        demeterEffect = false;
+                    } else {
+                        demeterEffect = true;
+                    }
+                }
+            }
+            if (demeterEffect) {
+                turno.baseBuilding(move2);
+                turno.getValidationBuild();
+                demeterValidation = turno.isValidationBuild();
+            }
+        } while (!demeterValidation);
+        turno.getGamer().setBuilds(1);
     }
 
     /**

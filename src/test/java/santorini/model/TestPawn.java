@@ -2,14 +2,11 @@ package santorini.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import santorini.model.Cell;
-import santorini.model.Pawn;
-import santorini.model.Table;
 
 import java.awt.*;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class TestPawn
@@ -24,6 +21,16 @@ public class TestPawn {
     @Before
     public void before() {
         pawn = new Pawn();
+    }
+
+    /**
+     * method that tests the creation of the pawn
+     */
+    @Test
+    public void testStartPawn() {
+        assertEquals(0, pawn.getPastLevel());
+        assertEquals(0, pawn.getPresentLevel());
+        assertTrue(pawn.getICanPlay());
     }
 
     /**
@@ -80,18 +87,4 @@ public class TestPawn {
 
     }
 
-    /**
-     * method that tests if the pawn fills a new position
-     */
-
-    @Test
-    public void testSetCellNotFree() {
-        pawn.setRow(2);
-        pawn.setColumn(2);
-        Table table = new Table();
-        Cell myCell;
-        myCell = table.getTableCell(2, 2);
-        pawn.setCellNotFree(myCell);
-        assertFalse(myCell.isFree());
-    }
 }

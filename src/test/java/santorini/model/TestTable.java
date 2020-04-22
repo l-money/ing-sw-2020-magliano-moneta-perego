@@ -2,13 +2,8 @@ package santorini.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import santorini.model.Cell;
-import santorini.model.Pawn;
-import santorini.model.Table;
 
-import java.awt.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -33,21 +28,23 @@ public class TestTable implements Serializable {
      * and if the cell is free or complete.
      */
     @Test
-    public void testSetCellsInTable() {
-        Cell position;
-        //position = new Cell();
+    public void testStartTable() {
         int i, j;
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
-                position = table.getTableCell(i, j);
-                assertEquals(position.getX(), i);
-                assertEquals(position.getY(), j);
-                assertEquals(0, position.getLevel());
-                assertTrue(position.isFree());
-                assertFalse(position.isComplete());
-                assertNull(position.getPawn());
+                assertEquals(i, table.getTableCell(i, j).getX());
+                assertEquals(j, table.getTableCell(i, j).getY());
+                assertEquals(0, table.getTableCell(i, j).getLevel());
+                assertTrue(table.getTableCell(i, j).isFree());
+                assertFalse(table.getTableCell(i, j).isComplete());
+                assertNull(table.getTableCell(i, j).getPawn());
             }
         }
+        assertEquals(4, table.getBag().getCounterBrick().length);
+        assertEquals(22, table.getBag().getCounterBrick()[0]);
+        assertEquals(18, table.getBag().getCounterBrick()[1]);
+        assertEquals(14, table.getBag().getCounterBrick()[2]);
+        assertEquals(18, table.getBag().getCounterBrick()[3]);
     }
 
     /**
@@ -146,98 +143,194 @@ public class TestTable implements Serializable {
         assertEquals(1, distance);
     }
 
+    /**
+     * method that tests getTableCell
+     */
+    @Test
+    public void testGetTableCell() {
+        Pawn p = new Pawn();
+        table.getTableCell(0, 0).setLevel(2);
+        table.getTableCell(0, 0).setPawn(p);
+        assertEquals(2, table.getTableCell(0, 0).getLevel());
+        assertNotNull(table.getTableCell(0, 0).getPawn());
+        assertEquals(p, table.getTableCell(0, 0).getPawn());
+        assertFalse(table.getTableCell(0, 0).isFree());
+    }
+
+    /**
+     * method that tests setACell for the tests
+     */
+    @Test
+    public void testSetACell() {
+        Pawn p = new Pawn();
+        assertEquals(2, table.getTableCell(2, 2).getX());
+        assertEquals(2, table.getTableCell(2, 2).getY());
+        assertEquals(0, table.getTableCell(2, 2).getLevel());
+        assertTrue(table.getTableCell(2, 2).isFree());
+        assertFalse(table.getTableCell(2, 2).isComplete());
+        assertNull(table.getTableCell(2, 2).getPawn());
+        table.setACell(2, 2, 1, false, false, p);
+        assertEquals(2, table.getTableCell(2, 2).getX());
+        assertEquals(2, table.getTableCell(2, 2).getY());
+        assertEquals(1, table.getTableCell(2, 2).getLevel());
+        assertFalse(table.getTableCell(2, 2).isFree());
+        assertFalse(table.getTableCell(2, 2).isComplete());
+        assertNotNull(table.getTableCell(2, 2).getPawn());
+        assertEquals(1, table.getTableCell(2, 2).getPawn().getPresentLevel());
+        assertEquals(2, table.getTableCell(2, 2).getPawn().getRow());
+        assertEquals(2, table.getTableCell(2, 2).getPawn().getColumn());
+        //test the hierarchy of level>complete>free>pawn
+        //case 1: level
+        table.setACell(2, 2, 4, true, true, p);
+        assertEquals(3, table.getTableCell(2, 2).getLevel());
+        assertFalse(table.getTableCell(2, 2).isFree());
+        assertTrue(table.getTableCell(2, 2).isComplete());
+        assertNull(table.getTableCell(2, 2).getPawn());
+        //case 2 complete
+        table.setACell(2, 2, 2, true, true, p);
+        assertEquals(2, table.getTableCell(2, 2).getLevel());
+        assertFalse(table.getTableCell(2, 2).isFree());
+        assertTrue(table.getTableCell(2, 2).isComplete());
+        assertNull(table.getTableCell(2, 2).getPawn());
+        //case 3: free
+        table.setACell(2, 2, 3, true, false, p);
+        assertEquals(3, table.getTableCell(2, 2).getLevel());
+        assertTrue(table.getTableCell(2, 2).isFree());
+        assertFalse(table.getTableCell(2, 2).isComplete());
+        assertNull(table.getTableCell(2, 2).getPawn());
+        //case 4 pawn
+        table.setACell(2, 2, 1, false, false, p);
+        assertEquals(1, table.getTableCell(2, 2).getLevel());
+        assertFalse(table.getTableCell(2, 2).isFree());
+        assertFalse(table.getTableCell(2, 2).isComplete());
+        assertEquals(p, table.getTableCell(2, 2).getPawn());
+        //case 5 pawn null
+        table.setACell(2, 2, 0, true, false, null);
+        assertEquals(0, table.getTableCell(2, 2).getLevel());
+        assertTrue(table.getTableCell(2, 2).isFree());
+        assertFalse(table.getTableCell(2, 2).isComplete());
+        assertNull(table.getTableCell(2, 2).getPawn());
+    }
+
+
     @Test
     public void testICanMove() {
-        Cell myCell;
-        Pawn myPawn = new Pawn();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                table.getTableCell(i, j).setPawn(null);
-                table.getTableCell(i, j).setFree(true);
-                table.getTableCell(i, j).setComplete(false);
-                table.getTableCell(i, j).setLevel(2);
-            }
-        }
-        table.getTableCell(2, 2).setX(2);
-        table.getTableCell(2, 2).setY(2);
-        table.getTableCell(2, 2).setLevel(0);
-        table.getTableCell(2, 2).setFree(false);
-        table.getTableCell(2, 2).setComplete(false);
-        table.getTableCell(2, 2).setPawn(myPawn);
-        myCell = table.getTableCell(2, 2);
-        myPawn.setRow(myCell.getX());
-        myPawn.setColumn(myCell.getY());
-        myPawn.setPastLevel(myCell.getLevel() - 1);
-        myPawn.setPresentLevel(myCell.getLevel());
-        myPawn.setIdGamer(0);
-        myPawn.setColorPawn(Color.BLUE);
-        ArrayList<Cell> nearCells = table.searchAdjacentCells(myCell);
-        boolean result = table.iCanMove(table.getTableCell(2, 2));
-        assertFalse(result);
-        table.getTableCell(2, 2).setLevel(1);
-        result = table.iCanMove(table.getTableCell(2, 2));
-        assertTrue(result);
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                table.getTableCell(i, j).setLevel(0);
-            }
-        }
-        table.getTableCell(2, 2).setLevel(3);
-        result = table.iCanMove(table.getTableCell(2, 2));
-        assertTrue(result);
+        Pawn pawn = new Pawn();
+        Pawn q = new Pawn();
+        //case 1: I can't move
+        table.setACell(0, 0, 1, false, false, pawn);
+        Cell myCell = table.getTableCell(0, 0);
+        table.setACell(0, 1, 3, true, false, null);
+        table.setACell(1, 1, 2, false, false, q);
+        table.setACell(1, 0, 1, false, true, null);
+        assertFalse(table.iCanMove(myCell));
+        //case 2: I can move up in [0;1]
+        table.setACell(0, 1, 2, true, false, null);
+        table.setACell(1, 1, 1, false, false, q);
+        assertTrue(table.iCanMove(myCell));
+        //case 3: I can move down in [0;1],[1;1],[1,0]
+        table.setACell(0, 0, 3, false, false, pawn);
+        myCell = table.getTableCell(0, 0);
+        table.setACell(0, 1, 0, true, false, null);
+        table.setACell(1, 1, 1, true, false, null);
+        table.setACell(1, 0, 2, true, false, null);
+        assertTrue(table.iCanMove(myCell));
     }
 
     @Test
     public void testICanBuild() {
-        Cell myCell = new Cell();
-        Pawn myPawn = new Pawn();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                table.getTableCell(i, j).setPawn(null);
-                table.getTableCell(i, j).setFree(true);
-                table.getTableCell(i, j).setComplete(true);
-                table.getTableCell(i, j).setLevel(3);
-            }
-        }
-        table.getTableCell(2, 2).setX(2);
-        table.getTableCell(2, 2).setY(2);
-        table.getTableCell(2, 2).setLevel(1);
-        table.getTableCell(2, 2).setFree(false);
-        table.getTableCell(2, 2).setComplete(false);
-        table.getTableCell(2, 2).setPawn(myPawn);
-        ArrayList<Cell> nearCells = table.searchAdjacentCells(myCell);
-        boolean result = table.iCanMove(table.getTableCell(2, 2));
-        assertFalse(result);
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                table.getTableCell(i, j).setPawn(null);
-                table.getTableCell(i, j).setFree(true);
-                table.getTableCell(i, j).setComplete(false);
-                table.getTableCell(i, j).setLevel(2);
-            }
-        }
-        nearCells = table.searchAdjacentCells(myCell);
-        result = table.iCanMove(table.getTableCell(2, 2));
-        assertTrue(result);
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                table.getTableCell(i, j).setPawn(null);
-                table.getTableCell(i, j).setFree(true);
-                table.getTableCell(i, j).setComplete(true);
-                table.getTableCell(i, j).setLevel(2);
-            }
-        }
-        nearCells = table.searchAdjacentCells(myCell);
-        result = table.iCanMove(table.getTableCell(2, 2));
-        assertFalse(result);
+        Pawn p = new Pawn();
+        Pawn q = new Pawn();
+        //case 1: I can't build
+        table.setACell(0, 0, 1, false, false, p);
+        Cell myCell = table.getTableCell(0, 0);
+        table.setACell(0, 1, 1, false, true, null);//dome for Atlas Effect
+        table.setACell(1, 1, 1, false, false, q);//there is q pawn
+        table.setACell(1, 0, 3, false, true, null);//the building is complete
+        assertFalse(table.iCanBuild(myCell));
+        //case 2: I can build in [1;1]
+        table.setACell(1, 1, 1, true, false, null);//the cell is free
+        assertTrue(table.iCanBuild(myCell));
     }
 
+    /**
+     * method that tests controlBaseMovement
+     */
     @Test
     public void testControlBaseMovement() {
-
-
+        Pawn p = new Pawn();
+        Pawn q = new Pawn();
+        Cell start;
+        Cell end1, end2, end3, end4, end5;
+        table.setACell(0, 2, 1, false, false, p);
+        start = table.getTableCell(0, 2);
+        table.setACell(0, 1, 2, true, false, null);//level 2: possible movement up
+        table.setACell(0, 3, 3, true, false, null);//level 3: impossible movement
+        table.setACell(1, 1, 0, true, false, null);//level 0: possible movement down
+        table.setACell(1, 2, 2, false, false, q);//is not free: impossible movement
+        table.setACell(1, 3, 3, false, true, null);//is complete: impossible movement
+        end1 = table.getTableCell(0, 1);
+        end2 = table.getTableCell(0, 3);
+        end3 = table.getTableCell(1, 1);
+        end4 = table.getTableCell(1, 2);
+        end5 = table.getTableCell(1, 3);
+        assertTrue(table.controlBaseMovement(start, end1));
+        assertTrue(table.controlBaseMovement(start, end3));
+        assertFalse(table.controlBaseMovement(start, end2));
+        assertFalse(table.controlBaseMovement(start, end4));
+        assertFalse(table.controlBaseMovement(start, end5));
     }
 
-
+    /**
+     * method tests controlBaseBuild and simple build
+     */
+    @Test
+    public void testControlBaseBuilding() {
+        Pawn p = new Pawn();
+        Pawn q = new Pawn();
+        Cell start;
+        Cell end1, end2, end3, end4, end5;
+        table.setACell(0, 2, 1, false, false, p);
+        start = table.getTableCell(0, 2);
+        //control if is possible to build
+        table.setACell(0, 1, 2, true, false, null);//level 2: I can build level 3
+        table.setACell(0, 3, 3, true, false, null);//level 3: I can build a dome
+        table.setACell(1, 1, 0, true, false, null);//level 0: I can build level 1
+        table.setACell(1, 2, 2, false, false, q);//is not free: impossible build
+        table.setACell(1, 3, 3, false, true, null);//is complete: impossible build
+        end1 = table.getTableCell(0, 1);
+        end2 = table.getTableCell(0, 3);
+        end3 = table.getTableCell(1, 1);
+        end4 = table.getTableCell(1, 2);
+        end5 = table.getTableCell(1, 3);
+        assertTrue(table.controlBaseBuilding(start, end1));
+        assertTrue(table.controlBaseBuilding(start, end2));
+        assertTrue(table.controlBaseBuilding(start, end3));
+        assertFalse(table.controlBaseBuilding(start, end4));
+        assertFalse(table.controlBaseBuilding(start, end5));
+        //build and control
+        table.build(end1);
+        table.build(end2);
+        table.build(end3);
+        assertEquals(3, end1.getLevel());
+        assertEquals(13, table.getBag().getCounterBrick()[2]);
+        assertEquals(3, end2.getLevel());
+        assertEquals(17, table.getBag().getCounterBrick()[3]);
+        assertTrue(end2.isComplete());
+        assertEquals(1, end3.getLevel());
+        assertEquals(21, table.getBag().getCounterBrick()[0]);
+        //build another brick on cell [1;1]
+        table.build(end3);
+        assertEquals(2, end3.getLevel());
+        assertEquals(17, table.getBag().getCounterBrick()[1]);
+        //I empty the brick of level 1
+        for (int i = 0; i < 21; i++) {
+            table.getBag().extractionBrick(1);
+        }
+        assertEquals(0, table.getBag().getCounterBrick()[0]);
+        end3.setLevel(0);
+        assertFalse(table.controlBaseBuilding(start, end3));
+        assertFalse(table.build(end3));
+    }
 
 }

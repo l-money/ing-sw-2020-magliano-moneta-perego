@@ -10,7 +10,7 @@ public class Cell implements Serializable {
     private int x;
     private int y;
     private final int MAX_LEVEL = 3;
-    private Pawn pawn = null;
+    private Pawn pawn;
 
 
     /**
@@ -20,6 +20,7 @@ public class Cell implements Serializable {
         this.level = 0;
         this.free = true;
         this.complete = false;
+        this.pawn = null;
     }
 
     /**
@@ -40,7 +41,9 @@ public class Cell implements Serializable {
     public void setLevel(int newLevel) {
         level = newLevel;
         if (level == 4) {
+            level = MAX_LEVEL;
             setComplete(true);
+            setFree(false);
         }
     }
 
@@ -55,14 +58,9 @@ public class Cell implements Serializable {
 
     public void setFree(boolean free) {
         this.free = free;
-    }
-
-    /**
-     * free this cell deleting pawn reference
-     */
-    public void free() {
-        this.free = true;
-        pawn = null;
+        if (free) {
+            this.pawn = null;
+        }
     }
 
     /**
@@ -71,21 +69,26 @@ public class Cell implements Serializable {
      * @param pawn pawn to put in this cell
      * @return operation success or failure
      */
-    public boolean setPawn(Pawn pawn) {
-        if (isFree() && !isComplete()) {
+    public void setPawn(Pawn pawn) {
             this.pawn = pawn;
-            this.free = false;
-            return true;
+        if (this.pawn == null) {
+            this.free = true;
         } else {
-            return false;
+            this.free = false;
         }
     }
 
+    /**
+     * method getPawn
+     *
+     * @return
+     */
     public Pawn getPawn() {
         return pawn;
     }
 
     /**
+     * method isComplete
      * @return complete
      */
     public boolean isComplete() {
@@ -93,25 +96,43 @@ public class Cell implements Serializable {
     }
 
     /**
+     * method setComplete
      * @param complete
      */
     public void setComplete(boolean complete) {
         this.complete = complete;
+        if (this.complete) {
+            this.free = false;}
     }
 
-
+    /**
+     * method getX
+     * @return row
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * method getY
+     * @return column
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * method setX
+     * @param newX new row
+     */
     public void setX(int newX) {
         x = newX;
     }
 
+    /**
+     * method setY
+     * @param newY new column
+     */
     public void setY(int newY) {
         y = newY;
     }
