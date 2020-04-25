@@ -14,6 +14,16 @@ public class Demeter extends God {
     private boolean demeterEffect;
     private Mossa move2;
 
+    @Override
+    public String getName() {
+        return "Demeter";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tua costruzione: il tuo lavoratore\npuò costruire una volta in più\nma non nella stessa cella";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -46,8 +56,8 @@ public class Demeter extends God {
      * @param turno
      */
     public void beforeOwnerBuilding(Turno turno) {
-        startX = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
-        startY = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
+        startX = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
+        startY = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
     }
 
     /**
@@ -67,7 +77,7 @@ public class Demeter extends God {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            if (move2.getIdPawn() != turno.getIdPawnOfMovement()) {
+            if (move2.getIdPawn() != turno.getIdStartPawn()) {
                 demeterEffect = false;
             } else {
                 if ((move2.getTargetX() < 0) || (move2.getTargetY() < 0)) {

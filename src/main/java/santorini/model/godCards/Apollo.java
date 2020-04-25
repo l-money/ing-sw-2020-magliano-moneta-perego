@@ -13,6 +13,18 @@ public class Apollo extends God {
     boolean apolloEffect;
 
 
+    @Override
+    public String getName() {
+        return "Apollo";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tuo spostamento: il tuo lavoratore può spostarsi nella casella di un lavoratore avversario\n" +
+                "(usando le normali regole di spostamento) e costringerlo ad occupare la casella appena liberata\n " +
+                "scambiando le posizioni";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -28,23 +40,22 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        int x = turno.getMove().getTargetX();
-        int y = turno.getMove().getTargetY();
-        end = turno.getTable().getTableCell(x, y);
-        otherPawn = turno.getTable().getTableCell(x, y).getPawn();
-        myPawn = turno.getGamer().getPawn(turno.getMove().getIdPawn());
-        start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
         do {
-            turno.getTable().getTableCell(x, y).setFree(false);
-            turno.getTable().getTableCell(x, y).setPawn(otherPawn);
+            int x = turno.getMove().getTargetX();
+            int y = turno.getMove().getTargetY();
+            end = turno.getTable().getTableCell(x, y);//save end cell
+            otherPawn = turno.getTable().getTableCell(x, y).getPawn();//save other pawn
+            myPawn = turno.getGamer().getPawn(turno.getMove().getIdPawn());//save myPawn
+            start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());//save myCell
+            turno.getTable().getTableCell(x, y).setFree(false);//set the start condition
+            turno.getTable().getTableCell(x, y).setPawn(otherPawn);//set the start condition
             apolloEffect = false;
             ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
 
-            if ((nearCells.contains(end)) && (!end.isFree()) &&
-                    (otherPawn.getIdGamer() != myPawn.getIdGamer())) {
+            if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() != null) &&
+                    (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
+                    (end.getLevel() - start.getLevel() <= 1)) {
                 apolloEffect = true;
-            } else {
-                apolloEffect = false;
             }
 
             if (apolloEffect) {
@@ -52,9 +63,7 @@ public class Apollo extends God {
                 turno.getTable().getTableCell(x, y).setPawn(null);
                 turno.baseMovement(turno.getMove());
                 turno.getValidationMove();
-                apolloEffect = turno.isValidationMove();
             } else {
-                turno.getTable().getTableCell(x, y).setPawn(null);
                 turno.baseMovement(turno.getMove());
                 turno.getValidationMove();
             }
@@ -70,12 +79,8 @@ public class Apollo extends God {
      */
     public void afterOwnerMoving(Turno turno) {
         if ((apolloEffect) && (turno.isValidationMove())) {
-            turno.getTable().getTableCell(start.getX(), start.getY()).setPawn(otherPawn);
-            turno.getTable().getTableCell(start.getX(), start.getY()).setFree(false);
-            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setRow(start.getX());
-            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setColumn(start.getY());
-            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setPastLevel(end.getLevel());
-            turno.getTable().getTableCell(start.getX(), start.getY()).getPawn().setPastLevel(start.getLevel());
+            turno.getTable().setACell(start.getY(), start.getY(), start.getLevel(), false, false, otherPawn);
+            turno.getGamer().setAPawn(otherPawn.getIdPawn(), start.getX(), start.getY(), end.getLevel(), start.getLevel());
         }
     }
 
@@ -132,5 +137,6 @@ public class Apollo extends God {
     public void afterOtherBuilding(Gamer other) {
 
     }
+
 }
 

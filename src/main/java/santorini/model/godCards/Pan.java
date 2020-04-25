@@ -7,6 +7,17 @@ import santorini.model.Pawn;
 
 public class Pan extends God {
 
+    @Override
+    public String getName() {
+        return "Pan";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Condizione di vittoria: vinci\n" +
+                "anche se il tuo lavoratore scende di due o più livelli";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -31,7 +42,7 @@ public class Pan extends God {
      * @param turno
      */
     public void afterOwnerMoving(Turno turno) {
-        Pawn myPawn = turno.getGamer().getPawn(turno.getIdPawnOfMovement());
+        Pawn myPawn = turno.getGamer().getPawn(turno.getIdStartPawn());
         if (((myPawn.getPastLevel() - myPawn.getPresentLevel() >= 2) &&
                 (myPawn.getPresentLevel() == 0))) {
             turno.setPanEffect(true);

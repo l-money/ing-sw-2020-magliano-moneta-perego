@@ -14,6 +14,17 @@ public class Artemis extends God {
     private boolean artemisEffect;
     private Mossa move2;
 
+    @Override
+    public String getName() {
+        return "Artemis";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
+                "ma non può tornare alla casella da cui è partito";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -29,8 +40,8 @@ public class Artemis extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
-        startX = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
-        startY = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
+        startX = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
+        startY = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
     }
 
     /**

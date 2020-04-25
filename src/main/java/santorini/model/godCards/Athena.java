@@ -9,6 +9,16 @@ public class Athena extends God {
     private Cell start;
     private boolean athenaEffect;
 
+    @Override
+    public String getName() {
+        return "Athena";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\nin questo turno i lavoratori avversari non possono salire di livello";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -24,8 +34,8 @@ public class Athena extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
-        int x1 = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
-        int y1 = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
+        int x1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
+        int y1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
         start = turno.getTable().getTableCell(x1, y1);
     }
 
@@ -41,7 +51,7 @@ public class Athena extends God {
         Cell end = turno.getTable().getTableCell(x2, y2);
         if (((end.getLevel() - start.getLevel()) == 1) &&
                 (end.getPawn() == turno.getTable().getTableCell(x2, y2).getPawn()) &&
-                (end.getPawn() == turno.getGamer().getPawn(turno.getIdPawnOfMovement()))
+                (end.getPawn() == turno.getGamer().getPawn(turno.getIdStartPawn()))
         ) {
             athenaEffect = true;
         }

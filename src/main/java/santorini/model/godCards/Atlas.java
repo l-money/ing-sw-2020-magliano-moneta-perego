@@ -13,6 +13,16 @@ public class Atlas extends God {
     private Mossa buildDome;
     private boolean atlasEffect;
 
+    @Override
+    public String getName() {
+        return "Atlas";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tua costruzione: il tuo lavoratore può costruire una cupola\nsu qualsiasi livello, compreso il terreno";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -54,7 +64,7 @@ public class Atlas extends God {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            if (buildDome.getIdPawn() != turno.getIdPawnOfMovement()) {
+            if (buildDome.getIdPawn() != turno.getIdStartPawn()) {
                 atlasEffect = false;
             } else {
                 if ((buildDome.getTargetX() < 0) || (buildDome.getTargetY() < 0)) {
@@ -62,8 +72,8 @@ public class Atlas extends God {
                 } else {
                     int x = buildDome.getTargetX();
                     int y = buildDome.getTargetY();
-                    int i = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
-                    int j = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
+                    int i = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
+                    int j = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
                     ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(turno.getTable().getTableCell(i, j));
                     if (!(nearCells.contains(turno.getTable().getTableCell(x, y)))) {
                         atlasEffect = false;

@@ -97,12 +97,14 @@ public class Cell implements Serializable {
 
     /**
      * method setComplete
-     * @param complete
+     * @param complete true or false
      */
     public void setComplete(boolean complete) {
         this.complete = complete;
         if (this.complete) {
-            this.free = false;}
+            this.free = false;
+            this.pawn = null;
+        }
     }
 
     /**
