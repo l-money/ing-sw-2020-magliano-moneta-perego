@@ -11,7 +11,6 @@ public class Apollo extends God {
     Pawn myPawn;
     Pawn otherPawn;
     boolean apolloEffect;
-    boolean validationApolloMove = false;
 
 
     /**
@@ -29,31 +28,39 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        validationApolloMove = false;
-        int x2 = turno.getMove().getTargetX();
-        int y2 = turno.getMove().getTargetY();
-        int idP = turno.getMove().getIdPawn();
-        end = turno.getTable().getTableCell(x2, y2);
-        otherPawn = turno.getTable().getTableCell(x2, y2).getPawn();
-        myPawn = turno.getGamer().getPawn(idP);
+        int x = turno.getMove().getTargetX();
+        int y = turno.getMove().getTargetY();
+        end = turno.getTable().getTableCell(x, y);
+        otherPawn = turno.getTable().getTableCell(x, y).getPawn();
+        myPawn = turno.getGamer().getPawn(turno.getMove().getIdPawn());
         start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
-        ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
-        if ((nearCells.contains(end)) &&
-                (turno.getTable().getTableCell(x2, y2).getPawn() != null) &&
-                (otherPawn.getIdGamer() != turno.getGamer().getIdGamer())) {
-            turno.getTable().getTableCell(x2, y2).setFree(true);
-            turno.getTable().getTableCell(x2, y2).setPawn(null);
-            apolloEffect = true;
-        } else {
+        do {
+            turno.getTable().getTableCell(x, y).setFree(false);
+            turno.getTable().getTableCell(x, y).setPawn(otherPawn);
             apolloEffect = false;
-        }
-        if (apolloEffect) {
-            do {
+            ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
+
+            if ((nearCells.contains(end)) && (!end.isFree()) &&
+                    (otherPawn.getIdGamer() != myPawn.getIdGamer())) {
+                apolloEffect = true;
+            } else {
+                apolloEffect = false;
+            }
+
+            if (apolloEffect) {
+                turno.getTable().getTableCell(x, y).setFree(true);
+                turno.getTable().getTableCell(x, y).setPawn(null);
                 turno.baseMovement(turno.getMove());
                 turno.getValidationMove();
-            } while (!turno.isValidationMove()); //theoretically baseMovement accepts the movement at first strike,so I can remove the do-while
-            turno.getGamer().setSteps(0);
-        }
+                apolloEffect = turno.isValidationMove();
+            } else {
+                turno.getTable().getTableCell(x, y).setPawn(null);
+                turno.baseMovement(turno.getMove());
+                turno.getValidationMove();
+            }
+
+        } while (!turno.isValidationMove());
+        turno.getGamer().setSteps(0);
     }
 
     /**
@@ -88,7 +95,6 @@ public class Apollo extends God {
      */
     public void afterOwnerBuilding(Turno turno) {
         turno.getGamer().setSteps(1);
-
     }
 
     /**
@@ -127,3 +133,4 @@ public class Apollo extends God {
 
     }
 }
+

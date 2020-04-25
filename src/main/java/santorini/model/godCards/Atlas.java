@@ -1,10 +1,17 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
+import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
+import santorini.model.Mossa;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Atlas extends God {
+    private Mossa buildDome;
+    private boolean atlasEffect;
 
     /**
      * Initialize player variables with card
@@ -38,6 +45,42 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
+        atlasEffect = false;
+        do {
+            try {
+                buildDome = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (buildDome.getIdPawn() != turno.getIdPawnOfMovement()) {
+                atlasEffect = false;
+            } else {
+                if ((buildDome.getTargetX() < 0) || (buildDome.getTargetY() < 0)) {
+                    atlasEffect = false;
+                } else {
+                    int x = buildDome.getTargetX();
+                    int y = buildDome.getTargetY();
+                    int i = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
+                    int j = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
+                    ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(turno.getTable().getTableCell(i, j));
+                    if (!(nearCells.contains(turno.getTable().getTableCell(x, y)))) {
+                        atlasEffect = false;
+                    } else {
+                        if ((!turno.getTable().getTableCell(x, y).isFree()) ||
+                                (turno.getTable().getTableCell(x, y).isComplete())) {
+                            atlasEffect = false;
+                        } else {
+                            turno.getTable().getTableCell(x, y).setComplete(true);
+                            turno.getGamer().setBuilds(0);
+                            atlasEffect = true;
+                        }
+                    }
+                }
+            }
+            //if(!atlasEffect){message sendField}
+        } while (!atlasEffect);
     }
 
     /**

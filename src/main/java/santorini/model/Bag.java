@@ -19,19 +19,18 @@ public class Bag implements Serializable {
 
     public Bag (){
         counterBrick = new int[4];
-        counterBrick[0]=22;
-        counterBrick[1]=18;
-        counterBrick[2]=14;
-        counterBrick[3]=18;
+        this.counterBrick[0] = 22;
+        this.counterBrick[1] = 18;
+        this.counterBrick[2] = 14;
+        this.counterBrick[3] = 18;
     }
-
     /**
      * method getCounterBrick
      * @return counterBrick
      */
 
     public int[] getCounterBrick() {
-        return counterBrick;
+        return this.counterBrick;
     }
 
     /**
@@ -41,7 +40,7 @@ public class Bag implements Serializable {
      */
 
     public boolean controlExistBrick (int levelBrick){
-       return (counterBrick[levelBrick-1]!=0);
+        return (this.counterBrick[levelBrick - 1] != 0);
     }
 
     /**
@@ -56,7 +55,7 @@ public class Bag implements Serializable {
     public boolean extractionBrick(int levelBrick) {
         boolean exist = controlExistBrick(levelBrick);
         if (exist) {
-            counterBrick[levelBrick - 1] = counterBrick[levelBrick - 1] - 1;
+            this.counterBrick[levelBrick - 1] = this.counterBrick[levelBrick - 1] - 1;
             return true;
         } else {
             return false;
@@ -71,6 +70,6 @@ public class Bag implements Serializable {
 
     public void reinsertBrick (int levelBrick){
 
-        counterBrick[levelBrick-1] = counterBrick[levelBrick-1]+1;
+        this.counterBrick[levelBrick - 1] = this.counterBrick[levelBrick - 1] + 1;
     }
 }

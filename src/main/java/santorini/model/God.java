@@ -22,6 +22,10 @@ public abstract class God implements Serializable {
         this.table = table;
     }
 
+    public String getName() {
+        return name;
+    }
+
     /**
      * Initialize player variables with card
      *

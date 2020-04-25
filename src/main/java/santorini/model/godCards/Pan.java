@@ -3,6 +3,7 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Gamer;
 import santorini.model.God;
+import santorini.model.Pawn;
 
 public class Pan extends God {
 
@@ -30,7 +31,13 @@ public class Pan extends God {
      * @param turno
      */
     public void afterOwnerMoving(Turno turno) {
-
+        Pawn myPawn = turno.getGamer().getPawn(turno.getIdPawnOfMovement());
+        if (((myPawn.getPastLevel() - myPawn.getPresentLevel() >= 2) &&
+                (myPawn.getPresentLevel() == 0))) {
+            turno.setPanEffect(true);
+        } else {
+            turno.setPanEffect(false);
+        }
     }
 
     /**

@@ -13,7 +13,9 @@ public class Turno implements Runnable {
     private Mossa move;
     private boolean validationMove;
     private boolean validationBuild;
-    private boolean panEffect;
+    private boolean panEffect = false;
+    private boolean promEffect = false;
+    private boolean startValidation;
     private NetworkHandlerServer gameHandler;
 
     /**
@@ -55,14 +57,16 @@ public class Turno implements Runnable {
         return gameHandler;
     }
 
+    public void setMove(Mossa move) {
+        this.move = move;
+    }
+
     /**
      * Executes in new Thread all player turn with
      * all god cards features
      */
     public void run() {
-        validationMove = false;
-        validationBuild = false;
-        panEffect = false;
+        firstControlOfMovement();
         myMovement();
         win();
         myBuilding();
@@ -81,18 +85,32 @@ public class Turno implements Runnable {
         gameHandler.sendFailed(gamer);
     }
 
+    private void firstControlOfMovement() {
+        startValidation = false;
+        validationMove = false;
+        validationBuild = false;
+        if ((gamer.getMyGodCard().getName().equals("Prometheus")) && (!promEffect)) {
+            move = giveMeMossa(Mossa.Action.BUILD);
+            promEffect = true;
+        } else {
+            promEffect = false;
+            do {
+                move = giveMeMossa(Mossa.Action.MOVE);
+                startValidation = getStartParameter(move);
+                if (!startValidation) {
+                    sendFailed();
+                    move = giveMeMossa(Mossa.Action.MOVE);
+                }
+            } while (!startValidation);
+            idPawnOfMovement = move.getIdPawn();
+        }
+    }
+
+    private void getFirst() {
+        firstControlOfMovement();
+    }
 
     public void myMovement() {
-        boolean startValidation = false;
-        move = giveMeMossa(Mossa.Action.MOVE);
-        do {
-            startValidation = getStartParameter(move);
-            if (!startValidation) {
-                sendFailed();
-                move = giveMeMossa(Mossa.Action.MOVE);
-            }
-        } while (!startValidation);
-        idPawnOfMovement = move.getIdPawn();
         gamer.getMyGodCard().beforeOwnerMoving(this);
         for (God card : otherCards) {
             card.beforeOtherMoving(gamer);
@@ -112,7 +130,7 @@ public class Turno implements Runnable {
     }
 
     public void win() {
-        baseWin();
+        Win();
     }
 
     public void myBuilding() {
@@ -153,24 +171,13 @@ public class Turno implements Runnable {
                 if ((!table.controlBaseMovement(myCell, destination))) {
                     validationMove = false;
                 } else {
-                    if ((gamer.getSteps() == 1)) {
-                        int x1 = myCell.getX();
-                        int y1 = myCell.getY();
-                        int x2 = destination.getX();
-                        int y2 = destination.getY();
-                        if ((gamer.getLevelsUp() != 1) &&
-                                (destination.getLevel() - myCell.getLevel() == 1)) {
+                    if ((gamer.getSteps() != 1)) {
+                        validationMove = false;
+                    } else {
+                        if ((gamer.getLevelsUp() != 1) && (destination.getLevel() - myCell.getLevel() == 1)) {
                             validationMove = false;
                         } else {
-                            getTable().getTableCell(x1, y1).getPawn().setPastLevel(myCell.getLevel());
-                            getTable().getTableCell(x1, y1).getPawn().setPresentLevel(destination.getLevel());
-                            getTable().getTableCell(x2, y2).setPawn(p);
-                            getTable().getTableCell(x2, y2).setFree(false);
-                            getTable().getTableCell(x2, y2).getPawn().setRow(destination.getX());
-                            getTable().getTableCell(x2, y2).getPawn().setColumn(destination.getY());
-                            getTable().getTableCell(x1, y1).setPawn(null);
-                            getTable().getTableCell(x1, y1).setFree(true);
-                            validationMove = true;
+                            validationMove = getChange(myCell, destination, p);
                         }
                     }
                 }
@@ -183,7 +190,7 @@ public class Turno implements Runnable {
      * Standard build on game field
      */
 
-    private void baseBuilding(Mossa move) {
+    public void baseBuilding(Mossa move) {
         Pawn p = getGamer().getPawn(move.getIdPawn());
         int idP = move.getIdPawn();
         Cell destination = table.getTableCell(move.getTargetX(), move.getTargetY());
@@ -214,14 +221,43 @@ public class Turno implements Runnable {
     /**
      * Standard win
      */
-    public void baseWin() {
+    public void Win() {
         Pawn myPawn = getGamer().getPawn(move.getIdPawn());
-        //if(panEffect){ getGamer().setWinner(true);}
-        if ((myPawn.getPastLevel() == 2) && (myPawn.getPresentLevel()) == 3) {
+        if (panEffect) {
             getGamer().setWinner(true);
         } else {
-            getGamer().setWinner(false);
+            if ((myPawn.getPastLevel() == 2) && (myPawn.getPresentLevel()) == 3) {
+                getGamer().setWinner(true);
+            } else {
+                getGamer().setWinner(false);
+            }
         }
+    }
+
+    /**
+     * method setPanEffect
+     * If the gamer has Pan card, control the effect of Pan
+     */
+    public void setPanEffect(boolean newPanEffect) {
+        this.panEffect = newPanEffect;
+    }
+
+    /**
+     * method getPromEffect
+     *
+     * @return promEffect: true or false
+     */
+    public boolean isPromEffect() {
+        return promEffect;
+    }
+
+    /**
+     * method setPromEffect
+     *
+     * @param promEffect new boolean
+     */
+    public void setPromEffect(boolean promEffect) {
+        this.promEffect = promEffect;
     }
 
     /**
@@ -297,5 +333,29 @@ public class Turno implements Runnable {
         }
     }
 
+    /**
+     * method getChange
+     *
+     * @param startCell the start cell
+     * @param endCell   the destination of the movment
+     * @param myPawn    the pawn which moves
+     * @return true
+     */
+
+    public boolean getChange(Cell startCell, Cell endCell, Pawn myPawn) {
+        int x1 = startCell.getX();
+        int y1 = startCell.getY();
+        int x2 = endCell.getX();
+        int y2 = endCell.getY();
+        getTable().getTableCell(x1, y1).getPawn().setPastLevel(startCell.getLevel());
+        getTable().getTableCell(x1, y1).getPawn().setPresentLevel(endCell.getLevel());
+        getTable().getTableCell(x2, y2).setPawn(myPawn);
+        getTable().getTableCell(x2, y2).setFree(false);
+        getTable().getTableCell(x2, y2).getPawn().setRow(startCell.getX());
+        getTable().getTableCell(x2, y2).getPawn().setColumn(endCell.getY());
+        getTable().getTableCell(x1, y1).setPawn(null);
+        getTable().getTableCell(x1, y1).setFree(true);
+        return true;
+    }
 
 }

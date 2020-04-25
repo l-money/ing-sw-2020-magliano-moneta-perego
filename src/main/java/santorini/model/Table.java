@@ -10,6 +10,7 @@ public class Table implements Serializable {
     private int row = 5;
     private int column = 5;
     private Cell[][] cells;
+    private Bag bag = new Bag();
 
     /**
      * Table builder for all 25 cells in the table.
@@ -24,6 +25,15 @@ public class Table implements Serializable {
                 cells[i][j].setY(j);
             }
         }
+    }
+
+    /**
+     * method getBag
+     *
+     * @return the bag of the table
+     */
+    public Bag getBag() {
+        return bag;
     }
 
     /**
@@ -75,12 +85,37 @@ public class Table implements Serializable {
     }
 
     /**
+     * method setACell for set a cell
+     *
+     * @param x        row
+     * @param y        column
+     * @param level    level
+     * @param free     free
+     * @param complete complete
+     * @param pawn     pawn into cell, possible null
+     */
+    public void setACell(int x, int y, int level, boolean free, boolean complete, Pawn pawn) {
+        getTableCell(x, y).setX(x);
+        getTableCell(x, y).setY(y);
+        getTableCell(x, y).setPawn(pawn);
+        getTableCell(x, y).setFree(free);
+        getTableCell(x, y).setComplete(complete);
+        getTableCell(x, y).setLevel(level);
+        if (getTableCell(x, y).getPawn() != null) {
+            getTableCell(x, y).getPawn().setPresentLevel(level);
+            getTableCell(x, y).getPawn().setRow(x);
+            getTableCell(x, y).getPawn().setColumn(y);
+        }
+    }
+
+    /**
      * method iCanMove : control my pawn can move
      *
      * @param myCell the position of my pawn
      * @return true if the pawn can move, else return false
      */
     public boolean iCanMove(Cell myCell) {
+        int k = 0;
         ArrayList<Cell> nearCells;
         ArrayList<Cell> nearCellsFree = new ArrayList<Cell>();
         Pawn myPawn = myCell.getPawn();
@@ -88,9 +123,8 @@ public class Table implements Serializable {
         int l = nearCells.size();
         for (int i = 0; i < l; i++) {
             Cell index = nearCells.get(i);
-            if ((((myCell.getLevel() + 1) == index.getLevel()) || (myCell.getLevel() >= index.getLevel())) &&
-                    (index.isFree()) && (!index.isComplete())
-            ) {
+            k = index.getLevel() - myCell.getLevel();
+            if ((k <= 1) && (k >= -3) && (index.isFree()) && (!index.isComplete()) &&(index.getPawn()==null)) {
                 nearCellsFree.add(index);
             }
         }
@@ -101,6 +135,12 @@ public class Table implements Serializable {
         }
     }
 
+    /**
+     * method iCanBuild : control my pawn can build
+     *
+     * @param myCell the position of my pawn
+     * @return true if the pawn can build, else return false
+     */
     public boolean iCanBuild(Cell myCell) {
         ArrayList<Cell> nearCells = searchAdjacentCells(myCell);
         ArrayList<Cell> nearCellsBuilds = new ArrayList<Cell>();
@@ -108,7 +148,8 @@ public class Table implements Serializable {
         int l = nearCells.size();
         for (int i = 0; i < l; i++) {
             Cell index = nearCells.get(i);
-            if ((index.isFree()) && (!index.isComplete()) && (index.getLevel() >= 0) && (index.getLevel() <= 3)) {
+            if ((index.isFree()) && (!index.isComplete()) && (index.getLevel() >= 0) && (index.getLevel() <= 3) &&
+                    (index.getPawn()==null)) {
                 nearCellsBuilds.add(index);
             }
         }
@@ -127,58 +168,72 @@ public class Table implements Serializable {
      * @return true if the pawn can do the movement respecting the rules, else return false
      */
     public boolean controlBaseMovement(Cell start, Cell end) {
-        boolean result = false;
+        int k = end.getLevel() - start.getLevel();
         ArrayList<Cell> nearCells = searchAdjacentCells(start);
         if (!nearCells.contains(end)) {
-            result = false;
+            return false;
         } else {
-            if (!end.isFree()) {
-                result = false;
+            if ((!end.isFree()) || (end.getPawn() != null)) {
+                return false;
             } else {
                 if (end.isComplete()) {
-                    result = false;
+                    return false;
                 } else {
-                    if (((start.getPawn().getPresentLevel() + 1) - end.getLevel()) >= 0) {
-                        result = true;
+                    if ((k <= 1) && (k >= -3) &&
+                            (start.getLevel() == start.getPawn().getPresentLevel())) {
+                        return true;
+                    } else {
+                        return false;
                     }
                 }
             }
         }
-        return result;
     }
 
+    /**
+     * method controlBaseBuild : control the pawn can build into a cell respecting the rules
+     * @param start the position of the pawn
+     * @param end the destination of the building
+     * @return true if the pawn can build  respecting the rules, else return false
+     */
     public boolean controlBaseBuilding(Cell start, Cell end) {
-        boolean result = false;
         ArrayList<Cell> nearCells = searchAdjacentCells(start);
         if (!nearCells.contains(end)) {
-            result = false;
+            return false;
         } else {
             if (!end.isFree()) {
-                result = false;
+                return false;
             } else {
                 if (end.isComplete()) {
-                    result = false;
+                    return false;
                 } else {
-                    if ((end.getLevel() >= 0) && (end.getLevel() <= 3)) {
-                        result = true;
-                    }
+                    if ((end.getPawn() == null) && (end.getLevel() >= 0) && (end.getLevel() <= 3) &&
+                            (getBag().controlExistBrick(end.getLevel() + 1))) {
+                        return true;
+                    }else{return false;}
                 }
             }
         }
-        return result;
     }
 
+    /**
+     * method build
+     * @param cell in which my pawns builds
+     * @return true if the pawn builds correctly
+     */
     public boolean build(Cell cell) {
         int myLevel = cell.getLevel();
-        cell.setLevel(myLevel + 1);
-        int newLevel = cell.getLevel();
-        if (newLevel > 3) {
-            cell.setLevel(3);
-            cell.setComplete(true);
-        } else {
-            cell.setLevel(newLevel);
-        }
-        return true;
+        if (getBag().controlExistBrick(myLevel + 1)) {
+            cell.setLevel(myLevel + 1);
+            int newLevel = cell.getLevel();
+            if (newLevel > 3) {
+                cell.setLevel(3);
+                cell.setComplete(true);
+            } else {
+                cell.setLevel(newLevel);
+            }
+            getBag().extractionBrick(myLevel + 1);
+            return true;
+        }else {return false;}
     }
-
 }
