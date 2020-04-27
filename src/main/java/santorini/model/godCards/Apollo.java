@@ -52,7 +52,7 @@ public class Apollo extends God {
             apolloEffect = false;
             ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
 
-            if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() != null) &&
+            if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
                     (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
                     (end.getLevel() - start.getLevel() <= 1)) {
                 apolloEffect = true;

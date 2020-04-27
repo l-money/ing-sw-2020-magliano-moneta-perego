@@ -38,15 +38,15 @@ public class TestTurno {
     @Test
     public void testGetStandardParameter() {
         Mossa move00 = new Mossa(Mossa.Action.MOVE, 0, 2, 2);
-        assertTrue(turn.getStandardParameter(move00));
+        assertTrue(turn.controlStandardParameter(move00));
         Mossa move01 = new Mossa(Mossa.Action.BUILD, 0, 2, 2);
-        assertTrue(turn.getStandardParameter(move01));
+        assertTrue(turn.controlStandardParameter(move01));
         Mossa move02 = new Mossa(Mossa.Action.MOVE, -1, 2, 2);
         Mossa move03 = new Mossa(Mossa.Action.BUILD, 0, 3, 7);
         Mossa move04 = new Mossa(Mossa.Action.BUILD, 3, -4, 9);
-        assertTrue(!turn.getStandardParameter(move02));
-        assertTrue(!turn.getStandardParameter(move03));
-        assertTrue(!turn.getStandardParameter(move04));
+        assertTrue(!turn.controlStandardParameter(move02));
+        assertTrue(!turn.controlStandardParameter(move03));
+        assertTrue(!turn.controlStandardParameter(move04));
     }
 
     /**

@@ -122,7 +122,7 @@ public class Turno implements Runnable {
         } else {
             do {
                 move = giveMeMossa(Mossa.Action.MOVE);
-                startValidation = getStandardParameter(move);
+                startValidation = controlStandardParameter(move);
                 if (!startValidation) {
                     sendFailed();
                 } else {
@@ -241,7 +241,7 @@ public class Turno implements Runnable {
             sendFailed();
             do {
                 move = giveMeMossa(Mossa.Action.MOVE);
-                startValidation = getStandardParameter(move);
+                startValidation = controlStandardParameter(move);
                 if (!startValidation || move.getIdPawn() != idStartPawn) {
                     sendFailed();
                 }
@@ -304,7 +304,7 @@ public class Turno implements Runnable {
             startValidation = false;
             do {
                 move = giveMeMossa(Mossa.Action.BUILD);
-                startValidation = getStandardParameter(move);
+                startValidation = controlStandardParameter(move);
                 if (!startValidation || move.getIdPawn() != idStartPawn) {
                     sendFailed();
                 }
@@ -375,11 +375,11 @@ public class Turno implements Runnable {
     }
 
     /**
-     * method getStandardParameter
+     * method controlStandardParameter
      *
      * @return true if the parameters are valid, or return false
      */
-    public boolean getStandardParameter(Mossa movement) {
+    public boolean controlStandardParameter(Mossa movement) {
         if ((movement.getIdPawn() < 0) || (movement.getIdPawn() > 1) ||
                 (movement.getTargetX() < 0) || (movement.getTargetX() > 5) ||
                 (movement.getTargetY() < 0) || (movement.getTargetY() > 5) ||
@@ -422,5 +422,60 @@ public class Turno implements Runnable {
         table.setACell(x2, y2, endCell.getLevel(), false, endCell.isComplete(), myPawn);
         getGamer().setAPawn(myPawn.getIdPawn(), x2, y2, startCell.getLevel(), endCell.getLevel());
         return true;
+    }
+
+    /**
+     * method godCardEffect
+     *
+     * @param move         the move effect of the card, not nullEffect
+     * @param effect       if move is correct, effect is true, else is false
+     * @param i            the case of the effect
+     * @param pastPosition the past position of the pawn
+     * @return the effect: true or false
+     */
+    // TODO end the method and improve it
+    public void godCardEffect(Mossa move, boolean effect, int i, Cell pastPosition) {
+        effect = false;
+        if (!controlStandardParameter(move)) {
+            effect = false;
+        } else {
+            Pawn myPawn = getGamer().getPawn(move.getIdPawn());
+            Cell end = getTable().getTableCell(move.getTargetX(), move.getTargetY());
+            Cell start = getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
+            switch (i) {
+                case 0:
+                    getGamer().setSteps(1);
+                    if ((end.getX() == pastPosition.getX()) &&
+                            (end.getY() == pastPosition.getY())) {
+                        effect = false;
+                    } else {
+                        baseMovement(move);
+                        getValidationMove();
+                        effect = isValidationMove();
+                    }
+                    break;
+                case 1:
+                    ArrayList<Cell> nearCells = getTable().searchAdjacentCells(start);
+                    if ((nearCells.contains(end)) && (end.getLevel() >= 0) && (end.getLevel() <= 3) &&
+                            (end.isFree()) && (!end.isComplete()) && (end.getPawn() == null) &&
+                            (controlStandardParameter(move))) {
+                        getTable().getTableCell(end.getX(), end.getY()).setComplete(true);
+                        effect = true;
+                        getGamer().setBuilds(0);
+                    } else {
+                        effect = false;
+                    }
+                    break;
+                case 2:
+                    // TODO demeter effect
+                    break;
+                case 3:
+                    // TODO hephaestus effect
+                    break;
+                default:
+                    effect = false;
+                    break;
+            }
+        }
     }
 }
