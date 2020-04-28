@@ -315,14 +315,13 @@ public class Gamer {
      * @return pawn1 or pawn2
      */
     public Pawn getPawn(int idPawn) {
-        if (idPawn == 0) {
-            return pawn0;
-        } else {
-            if (idPawn == 1) {
+        switch (idPawn) {
+            case 0:
+                return pawn0;
+            case 1:
                 return pawn1;
-            } else {
+            default:
                 return null;
-            }
         }
     }
 

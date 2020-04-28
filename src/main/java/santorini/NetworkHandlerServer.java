@@ -23,8 +23,9 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Starts listening for clients
-     * after 30*1000 milliseconds starts game
+     * Starts listening to clients
+     * The first client connected will choose the number of players
+     * Until player numbers is reached, the game starts.
      */
     public void run() {
         initGameConnections();
@@ -44,6 +45,8 @@ public class NetworkHandlerServer implements Runnable {
             inputStream = new ObjectInputStream(s.getInputStream());
             outputStream = new ObjectOutputStream(s.getOutputStream());
             players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
+            outputStream.writeObject(i + "");
+            outputStream.flush();
             i++;
             outputStream.writeObject(Parameters.command.SET_PLAYERS_NUMBER);
             outputStream.flush();
@@ -53,6 +56,7 @@ public class NetworkHandlerServer implements Runnable {
                 inputStream = new ObjectInputStream(s.getInputStream());
                 outputStream = new ObjectOutputStream(s.getOutputStream());
                 players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
+                outputStream.writeObject(i + "");
             }
             startGame();
 
@@ -87,6 +91,15 @@ public class NetworkHandlerServer implements Runnable {
         }
     }
 
+    /**
+     * Requests to a specific player to choose a card from a pool
+     *
+     * @param cards  pool of cards
+     * @param player player that has to make the choice
+     * @return choosed card
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public God chooseCard(ArrayList<God> cards, Gamer player) throws IOException, ClassNotFoundException {
         outputStream = player.getOutputStream();
         outputStream.writeObject(cards);
@@ -96,6 +109,15 @@ public class NetworkHandlerServer implements Runnable {
         return g;
     }
 
+    /**
+     * Request to a specific client to do his moves
+     *
+     * @param tipo  Type of action (e.g. move, build)
+     * @param gamer Player that has to do action
+     * @return player action details
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public Mossa richiediMossa(Action tipo, Gamer gamer) throws IOException, ClassNotFoundException {
         outputStream = gamer.getOutputStream();
         Parameters.command command = null;
@@ -117,6 +139,11 @@ public class NetworkHandlerServer implements Runnable {
         return mossa;
     }
 
+    /**
+     * Generic error message that means "action failed" for a specified player
+     *
+     * @param gamer player to send error message
+     */
     public void sendFailed(Gamer gamer) {
         outputStream = gamer.getOutputStream();
         try {
@@ -124,5 +151,22 @@ public class NetworkHandlerServer implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Requests initial pawn coords to players
+     *
+     * @param gamer player to request to put pawns
+     * @return String containing 2 positions in format "x1,y1,x2,y2"
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public String placePawns(Gamer gamer) throws IOException, ClassNotFoundException {
+        outputStream = gamer.getOutputStream();
+        outputStream.writeObject(Parameters.command.INITIALIZE_PAWNS);
+        outputStream.flush();
+        inputStream = gamer.getInputStream();
+        String posizioni = inputStream.readObject().toString();
+        return posizioni;
     }
 }

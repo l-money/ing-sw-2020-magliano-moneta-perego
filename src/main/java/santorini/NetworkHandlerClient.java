@@ -14,6 +14,7 @@ public class NetworkHandlerClient implements Runnable {
     private Socket server;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+    private View view;
 
     /**
      * Initialize a new connection with a game server to join in a new game
@@ -21,7 +22,8 @@ public class NetworkHandlerClient implements Runnable {
      * @param address server address
      * @param name    player name
      */
-    public NetworkHandlerClient(String address, String name) {
+    public NetworkHandlerClient(String address, String name, View view) {
+        this.view = view;
         try {
             server = new Socket(address, Parameters.PORT);
             outputStream = new ObjectOutputStream(server.getOutputStream());
@@ -88,19 +90,11 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case SET_PLAYERS_NUMBER:
                             /*Chiedi il numero di giocatori*/
-                            int n = 0;
-                            int number = numberPlayer(n);
-                            outputStream.writeObject(number);
-                            outputStream.flush();
+                            view.setNumeroGiocatori();
                             break;
                         case INITIALIZE_PAWNS:
                             /*Chiedi le coordinate iniziali delle pedine*/
-                            int x = 0;
-                            int y = 0;
-                            int row = insertRow(x);
-                            int column = insertColumn(y);
-                            outputStream.writeObject(row);
-                            outputStream.writeObject(column);
+                            /*Stringa con formato x1,y1,x2,y2*/
                             break;
                         case FAILED:
                             /*Invia errore al giocatore e resta subito pronto
@@ -131,6 +125,7 @@ public class NetworkHandlerClient implements Runnable {
 
         }).start();
     }
+
 
     /**
      * Method that take the user's input level
@@ -268,6 +263,11 @@ public class NetworkHandlerClient implements Runnable {
             System.out.println("Errore inserimento");
         }
         return colonna;
+    }
+
+    public void setPartecipanti(String partecipanti) throws IOException {
+        outputStream.writeObject(partecipanti);
+        outputStream.flush();
     }
 
 }

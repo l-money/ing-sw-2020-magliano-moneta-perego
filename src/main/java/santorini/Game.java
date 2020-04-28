@@ -9,13 +9,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game implements Runnable {
-    private ArrayList<Gamer> giocatori;
+    private final ArrayList<Gamer> giocatori;
     /*god cards sono quelle attive nella partita
      * passa una copia di questa lista al turno
      * rifai la classe extraction con la shuffle della collection*/
     private ArrayList<God> godCards;
     private Table table = new Table();
-    private NetworkHandlerServer handler;
+    private final NetworkHandlerServer handler;
 
     /**
      * Game initialization
@@ -33,13 +33,50 @@ public class Game implements Runnable {
     public void run() {
         cardChoice();
         placePawns();
+        updateField();
         partita();
     }
 
+    /**
+     * Requests to all clients to place their pawns
+     */
     public void placePawns() {
-
+        for (Gamer g : giocatori) {
+            boolean done = false;
+            do {
+                try {
+                    String posizioni = handler.placePawns(g);
+                    String pos[] = posizioni.split(","); //x1,y1,x2,y2
+                    int x1 = Integer.parseInt(pos[0]);
+                    int y1 = Integer.parseInt(pos[1]);
+                    int x2 = Integer.parseInt(pos[2]);
+                    int y2 = Integer.parseInt(pos[3]);
+                    if (!table.getTableCell(x1, y1).isFree() || !table.getTableCell(x2, y2).isFree()) {
+                        handler.sendFailed(g);
+                        done = false;
+                    } else {
+                        done = true;
+                        g.getPawn(0).setRow(x1);
+                        g.getPawn(0).setColumn(y1);
+                        g.getPawn(1).setRow(x2);
+                        g.getPawn(1).setColumn(x2);
+                        table.getTableCell(x1, y1).setFree(false);
+                        table.getTableCell(x1, y1).setPawn(g.getPawn(0));
+                        table.getTableCell(x2, y2).setFree(false);
+                        table.getTableCell(x2, y2).setPawn(g.getPawn(1));
+                        updateField();
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            } while (!done);
+        }
     }
 
+    /**
+     * Extracts number of players of random cards and requests
+     * to clients in order to choose one
+     */
     public void cardChoice() {
         Extraction ex = new Extraction();
         godCards = ex.extractionGods(giocatori.size());
@@ -61,6 +98,10 @@ public class Game implements Runnable {
         return table;
     }
 
+    /**
+     * Game loop.  Each cicle ask to a player to do his moves
+     * Cicle continue until someone wins
+     */
     public void partita() {
         while (true) {
             for (Gamer g : giocatori) {
@@ -80,6 +121,9 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * Sends to all clients the game field status
+     */
     public void updateField() {
         for (Gamer g : giocatori) {
             handler.updateField(g);

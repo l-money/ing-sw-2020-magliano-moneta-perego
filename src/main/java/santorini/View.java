@@ -3,12 +3,23 @@ package santorini;
 import santorini.model.Pawn;
 import santorini.model.Table;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class View {
 
     private Table table;
+    private BufferedReader br;
+    private NetworkHandlerClient handlerClient;
 
     public View() {
         table = new Table();
+        br = new BufferedReader(new InputStreamReader(System.in));
+    }
+
+    public void setHandlerClient(NetworkHandlerClient handlerClient) {
+        this.handlerClient = handlerClient;
     }
 
     //metodo che stampa la table indicante livello cella e posizione pedina
@@ -39,6 +50,25 @@ public class View {
 
     }
 
+    public void setNumeroGiocatori() {
+        new Thread(() -> {
+            String partecipanti = "2";
+            System.out.print("Scegli numero partecipanti [Default 2]: ");
+            try {
+                partecipanti = br.readLine();
+                if (partecipanti.charAt(0) == '3') {
+                    partecipanti = "3";
+                } else {
+                    partecipanti = "2";
+                }
+                handlerClient.setPartecipanti(partecipanti);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }).start();
+    }
+
 
 //    public class ColorPrint{
 //        public static final String ANSI_RESET = "\u001B[0m";
@@ -64,17 +94,3 @@ public class View {
 //    }
 }
 
-class ViewStampa {
-    public static void main(String[] args) {
-        View v = new View();
-        Table t = new Table();
-        Pawn p = new Pawn();
-        v.printTable(t);
-        System.out.println("\n");
-        t.getTableCell(2, 2).setLevel(2);
-        t.getTableCell(1, 0).setPawn(p);
-        t.getTableCell(0, 2).setPawn(p);
-        v.printTable(t);
-    }
-
-}
