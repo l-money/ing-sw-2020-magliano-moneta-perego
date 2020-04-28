@@ -153,6 +153,7 @@ public class Table implements Serializable {
             }
         }
         if (nearCellsBuilds.size() > 0) {
+            getTableCell(myCell.getX(), myCell.getY()).getPawn().setICanPlay(true);
             return true;
         } else {
             return false;

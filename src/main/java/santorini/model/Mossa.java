@@ -6,7 +6,6 @@ public class Mossa implements Serializable {
     public static enum Action {
         MOVE,
         BUILD,
-        NO
     }
 
     private Action action;
@@ -38,12 +37,4 @@ public class Mossa implements Serializable {
         return idPawn;
     }
 
-    public void setAction(Action myAction) {
-        this.action = myAction;
-        if (this.action == Action.NO) {
-            this.idPawn = -1;
-            this.targetX = -1;
-            this.targetY = -1;
-        }
-    }
 }

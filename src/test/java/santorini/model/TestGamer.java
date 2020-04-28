@@ -7,23 +7,26 @@ import santorini.model.godCards.Artemis;
 import santorini.model.godCards.Athena;
 
 import java.awt.*;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 public class TestGamer implements Serializable {
     private Gamer gamer;
     private ArrayList<God> gods;
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
 
     @Before
     public void before() {
         Socket socket = new Socket();
         String name = "Ajeje Brazorf";
         int id = 0;
-        gamer = new Gamer(socket, name, id, null, null);
+        gamer = new Gamer(socket, name, id, inputStream, outputStream);
         gods = new ArrayList<>();
         gods.add(new Apollo());
         gods.add(new Artemis());
@@ -74,8 +77,20 @@ public class TestGamer implements Serializable {
      */
     @Test
     public void testSocket() {
+        Socket s = new Socket();
         gamer.setSocket(null);
         assertNull(gamer.getSocket());
+        gamer.setSocket(s);
+        assertEquals(s, gamer.getSocket());
+    }
+
+    /**
+     * method that tests the outputStream and inputStream
+     */
+    @Test
+    public void testOutputStreamAndInputStream() {
+        assertEquals(outputStream, gamer.getOutputStream());
+        assertEquals(inputStream, gamer.getInputStream());
     }
 
     /**

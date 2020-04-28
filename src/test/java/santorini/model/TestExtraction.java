@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Class TestExtraction
@@ -35,15 +35,16 @@ public class TestExtraction {
 
     /**
      * method that tests the uniqueness of the list of god card
+     * */
 
 
     @Test
     public void testUniqueness() {
         List<God> cards = extraction.extractionGods(3);
-        assertTrue(!cards.get(0).equals(cards.get(1)));
-        assertTrue(!cards.get(0).equals(cards.get(2)));
-        assertTrue(!cards.get(1).equals(cards.get(2)));
+        //System.out.println(cards.get(0).getName()+"\n"+cards.get(1).getName()+"\n"+cards.get(2).getName()+"\n");
+        assertNotSame(cards.get(0), cards.get(1));
+        assertNotSame(cards.get(1), cards.get(2));
+        assertNotSame(cards.get(2), cards.get(0));
     }
-     */
 
 }

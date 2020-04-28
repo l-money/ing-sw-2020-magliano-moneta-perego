@@ -18,6 +18,7 @@ public class TestTurno {
     private God Athena, Prometheus;
     private NetworkHandlerServer gamerHandler;
     private ArrayList<God> godCards;
+    private boolean effect;
 
     @Before
     public void before() {
@@ -29,6 +30,7 @@ public class TestTurno {
         godCards.add(Athena);
         godCards.add(Prometheus);
         turn = new Turno(godCards, gamer, table, gamerHandler);
+
 
     }
 
@@ -212,9 +214,44 @@ public class TestTurno {
     /**
      * method that tests when a pawn is lock or unlock and if the gamer lose the game because he can not build
      */
-    //TODO control the conditions of lock and unlock pawn into baseBuilding
     @Test
     public void testBaseBuildingLockUnlock() {
+        turn.setStartValidation(1);
+        Pawn q = new Pawn();
+        turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
+        turn.getTable().setACell(0, 0, 1, false, false, turn.getGamer().getPawn(1));
+        //pawn1 can not build but pawn0 can, gamer doesn't lose
+        turn.getTable().setACell(0, 1, 3, false, true, null);
+        turn.getTable().setACell(1, 0, 3, false, true, null);
+        turn.getTable().setACell(1, 1, 1, false, false, q);
+        Mossa m0 = new Mossa(Mossa.Action.BUILD, 1, 1, 1);
+        turn.baseBuilding(m0);
+        assertFalse(turn.isValidationBuild());
+        assertTrue(!turn.getGamer().getPawn(1).getICanPlay());
+        assertTrue(turn.getGamer().getPawn(0).getICanPlay());
+        assertTrue(!turn.getGamer().getLoser());
+        //pawn1 can not build, pawn0 can not build, gamer loses
+        turn.setStartValidation(0);
+        turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
+        turn.getTable().setACell(3, 4, 3, false, true, null);
+        turn.getTable().setACell(4, 3, 3, false, true, null);
+        turn.getTable().setACell(3, 3, 3, false, true, null);
+        Mossa m1 = new Mossa(Mossa.Action.BUILD, 0, 3, 3);
+        turn.baseBuilding(m1);
+        assertTrue(turn.isValidationBuild());//validationBuild is true for exit from do-while
+        assertTrue(!turn.getGamer().getPawn(1).getICanPlay());
+        assertTrue(!turn.getGamer().getPawn(0).getICanPlay());
+        assertTrue(turn.getGamer().getLoser());
+        //pawn1 unlocks
+        turn.getGamer().setLoser(false);
+        turn.setStartValidation(1);//gamer want to move pawn1
+        turn.getTable().setACell(1, 1, 1, true, false, null);//cell is free
+        Mossa move3 = new Mossa(Mossa.Action.BUILD, 1, 1, 1);
+        turn.baseBuilding(move3);
+        assertTrue(turn.isValidationBuild());
+        assertTrue(turn.getGamer().getPawn(1).getICanPlay());//pawn1 is not locked
+        assertTrue(!turn.getGamer().getPawn(0).getICanPlay());//pawn0 is locked
+        assertTrue(!turn.getGamer().getLoser());//gamer can move
     }
 
     /**
@@ -304,4 +341,54 @@ public class TestTurno {
         assertNotNull(turn.getTable().getTableCell(2, 2).getPawn());
         assertTrue(!turn.getTable().getTableCell(2, 2).isFree());
     }
+
+    /**
+     * method that tests the god effect of Artemis
+     */
+
+    @Test
+    public void testGodCardEffectArtemis() {
+        turn.setStartValidation(0);
+        //pawn0 moves from cell[1,1] to cell[2,2] and does a secondo move to cell[3,3]
+        turn.getGamer().setAPawn(0, 0, 0, 0, 0);
+        turn.getTable().setACell(1, 1, 1, false, false, turn.getGamer().getPawn(0));
+        turn.getTable().setACell(2, 2, 1, true, false, null);
+        turn.getTable().setACell(3, 3, 1, true, false, null);
+        Cell myPosition = turn.getTable().getTableCell(turn.getGamer().getPawn(0).getRow(), turn.getGamer().getPawn(0).getColumn());
+        Mossa m0 = new Mossa(Mossa.Action.MOVE, 0, 2, 2);
+        turn.baseMovement(m0);
+        assertTrue(turn.isValidationMove());
+        assertEquals(2, turn.getGamer().getPawn(0).getRow());
+        assertEquals(2, turn.getGamer().getPawn(0).getColumn());
+        Mossa m1 = new Mossa(Mossa.Action.MOVE, 0, 3, 3);
+        effect = turn.godCardEffect(m1, effect, 0, myPosition);
+        assertTrue(effect);
+        //pawn0 moves from cell[1,1] to cell[2,2] and it wants to go back to cell[1,1] but it can not
+        turn.getTable().setACell(1, 1, 1, false, false, turn.getGamer().getPawn(0));
+        turn.getTable().setACell(2, 2, 1, true, false, null);
+        turn.getTable().setACell(3, 3, 1, true, false, null);
+        myPosition = turn.getTable().getTableCell(turn.getGamer().getPawn(0).getRow(), turn.getGamer().getPawn(0).getColumn());
+        Mossa m2 = new Mossa(Mossa.Action.MOVE, 0, 2, 2);
+        turn.baseMovement(m2);
+        assertTrue(turn.isValidationMove());
+        Mossa m3 = new Mossa(Mossa.Action.MOVE, 0, 1, 1);
+        effect = turn.godCardEffect(m3, effect, 0, myPosition);
+        assertTrue(!effect);
+        //pawn0 moves from cell[2,2] to cell[2,3] and the gamer doesn't want do a second move
+        myPosition = turn.getTable().getTableCell(2, 2);
+        Mossa m4 = new Mossa(Mossa.Action.MOVE, 0, 2, 3);
+        turn.baseMovement(m4);
+        assertTrue(turn.isValidationMove());
+        //System.out.print("x: "+turn.getGamer().getPawn(0).getRow());
+        //System.out.print(" y "+turn.getGamer().getPawn(0).getColumn()+"\n");
+        Mossa m5 = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
+        effect = turn.godCardEffect(m5, effect, 0, myPosition);
+        assertTrue(effect);
+        //pawn0 wants to build in cell[2,4] but it can not
+        Mossa m6 = new Mossa(Mossa.Action.BUILD, 0, 2, 4);
+        effect = turn.godCardEffect(m6, effect, 0, myPosition);
+        assertTrue(!effect);
+    }
+
+
 }

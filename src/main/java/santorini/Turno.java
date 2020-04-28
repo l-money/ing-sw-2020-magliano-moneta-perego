@@ -430,52 +430,89 @@ public class Turno implements Runnable {
      * @param move         the move effect of the card, not nullEffect
      * @param effect       if move is correct, effect is true, else is false
      * @param i            the case of the effect
-     * @param pastPosition the past position of the pawn
+     * @param specialCell the past position of the pawn
      * @return the effect: true or false
      */
     // TODO end the method and improve it
-    public void godCardEffect(Mossa move, boolean effect, int i, Cell pastPosition) {
-        effect = false;
-        if (!controlStandardParameter(move)) {
-            effect = false;
+    public boolean godCardEffect(Mossa move, boolean effect, int i, Cell specialCell) {
+        if (nullEffectForGodCards(move)) {
+            effect = true;
         } else {
-            Pawn myPawn = getGamer().getPawn(move.getIdPawn());
-            Cell end = getTable().getTableCell(move.getTargetX(), move.getTargetY());
-            Cell start = getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
-            switch (i) {
-                case 0:
-                    getGamer().setSteps(1);
-                    if ((end.getX() == pastPosition.getX()) &&
-                            (end.getY() == pastPosition.getY())) {
-                        effect = false;
-                    } else {
-                        baseMovement(move);
-                        getValidationMove();
-                        effect = isValidationMove();
-                    }
-                    break;
-                case 1:
-                    ArrayList<Cell> nearCells = getTable().searchAdjacentCells(start);
-                    if ((nearCells.contains(end)) && (end.getLevel() >= 0) && (end.getLevel() <= 3) &&
-                            (end.isFree()) && (!end.isComplete()) && (end.getPawn() == null) &&
-                            (controlStandardParameter(move))) {
-                        getTable().getTableCell(end.getX(), end.getY()).setComplete(true);
-                        effect = true;
-                        getGamer().setBuilds(0);
-                    } else {
-                        effect = false;
-                    }
-                    break;
-                case 2:
-                    // TODO demeter effect
-                    break;
-                case 3:
-                    // TODO hephaestus effect
-                    break;
-                default:
-                    effect = false;
-                    break;
+            if (!controlStandardParameter(move)) {
+                effect = false;
+            } else {
+                Pawn myPawn = getGamer().getPawn(move.getIdPawn());
+                Cell end = getTable().getTableCell(move.getTargetX(), move.getTargetY());
+                Cell start = getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
+                switch (i) {
+                    case 0:
+                        getGamer().setSteps(1);
+                        if (move.getAction() == Mossa.Action.MOVE) {
+                            if ((end.getX() == specialCell.getX()) &&
+                                    (end.getY() == specialCell.getY())) {
+                                effect = false;
+                            } else {
+                                baseMovement(move);
+                                getValidationMove();
+                                effect = isValidationMove();
+                            }
+                        } else {
+                            effect = false;
+                        }
+                        break;
+                    case 1:
+                        if (move.getAction() == Mossa.Action.BUILD) {
+                            ArrayList<Cell> nearCells = getTable().searchAdjacentCells(start);
+                            if ((nearCells.contains(end)) && (end.getLevel() >= 0) && (end.getLevel() <= 3) &&
+                                    (end.isFree()) && (!end.isComplete()) && (end.getPawn() == null) &&
+                                    (controlStandardParameter(move))) {
+                                getTable().getTableCell(end.getX(), end.getY()).setComplete(true);
+                                effect = true;
+                                getGamer().setBuilds(0);
+                            } else {
+                                effect = false;
+                            }
+                        } else {
+                            effect = false;
+                        }
+                        break;
+                    case 2:
+                        if (move.getAction() == Mossa.Action.BUILD) {
+                            if (move.getTargetY() == specialCell.getX() &&
+                                    move.getTargetY() == specialCell.getY()) {
+                                effect = false;
+                            } else {
+                                baseBuilding(move);
+                                getValidationBuild();
+                                effect = isValidationBuild();
+                            }
+                        } else {
+                            effect = false;
+                        }
+                        break;
+                    case 3:
+                        if (move.getAction() == Mossa.Action.BUILD) {
+                            if ((move.getTargetX() == specialCell.getX()) &&
+                                    (move.getTargetY() == specialCell.getY())) {
+                                baseBuilding(move);
+                                getValidationBuild();
+                                effect = isValidationBuild();
+                            } else {
+                                effect = false;
+                            }
+                        } else {
+                            effect = false;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
             }
         }
+        return effect;
     }
+
+
+
 }

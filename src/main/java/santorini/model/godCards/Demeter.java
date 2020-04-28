@@ -1,6 +1,7 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
+import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
@@ -8,11 +9,9 @@ import santorini.model.Mossa;
 import java.io.IOException;
 
 public class Demeter extends God {
-    private int startX;
-    private int startY;
-    private boolean demeterValidation;
+    private Cell positionFirstBuilding;
     private boolean demeterEffect;
-    private Mossa move2;
+    private Mossa build2;
 
     @Override
     public String getName() {
@@ -36,7 +35,7 @@ public class Demeter extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
     }
@@ -44,7 +43,7 @@ public class Demeter extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
 
@@ -53,51 +52,47 @@ public class Demeter extends God {
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-        startX = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
-        startY = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
     }
 
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-        turno.getGamer().setBuilds(1);
+        int startX = turno.getMove().getTargetX();
+        int startY = turno.getMove().getTargetY();
+        positionFirstBuilding = turno.getTable().getTableCell(startX, startY);
+        //demeterEffect = true;
+        try {
+            build2 = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         do {
-            demeterEffect = true;
-            demeterValidation = false;
-            try {
-                move2 = turno.getGameHandler().richiediMossa(Mossa.Action.MOVE, getOwner());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            if (move2.getIdPawn() != turno.getIdStartPawn()) {
-                demeterEffect = false;
-            } else {
-                if ((move2.getTargetX() < 0) || (move2.getTargetY() < 0)) {
-                    demeterEffect = false;
-                } else {
-                    if ((startX == move2.getTargetX()) &&
-                            (startY == move2.getTargetY())) { //if the pawn comes back to the first position, starts artemis effect
-                        demeterEffect = false;
-                    } else {
-                        demeterEffect = true;
+            turno.getGamer().setBuilds(1);
+            turno.godCardEffect(build2, demeterEffect, 2, positionFirstBuilding);
+            if (!demeterEffect) {
+                //if demeterEffect is false, the destination is incorrect, insert the correct destination
+                turno.sendFailed();
+                //ask another destination of the build
+                try {
+                    build2 = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
                     }
                 }
-            }
-            if (demeterEffect) {
-                turno.baseBuilding(move2);
-                turno.getValidationBuild();
-                demeterValidation = turno.isValidationBuild();
-            }
-        } while (!demeterValidation);
+
+        } while (!demeterEffect);
         turno.getGamer().setBuilds(1);
+
     }
 
     /**

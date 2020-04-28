@@ -268,12 +268,6 @@ public class Gamer {
     }
 
     /**
-     * method setColorGamer
-     * @param colorGamer the color of the gamer
-     */
-    //public void setColorGamer(Color colorGamer){this.colorGamer = colorGamer;}
-
-    /**
      * method isWinner
      * @return winner
      */

@@ -50,7 +50,6 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        turno.getGamer().setSteps(1);
         //artemisEffect = false;
         //request a movement from the gamer
             try {
@@ -60,14 +59,8 @@ public class Artemis extends God {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-        //if the gamer doesn't want to move puts the code of the nullEffect: -1,-1,-1
-        if (turno.nullEffectForGodCards(move2)) {
-            turno.getGamer().setSteps(0);
-            }
-        //else the gamer wants to do the move
-        else {
             do {
-                turno.godCardEffect(move2, artemisEffect, 0, start);
+                /**artemisEffect = */turno.godCardEffect(move2, artemisEffect, 0, start);
                 //if the movement is not possible or correct, artemisEffect is false and he have to remake the movement
                 if (!artemisEffect) {
                     turno.sendFailed();
@@ -84,7 +77,6 @@ public class Artemis extends God {
                 //until the movement is correct, the gamer have to insert the correct movement
             } while (!artemisEffect);
         }
-    }
 
     /**
      * Features added by card before its owner starts building

@@ -19,13 +19,12 @@ public class Extraction implements Serializable {
         gods.add(new Apollo());
         gods.add(new Artemis());
         gods.add(new Athena());
-        gods.add(new Atlas());
-        /**
          gods.add(new Demeter());
          gods.add(new Hephaestus());
          gods.add(new Minotaur());
          gods.add(new Pan());
          gods.add(new Prometheus());
+        /**
          gods.add(new Zeus());
          gods.add(new Demeter());
          gods.add(new Hephaestus());
