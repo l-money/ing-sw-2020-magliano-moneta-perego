@@ -105,6 +105,10 @@ public class NetworkHandlerClient implements Runnable {
                         case FAILED:
                             /*Invia errore al giocatore e resta subito pronto
                              * per una nuova richiesta di istruzioni dal server*/
+                            System.out.println("Errore generale");
+                            System.out.println(("Nuova istruzione in arrivo : "));
+                            //non so come ricevere
+                            Object newObject = inputStream.readObject();
                             break;
                     }
                 }
@@ -123,6 +127,8 @@ public class NetworkHandlerClient implements Runnable {
         new Thread(() -> {
             /*Aggiorna il campo con quello appena arrivato dal server (table)
             Fallo in questo thread*/
+//
+
         }).start();
     }
 
@@ -263,6 +269,5 @@ public class NetworkHandlerClient implements Runnable {
         }
         return colonna;
     }
-
 
 }
