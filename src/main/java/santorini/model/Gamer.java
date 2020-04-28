@@ -326,5 +326,21 @@ public class Gamer {
         }
     }
 
+    /**
+     * method setAPawn
+     *
+     * @param idPawn  the id of my pawn: pawn0 or pawn1
+     * @param x       row of the pawn
+     * @param y       column of the pawn
+     * @param past    past level of the pawn
+     * @param present present level of the pawn
+     */
+    public void setAPawn(int idPawn, int x, int y, int past, int present) {
+        getPawn(idPawn).setRow(x);
+        getPawn(idPawn).setColumn(y);
+        getPawn(idPawn).setPastLevel(past);
+        getPawn(idPawn).setPresentLevel(present);
+    }
+
 }
 

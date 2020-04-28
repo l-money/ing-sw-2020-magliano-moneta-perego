@@ -106,6 +106,9 @@ public class NetworkHandlerServer implements Runnable {
             case BUILD:
                 command = Parameters.command.BUILD;
                 break;
+            /**default:
+             command = Parameters.command.FAILED;
+             break;*/
         }
         outputStream.writeObject(command);
         outputStream.flush();

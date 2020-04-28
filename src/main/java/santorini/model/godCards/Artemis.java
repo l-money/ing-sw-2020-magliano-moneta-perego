@@ -1,6 +1,7 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
+import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
@@ -8,11 +9,20 @@ import santorini.model.Mossa;
 import java.io.IOException;
 
 public class Artemis extends God {
-    private int startX;
-    private int startY;
-    private boolean artemisValidation;
+    private Cell start;
     private boolean artemisEffect;
     private Mossa move2;
+
+    @Override
+    public String getName() {
+        return "Artemis";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
+                "ma non può tornare alla casella da cui è partito";
+    }
 
     /**
      * Initialize player variables with card
@@ -29,8 +39,9 @@ public class Artemis extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
-        startX = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
-        startY = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
+        int startX = turno.getGamer().getPawn(turno.getMove().getIdPawn()).getRow();//save start position X
+        int startY = turno.getGamer().getPawn(turno.getMove().getIdPawn()).getColumn();//save start position Y
+        start = turno.getTable().getTableCell(startX, startY);
     }
 
     /**
@@ -40,9 +51,8 @@ public class Artemis extends God {
      */
     public void afterOwnerMoving(Turno turno) {
         turno.getGamer().setSteps(1);
-        do {
-            artemisEffect = false;
-            artemisValidation = false;
+        //artemisEffect = false;
+        //request a movement from the gamer
             try {
                 move2 = turno.getGameHandler().richiediMossa(Mossa.Action.MOVE, getOwner());
             } catch (IOException e) {
@@ -50,22 +60,30 @@ public class Artemis extends God {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            if ((startX == move2.getTargetX()) &&
-                    (startY == move2.getTargetY())) { //if the pawn comes back to the first position, starts artemis effect
-                artemisEffect = true;
-            } else {
-                artemisEffect = false;
+        //if the gamer doesn't want to move puts the code of the nullEffect: -1,-1,-1
+        if (turno.nullEffectForGodCards(move2)) {
+            turno.getGamer().setSteps(0);
             }
-            if ((move2.getTargetX() < 0) || (move2.getTargetY() < 0)) {
-                artemisValidation = true;
-            } else {
+        //else the gamer wants to do the move
+        else {
+            do {
+                turno.godCardEffect(move2, artemisEffect, 0, start);
+                //if the movement is not possible or correct, artemisEffect is false and he have to remake the movement
                 if (!artemisEffect) {
-                    turno.baseMovement(move2);
-                    turno.getValidationMove();
-                    artemisValidation = turno.isValidationMove();
+                    turno.sendFailed();
+                    //ask another movement
+                    try {
+                        move2 = turno.getGameHandler().richiediMossa(Mossa.Action.MOVE, getOwner());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        } while (!artemisValidation);
+                //else the movement is correct and artemisEffect is true
+                //until the movement is correct, the gamer have to insert the correct movement
+            } while (!artemisEffect);
+        }
     }
 
     /**

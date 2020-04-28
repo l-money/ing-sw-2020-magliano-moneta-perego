@@ -118,7 +118,6 @@ public class Table implements Serializable {
         int k = 0;
         ArrayList<Cell> nearCells;
         ArrayList<Cell> nearCellsFree = new ArrayList<Cell>();
-        Pawn myPawn = myCell.getPawn();
         nearCells = searchAdjacentCells(myCell);
         int l = nearCells.size();
         for (int i = 0; i < l; i++) {
@@ -129,6 +128,7 @@ public class Table implements Serializable {
             }
         }
         if (nearCellsFree.size() > 0) {
+            getTableCell(myCell.getX(), myCell.getY()).getPawn().setICanPlay(true);
             return true;
         } else {
             return false;
@@ -144,7 +144,6 @@ public class Table implements Serializable {
     public boolean iCanBuild(Cell myCell) {
         ArrayList<Cell> nearCells = searchAdjacentCells(myCell);
         ArrayList<Cell> nearCellsBuilds = new ArrayList<Cell>();
-        Pawn myPawn = myCell.getPawn();
         int l = nearCells.size();
         for (int i = 0; i < l; i++) {
             Cell index = nearCells.get(i);
@@ -201,7 +200,7 @@ public class Table implements Serializable {
         if (!nearCells.contains(end)) {
             return false;
         } else {
-            if (!end.isFree()) {
+            if (!end.isFree() || (end.getPawn() != null)) {
                 return false;
             } else {
                 if (end.isComplete()) {
@@ -210,7 +209,9 @@ public class Table implements Serializable {
                     if ((end.getPawn() == null) && (end.getLevel() >= 0) && (end.getLevel() <= 3) &&
                             (getBag().controlExistBrick(end.getLevel() + 1))) {
                         return true;
-                    }else{return false;}
+                    } else {
+                        return false;
+                    }
                 }
             }
         }

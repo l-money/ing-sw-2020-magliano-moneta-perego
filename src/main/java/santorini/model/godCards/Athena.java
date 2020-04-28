@@ -9,6 +9,16 @@ public class Athena extends God {
     private Cell start;
     private boolean athenaEffect;
 
+    @Override
+    public String getName() {
+        return "Athena";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\nin questo turno i lavoratori avversari non possono salire di livello";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -24,9 +34,9 @@ public class Athena extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
-        int x1 = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getRow();
-        int y1 = turno.getGamer().getPawn(turno.getIdPawnOfMovement()).getColumn();
-        start = turno.getTable().getTableCell(x1, y1);
+        int x1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
+        int y1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
+        start = turno.getTable().getTableCell(x1, y1);//save the start position of the pawn
     }
 
     /**
@@ -38,11 +48,14 @@ public class Athena extends God {
         athenaEffect = false;
         int x2 = turno.getMove().getTargetX();
         int y2 = turno.getMove().getTargetY();
-        Cell end = turno.getTable().getTableCell(x2, y2);
+        Cell end = turno.getTable().getTableCell(x2, y2);//save the end position of the pawn
+        //if the pawn goes up to one level
+        //and the pawn is the same of the end cell and of the gamer
         if (((end.getLevel() - start.getLevel()) == 1) &&
                 (end.getPawn() == turno.getTable().getTableCell(x2, y2).getPawn()) &&
-                (end.getPawn() == turno.getGamer().getPawn(turno.getIdPawnOfMovement()))
+                (end.getPawn() == turno.getGamer().getPawn(turno.getIdStartPawn()))
         ) {
+            //athenaEffect is true
             athenaEffect = true;
         }
     }
@@ -71,6 +84,7 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void beforeOtherMoving(Gamer other) {
+        //if athenaEffect is true, the others gamers can not go up to one level
         if (athenaEffect) {
             other.setLevelsUp(0);
         }

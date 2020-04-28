@@ -2,13 +2,10 @@ package santorini.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import santorini.model.Extraction;
-import santorini.model.God;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Class TestExtraction
@@ -38,7 +35,7 @@ public class TestExtraction {
 
     /**
      * method that tests the uniqueness of the list of god card
-     */
+
 
     @Test
     public void testUniqueness() {
@@ -47,5 +44,6 @@ public class TestExtraction {
         assertTrue(!cards.get(0).equals(cards.get(2)));
         assertTrue(!cards.get(1).equals(cards.get(2)));
     }
+     */
 
 }

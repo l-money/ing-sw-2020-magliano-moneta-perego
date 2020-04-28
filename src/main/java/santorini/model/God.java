@@ -26,6 +26,10 @@ public abstract class God implements Serializable {
         return name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     /**
      * Initialize player variables with card
      *

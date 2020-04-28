@@ -96,12 +96,12 @@ public class Pawn implements Serializable {
 
     /**
      * method setIdPawn
-     * @param newIddPawn the identification number of the pawn
+     * @param newIdPawn the identification number of the pawn
      */
 
 
-    public void setIdPawn(int newIddPawn){
-        idPawn = newIddPawn;
+    public void setIdPawn(int newIdPawn) {
+        idPawn = newIdPawn;
     }
 
     /**
@@ -111,6 +111,21 @@ public class Pawn implements Serializable {
 
     public void setIdGamer (int newIdGamer){
         idGamer = newIdGamer;
+        switch (idGamer) {
+            case 0:
+                setColorPawn(Color.YELLOW);
+                break;
+            case 1:
+                setColorPawn(Color.RED);
+                break;
+            case 2:
+                setColorPawn(Color.BLUE);
+                break;
+            default:
+                setColorPawn(null);
+                break;
+        }
+
     }
 
     public void setPresentLevel (int newPresentLevel){

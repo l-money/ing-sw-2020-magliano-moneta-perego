@@ -8,6 +8,7 @@ public class Parameters {
         INITIALIZE_PAWNS,
         MOVE,
         BUILD,
-        FAILED
+        FAILED,
+        NO
     }
 }

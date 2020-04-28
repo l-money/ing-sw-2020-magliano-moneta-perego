@@ -10,6 +10,19 @@ import java.io.IOException;
 public class Hephaestus extends God {
     private boolean HEffect;
     private Mossa buildingPlus;
+
+    @Override
+    public String getName() {
+        return "Hephaestus";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Tua costruzione: il tuo lavoratore\n" +
+                "può costruire un blocco aggiuntivo\n" +
+                "(non una cupola) al di sopra del primo blocco.";
+    }
+
     /**
      * Initialize player variables with card
      *
@@ -69,7 +82,7 @@ public class Hephaestus extends God {
             if (buildingPlus.getIdPawn() == -1) {
                 HEffect = true; //The gamer doesn't want to build again on the same cell
             } else {
-                if (buildingPlus.getIdPawn() != turno.getIdPawnOfMovement()) {
+                if (buildingPlus.getIdPawn() != turno.getIdStartPawn()) {
                     HEffect = false;
                 } else {
                     if ((buildingPlus.getTargetX() != x) || (buildingPlus.getTargetY() != y)) {

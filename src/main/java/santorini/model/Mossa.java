@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class Mossa implements Serializable {
     public static enum Action {
         MOVE,
-        BUILD
+        BUILD,
+        NO
     }
 
     private Action action;
@@ -14,7 +15,7 @@ public class Mossa implements Serializable {
     private int idPawn;
 
 
-    public Mossa(Action action, int targetX, int targetY, int idPawn) {
+    public Mossa(Action action, int idPawn, int targetX, int targetY) {
         this.action = action;
         this.targetX = targetX;
         this.targetY = targetY;
@@ -35,5 +36,14 @@ public class Mossa implements Serializable {
 
     public int getIdPawn() {
         return idPawn;
+    }
+
+    public void setAction(Action myAction) {
+        this.action = myAction;
+        if (this.action == Action.NO) {
+            this.idPawn = -1;
+            this.targetX = -1;
+            this.targetY = -1;
+        }
     }
 }
