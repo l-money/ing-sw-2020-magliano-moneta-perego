@@ -1,5 +1,6 @@
 package santorini;
 
+import santorini.model.Extraction;
 import santorini.model.God;
 import santorini.model.Mossa;
 import santorini.model.Table;
@@ -15,6 +16,9 @@ public class NetworkHandlerClient implements Runnable {
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private View view;
+    private Extraction e;
+    private int[] players1;
+    private int[] cards;
 
     /**
      * Initialize a new connection with a game server to join in a new game
@@ -49,13 +53,17 @@ public class NetworkHandlerClient implements Runnable {
             try {
                 Object o = inputStream.readObject();
                 if (o instanceof ArrayList) {
+                    e = new Extraction();
                     ArrayList<God> gods = (ArrayList<God>) o;
+                    int k = players1[0];
+                    gods = e.extractionGods(k);
                     /*Scelta della carta*/
-                    int card = 0;
-                    int k = chooseCard(card);
-                    God g = gods.get(k);
+                    view.chooseCards();
+                    int a = cards[0];
+                    God g = gods.get(a);
                     outputStream.writeObject(g);
                     outputStream.flush();
+                    gods.remove(gods.get(a));
                 } else if (o instanceof Table) {
                     Table t = (Table) o;
                     updateField(t);
@@ -64,29 +72,11 @@ public class NetworkHandlerClient implements Runnable {
                     switch (cmd) {
                         case BUILD:
                             /*Chiedi una nuova myBuilding*/
-                            int bC = 0;
-                            int c = 0;
-                            int d = 0;
-
-                            int build = insertLevel(bC);
-                            int row2 = insertRow(c);
-                            int column2 = insertColumn(d);
-                            outputStream.writeObject(build);
-                            outputStream.writeObject(row2);
-                            outputStream.writeObject(column2);
+                            view.setNewBuild();
                             break;
                         case MOVE:
                             /*Chiedi una nuova myMovement*/
-                            int cP = 0;
-                            int a = 0; //riga
-                            int b = 0; //colonna
-
-                            int pawn = choosePawn(cP);
-                            int row1 = insertRow(a);
-                            int column1 = insertColumn(b);
-                            outputStream.writeObject(pawn);
-                            outputStream.writeObject(row1);
-                            outputStream.writeObject(column1);
+                            view.setNewMove();
                             break;
                         case SET_PLAYERS_NUMBER:
                             /*Chiedi il numero di giocatori*/
@@ -94,15 +84,12 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case INITIALIZE_PAWNS:
                             /*Chiedi le coordinate iniziali delle pedine*/
-                            /*Stringa con formato x1,y1,x2,y2*/
+                            view.setInitializePawn();
                             break;
                         case FAILED:
                             /*Invia errore al giocatore e resta subito pronto
                              * per una nuova richiesta di istruzioni dal server*/
-                            System.out.println("Errore generale");
-                            System.out.println(("Nuova istruzione in arrivo : "));
-                            //non so come ricevere
-                            Object newObject = inputStream.readObject();
+                            view.setFailed();
                             break;
                     }
                 }
@@ -121,153 +108,46 @@ public class NetworkHandlerClient implements Runnable {
         new Thread(() -> {
             /*Aggiorna il campo con quello appena arrivato dal server (table)
             Fallo in questo thread*/
-//
+
 
         }).start();
     }
 
-
-    /**
-     * Method that take the user's input level
-     *
-     * @param l is the level that user inputs
-     * @return the level that the user wants to build
-     */
-    private int insertLevel(int l) {
-        int livello = 0;
-        System.out.println("Che livello vuoi costruire?");
-        Scanner input = new Scanner(System.in);
-        l = input.nextInt();
-
-        if (l == 1 | l == 2 | l == 3 | l == 4) {
-            livello = l;
-        } else {
-            System.out.println("Livello inserito non corretto");
-        }
-        return livello;
-    }
-
-
-    //creo una classe che mi faccia scegliere una carta e mi restituisce il valore immesso
-    //pensiamo che la scelta avvenga attraverso 3 carte quindi
-
-    /**
-     * Method where user can choose the card
-     *
-     * @param i is the card that user can choose
-     * @return the card that user choose
-     */
-    private int chooseCard(int i) {
-        int cartaScelta = 0;
-        System.out.println("Inserisci la carta che vuoi scegliere: ");
-        Scanner input = new Scanner(System.in);
-        i = input.nextInt();
-
-        if (i == 1 | i == 2 | i == 3) {
-            cartaScelta = i;
-        } else {
-            System.out.println("The integer is not correct");
-        }
-        return cartaScelta;
-    }
-
-    //creo una classe nuova mossa che mi permette di scegliere la pedina che voglio utilizzare
-    //per la mossa
-
-    /**
-     * Method where the user can choose pawn to position at start or to move to near cell
-     *
-     * @param p is the pawn that user want to use to position at start or to move
-     * @return the pawn number that user want to position at start or to move
-     */
-    private int choosePawn(int p) {
-        int pedina = 0;
-        System.out.println("Che pedina vuoi scegliere? ");
-        Scanner input = new Scanner(System.in);
-        p = input.nextInt();
-
-        if (p == 1 | p == 2) {
-            pedina = p;
-        } else {
-            System.out.println("Pedina non scelta. Numero errato.");
-        }
-        return pedina;
-
-    }
-
-
-    //creo una classe inserimento di giocatori
-    //ritornerà un intero che è il numero dei giocatori che partecipano
-
-    /**
-     * Method that ask to one user how many players want to play
-     *
-     * @param a is the number that user insert to start playing
-     * @return the number of players
-     */
-    private int numberPlayer(int a) {
-        int numeroGiocatori = 0;
-        System.out.println("Numero di giocatori partecipanti: ");
-        Scanner input = new Scanner(System.in);
-        a = input.nextInt();
-
-        if (a == 2 | a == 3) {
-            numeroGiocatori = a;
-        } else {
-            System.out.println("Errore inserimento");
-        }
-        return numeroGiocatori;
-    }
-
-    /*creo una classe che permette all'utente di inserire le cordinate sia di posizionamento
-    della pedina sia di scelta della casella per la mossa*/
-
-    /**
-     * Method where user insert the cell's row where want to move or position
-     *
-     * @param i is the row that user want to insert
-     * @return the row insert from user
-     */
-
-    //metodo riga
-    private int insertRow(int i) {
-        int riga = 0;
-        System.out.println("Inserisci riga: ");
-        Scanner input = new Scanner(System.in);
-        i = input.nextInt();
-
-        if (i >= 0 && i <= 4) {
-            riga = i;
-        } else {
-            System.out.println("Errore inserimento");
-        }
-        return riga;
-    }
-
-    /**
-     * Method where user insert the cell's column where want to move or position
-     *
-     * @param j is the column that user want to insert
-     * @return the column insert from user
-     */
-    //metodo colonna
-    private int insertColumn(int j) {
-        int colonna = 0;
-        System.out.println("Inserisci colonna: ");
-        Scanner input = new Scanner(System.in);
-        j = input.nextInt();
-
-        if (j >= 0 && j <= 4) {
-            colonna = j;
-        } else {
-            System.out.println("Errore inserimento");
-        }
-        return colonna;
-    }
-
-    public void setPartecipanti(String partecipanti) throws IOException {
-        outputStream.writeObject(partecipanti);
+    public void setCard(int[] chooseCard) throws IOException {
+        cards = chooseCard;
+        outputStream.writeObject(chooseCard);
         outputStream.flush();
     }
+
+    public int[] getCard() {
+        return cards;
+    }
+
+
+    public void setPartecipanti(int[] players) throws IOException {
+        players1 = players;
+        outputStream.writeObject(players);
+        outputStream.flush();
+    }
+
+    public int[] getPartecipanti() {
+        return players1;
+    }
+
+    public void setCordinata(int[] coordinate) throws IOException {
+        outputStream.writeObject(coordinate);
+        outputStream.flush();
+    }
+
+    public void setMovementPawn(int[] coordinateMove) throws IOException {
+        outputStream.writeObject(coordinateMove);
+        outputStream.flush();
+    }
+
+    public void setBuildPawn(int[] positionBuild) throws IOException {
+        outputStream.writeObject(positionBuild);
+        outputStream.flush();
+    }
+
 
 }
