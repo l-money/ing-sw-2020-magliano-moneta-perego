@@ -50,4 +50,5 @@ public class TestMossa {
         assertEquals(-1, nullEffectBuild.getIdPawn());
         assertEquals(-1, nullEffectBuild.getIdPawn());
     }
+
 }

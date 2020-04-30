@@ -116,4 +116,5 @@ public class Athena extends God {
     public void afterOtherBuilding(Gamer other) {
         other.setLevelsUp(1);
     }
+
 }
