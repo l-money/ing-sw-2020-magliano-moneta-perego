@@ -433,7 +433,6 @@ public class Turno implements Runnable {
      * @param specialCell the past position of the pawn
      * @return the effect: true or false
      */
-    // TODO end the method and improve it
     public boolean godCardEffect(Mossa move, boolean effect, int i, Cell specialCell) {
         if (nullEffectForGodCards(move)) {
             effect = true;
@@ -512,7 +511,5 @@ public class Turno implements Runnable {
         }
         return effect;
     }
-
-
 
 }

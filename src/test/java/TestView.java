@@ -3,9 +3,13 @@ import org.junit.Test;
 import santorini.View;
 import santorini.model.Gamer;
 import santorini.model.God;
+import santorini.model.Mossa;
 import santorini.model.godCards.Pdor;
 
 import java.util.ArrayList;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
 
 public class TestView {
     private View view;
@@ -60,6 +64,55 @@ public class TestView {
         System.out.print("\n****pawn0 builds a dome in [2;0]****\n\n");
         view.getTable().setACell(2,0,3,false,true,null);
         view.printTable(view.getTable());
+    }
+
+    /**
+     * method that tests the coordinate in input
+     */
+    @Test
+    public void testGiveMeStringCoordinate() {
+        String s1 = "A";
+        String s2 = "3;2";
+        String s3 = "6,2";
+        String s4 = "2,3";
+        String s5 = "A,3";
+        int[] coordinate;
+        coordinate = view.giveMeStringCoordinate(s1);
+        assertEquals(-1, coordinate[0]);
+        assertEquals(-1, coordinate[1]);
+
+        coordinate = view.giveMeStringCoordinate(s2);
+        assertEquals(-1, coordinate[0]);
+        assertEquals(-1, coordinate[1]);
+
+        coordinate = view.giveMeStringCoordinate(s3);
+        assertEquals(-1, coordinate[0]);
+        assertEquals(-1, coordinate[1]);
+
+        coordinate = view.giveMeStringCoordinate(s5);
+        assertEquals(-1, coordinate[0]);
+        assertEquals(-1, coordinate[1]);
+
+        coordinate = view.giveMeStringCoordinate(s4);
+        assertEquals(2, coordinate[0]);
+        assertEquals(3, coordinate[1]);
+    }
+
+    /**
+     * method that tests if the gamer doesn't want using the card effect
+     */
+    @Test
+    public void testNoGodEffectStringInput() {
+        String s1 = "No";
+        String s2 = "NoNo";
+        Mossa m;
+        m = view.noGodEffect(s1);
+        assertEquals(Mossa.Action.MOVE, m.getAction());
+        assertEquals(-1, m.getIdPawn());
+        assertEquals(-1, m.getTargetX());
+        assertEquals(-1, m.getTargetY());
+        m = view.noGodEffect(s2);
+        assertNull(m);
     }
 
 }

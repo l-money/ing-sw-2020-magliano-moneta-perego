@@ -2,7 +2,6 @@ package santorini;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class Main {
@@ -19,8 +18,8 @@ public class Main {
             System.exit(1);
         }
         View v = new View();
-        NetworkHandlerClient handlerClient = new NetworkHandlerClient(address, name, v);
-        v.setHandlerClient(handlerClient);
-        new Thread(handlerClient).start();
+        //NetworkHandlerClient handlerClient = new NetworkHandlerClient(address, name, v);
+        //v.setHandlerClient(handlerClient);
+        //new Thread(handlerClient).start();
     }
 }
