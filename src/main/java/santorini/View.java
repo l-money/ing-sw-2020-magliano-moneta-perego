@@ -54,7 +54,6 @@ public class View {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }).start();
     }
 
