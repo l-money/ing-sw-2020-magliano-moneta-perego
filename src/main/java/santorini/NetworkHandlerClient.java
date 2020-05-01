@@ -1,16 +1,22 @@
 package santorini;
 
+import santorini.model.Extraction;
 import santorini.model.God;
+import santorini.model.Mossa;
 import santorini.model.Table;
 
 import java.io.*;
 import java.net.Socket;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class NetworkHandlerClient implements Runnable {
     private Socket server;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+    private View view;
+    private int[] players1;
 
     /**
      * Initialize a new connection with a game server to join in a new game
@@ -18,7 +24,8 @@ public class NetworkHandlerClient implements Runnable {
      * @param address server address
      * @param name    player name
      */
-    public NetworkHandlerClient(String address, String name) {
+    public NetworkHandlerClient(String address, String name, View view) {
+        this.view = view;
         try {
             server = new Socket(address, Parameters.PORT);
             outputStream = new ObjectOutputStream(server.getOutputStream());
@@ -46,9 +53,7 @@ public class NetworkHandlerClient implements Runnable {
                 if (o instanceof ArrayList) {
                     ArrayList<God> gods = (ArrayList<God>) o;
                     /*Scelta della carta*/
-                    God g = null;
-                    outputStream.writeObject(g);
-                    outputStream.flush();
+                    view.chooseCards(gods);
                 } else if (o instanceof Table) {
                     Table t = (Table) o;
                     updateField(t);
@@ -57,19 +62,24 @@ public class NetworkHandlerClient implements Runnable {
                     switch (cmd) {
                         case BUILD:
                             /*Chiedi una nuova myBuilding*/
+                            view.setNewBuild();
                             break;
                         case MOVE:
                             /*Chiedi una nuova myMovement*/
+                            view.setNewMove();
                             break;
                         case SET_PLAYERS_NUMBER:
                             /*Chiedi il numero di giocatori*/
+                            view.setNumeroGiocatori();
                             break;
                         case INITIALIZE_PAWNS:
                             /*Chiedi le coordinate iniziali delle pedine*/
+                            view.setInitializePawn();
                             break;
                         case FAILED:
                             /*Invia errore al giocatore e resta subito pronto
                              * per una nuova richiesta di istruzioni dal server*/
+                            view.setFailed();
                             break;
                     }
                 }
@@ -88,7 +98,41 @@ public class NetworkHandlerClient implements Runnable {
         new Thread(() -> {
             /*Aggiorna il campo con quello appena arrivato dal server (table)
             Fallo in questo thread*/
+
+
         }).start();
     }
+
+    public void setCard(God chooseCard) throws IOException {
+        outputStream.writeObject(chooseCard);
+        outputStream.flush();
+    }
+
+
+    public void setPartecipanti(int[] players) throws IOException {
+        players1 = players;
+        outputStream.writeObject(players);
+        outputStream.flush();
+    }
+
+    public int[] getPartecipanti() {
+        return players1;
+    }
+
+    public void setCordinata(int[] coordinate) throws IOException {
+        outputStream.writeObject(coordinate);
+        outputStream.flush();
+    }
+
+    public void setMovementPawn(int[] coordinateMove) throws IOException {
+        outputStream.writeObject(coordinateMove);
+        outputStream.flush();
+    }
+
+    public void setBuildPawn(int[] positionBuild) throws IOException {
+        outputStream.writeObject(positionBuild);
+        outputStream.flush();
+    }
+
 
 }
