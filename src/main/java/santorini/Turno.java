@@ -49,6 +49,11 @@ public class Turno implements Runnable {
         return move;
     }
 
+    public Mossa setMove(int i, int x, int y) {
+        Mossa m = new Mossa(Mossa.Action.MOVE, i, x, y);
+        return m;
+    }
+
     public int getIdStartPawn() {
         return idStartPawn;
     }
@@ -97,7 +102,8 @@ public class Turno implements Runnable {
     }
 
     public void sendFailed() {
-        gameHandler.sendFailed(gamer);
+        //gameHandler.sendFailed(gamer);
+        System.err.print("Errore\n");
     }
 
     /**
@@ -118,6 +124,7 @@ public class Turno implements Runnable {
         startValidation = false;
         if ((getGamer().getMyGodCard().getName().equals("Prometheus")) && (!promEffect)) {
             move = giveMeMossa(Mossa.Action.BUILD);
+            System.out.println("Hai Prometeo");
             promEffect = true;
         } else {
             do {

@@ -34,6 +34,14 @@ public class TestMossa {
         assertEquals(1, build.getIdPawn());
         assertEquals(1, build.getTargetX());
         assertEquals(2, build.getTargetY());
+        move.setAction(Mossa.Action.BUILD);
+        move.setIdPawn(1);
+        move.setTargetX(3);
+        move.setTargetY(3);
+        assertEquals(Mossa.Action.BUILD, move.getAction());
+        assertEquals(1, move.getIdPawn());
+        assertEquals(3, move.getTargetX());
+        assertEquals(3, move.getTargetY());
     }
 
     /**
@@ -50,5 +58,32 @@ public class TestMossa {
         assertEquals(-1, nullEffectBuild.getIdPawn());
         assertEquals(-1, nullEffectBuild.getIdPawn());
     }
+
+    /**
+     * method that tests setMyMossa
+     */
+    @Test
+    public void testSetMyMossa() {
+        Mossa k;
+        k = move.setMyMossa(Mossa.Action.MOVE, 0, 1, 2);
+        assertEquals(Mossa.Action.MOVE, k.getAction());
+        assertEquals(0, k.getIdPawn());
+        assertEquals(1, k.getTargetX());
+        assertEquals(2, k.getTargetY());
+        k = move.setMyMossa(Mossa.Action.BUILD, 1, 2, 3);
+        assertEquals(Mossa.Action.BUILD, k.getAction());
+        assertEquals(1, k.getIdPawn());
+        assertEquals(2, k.getTargetX());
+        assertEquals(3, k.getTargetY());
+    }
+
+    //TODO review this method
+    /**
+     @Test public void testInputMossa() throws IOException {
+     Mossa m;
+     m = move.InputMossa();
+     System.out.println(m.getIdPawn());
+     }
+     */
 
 }

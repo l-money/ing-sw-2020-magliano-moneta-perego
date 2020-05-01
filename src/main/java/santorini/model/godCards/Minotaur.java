@@ -82,10 +82,12 @@ public class Minotaur extends God {
                 turno.getTable().getTableCell(end.getX(), end.getY()).setPawn(null);
                 turno.baseMovement(turno.getMove());
                 turno.getValidationMove();
+
                 minoEffect = turno.isValidationMove();
             } else {
                 turno.baseMovement(turno.getMove());
                 turno.getValidationMove();
+
             }
         } while (!turno.isValidationMove());
         turno.getGamer().setSteps(0);

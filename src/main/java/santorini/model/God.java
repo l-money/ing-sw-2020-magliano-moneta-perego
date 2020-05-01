@@ -23,11 +23,11 @@ public abstract class God implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return "Name";
     }
 
     public String getDescription() {
-        return description;
+        return "Description";
     }
 
     /**

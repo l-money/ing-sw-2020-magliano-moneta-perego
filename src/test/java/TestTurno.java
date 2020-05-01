@@ -4,6 +4,7 @@ import santorini.NetworkHandlerServer;
 import santorini.Turno;
 import santorini.model.*;
 import santorini.model.godCards.Athena;
+import santorini.model.godCards.Pdor;
 import santorini.model.godCards.Prometheus;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class TestTurno {
     private Turno turn;
     private Table table;
     private Gamer gamer;
-    private God Athena, Prometheus;
+    private God Athena, Prometheus, Pdor;
     private NetworkHandlerServer gamerHandler;
     private ArrayList<God> godCards;
     private boolean effect;
@@ -24,14 +25,16 @@ public class TestTurno {
     public void before() {
         table = new Table();
         gamer = new Gamer(null, "Hercules", 0, null, null);
+        //gamerHandler = new NetworkHandlerServer();
         Athena = new Athena();
         Prometheus = new Prometheus();
+        Pdor = new Pdor();
         godCards = new ArrayList<>();
+        godCards.add(Pdor);
         godCards.add(Athena);
         godCards.add(Prometheus);
+
         turn = new Turno(godCards, gamer, table, gamerHandler);
-
-
     }
 
     /**
@@ -389,6 +392,29 @@ public class TestTurno {
         effect = turn.godCardEffect(m6, effect, 0, myPosition);
         assertTrue(!effect);
     }
+    /**
+     public static void main(String[] args) {
+     int i, x, y;
+     String s;
+     Mossa m = null;
+     Scanner in = new Scanner(System.in);
+     System.out.print("Inserisci azione: ");
+     s = in.nextLine();
+     System.out.print(" *"+s+"*\n");
+     System.out.println("Inserisci pedina da muovere: ");
+     i = in.nextInt();
+     System.out.println("Inserisci riga: ");
+     x = in.nextInt();
+     System.out.println("Inserisci colonna: ");
+     y = in.nextInt();
+     if( s.equals("Movimento")){ m = new Mossa(Mossa.Action.MOVE, i, x, y);}
+     else{ if( s.equals("Costruisci")){ m = new Mossa(Mossa.Action.BUILD, i, x, y);}}
 
+     System.out.println("Mossa inserita: azione = " + m.getAction() +
+     "\npedina = " + m.getIdPawn() + "\ncoordinate = " +
+     m.getTargetX() + "," + m.getTargetY());
+     return;
+     }
+     */
 
 }

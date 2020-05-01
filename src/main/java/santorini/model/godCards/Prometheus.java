@@ -61,6 +61,7 @@ public class Prometheus extends God {
                 }
                 turno.baseMovement(turno.getMove());
                 turno.getValidationMove();
+
                 promValidation = turno.isValidationMove();
             } while (!promValidation);
             turno.getGamer().setSteps(0);
@@ -69,6 +70,7 @@ public class Prometheus extends God {
             do {
                 turno.baseBuilding(turno.getMove());
                 turno.getValidationMove();
+
                 promValidation = turno.isValidationMove();
             } while (!promValidation);
             turno.getGamer().setLevelsUp(0);
