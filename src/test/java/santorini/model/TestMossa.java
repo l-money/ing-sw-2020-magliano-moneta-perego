@@ -78,12 +78,11 @@ public class TestMossa {
     }
 
     //TODO review this method
-    /**
+/**
      @Test public void testInputMossa() throws IOException {
      Mossa m;
      m = move.InputMossa();
      System.out.println(m.getIdPawn());
      }
      */
-
 }

@@ -1,8 +1,12 @@
 package santorini.model;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 
 public class Mossa implements Serializable {
+
+    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     public static enum Action {
         MOVE,
         BUILD,
@@ -32,6 +36,7 @@ public class Mossa implements Serializable {
 
     /**
      * method getTargetX
+     *
      * @return row
      */
     public int getTargetX() {
@@ -40,6 +45,7 @@ public class Mossa implements Serializable {
 
     /**
      * method getTargetY
+     *
      * @return column
      */
     public int getTargetY() {
@@ -48,6 +54,7 @@ public class Mossa implements Serializable {
 
     /**
      * method getIdPawn
+     *
      * @return id of the pawn
      */
     public int getIdPawn() {
@@ -91,6 +98,14 @@ public class Mossa implements Serializable {
         this.idPawn = idPawn;
     }
 
+    public static BufferedReader getInput() {
+        return input;
+    }
+
+    public static void setInput(BufferedReader input) {
+        Mossa.input = input;
+    }
+
     /**
      * method setMyMossa
      *
@@ -115,18 +130,19 @@ public class Mossa implements Serializable {
 
     //TODO review this method
     /**
+
      public Mossa InputMossa() throws IOException {
-     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
      System.out.println("Inserisci azione");
-     String a = input.readLine();
+     String a = getInput().readLine();
      System.out.println("Inserisci pedina");
-     String  s = input.readLine();
+     String  s = getInput().readLine();
      int i = Integer.parseInt(s);
      System.out.println("Inserisci riga");
-     s = input.readLine();
+     s = getInput().readLine();
      int x = Integer.parseInt(s);
      System.out.println("Inserisci colonna");
-     s = input.readLine();
+     s = getInput().readLine();
      int y = Integer.parseInt(s);
      if(a.equals("MOVE")){
      return new Mossa(Action.MOVE,i,x,y);
