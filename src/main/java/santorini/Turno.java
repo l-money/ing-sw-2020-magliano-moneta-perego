@@ -49,6 +49,7 @@ public class Turno implements Runnable {
         return move;
     }
 
+
     public int getIdStartPawn() {
         return idStartPawn;
     }
@@ -106,7 +107,7 @@ public class Turno implements Runnable {
      * all god cards features
      */
     public void run() {
-        firstControlOfMovement(getMove());
+        firstControlOfMovement();
         myMovement();
         win();
         myBuilding();
@@ -115,23 +116,22 @@ public class Turno implements Runnable {
     /**
      * method firstControlOfMovement
      */
-    public void firstControlOfMovement(Mossa m) {
+    public void firstControlOfMovement() {
         startValidation = false;
         if ((getGamer().getMyGodCard().getName().equals("Prometheus")) && (!promEffect)) {
-            //move = giveMeMossa(Mossa.Action.BUILD);
+            move = giveMeMossa(Mossa.Action.BUILD);
             System.out.println("Hai Prometeo");
             promEffect = true;
         } else {
-            //do {
-            //move = giveMeMossa(Mossa.Action.MOVE);
+            do {
+                move = giveMeMossa(Mossa.Action.MOVE);
                 startValidation = controlStandardParameter(move);
                 if (!startValidation) {
                     sendFailed();
                 } else {
-                    System.out.println("OK");
                     idStartPawn = move.getIdPawn();
                 }
-            //} while (!startValidation);
+            } while (!startValidation);
         }
     }
 

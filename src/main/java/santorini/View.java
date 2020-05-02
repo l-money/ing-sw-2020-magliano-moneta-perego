@@ -2,6 +2,7 @@ package santorini;
 
 import santorini.model.*;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,9 +26,149 @@ public class View {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
     public void setHandlerClient(NetworkHandlerClient handlerClient) {
         this.handlerClient = handlerClient;
     }
+
+    //metodo che stampa la table indicante livello cella e posizione pedina
+    public void printTable(Table table) {
+        //printGamerInGame(gamers);
+        System.out.print("\t\t\t\t\t\t[colonna]\n\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n");
+        System.out.print("[riga]\t------------------------------------------\n");
+        for (int i = 0; i <= 4; i++) {
+            System.out.print("* " + i + " *\t");
+            for (int j = 0; j <= 4; j++) {
+                if (table.getTableCell(i, j).getPawn() != null) {
+                    System.out.print(" |");
+                    colorCellPawn(table.getTableCell(i, j).getPawn());
+                } else {
+                    System.out.print(" |\t");
+                    if (table.getTableCell(i, j).isComplete()) {
+                        System.out.print("\u001B[45m" + "\u001B[0m");
+                    } else {
+                        System.out.print("\u001B[0m");
+                    }
+                }
+                System.out.print(" " + table.getTableCell(i, j).getLevel() + "\u001B[0m" + "\t");
+            }
+            System.out.print(" |\n");
+            System.out.print("\t\t------------------------------------------");
+            System.out.println();
+        }
+    }
+
+    //metodo che ricerca in quali celle hanno la cupola
+    public void searchLevelMax(Table table) {
+        for (int i = 0; i <= 4; i++) {
+            for (int j = 0; j <= 4; j++) {
+
+            }
+        }
+    }
+
+
+    public void colorCellPawn(Pawn pawn) {
+        if (pawn.getColorPawn().equals(Color.YELLOW)) {
+            System.out.print("\u001B[34m" + "\u001B[43m" + "(" + pawn.getIdPawn() + ")" + "\u001B[0m");
+        } else {
+            if (pawn.getColorPawn().equals(Color.BLUE)) {
+                System.out.print("\u001B[46m" + "(" + pawn.getIdPawn() + ")" + "\u001B[0m");
+
+            } else {
+                if (pawn.getColorPawn().equals(Color.RED)) {
+                    System.out.print("\u001B[41m" + "(" + pawn.getIdPawn() + ")" + "\u001B[0m");
+                } else {
+                    System.out.print("\u001B[0m");
+                }
+            }
+        }
+    }
+
+    public void printGamerInGame(ArrayList<Gamer> gamers) {
+        int k = gamers.size();
+        for (int i = 0; i < k; i++) {
+            System.out.print("Giocatore " + (i + 1) + ": " + gamers.get(i).getName() + "\t\tCarta: " + gamers.get(i).getMyGodCard().getName() + "\t\tColore: ");
+            printColor(gamers.get(i).getColorGamer());
+        }
+        System.out.println();
+    }
+
+    public void printColor(Color color) {
+        if (color == Color.YELLOW) {
+            System.out.println("Giallo");
+        } else {
+            if (color == Color.RED) {
+                System.out.println("Rosso");
+            } else {
+                if (color == Color.BLUE) {
+                    System.out.println("Blu");
+                } else {
+                    System.out.println("No color");
+                }
+            }
+        }
+    }
+
+    /**
+     * giveMeStringCoordinate
+     *
+     * @param s the input string with coordinate, the correct syntax is: x,y
+     * @return the coordinate x = row and y = column
+     */
+    public int[] giveMeStringCoordinate(String s) {
+        int l = s.length();
+        int[] cordinate = new int[2];
+        cordinate[0] = -1;
+        cordinate[1] = -1;
+        if (l != 3) {
+            System.err.println("Errore: sintassi non corretta");
+        } else {
+            char[] c = new char[l];
+            for (int i = 0; i < l; i++) {
+                c[i] = s.charAt(i);
+            }
+            if (c[1] != ',') {
+                System.err.println("Errore: sintassi non corretta");
+            } else {
+                int x = Character.getNumericValue(c[0]);
+                int y = Character.getNumericValue(c[2]);
+                if ((x < 0) || (x > 4) || (y < 0) || (y > 4)) {
+                    System.err.println("Errore: valori non esistenti");
+                } else {
+                    cordinate[0] = x;
+                    cordinate[1] = y;
+                }
+
+            }
+        }
+        return cordinate;
+    }
+
+    /**
+     * method noGodEffect
+     *
+     * @param no the input string of the gamer
+     * @return the noEffect if the syntax is correct, or return null
+     */
+
+    public Mossa noGodEffect(String no) {
+        if ((no.equals("NO")) || (no.equals("No")) || (no.equals("no"))) {
+            Mossa noEffect;
+            noEffect = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
+            return noEffect;
+        } else {
+            return null;
+        }
+    }
+
 
 
     public void chooseCards(ArrayList<God> gods) {
@@ -66,7 +207,7 @@ public class View {
             System.out.println("In che cella vuoi costruire [x,y]? ");
             try {
                 moveBuild = br.readLine();
-                positionBuild = giveMeString(moveBuild, 2);
+                positionBuild = giveMeStringCoordinate(moveBuild);
                 int b = Integer.parseInt(movePawn);
                 build = new Mossa(Mossa.Action.BUILD, b, positionBuild[0], positionBuild[1]);
 
@@ -93,14 +234,14 @@ public class View {
                     case '0':
                         System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
                         stringMove = br.readLine();
-                        coordinateMove = giveMeString(stringMove, 2);
+                        coordinateMove = giveMeStringCoordinate(stringMove);
                         move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
 
                         break;
                     case '1':
                         System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
                         stringMove = br.readLine();
-                        coordinateMove = giveMeString(stringMove, 2);
+                        coordinateMove = giveMeStringCoordinate(stringMove);
                         move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
 
                         break;
@@ -123,7 +264,7 @@ public class View {
     public void setNumeroGiocatori() {
         new Thread(() -> {
             String partecipanti = "2";
-            int[] players = new int[1];
+            int players;
             System.out.print("Scegli numero partecipanti [Default 2]: ");
             try {
 //                partecipanti = br.readLine();
@@ -132,7 +273,7 @@ public class View {
 //                } else {
 //                    partecipanti = "2";
 //                }
-                players = giveMeString(partecipanti, 1);//Se scelgo di usare il metodo devo mettere int al posto di string?
+                players = Integer.parseInt(partecipanti);//Se scelgo di usare il metodo devo mettere int al posto di string?
                 handlerClient.setPartecipanti(players);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -147,18 +288,18 @@ public class View {
     public void setInitializePawn() {
         new Thread(() -> {
             String coordPawn0, coordPawn1;
-            int[] coordinate = new int[2];
+            int[] coordinate;
             System.out.println("Inserisci posizioni delle pedine: ");
             try {
                 System.out.println("Inserisci cordinata pedina 1 [x,y]: ");
                 coordPawn0 = br.readLine();
-                coordinate = giveMeString(coordPawn0, 2);
+                coordinate = giveMeStringCoordinate(coordPawn0);
                 gamer.setAPawn(0, coordinate[0], coordinate[1], 0, 0);
                 table.setACell(coordinate[0], coordinate[1], 0, false, false, gamer.getPawn(0));
 
                 System.out.println("Inserisci cordinata pedina 2 [x,y]: ");
                 coordPawn1 = br.readLine();
-                coordinate = giveMeString(coordPawn1, 2);
+                coordinate = giveMeStringCoordinate(coordPawn1);
                 gamer.setAPawn(1, coordinate[0], coordinate[1], 0, 0);
                 table.setACell(coordinate[0], coordinate[1], 0, false, false, gamer.getPawn(1));
 
@@ -194,44 +335,6 @@ public class View {
         return numberCard;
     }
 
-    public int[] giveMeString(String s, int n) {
-        //s è la stringa in ingresso
-        //n numero di caratteri richiesti: 1 per giocatori; 2 per coordinate x,y
-        int[] numbers = new int[n];
-        int l = s.length();
-        char[] chars = new char[l];
-        for (int i = 0; i < l; i++) {
-            chars[i] = s.charAt(i);
-        }
-        switch (l) {
-            case 1:
-                int x = Integer.parseInt(String.valueOf(chars[n - 1]));
-                if ((x == 2) || (x == 3)) {
-                    numbers[n - 1] = x;
-                } else {
-                    System.err.println("Errore\n");
-                }
-                break;
-            case 3:
-                if (chars[1] != ',') {
-                    System.err.println("Errore\n");
-                } else {
-                    int x1 = Integer.parseInt(String.valueOf(chars[0]));
-                    int y1 = Integer.parseInt(String.valueOf(chars[2]));
-                    if ((x1 < 0) || (x1 > 4) || (y1 < 0) || (y1 > 4)) {
-                        System.err.println("Errore\n");
-                    } else {
-                        numbers[0] = x1;
-                        numbers[1] = y1;
-                    }
-                }
-                break;
-            default:
-                System.err.println("Errore\n");
-                break;
-        }
-        return numbers;
-    }
 
 }
 

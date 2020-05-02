@@ -1,22 +1,20 @@
 package santorini;
 
-import santorini.model.Extraction;
 import santorini.model.God;
-import santorini.model.Mossa;
 import santorini.model.Table;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class NetworkHandlerClient implements Runnable {
     private Socket server;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private View view;
-    private int[] players1;
+    private int players1;
 
     /**
      * Initialize a new connection with a game server to join in a new game
@@ -109,13 +107,13 @@ public class NetworkHandlerClient implements Runnable {
     }
 
 
-    public void setPartecipanti(int[] players) throws IOException {
+    public void setPartecipanti(int players) throws IOException {
         players1 = players;
         outputStream.writeObject(players);
         outputStream.flush();
     }
 
-    public int[] getPartecipanti() {
+    public int getPartecipanti() {
         return players1;
     }
 

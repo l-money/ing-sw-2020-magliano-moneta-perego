@@ -1,12 +1,8 @@
 package santorini.model;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 
 public class Mossa implements Serializable {
-
-    static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     public static enum Action {
         MOVE,
         BUILD,
@@ -27,7 +23,6 @@ public class Mossa implements Serializable {
 
     /**
      * method getAction
-     *
      * @return action
      */
     public Action getAction() {
@@ -36,7 +31,6 @@ public class Mossa implements Serializable {
 
     /**
      * method getTargetX
-     *
      * @return row
      */
     public int getTargetX() {
@@ -45,7 +39,6 @@ public class Mossa implements Serializable {
 
     /**
      * method getTargetY
-     *
      * @return column
      */
     public int getTargetY() {
@@ -54,7 +47,6 @@ public class Mossa implements Serializable {
 
     /**
      * method getIdPawn
-     *
      * @return id of the pawn
      */
     public int getIdPawn() {
@@ -63,25 +55,20 @@ public class Mossa implements Serializable {
 
     /**
      * method setAction
-     *
      * @param action .
      */
     public void setAction(Action action) {
         this.action = action;
     }
-
     /**
      * method setTargetX
-     *
-     * @param targetX .
+     * @param  targetX .
      */
     public void setTargetX(int targetX) {
         this.targetX = targetX;
     }
-
     /**
      * method setIdPawn
-     *
      * @param targetY .
      */
     public void setTargetY(int targetY) {
@@ -90,7 +77,6 @@ public class Mossa implements Serializable {
 
     /**
      * method setIdPawn
-     *
      * @param idPawn id pawn
      */
     public void setIdPawn(int idPawn) {
@@ -98,17 +84,8 @@ public class Mossa implements Serializable {
         this.idPawn = idPawn;
     }
 
-    public static BufferedReader getInput() {
-        return input;
-    }
-
-    public static void setInput(BufferedReader input) {
-        Mossa.input = input;
-    }
-
     /**
      * method setMyMossa
-     *
      * @param a action MOVE or BUILD
      * @param i id Pawn
      * @param x row
@@ -130,19 +107,18 @@ public class Mossa implements Serializable {
 
     //TODO review this method
     /**
-
      public Mossa InputMossa() throws IOException {
-
+     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
      System.out.println("Inserisci azione");
-     String a = getInput().readLine();
+     String a = input.readLine();
      System.out.println("Inserisci pedina");
-     String  s = getInput().readLine();
+     String  s = input.readLine();
      int i = Integer.parseInt(s);
      System.out.println("Inserisci riga");
-     s = getInput().readLine();
+     s = input.readLine();
      int x = Integer.parseInt(s);
      System.out.println("Inserisci colonna");
-     s = getInput().readLine();
+     s = input.readLine();
      int y = Integer.parseInt(s);
      if(a.equals("MOVE")){
      return new Mossa(Action.MOVE,i,x,y);
