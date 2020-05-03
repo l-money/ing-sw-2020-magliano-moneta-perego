@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import santorini.NetworkHandlerServer;
 import santorini.Turno;
+import santorini.View;
 import santorini.model.*;
 import santorini.model.godCards.Athena;
 import santorini.model.godCards.Pdor;
@@ -70,7 +71,7 @@ public class TestTurno {
         Pawn q = new Pawn();
         turn.getTable().setACell(1, 1, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(1, 2, 0, false, false, turn.getGamer().getPawn(1));
-        turn.setStartValidation(turn.getGamer().getPawn(0).getIdPawn());
+        turn.setIdStartPawn(turn.getGamer().getPawn(0).getIdPawn());
         //cell[rowX,columnY,level]
         //move up from cell[1,1,0] to cell[2,2,1]
         turn.getTable().setACell(2, 2, 1, true, false, null);
@@ -105,7 +106,7 @@ public class TestTurno {
         //the gamer changes the pawn
         Mossa move5 = new Mossa(Mossa.Action.MOVE, 1, 0, 3);
         turn.baseMovement(move5);
-        assertTrue(!turn.isValidationMove());
+        assertTrue(turn.isValidationMove());
         //the gamer has steps = 0
         turn.getGamer().setSteps(0);
         turn.getTable().setACell(2, 2, 1, false, false, turn.getGamer().getPawn(0));
@@ -129,7 +130,7 @@ public class TestTurno {
     @Test
     public void testBaseMovementLockUnlock() {
         Pawn q = new Pawn();
-        turn.setStartValidation(0);//gamer want to move  pawn0
+        turn.setIdStartPawn(0);//gamer want to move  pawn0
         turn.getTable().setACell(0, 0, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(1));
         //pawn0 can not move, pawn1 can move
@@ -146,7 +147,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getPawn(1).getICanPlay());//pawn1 is not locked
         assertTrue(!turn.getGamer().getLoser());//gamer can move with pawn1
         //pawn0 can not move and pawn1 can not move
-        turn.setStartValidation(1);//gamer want to move pawn1
+        turn.setIdStartPawn(1);//gamer want to move pawn1
         turn.getTable().setACell(3, 3, 1, false, true, null);//level 1 with dome for Atlas effect
         Mossa move1 = new Mossa(Mossa.Action.MOVE, 1, 3, 4);
         turn.baseMovement(move1);
@@ -156,7 +157,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getLoser());//gamer can not move
         //pawn0 unlocks
         turn.getGamer().setLoser(false);
-        turn.setStartValidation(0);//gamer want to move pawn0
+        turn.setIdStartPawn(0);//gamer want to move pawn0
         turn.getTable().setACell(0, 1, 1, true, false, null);//cell is free
         Mossa move3 = new Mossa(Mossa.Action.MOVE, 0, 0, 1);
         turn.baseMovement(move3);
@@ -171,7 +172,7 @@ public class TestTurno {
      */
     @Test
     public void testBaseBuilding() {
-        turn.setStartValidation(0);
+        turn.setIdStartPawn(0);
         turn.getTable().setACell(1, 1, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(2, 2, 1, false, false, turn.getGamer().getPawn(1));
         //pawn0 can build:
@@ -219,7 +220,7 @@ public class TestTurno {
      */
     @Test
     public void testBaseBuildingLockUnlock() {
-        turn.setStartValidation(1);
+        turn.setIdStartPawn(1);
         Pawn q = new Pawn();
         turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(0, 0, 1, false, false, turn.getGamer().getPawn(1));
@@ -234,7 +235,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getPawn(0).getICanPlay());
         assertTrue(!turn.getGamer().getLoser());
         //pawn1 can not build, pawn0 can not build, gamer loses
-        turn.setStartValidation(0);
+        turn.setIdStartPawn(0);
         turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(3, 4, 3, false, true, null);
         turn.getTable().setACell(4, 3, 3, false, true, null);
@@ -247,7 +248,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getLoser());
         //pawn1 unlocks
         turn.getGamer().setLoser(false);
-        turn.setStartValidation(1);//gamer want to move pawn1
+        turn.setIdStartPawn(1);//gamer want to move pawn1
         turn.getTable().setACell(1, 1, 1, true, false, null);//cell is free
         Mossa move3 = new Mossa(Mossa.Action.BUILD, 1, 1, 1);
         turn.baseBuilding(move3);
@@ -262,7 +263,7 @@ public class TestTurno {
      */
     @Test
     public void testBagEmpty() {
-        turn.setStartValidation(0);
+        turn.setIdStartPawn(0);
         //set empty the counterBrick of level 1
         while (turn.getTable().getBag().controlExistBrick(1)) {
             turn.getTable().getBag().extractionBrick(1);
@@ -292,7 +293,7 @@ public class TestTurno {
      */
     @Test
     public void testControlBaseWin() {
-        turn.setStartValidation(0);
+        turn.setIdStartPawn(0);
         turn.getGamer().setAPawn(0, 1, 1, 1, 2);
         turn.getTable().setACell(1, 1, 2, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(2, 2, 3, true, false, null);
@@ -330,7 +331,7 @@ public class TestTurno {
      */
     @Test
     public void testGetMyStep() {
-        turn.setStartValidation(1);
+        turn.setIdStartPawn(1);
         turn.getGamer().setAPawn(1, 1, 1, 0, 1);
         turn.getTable().setACell(1, 1, 1, false, false, turn.getGamer().getPawn(1));
         turn.getTable().setACell(2, 2, 2, true, false, null);
@@ -348,10 +349,9 @@ public class TestTurno {
     /**
      * method that tests the god effect of Artemis
      */
-
     @Test
     public void testGodCardEffectArtemis() {
-        turn.setStartValidation(0);
+        turn.setIdStartPawn(0);
         //pawn0 moves from cell[1,1] to cell[2,2] and does a secondo move to cell[3,3]
         turn.getGamer().setAPawn(0, 0, 0, 0, 0);
         turn.getTable().setACell(1, 1, 1, false, false, turn.getGamer().getPawn(0));
@@ -381,7 +381,7 @@ public class TestTurno {
         myPosition = turn.getTable().getTableCell(2, 2);
         Mossa m4 = new Mossa(Mossa.Action.MOVE, 0, 2, 3);
         turn.baseMovement(m4);
-        assertTrue(turn.isValidationMove());
+        assertTrue(!turn.isValidationMove());
         //System.out.print("x: "+turn.getGamer().getPawn(0).getRow());
         //System.out.print(" y "+turn.getGamer().getPawn(0).getColumn()+"\n");
         Mossa m5 = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
@@ -392,29 +392,138 @@ public class TestTurno {
         effect = turn.godCardEffect(m6, effect, 0, myPosition);
         assertTrue(!effect);
     }
-    /**
-     public static void main(String[] args) {
-     int i, x, y;
-     String s;
-     Mossa m = null;
-     Scanner in = new Scanner(System.in);
-     System.out.print("Inserisci azione: ");
-     s = in.nextLine();
-     System.out.print(" *"+s+"*\n");
-     System.out.println("Inserisci pedina da muovere: ");
-     i = in.nextInt();
-     System.out.println("Inserisci riga: ");
-     x = in.nextInt();
-     System.out.println("Inserisci colonna: ");
-     y = in.nextInt();
-     if( s.equals("Movimento")){ m = new Mossa(Mossa.Action.MOVE, i, x, y);}
-     else{ if( s.equals("Costruisci")){ m = new Mossa(Mossa.Action.BUILD, i, x, y);}}
 
-     System.out.println("Mossa inserita: azione = " + m.getAction() +
-     "\npedina = " + m.getIdPawn() + "\ncoordinate = " +
-     m.getTargetX() + "," + m.getTargetY());
-     return;
-     }
+    /**
+     * method that tests if the gamer has the card Prometheus
      */
+    @Test
+    public void testEffectOfPrometheusCard() {
+        gamer.setMyGodCard(Prometheus);
+        assertFalse(turn.getPromEffect());
+        turn.effectOfPrometheusCard();
+        assertTrue(turn.getPromEffect());
+        turn.setPromEffect(false);
+        gamer.setMyGodCard(Pdor);
+        assertFalse(turn.getPromEffect());
+        turn.effectOfPrometheusCard();
+        assertTrue(!turn.getPromEffect());
+    }
+
+    /**
+     * method that tests a turn of a gamer with movement and building
+     */
+    @Test
+    public void testMovementAndBuilding() {
+        View v = new View();
+        Pawn q = new Pawn();
+        q.setIdGamer(1);
+        q.setIdPawn(0);
+        gamer.setMyGodCard(Pdor);
+        gamer.setAPawn(1, -2, -2, 0, 0);
+        gamer.setAPawn(0, -2, -2, 0, 0);
+        turn.getTable().setACell(0, 0, 1, false, false, gamer.getPawn(1));
+        turn.getTable().setACell(3, 0, 1, false, false, gamer.getPawn(0));
+        turn.getTable().setACell(1, 0, 3, true, false, null);
+        turn.getTable().setACell(0, 1, 1, false, false, q);
+        turn.getTable().setACell(1, 1, 2, true, false, null);
+        turn.getTable().setACell(1, 2, 3, false, true, null);
+        v.printTable(turn.getTable());
+        Mossa m0 = new Mossa(Mossa.Action.BUILD, 1, 1, 1);
+        Mossa m1 = new Mossa(Mossa.Action.MOVE, 1, 1, 0);
+        Mossa m2 = new Mossa(Mossa.Action.MOVE, 1, 1, 1);
+        Mossa m3 = new Mossa(Mossa.Action.MOVE, 1, 2, 3);
+        Mossa m4 = new Mossa(Mossa.Action.BUILD, 0, 1, 2);
+        Mossa m5 = new Mossa(Mossa.Action.BUILD, 1, 1, 2);
+        Mossa m6 = new Mossa(Mossa.Action.BUILD, 1, 2, 2);
+        System.out.println("\n");
+        do {
+            turn.effectOfPrometheusCard();
+            assertTrue(!turn.getPromEffect());
+            turn.myMovement(m0);
+        } while (!turn.isValidationMove() && turn.getCount() <= 1);
+        assertFalse(turn.isValidationMove());
+
+        turn.setCount(0);
+        do {
+            turn.effectOfPrometheusCard();
+            assertTrue(!turn.getPromEffect());
+            turn.myMovement(m1);
+        } while (!turn.isValidationMove() && turn.getCount() <= 1);
+        assertFalse(turn.isValidationMove());
+
+        turn.setCount(0);
+        do {
+            turn.effectOfPrometheusCard();
+            assertTrue(!turn.getPromEffect());
+            turn.myMovement(m2);
+        } while (!turn.isValidationMove() && turn.getCount() <= 1);
+        assertTrue(turn.isValidationMove());
+        assertNull(turn.getTable().getTableCell(0, 0).getPawn());
+        assertEquals(turn.getGamer().getPawn(1), turn.getTable().getTableCell(1, 1).getPawn());
+        assertEquals(1, turn.getIdStartPawn());
+        v.printTable(turn.getTable());
+
+        turn.win();
+        assertFalse(turn.getGamer().isWinner());
+
+        System.out.println("\n");
+
+        turn.setCount(0);
+        do {
+            turn.myBuilding(m3);
+        } while (!turn.isValidationBuild() && turn.getCount() <= 1);
+        assertFalse(turn.isValidationBuild());
+
+        turn.setCount(0);
+        do {
+            turn.myBuilding(m4);
+        } while (!turn.isValidationBuild() && turn.getCount() <= 1);
+        assertFalse(turn.isValidationBuild());
+
+        turn.setCount(0);
+        do {
+            turn.myBuilding(m5);
+        } while (!turn.isValidationBuild() && turn.getCount() <= 1);
+        assertFalse(turn.isValidationBuild());
+
+        turn.setCount(0);
+        do {
+            turn.myBuilding(m6);
+        } while (!turn.isValidationBuild() && turn.getCount() <= 1);
+        assertTrue(turn.isValidationBuild());
+        assertEquals(1, turn.getTable().getTableCell(2, 2).getLevel());
+        v.printTable(turn.getTable());
+    }
+
+    /**
+     * method that tests the win of the current gamer
+     */
+    @Test
+    public void testTheGamerWins() {
+        View v = new View();
+        turn.getGamer().setMyGodCard(Pdor);
+        turn.getGamer().setAPawn(0, -2, -2, -2, -2);
+        turn.getTable().setACell(1, 1, 2, false, false, turn.getGamer().getPawn(0));
+        turn.getTable().setACell(2, 2, 3, true, false, null);
+        v.printTable(turn.getTable());
+        Mossa win = new Mossa(Mossa.Action.MOVE, 0, 2, 2);
+        Mossa build = new Mossa(Mossa.Action.BUILD, 0, 3, 3);
+        do {
+            turn.effectOfPrometheusCard();
+            assertTrue(!turn.getPromEffect());
+            turn.myMovement(win);
+        } while (!turn.isValidationMove() && turn.getCount() <= 1);
+        assertTrue(turn.isValidationMove());
+        v.printTable(turn.getTable());
+        turn.win();
+        assertTrue(turn.getGamer().isWinner());
+        assertEquals(0, turn.getGamer().getBuilds());
+        turn.setCount(0);
+        do {
+            turn.myBuilding(build);
+        } while (!turn.isValidationMove() && turn.getCount() <= 1);
+        assertTrue(turn.isValidationBuild());
+    }
+
 
 }

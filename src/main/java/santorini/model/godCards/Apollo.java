@@ -62,11 +62,11 @@ public class Apollo extends God {
                 turno.getTable().getTableCell(x, y).setFree(true);
                 turno.getTable().getTableCell(x, y).setPawn(null);
                 turno.baseMovement(turno.getMove());
-                turno.getValidationMove();
+                turno.getValidationMove(turno.isValidationMove());
 
             } else {
                 turno.baseMovement(turno.getMove());
-                turno.getValidationMove();
+                turno.getValidationMove(turno.isValidationMove());
 
             }
 

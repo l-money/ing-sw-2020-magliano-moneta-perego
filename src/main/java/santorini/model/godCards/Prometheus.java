@@ -41,7 +41,7 @@ public class Prometheus extends God {
      */
     public void beforeOwnerMoving(Turno turno) {
         building = false;
-        if (turno.isPromEffect()) {
+        if (turno.getPromEffect()) {
             build1 = turno.getMove();
             if (build1.getIdPawn() == -1) {// the gamer doesn't want to build-move-build
                 building = false;
@@ -60,7 +60,7 @@ public class Prometheus extends God {
                     e.printStackTrace();
                 }
                 turno.baseMovement(turno.getMove());
-                turno.getValidationMove();
+                turno.getValidationMove(turno.isValidationMove());
 
                 promValidation = turno.isValidationMove();
             } while (!promValidation);
@@ -69,7 +69,7 @@ public class Prometheus extends God {
             promValidation = false;
             do {
                 turno.baseBuilding(turno.getMove());
-                turno.getValidationMove();
+                turno.getValidationMove(turno.isValidationMove());
 
                 promValidation = turno.isValidationMove();
             } while (!promValidation);

@@ -16,7 +16,7 @@ public class TestView {
     private Gamer f;
     private Gamer g;
     private Gamer h;
-    private ArrayList<Gamer> gamers = new ArrayList<Gamer>();
+    private ArrayList<Gamer> gamers = new ArrayList<>();
     private God god = new Pdor();
 
     @Before
