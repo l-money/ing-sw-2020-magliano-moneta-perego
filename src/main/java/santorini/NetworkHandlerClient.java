@@ -117,7 +117,7 @@ public class NetworkHandlerClient implements Runnable {
     }
 
 
-    public void initializaPawns(String coordinate) throws IOException {
+    public void initializePawns(int[] coordinate) throws IOException {
         outputStream.writeObject(coordinate);
         outputStream.flush();
     }
@@ -127,8 +127,8 @@ public class NetworkHandlerClient implements Runnable {
         outputStream.flush();
     }
 
-    public void setBuildPawn(Mossa mossa) throws IOException {
-        outputStream.writeObject(mossa);
+    public void setBuildPawn(Mossa build) throws IOException {
+        outputStream.writeObject(build);
         outputStream.flush();
     }
 

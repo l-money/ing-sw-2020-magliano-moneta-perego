@@ -252,7 +252,7 @@ public class View {
                     int b = Integer.parseInt(movePawn);
                     build = new Mossa(Mossa.Action.BUILD, b, positionBuild[0], positionBuild[1]);
                 } while (positionBuild[0] < 0 || positionBuild[0] > 4 || positionBuild[1] < 0 || positionBuild[1] > 4);
-                handlerClient.setBuildPawn(positionBuild);
+                handlerClient.setBuildPawn(build);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -294,7 +294,7 @@ public class View {
                             System.out.println("Numero pedina inserita non corretta!");
                     }
                 } while (choosePawn < 0 || choosePawn > 1);
-                handlerClient.setMovementPawn(coordinateMove);
+                handlerClient.setMovementPawn(move);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -345,7 +345,7 @@ public class View {
                     gamer.setAPawn(1, coordinate[0], coordinate[1], 0, 0);
                     table.setACell(coordinate[0], coordinate[1], 0, false, false, gamer.getPawn(1));
                 } while (coordinate[0] < 0 || coordinate[0] > 4 || coordinate[1] < 0 || coordinate[1] > 4);
-                handlerClient.setCordinata(coordinate);
+                handlerClient.initializePawns(coordinate);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -364,5 +364,7 @@ public class View {
         }).start();
     }
 
+    public void setID(int id) {
+    }
 }
 
