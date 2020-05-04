@@ -1,12 +1,19 @@
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import santorini.Turno;
 import santorini.View;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
+import santorini.model.godCards.Apollo;
+import santorini.model.godCards.Artemis;
+import santorini.model.godCards.Athena;
 import santorini.model.godCards.Pdor;
 
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNull;
@@ -16,32 +23,44 @@ public class TestView {
     private Gamer f;
     private Gamer g;
     private Gamer h;
+    private Apollo a = new Apollo();
+    private Artemis b = new Artemis();
+    private Athena c = new Athena();
     private ArrayList<Gamer> gamers = new ArrayList<Gamer>();
     private God god = new Pdor();
+    private ArrayList<God> listadei = new ArrayList<God>();
 
     @Before
-    public void before(){
+    public void before() {
         view = new View();
-        g = new Gamer(null,"Al",0,null,null);
+        g = new Gamer(null, "Al", 0, null, null);
         g.setMyGodCard(god);
-        f = new Gamer(null,"John",1,null,null);
+        f = new Gamer(null, "John", 1, null, null);
         f.setMyGodCard(god);
-        h = new Gamer(null,"Jack",2,null,null);
+        h = new Gamer(null, "Jack", 2, null, null);
         h.setMyGodCard(god);
         gamers.add(g);
         gamers.add(f);
         gamers.add(h);
     }
 
+    @Before
+    public void before1() {
+        view = new View();
+        listadei.add(a);
+        listadei.add(b);
+        listadei.add(c);
+    }
+
     @Test
-    public void testColorCellPawn(){
+    public void testColorCellPawn() {
         System.out.print("\n****New table****\n\n");
         view.printGamerInGame(gamers);
         view.printTable(view.getTable());
         System.out.print("\n****pawns in table****\n\n");
         //set pawns of the gamers
-        g.setAPawn(0,0,0,0,0);
-        g.setAPawn(1,0,0,0,0);
+        g.setAPawn(0, 0, 0, 0, 0);
+        g.setAPawn(1, 0, 0, 0, 0);
         f.setAPawn(0,0,0,0,0);
         f.setAPawn(1,0,0,0,0);
         h.setAPawn(0,0,0,0,0);
@@ -113,6 +132,29 @@ public class TestView {
         assertEquals(-1, m.getTargetY());
         m = view.noGodEffect(s2);
         assertNull(m);
+    }
+
+    @Test
+    public void testChooseCard() {
+        System.out.println("**scelta carte**");
+        //ampiezza dell'array list ok
+        assertEquals(3, listadei.size());
+        //
+        view.chooseCards(listadei);
+    }
+
+    @Test
+    public void testMove() {
+//        String s1 = "0,2";
+//
+//        int[] coordinateMove;
+//
+//        ;
+//        assertEquals(, coordinateMove[0]);
+//        assertEquals(-1, coordinateMove[1]);
+//        g.setAPawn(0, coordinateMove[0],coordinateMove[1],0,0);
+//
+
     }
 
 }
