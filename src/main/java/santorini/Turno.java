@@ -225,6 +225,7 @@ public class Turno implements Runnable {
      * method myMovement
      */
     public void myMovement(Mossa m) {
+        validationMove = false;
         if ((controlStandardParameter(m) && m.getAction().equals(Mossa.Action.MOVE) && (!promEffect))
                 ||
                 (controlStandardParameter(m) && m.getAction().equals(Mossa.Action.BUILD) && (promEffect))
@@ -236,7 +237,6 @@ public class Turno implements Runnable {
                     card.beforeOtherMoving(gamer);
                 }
             }
-
             baseMovement(m);
             getValidationMove(validationMove);
 
@@ -264,6 +264,7 @@ public class Turno implements Runnable {
      * method myBuilding
      */
     public void myBuilding(Mossa b) {
+        validationBuild = false;
         if ((controlStandardParameter(b)) && (validationMove) &&
                 (b.getAction().equals(Mossa.Action.BUILD)) && (b.getIdPawn() == idStartPawn) &&
                 (count == 0)) {
@@ -299,6 +300,7 @@ public class Turno implements Runnable {
         int k = move.getIdPawn();
         //control if the gamer can do one step
         if (getGamer().getSteps() == 0) {
+            System.out.println("***Over: Steps = " + getGamer().getSteps() + "***");
             validationMove = true;
         } else {
                 //control the pawn can move
@@ -325,6 +327,7 @@ public class Turno implements Runnable {
                             //do the step and change position
                             validationMove = getMyStep(start, end, p);
                             setIdStartPawn(k);
+                            System.out.println("***movimento valido***");
                         }
 
                     }
@@ -343,7 +346,6 @@ public class Turno implements Runnable {
             System.err.println("Mossa numero " + (count + 1) + "\tmovimento non validato");
             count++;
         } else {
-            System.out.println("***movimento valido***");
             getGamer().setSteps(0);
         }
     }
@@ -518,11 +520,13 @@ public class Turno implements Runnable {
     public boolean getMyStep(Cell startCell, Cell endCell, Pawn myPawn) {
         int x1 = startCell.getX();
         int y1 = startCell.getY();
+        int l1 = startCell.getLevel();
         int x2 = endCell.getX();
         int y2 = endCell.getY();
+        int l2 = endCell.getLevel();
+        getGamer().setAPawn(myPawn.getIdPawn(), x2, y2, l1, l2);
         table.setACell(x1, y1, startCell.getLevel(), true, startCell.isComplete(), null);
         table.setACell(x2, y2, endCell.getLevel(), false, endCell.isComplete(), myPawn);
-        getGamer().setAPawn(myPawn.getIdPawn(), x2, y2, startCell.getLevel(), endCell.getLevel());
         return true;
     }
 
@@ -555,7 +559,7 @@ public class Turno implements Runnable {
                             } else {
                                 baseMovement(move);
                                 getValidationMove(validationMove);
-                                effect = isValidationMove();
+                                effect = validationMove;
                             }
                         } else {
                             effect = false;

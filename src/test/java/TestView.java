@@ -21,7 +21,8 @@ public class TestView {
 
     @Before
     public void before(){
-        view = new View();
+        // TODO : NOT NULL
+        view = new View(null, null);
         g = new Gamer(null,"Al",0,null,null);
         g.setMyGodCard(god);
         f = new Gamer(null,"John",1,null,null);

@@ -335,6 +335,10 @@ public class TestTurno {
         turn.getGamer().setAPawn(1, 1, 1, 0, 1);
         turn.getTable().setACell(1, 1, 1, false, false, turn.getGamer().getPawn(1));
         turn.getTable().setACell(2, 2, 2, true, false, null);
+        assertEquals(1, turn.getGamer().getPawn(1).getRow());
+        assertEquals(1, turn.getGamer().getPawn(1).getColumn());
+        assertEquals(0, turn.getGamer().getPawn(1).getPastLevel());
+        assertEquals(1, turn.getGamer().getPawn(1).getPresentLevel());
         turn.getMyStep(turn.getTable().getTableCell(1, 1), turn.getTable().getTableCell(2, 2), turn.getGamer().getPawn(1));
         assertNull(turn.getTable().getTableCell(1, 1).getPawn());
         assertTrue(turn.getTable().getTableCell(1, 1).isFree());
@@ -414,7 +418,7 @@ public class TestTurno {
      */
     @Test
     public void testMovementAndBuilding() {
-        View v = new View();
+        View v = new View(null, null);
         Pawn q = new Pawn();
         q.setIdGamer(1);
         q.setIdPawn(0);
@@ -500,7 +504,8 @@ public class TestTurno {
      */
     @Test
     public void testTheGamerWins() {
-        View v = new View();
+        //TODO NOT NULL
+        View v = new View(null, null);
         turn.getGamer().setMyGodCard(Pdor);
         turn.getGamer().setAPawn(0, -2, -2, -2, -2);
         turn.getTable().setACell(1, 1, 2, false, false, turn.getGamer().getPawn(0));
