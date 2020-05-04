@@ -13,17 +13,34 @@ public class View {
     private Table table;
     private BufferedReader br;
     private NetworkHandlerClient handlerClient;
-    private Gamer gamer;
-    private Turno turno;
     private Mossa move;
     private Mossa build;
     private String movePawn;
     private ArrayList<God> gods;
+    private Thread listen;
+    private String color;
+    private int ID;
 
-    public View() {
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    /**
+     * Initializes a new view that creates a networkhandler
+     *
+     * @param address address to connect network handler socket
+     * @param name    player name in game
+     */
+    public View(String address, String name) {
         table = new Table();
-        gamer = new Gamer(null, "Prova", 0, null, null);
         br = new BufferedReader(new InputStreamReader(System.in));
+        handlerClient = new NetworkHandlerClient(address, name, this);
+        listen = new Thread(handlerClient);
+        listen.start();
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public Table getTable() {
@@ -34,9 +51,6 @@ public class View {
         this.table = table;
     }
 
-    public void setHandlerClient(NetworkHandlerClient handlerClient) {
-        this.handlerClient = handlerClient;
-    }
 
     //metodo che stampa la table indicante livello cella e posizione pedina
     public void printTable(Table table) {
@@ -117,7 +131,7 @@ public class View {
         }
     }
 
-    /**
+    /**NON SERVE
      * giveMeStringCoordinate
      *
      * @param s the input string with coordinate, the correct syntax is: x,y
@@ -169,8 +183,12 @@ public class View {
         }
     }
 
-
-
+    /**
+     * Shows to user available card with description
+     * then request a choice
+     *
+     * @param gods List of available cards
+     */
     public void chooseCards(ArrayList<God> gods) {
         new Thread(() -> {
             String card = "1";
@@ -186,10 +204,10 @@ public class View {
                     System.out.println("Che carta vuoi scegliere?");
                     card = br.readLine();
                     number = Integer.parseInt(card);
-                    if (number < 0 || number > 2) {
+                    if (number < 0 || number >= gods.size()) {
                         System.out.println("Errore carta scelta!");
                     }
-                } while (number < 0 || number > 2);
+                } while (number < 0 || number >= gods.size());
                 chooseCard = gods.get(number);
                 handlerClient.setCard(chooseCard);
             } catch (IOException e) {
@@ -198,20 +216,26 @@ public class View {
         }).start();
     }
 
-
-    //chiedo solamente la cella in cui voglio costruire e incremento di uno il livello
+    /**
+     * Requests to user the place where he wants to build
+     */
     public void setNewBuild() {
         new Thread(() -> {
             String moveBuild;
             int[] positionBuild = new int[2];
-            System.out.println("In che cella vuoi costruire [x,y]? ");
+            boolean valid = false;
             try {
-                moveBuild = br.readLine();
-                positionBuild = giveMeStringCoordinate(moveBuild);
+                do {
+                    System.out.println("In che cella vuoi costruire [x,y]? ");
+                    moveBuild = br.readLine();
+                    valid = validaCoordinate(moveBuild);
+                } while (!valid);
+                String in[] = moveBuild.split(",");
+                positionBuild[0] = Integer.parseInt(in[0]);
+                positionBuild[1] = Integer.parseInt(in[1]);
                 int b = Integer.parseInt(movePawn);
                 build = new Mossa(Mossa.Action.BUILD, b, positionBuild[0], positionBuild[1]);
-
-                handlerClient.setBuildPawn(positionBuild);
+                handlerClient.setBuildPawn(build);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -219,36 +243,48 @@ public class View {
         }).start();
     }
 
-    /*
-        metodo che dopo aver scelto la pedina da muovere,
-        chiede l'inserimento nella cella in cui vuole spostarsi
+    /**
+     * Requests to user the place where he wants to move
      */
     public void setNewMove() {
         new Thread(() -> {
             String stringMove;
+            String[] in;
             int[] coordinateMove = new int[2];
-            System.out.println("Che pedina vuoi muovere? ");
             try {
-                movePawn = br.readLine();
-                switch (movePawn.charAt(0)) {
-                    case '0':
-                        System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
-                        stringMove = br.readLine();
-                        coordinateMove = giveMeStringCoordinate(stringMove);
-                        move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
-
-                        break;
-                    case '1':
-                        System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
-                        stringMove = br.readLine();
-                        coordinateMove = giveMeStringCoordinate(stringMove);
-                        move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
-
-                        break;
-                    default:
-                        System.out.println("Numero pedina errore");
-                }
-                handlerClient.setMovementPawn(coordinateMove);
+                boolean inputok = false;
+                do {
+                    System.out.println("Che pedina vuoi muovere? ");
+                    movePawn = br.readLine();
+                    switch (movePawn.charAt(0)) {
+                        case '0':
+                            do {
+                                System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
+                                stringMove = br.readLine();
+                                inputok = validaCoordinate(stringMove);
+                            } while (!inputok);
+                            in = stringMove.split(",");
+                            coordinateMove[0] = Integer.parseInt(in[0]);
+                            coordinateMove[1] = Integer.parseInt(in[1]);
+                            move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
+                            break;
+                        case '1':
+                            do {
+                                System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
+                                stringMove = br.readLine();
+                                inputok = validaCoordinate(stringMove);
+                            } while (!inputok);
+                            in = stringMove.split(",");
+                            coordinateMove[0] = Integer.parseInt(in[0]);
+                            coordinateMove[1] = Integer.parseInt(in[1]);
+                            move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
+                            break;
+                        default:
+                            System.out.println("Pedina non valida");
+                            inputok = false;
+                    }
+                } while (!inputok);
+                handlerClient.setMovementPawn(move);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -257,23 +293,27 @@ public class View {
     }
 
 
-    /*
-        metodo che mi fa immettere il numero dei partecipanti alla partita
-        che possono essere o 2 o 3
+    /**
+     * Requests to player how many user has to be in the match
      */
     public void setNumeroGiocatori() {
         new Thread(() -> {
-            String partecipanti = "2";
-            int players;
+            String partecipanti = null;
+            int players = 2;
             System.out.print("Scegli numero partecipanti [Default 2]: ");
             try {
-//                partecipanti = br.readLine();
-//                if (partecipanti.charAt(0) == '3') {
-//                    partecipanti = "3";
-//                } else {
-//                    partecipanti = "2";
-//                }
+                partecipanti = br.readLine();
                 players = Integer.parseInt(partecipanti);//Se scelgo di usare il metodo devo mettere int al posto di string?
+                if (players != 2 && players != 3) {
+                    throw new NumberFormatException();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NumberFormatException ex) {
+                System.out.println("Formato non valido, verranno impostati 2 giocatori");
+                players = 2;
+            }
+            try {
                 handlerClient.setPartecipanti(players);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -281,35 +321,67 @@ public class View {
         }).start();
     }
 
-    /*
-        metodo che mi fa inserire le pedine all'interno della tabella
-        nelle coordinate x e y
+    /**
+     * Requests init pawn positions before game starts
      */
     public void setInitializePawn() {
         new Thread(() -> {
             String coordPawn0, coordPawn1;
-            int[] coordinate;
             System.out.println("Inserisci posizioni delle pedine: ");
+            boolean valid;
             try {
-                System.out.println("Inserisci cordinata pedina 1 [x,y]: ");
-                coordPawn0 = br.readLine();
-                coordinate = giveMeStringCoordinate(coordPawn0);
-                gamer.setAPawn(0, coordinate[0], coordinate[1], 0, 0);
-                table.setACell(coordinate[0], coordinate[1], 0, false, false, gamer.getPawn(0));
-
-                System.out.println("Inserisci cordinata pedina 2 [x,y]: ");
-                coordPawn1 = br.readLine();
-                coordinate = giveMeStringCoordinate(coordPawn1);
-                gamer.setAPawn(1, coordinate[0], coordinate[1], 0, 0);
-                table.setACell(coordinate[0], coordinate[1], 0, false, false, gamer.getPawn(1));
-
-                handlerClient.setCordinata(coordinate);
+                do {
+                    System.out.println("Inserisci cordinata pedina 1 [x,y]: ");
+                    coordPawn0 = br.readLine();
+                    valid = validaCoordinate(coordPawn0);
+                    if (!valid) {
+                        System.out.println("Formato coordinate non valido");
+                    }
+                } while (!valid);
+                do {
+                    System.out.println("Inserisci cordinata pedina 2 [x,y]: ");
+                    coordPawn1 = br.readLine();
+                    valid = validaCoordinate(coordPawn1);
+                    if (!valid) {
+                        System.out.println("Formato coordinate non valido");
+                    }
+                } while (!valid);
+                handlerClient.initializaPawns(coordPawn0 + "," + coordPawn1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
+    /**
+     * This method validates an input as String coordinates
+     *
+     * @param coords coordinates in format x,y
+     * @return true if string format is x,y and x,y are int ∈{0,4}; false otherwise
+     */
+    private boolean validaCoordinate(String coords) {
+        String[] c = coords.split(",");
+        if (c.length != 2) {
+            return false;
+        }
+        try {
+            int i = Integer.parseInt(c[0]);
+            if (i < 0 || i > 4) {
+                return false;
+            }
+            i = Integer.parseInt(c[1]);
+            if (i < 0 || i > 4) {
+                return false;
+            }
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    /**
+     * This method is called if server sends an error message
+     */
     public void setFailed() {
         new Thread(() -> {
 
@@ -317,22 +389,6 @@ public class View {
             System.out.println(("Nuova istruzione in arrivo: "));
 
         }).start();
-    }
-
-    public int[] giveMeCard(String c, int nu) {
-        int[] numberCard = new int[nu];
-        int m = c.length();
-        char[] stringCard = new char[m];
-        for (int i = 0; i < m; i++) {
-            stringCard[i] = c.charAt(i);
-        }
-        if (m == 1) {
-            int x = Integer.parseInt(String.valueOf(stringCard[nu - 1]));
-            numberCard[nu - 1] = x;
-        } else {
-            System.err.println("Errore");
-        }
-        return numberCard;
     }
 
 

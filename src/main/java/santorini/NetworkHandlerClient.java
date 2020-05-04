@@ -1,6 +1,7 @@
 package santorini;
 
 import santorini.model.God;
+import santorini.model.Mossa;
 import santorini.model.Table;
 
 import java.io.IOException;
@@ -30,7 +31,9 @@ public class NetworkHandlerClient implements Runnable {
             inputStream = new ObjectInputStream(server.getInputStream());
             outputStream.writeObject(name);
             outputStream.flush();
-        } catch (IOException e) {
+            int id = Integer.parseInt(inputStream.readObject().toString());
+            view.setID(id);
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -109,26 +112,23 @@ public class NetworkHandlerClient implements Runnable {
 
     public void setPartecipanti(int players) throws IOException {
         players1 = players;
-        outputStream.writeObject(players);
+        outputStream.writeObject(players + "");
         outputStream.flush();
     }
 
-    public int getPartecipanti() {
-        return players1;
-    }
 
-    public void setCordinata(int[] coordinate) throws IOException {
+    public void initializaPawns(String coordinate) throws IOException {
         outputStream.writeObject(coordinate);
         outputStream.flush();
     }
 
-    public void setMovementPawn(int[] coordinateMove) throws IOException {
-        outputStream.writeObject(coordinateMove);
+    public void setMovementPawn(Mossa move) throws IOException {
+        outputStream.writeObject(move);
         outputStream.flush();
     }
 
-    public void setBuildPawn(int[] positionBuild) throws IOException {
-        outputStream.writeObject(positionBuild);
+    public void setBuildPawn(Mossa mossa) throws IOException {
+        outputStream.writeObject(mossa);
         outputStream.flush();
     }
 

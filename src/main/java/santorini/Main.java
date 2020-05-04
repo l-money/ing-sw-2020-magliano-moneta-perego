@@ -17,7 +17,7 @@ public class Main {
             ex.printStackTrace();
             System.exit(1);
         }
-        View v = new View();
+        View v = new View(address, name);
         //NetworkHandlerClient handlerClient = new NetworkHandlerClient(address, name, v);
         //v.setHandlerClient(handlerClient);
         //new Thread(handlerClient).start();
