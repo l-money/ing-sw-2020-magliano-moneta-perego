@@ -8,6 +8,7 @@ public abstract class God implements Serializable {
     protected Gamer owner;
     protected String name, description;
     protected Table table;
+    protected Mossa effectMove;
 
 
     public Gamer getOwner() {
@@ -28,6 +29,14 @@ public abstract class God implements Serializable {
 
     public String getDescription() {
         return "Description";
+    }
+
+    public Mossa getEffectMove() {
+        return effectMove;
+    }
+
+    public void setEffectMove(Mossa effectMove) {
+        this.effectMove = effectMove;
     }
 
     /**

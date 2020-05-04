@@ -6,8 +6,6 @@ import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
 
-import java.io.IOException;
-
 public class Artemis extends God {
     private Cell start;
     private boolean artemisEffect;
@@ -22,6 +20,16 @@ public class Artemis extends God {
     public String getDescription() {
         return "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
                 "ma non può tornare alla casella da cui è partito";
+    }
+
+    @Override
+    public Mossa getEffectMove() {
+        return move2;
+    }
+
+    @Override
+    public void setEffectMove(Mossa effectMove) {
+        this.move2 = effectMove;
     }
 
     /**
@@ -50,32 +58,25 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        //artemisEffect = false;
+        artemisEffect = false;
         //request a movement from the gamer
-            try {
-                move2 = turno.getGameHandler().richiediMossa(Mossa.Action.MOVE, getOwner());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        //TODO uncomment effectMove = turno.moveRequest();
+        //effectMove = turno.moveRequest();
+        turno.setMove(effectMove);
             do {
-                /**artemisEffect = */turno.godCardEffect(move2, artemisEffect, 0, start);
+                artemisEffect = turno.godCardEffect(getEffectMove(), artemisEffect, 0, start);
                 //if the movement is not possible or correct, artemisEffect is false and he have to remake the movement
                 if (!artemisEffect) {
                     turno.sendFailed();
+                    turno.setCount(turno.getCount() + 1);
                     //ask another movement
-                    try {
-                        move2 = turno.getGameHandler().richiediMossa(Mossa.Action.MOVE, getOwner());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    //TODO uncomment effectMove = turno.moveRequest();
+                    //effectMove = turno.moveRequest();
+                    turno.setMove(effectMove);
                 }
                 //else the movement is correct and artemisEffect is true
                 //until the movement is correct, the gamer have to insert the correct movement
-            } while (!artemisEffect);
+            } while (!artemisEffect && turno.getCount() <= 2);
         }
 
     /**
@@ -131,4 +132,5 @@ public class Artemis extends God {
     public void afterOtherBuilding(Gamer other) {
 
     }
+
 }

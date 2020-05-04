@@ -41,36 +41,26 @@ public class Apollo extends God {
      */
     public void beforeOwnerMoving(Turno turno) {
         do {
+            int i = turno.getMove().getIdPawn();
             int x = turno.getMove().getTargetX();
             int y = turno.getMove().getTargetY();
             end = turno.getTable().getTableCell(x, y);//save end cell
             otherPawn = turno.getTable().getTableCell(x, y).getPawn();//save other pawn
-            myPawn = turno.getGamer().getPawn(turno.getMove().getIdPawn());//save myPawn
+            myPawn = turno.getGamer().getPawn(i);//save myPawn
             start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());//save myCell
-            turno.getTable().getTableCell(x, y).setFree(false);//set the start condition
-            turno.getTable().getTableCell(x, y).setPawn(otherPawn);//set the start condition
             apolloEffect = false;
             ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
 
             if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
                     (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
                     (end.getLevel() - start.getLevel() <= 1)) {
-                apolloEffect = true;
-            }
-
-            if (apolloEffect) {
                 turno.getTable().getTableCell(x, y).setFree(true);
                 turno.getTable().getTableCell(x, y).setPawn(null);
-                turno.baseMovement(turno.getMove());
-                turno.getValidationMove();
-
-            } else {
-                turno.baseMovement(turno.getMove());
-                turno.getValidationMove();
-
+                apolloEffect = true;
             }
-
-        } while (!turno.isValidationMove());
+                turno.baseMovement(turno.getMove());
+                turno.getValidationMove(turno.isValidationMove());
+        } while (!turno.isValidationMove() && turno.getCount() <= 2);
         turno.getGamer().setSteps(0);
     }
 
@@ -80,9 +70,11 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
+
         if ((apolloEffect) && (turno.isValidationMove())) {
+            otherPawn.setPastLevel(end.getLevel());
             turno.getTable().setACell(start.getY(), start.getY(), start.getLevel(), false, false, otherPawn);
-            turno.getGamer().setAPawn(otherPawn.getIdPawn(), start.getX(), start.getY(), end.getLevel(), start.getLevel());
+
         }
     }
 
@@ -110,6 +102,7 @@ public class Apollo extends God {
      * @param other player to customize
      */
     public void beforeOtherMoving(Gamer other) {
+
 
     }
 
@@ -139,6 +132,7 @@ public class Apollo extends God {
     public void afterOtherBuilding(Gamer other) {
 
     }
+
 
 }
 
