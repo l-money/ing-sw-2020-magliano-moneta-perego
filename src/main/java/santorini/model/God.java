@@ -11,6 +11,11 @@ public abstract class God implements Serializable {
     protected Mossa effectMove;
 
 
+    public God(String n, String desc) {
+        this.name = n;
+        this.description = desc;
+    }
+
     public Gamer getOwner() {
         return owner;
     }
@@ -24,11 +29,11 @@ public abstract class God implements Serializable {
     }
 
     public String getName() {
-        return "Name";
+        return this.name;
     }
 
     public String getDescription() {
-        return "Description";
+        return this.description;
     }
 
     public Mossa getEffectMove() {
@@ -90,7 +95,7 @@ public abstract class God implements Serializable {
         if (this == o) return true;
         if (!(o instanceof God)) return false;
         God god = (God) o;
-        return name.equalsIgnoreCase(god.name);
+        return name.equalsIgnoreCase(god.getName());
     }
 
     /**

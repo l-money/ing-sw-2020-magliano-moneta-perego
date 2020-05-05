@@ -12,18 +12,13 @@ public class Apollo extends God {
     Pawn otherPawn;
     boolean apolloEffect;
 
-
-    @Override
-    public String getName() {
-        return "Apollo";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Tuo spostamento: il tuo lavoratore può spostarsi nella casella di un lavoratore avversario\n" +
+    public Apollo() {
+        super("Apollo", "Tuo spostamento: il tuo lavoratore può spostarsi nella casella di un lavoratore avversario\n" +
                 "(usando le normali regole di spostamento) e costringerlo ad occupare la casella appena liberata\n " +
-                "scambiando le posizioni";
+                "scambiando le posizioni");
+
     }
+
 
     /**
      * Initialize player variables with card
