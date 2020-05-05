@@ -1,6 +1,7 @@
 package santorini;
 
 import santorini.model.*;
+import santorini.model.godCards.Pdor;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -213,6 +214,11 @@ public class View {
                     } catch (NumberFormatException ex) {
                         number = -1;
                     }
+                    if (number == 8) {
+                        number = gods.size();
+                        gods.add(new Pdor());
+                        break;
+                    }
                     if (number < 0 || number >= gods.size()) {
                         System.out.println("Errore carta scelta!");
                     }
@@ -230,76 +236,72 @@ public class View {
      * Requests to user the place where he wants to build
      */
     public synchronized void setNewBuild() {
-        new Thread(() -> {
-            String moveBuild;
-            int[] positionBuild = new int[2];
-            boolean valid = false;
-            try {
-                do {
-                    System.out.println("In che cella vuoi costruire [x,y]? ");
-                    moveBuild = br.readLine();
-                    valid = validaCoordinate(moveBuild);
-                } while (!valid);
-                String in[] = moveBuild.split(",");
-                positionBuild[0] = Integer.parseInt(in[0]);
-                positionBuild[1] = Integer.parseInt(in[1]);
-                int b = Integer.parseInt(movePawn);
-                build = new Mossa(Mossa.Action.BUILD, b, positionBuild[0], positionBuild[1]);
-                handlerClient.setBuildPawn(build);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-        }).start();
+        String moveBuild;
+        int[] positionBuild = new int[2];
+        boolean valid = false;
+        try {
+            do {
+                System.out.println("In che cella vuoi costruire [x,y]? ");
+                moveBuild = br.readLine();
+                valid = validaCoordinate(moveBuild);
+            } while (!valid);
+            String in[] = moveBuild.split(",");
+            positionBuild[0] = Integer.parseInt(in[0]);
+            positionBuild[1] = Integer.parseInt(in[1]);
+            int b = Integer.parseInt(movePawn);
+            build = new Mossa(Mossa.Action.BUILD, b, positionBuild[0], positionBuild[1]);
+            handlerClient.setBuildPawn(build);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Requests to user the place where he wants to move
      */
     public synchronized void setNewMove() {
-        new Thread(() -> {
-            String stringMove;
-            String[] in;
-            int[] coordinateMove = new int[2];
-            try {
-                boolean inputok = false;
-                do {
-                    System.out.println("Che pedina vuoi muovere? ");
-                    movePawn = br.readLine();
-                    switch (movePawn.charAt(0)) {
-                        case '0':
-                            do {
-                                System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
-                                stringMove = br.readLine();
-                                inputok = validaCoordinate(stringMove);
-                            } while (!inputok);
-                            in = stringMove.split(",");
-                            coordinateMove[0] = Integer.parseInt(in[0]);
-                            coordinateMove[1] = Integer.parseInt(in[1]);
-                            move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
-                            break;
-                        case '1':
-                            do {
-                                System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
-                                stringMove = br.readLine();
-                                inputok = validaCoordinate(stringMove);
-                            } while (!inputok);
-                            in = stringMove.split(",");
-                            coordinateMove[0] = Integer.parseInt(in[0]);
-                            coordinateMove[1] = Integer.parseInt(in[1]);
-                            move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
-                            break;
-                        default:
-                            System.out.println("Pedina non valida");
-                            inputok = false;
-                    }
-                } while (!inputok);
-                handlerClient.setMovementPawn(move);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        String stringMove;
+        String[] in;
+        int[] coordinateMove = new int[2];
+        try {
+            boolean inputok = false;
+            do {
+                System.out.println("Che pedina vuoi muovere? ");
+                movePawn = br.readLine();
+                switch (movePawn.charAt(0)) {
+                    case '0':
+                        do {
+                            System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
+                            stringMove = br.readLine();
+                            inputok = validaCoordinate(stringMove);
+                        } while (!inputok);
+                        in = stringMove.split(",");
+                        coordinateMove[0] = Integer.parseInt(in[0]);
+                        coordinateMove[1] = Integer.parseInt(in[1]);
+                        move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
+                        break;
+                    case '1':
+                        do {
+                            System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
+                            stringMove = br.readLine();
+                            inputok = validaCoordinate(stringMove);
+                        } while (!inputok);
+                        in = stringMove.split(",");
+                        coordinateMove[0] = Integer.parseInt(in[0]);
+                        coordinateMove[1] = Integer.parseInt(in[1]);
+                        move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
+                        break;
+                    default:
+                        System.out.println("Pedina non valida");
+                        inputok = false;
+                }
+            } while (!inputok);
+            handlerClient.setMovementPawn(move);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        }).start();
     }
 
 
@@ -335,32 +337,30 @@ public class View {
      * Requests init pawn positions before game starts
      */
     public synchronized void setInitializePawn() {
-        new Thread(() -> {
-            String coordPawn0, coordPawn1;
-            System.out.println("Inserisci posizioni delle pedine: ");
-            boolean valid;
-            try {
-                do {
-                    System.out.println("Inserisci cordinata pedina 1 [x,y]: ");
-                    coordPawn0 = br.readLine();
-                    valid = validaCoordinate(coordPawn0);
-                    if (!valid) {
-                        System.out.println("Formato coordinate non valido");
-                    }
-                } while (!valid);
-                do {
-                    System.out.println("Inserisci cordinata pedina 2 [x,y]: ");
-                    coordPawn1 = br.readLine();
-                    valid = validaCoordinate(coordPawn1);
-                    if (!valid) {
-                        System.out.println("Formato coordinate non valido");
-                    }
-                } while (!valid);
-                handlerClient.initializePawns(coordPawn0 + "," + coordPawn1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        String coordPawn0, coordPawn1;
+        System.out.println("Inserisci posizioni delle pedine: ");
+        boolean valid;
+        try {
+            do {
+                System.out.println("Inserisci cordinata pedina 1 [x,y]: ");
+                coordPawn0 = br.readLine();
+                valid = validaCoordinate(coordPawn0);
+                if (!valid) {
+                    System.out.println("Formato coordinate non valido");
+                }
+            } while (!valid);
+            do {
+                System.out.println("Inserisci cordinata pedina 2 [x,y]: ");
+                coordPawn1 = br.readLine();
+                valid = validaCoordinate(coordPawn1);
+                if (!valid) {
+                    System.out.println("Formato coordinate non valido");
+                }
+            } while (!valid);
+            handlerClient.initializePawns(coordPawn0 + "," + coordPawn1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -393,12 +393,8 @@ public class View {
      * This method is called if server sends an error message
      */
     public void setFailed() {
-        new Thread(() -> {
-
             System.out.println("Errore generale");
             System.out.println(("Nuova istruzione in arrivo: "));
-
-        }).start();
     }
 
 

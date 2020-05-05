@@ -63,11 +63,11 @@ public class NetworkHandlerClient implements Runnable {
                     switch (cmd) {
                         case BUILD:
                             /*Chiedi una nuova myBuilding*/
-                            view.setNewBuild();
+                            new Thread(() -> view.setNewBuild()).start();
                             break;
                         case MOVE:
                             /*Chiedi una nuova myMovement*/
-                            view.setNewMove();
+                            new Thread(() -> view.setNewMove()).start();
                             break;
                         case SET_PLAYERS_NUMBER:
                             /*Chiedi il numero di giocatori*/
@@ -75,12 +75,12 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case INITIALIZE_PAWNS:
                             /*Chiedi le coordinate iniziali delle pedine*/
-                            view.setInitializePawn();
+                            new Thread(() -> view.setInitializePawn()).start();
                             break;
                         case FAILED:
                             /*Invia errore al giocatore e resta subito pronto
                              * per una nuova richiesta di istruzioni dal server*/
-                            view.setFailed();
+                            new Thread(() -> view.setFailed()).start();
                             break;
                     }
                 }

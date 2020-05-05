@@ -170,7 +170,7 @@ public class Turno implements Runnable {
      */
     public Mossa moveRequest() {
         if (!promEffect) {
-            System.out.println("Chiedo movimento");
+            System.out.println("Chiedo movimento al giocatore " + gamer.getId() + ":\t" + gamer.getName());
             move = giveMeMossa(Mossa.Action.MOVE);
         }
         return move;
@@ -182,7 +182,7 @@ public class Turno implements Runnable {
      * @return a move of typo BUILD
      */
     public Mossa buildingRequest() {
-        System.out.println("Chiedo costruzione");
+        System.out.println("Chiedo costruzione al giocatore " + gamer.getId() + ":\t" + gamer.getName());
         move = giveMeMossa(Mossa.Action.BUILD);
         return move;
     }
