@@ -9,14 +9,9 @@ public class Atlas extends God {
     private Mossa buildDome;
     private boolean atlasEffect;
 
-    @Override
-    public String getName() {
-        return "Atlas";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Tua costruzione: il tuo lavoratore può costruire una cupola\nsu qualsiasi livello, compreso il terreno";
+    public Atlas() {
+        super("Atlas", "Tua costruzione: il tuo lavoratore può costruire una cupola\n" +
+                "su qualsiasi livello, compreso il terreno");
     }
 
     /**

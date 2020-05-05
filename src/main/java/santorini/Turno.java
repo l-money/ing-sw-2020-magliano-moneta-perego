@@ -15,6 +15,7 @@ public class Turno implements Runnable {
     private boolean validationBuild;
     private boolean panEffect = false;
     private boolean promEffect = false;
+    private boolean athenaEffect = false;
     private NetworkHandlerServer gameHandler;
     //count is for test, it will substitute by a timer
     private int count = 0;
@@ -87,6 +88,24 @@ public class Turno implements Runnable {
      */
     public NetworkHandlerServer getGameHandler() {
         return gameHandler;
+    }
+
+    /**
+     * method setTable
+     *
+     * @param table table of the past turn
+     */
+    public void setTable(Table table) {
+        this.table = table;
+    }
+
+    /**
+     * method setGamer
+     *
+     * @param gamer the new gamer
+     */
+    public void setGamer(Gamer gamer) {
+        this.gamer = gamer;
     }
 
     /**
@@ -186,10 +205,11 @@ public class Turno implements Runnable {
      * all god cards features
      */
     public void run() {
+        count = 0;
         validationMove = false;
         validationBuild = false;
         do {
-            effectOfPrometheusCard();
+            effectsOfCards();
             move = moveRequest();
             myMovement(move);
         }while(!validationMove && count <= 10);
@@ -202,12 +222,13 @@ public class Turno implements Runnable {
     }
 
     /**
-     * method effectOfPrometheusCard
+     * method effectsOfCards
      * Sets true if the gamer wants to use the effect of Prometheus (build-move-build with levelUp = 0)
      * else sets false promEffect
      * TODO remember to remove System.out and the comments
      */
-    public void effectOfPrometheusCard() {
+    public void effectsOfCards() {
+        //Prometheus
         setPromEffect(false);
         if ((getGamer().getMyGodCard().getName().equals("Prometheus")) && (!promEffect)) {
             System.out.println("Hai Prometheus, costruzione facoltativa ");
@@ -216,8 +237,14 @@ public class Turno implements Runnable {
             /**
              if (nullEffectForGodCards(move)) {
              setPromEffect(false);
-            }
+             }
              */
+        }
+        //Athena
+        if ((!getGamer().getMyGodCard().getName().equals("Athena")) && (athenaEffect)) {
+            getGamer().setLevelsUp(0);
+        } else {
+            setAthenaEffect(false);
         }
     }
 
@@ -300,7 +327,7 @@ public class Turno implements Runnable {
         int k = move.getIdPawn();
         //control if the gamer can do one step
         if (getGamer().getSteps() == 0) {
-            System.out.println("***Over: Steps = " + getGamer().getSteps() + "***");
+            //System.out.println("***Over: Steps = " + getGamer().getSteps() + "***");
             validationMove = true;
         } else {
                 //control the pawn can move
@@ -463,10 +490,30 @@ public class Turno implements Runnable {
     }
 
     /**
+     * method getAthenaEffect
+     *
+     * @return true or false
+     */
+    public boolean getAthenaEffect() {
+        return athenaEffect;
+    }
+
+    /**
+     * method setAthenaEffect
+     *
+     * @param athenaEffect true or false
+     */
+    public void setAthenaEffect(boolean athenaEffect) {
+        this.athenaEffect = athenaEffect;
+    }
+
+    /**
      * method amILocked
      *
      * @return true if at least one pawn can move and  build, otherwise false
      */
+
+
 
     private boolean amILocked(Gamer gamer) {
         Pawn p0 = gamer.getPawn(0);

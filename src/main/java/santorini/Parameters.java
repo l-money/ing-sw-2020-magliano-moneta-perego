@@ -9,6 +9,7 @@ public class Parameters {
         MOVE,
         BUILD,
         FAILED,
-        NO
+        NO,
     }
+
 }

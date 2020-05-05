@@ -5,15 +5,10 @@ import santorini.model.Gamer;
 import santorini.model.God;
 
 public class Pdor extends God {
-    @Override
-    public String getName() {
-        return "Pdor";
-    }
 
-    @Override
-    public String getDescription() {
-        return "Io sono Pdor, figlio di Kmer, della tribù di Istar,\n" +
-                "nella terra desolata dei Kfnir";
+    public Pdor() {
+        super("Pdor", "Io sono Pdor, figlio di Kmer, della tribù di Istar,\n" +
+                "nella terra desolata dei Kfnir");
     }
 
     @Override

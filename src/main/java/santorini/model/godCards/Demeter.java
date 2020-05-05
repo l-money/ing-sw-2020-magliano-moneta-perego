@@ -13,14 +13,8 @@ public class Demeter extends God {
     private boolean demeterEffect;
     private Mossa build2;
 
-    @Override
-    public String getName() {
-        return "Demeter";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Tua costruzione: il tuo lavoratore\npuò costruire una volta in più\nma non nella stessa cella";
+    public Demeter() {
+        super("Demeter", "Tua costruzione: il tuo lavoratore\npuò costruire una volta in più\nma non nella stessa cella");
     }
 
     /**

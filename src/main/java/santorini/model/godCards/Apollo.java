@@ -16,7 +16,6 @@ public class Apollo extends God {
         super("Apollo", "Tuo spostamento: il tuo lavoratore può spostarsi nella casella di un lavoratore avversario\n" +
                 "(usando le normali regole di spostamento) e costringerlo ad occupare la casella appena liberata\n " +
                 "scambiando le posizioni");
-
     }
 
 
@@ -45,13 +44,17 @@ public class Apollo extends God {
             start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());//save myCell
             apolloEffect = false;
             ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
-
             if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
                     (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
                     (end.getLevel() - start.getLevel() <= 1)) {
-                turno.getTable().getTableCell(x, y).setFree(true);
-                turno.getTable().getTableCell(x, y).setPawn(null);
-                apolloEffect = true;
+                if ((end.getLevel() - start.getLevel() == 1) && (turno.getAthenaEffect())) {
+                    System.out.println("Effetto di Athena: non puoi salire");
+                    apolloEffect = false;
+                } else {
+                    turno.getTable().getTableCell(x, y).setFree(true);
+                    turno.getTable().getTableCell(x, y).setPawn(null);
+                    apolloEffect = true;
+                }
             }
                 turno.baseMovement(turno.getMove());
                 turno.getValidationMove(turno.isValidationMove());
@@ -69,7 +72,6 @@ public class Apollo extends God {
         if ((apolloEffect) && (turno.isValidationMove())) {
             otherPawn.setPastLevel(end.getLevel());
             turno.getTable().setACell(start.getY(), start.getY(), start.getLevel(), false, false, otherPawn);
-
         }
     }
 

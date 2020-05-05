@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class TestTurnCards {
+public class TestCards_ApolloArtemisAthena {
     private ArrayList<God> cards;
     private God Apollo = new Apollo();
     private God Artemis = new Artemis();
@@ -70,7 +70,7 @@ public class TestTurnCards {
         Mossa m0 = new Mossa(Mossa.Action.MOVE, 0, 1, 1);
         t1.setMove(m0);
         do {
-            t1.effectOfPrometheusCard();
+            t1.effectsOfCards();
             assertFalse(t1.getPromEffect());
             t1.myMovement(t1.getMove());
             t1.getValidationMove(t1.isValidationMove());
@@ -92,7 +92,7 @@ public class TestTurnCards {
         Mossa m1 = new Mossa(Mossa.Action.MOVE, 0, 1, 0);
         t1.setMove(m1);
         do {
-            t1.effectOfPrometheusCard();
+            t1.effectsOfCards();
             assertFalse(t1.getPromEffect());
             t1.myMovement(t1.getMove());
             t1.getValidationMove(t1.isValidationMove());
@@ -115,7 +115,7 @@ public class TestTurnCards {
         Mossa m2 = new Mossa(Mossa.Action.MOVE, 0, 2, 0);
         t1.setMove(m2);
         do {
-            t1.effectOfPrometheusCard();
+            t1.effectsOfCards();
             assertFalse(t1.getPromEffect());
             t1.myMovement(t1.getMove());
             t1.getValidationMove(t1.isValidationMove());
@@ -132,7 +132,7 @@ public class TestTurnCards {
         Mossa m3 = new Mossa(Mossa.Action.MOVE, 0, 2, 1);
         t1.setMove(m3);
         do {
-            t1.effectOfPrometheusCard();
+            t1.effectsOfCards();
             assertFalse(t1.getPromEffect());
             t1.myMovement(t1.getMove());
             t1.getValidationMove(t1.isValidationMove());
@@ -162,7 +162,7 @@ public class TestTurnCards {
         t2.setMove(m0);
         t2.getGamer().getMyGodCard().setEffectMove(a0);
         do {
-            t2.effectOfPrometheusCard();
+            t2.effectsOfCards();
             assertFalse(t2.getPromEffect());
             t2.myMovement(t2.getMove());
             t2.getValidationMove(t2.isValidationMove());
@@ -180,7 +180,7 @@ public class TestTurnCards {
         t2.setMove(m1);
         t2.getGamer().getMyGodCard().setEffectMove(No);
         do {
-            t2.effectOfPrometheusCard();
+            t2.effectsOfCards();
             assertFalse(t2.getPromEffect());
             t2.myMovement(t2.getMove());
             t2.getValidationMove(t2.isValidationMove());
@@ -198,7 +198,7 @@ public class TestTurnCards {
         t2.setMove(m2);
         t2.getGamer().getMyGodCard().setEffectMove(a2);
         do {
-            t2.effectOfPrometheusCard();
+            t2.effectsOfCards();
             assertFalse(t2.getPromEffect());
             t2.myMovement(t2.getMove());
             t2.getValidationMove(t2.isValidationMove());
@@ -210,6 +210,110 @@ public class TestTurnCards {
         assertEquals(0, t2.getGamer().getPawn(0).getPastLevel());
         assertEquals(0, t2.getGamer().getPawn(0).getPresentLevel());
         v.printTable(t2.getTable());
+    }
+
+    @Test
+    public void athenaEffect() {
+        t3.getTable().setACell(0, 1, 1, false, false, null);
+        v.printGamerInGame(players);
+        v.printTable(t3.getTable());
+        Mossa m0 = new Mossa(Mossa.Action.MOVE, 0, 2, 1);
+        t3.setMove(m0);
+        do {
+            t3.effectsOfCards();
+            assertFalse(t3.getPromEffect());
+            t3.myMovement(t3.getMove());
+            t3.getValidationMove(t3.isValidationMove());
+        } while (!t3.isValidationMove() && t3.getCount() <= 2);
+        assertTrue(t3.isValidationMove());
+        assertEquals(g3.getPawn(0), t3.getTable().getTableCell(2, 1).getPawn());
+        assertEquals(2, g3.getPawn(0).getRow());
+        assertEquals(1, g3.getPawn(0).getColumn());
+        assertEquals(0, g3.getPawn(0).getPastLevel());
+        assertEquals(1, g3.getPawn(0).getPresentLevel());
+        v.printTable(t3.getTable());
+        t1 = t3;
+        t1.setGamer(g1);
+        System.out.println("Turno del giocatore:" + t1.getGamer().getName() + " " + t1.getGamer().getId());
+        System.out.println(t1.getAthenaEffect());
+        v.printTable(t1.getTable());
+        Mossa m1 = new Mossa(Mossa.Action.MOVE, 0, 1, 1);
+        Mossa m2 = new Mossa(Mossa.Action.MOVE, 0, 0, 1);
+        Mossa m3 = new Mossa(Mossa.Action.MOVE, 0, 1, 0);
+
+        t1.setMove(m1);
+        do {
+            t1.effectsOfCards();
+            assertFalse(t1.getPromEffect());
+            assertTrue(t1.getAthenaEffect());
+            t1.myMovement(t1.getMove());
+            t1.getValidationMove(t1.isValidationMove());
+        } while (!t1.isValidationMove() && t1.getCount() <= 2);
+        assertEquals(g1.getPawn(0), t1.getTable().getTableCell(0, 0).getPawn());
+        v.printTable(t1.getTable());
+
+        t1.setMove(m2);
+        do {
+            t1.effectsOfCards();
+            assertFalse(t1.getPromEffect());
+            assertTrue(t1.getAthenaEffect());
+            t1.myMovement(t1.getMove());
+            t1.getValidationMove(t1.isValidationMove());
+        } while (!t1.isValidationMove() && t1.getCount() <= 2);
+        assertEquals(g1.getPawn(0), t1.getTable().getTableCell(0, 0).getPawn());
+
+        t1.getGamer().setSteps(1);
+        t1.setMove(m3);
+        do {
+            t1.effectsOfCards();
+            assertFalse(t1.getPromEffect());
+            assertTrue(t1.getAthenaEffect());
+            t1.myMovement(t1.getMove());
+            t1.getValidationMove(t1.isValidationMove());
+        } while (!t1.isValidationMove() && t1.getCount() <= 2);
+        assertTrue(t1.isValidationMove());
+        //assertEquals(g1.getPawn(0),t1.getTable().getTableCell(1,0).getPawn());
+        v.printTable(t1.getTable());
+    }
+
+    @Test
+    public void testNoAthenaEffect() {
+        g1.setAPawn(1, 4, 4, 0, 1);
+        t3.getTable().setACell(4, 4, 1, false, false, g1.getPawn(1));
+        t3.getTable().setACell(3, 3, 2, true, false, null);
+        v.printGamerInGame(players);
+        v.printTable(t3.getTable());
+        Mossa m0 = new Mossa(Mossa.Action.MOVE, 0, 0, 1);
+        t3.setMove(m0);
+        do {
+            t3.effectsOfCards();
+            assertFalse(t3.getPromEffect());
+            t3.myMovement(t3.getMove());
+            t3.getValidationMove(t3.isValidationMove());
+        } while (!t3.isValidationMove() && t3.getCount() <= 2);
+        assertTrue(t3.isValidationMove());
+        assertEquals(g3.getPawn(0), t3.getTable().getTableCell(0, 1).getPawn());
+        assertEquals(0, g3.getPawn(0).getRow());
+        assertEquals(1, g3.getPawn(0).getColumn());
+        assertEquals(0, g3.getPawn(0).getPastLevel());
+        assertEquals(0, g3.getPawn(0).getPresentLevel());
+        v.printTable(t3.getTable());
+        t1 = t3;
+        t1.setGamer(g1);
+        System.out.println("Turno del giocatore:" + t1.getGamer().getName() + " " + t1.getGamer().getId());
+        System.out.println(t1.getAthenaEffect());
+        v.printTable(t1.getTable());
+        Mossa m1 = new Mossa(Mossa.Action.MOVE, 1, 3, 3);
+        t1.setMove(m1);
+        do {
+            t1.effectsOfCards();
+            assertFalse(t1.getPromEffect());
+            assertTrue(!t1.getAthenaEffect());
+            t1.myMovement(t1.getMove());
+            t1.getValidationMove(t1.isValidationMove());
+        } while (!t1.isValidationMove() && t1.getCount() <= 2);
+        assertEquals(g1.getPawn(1), t1.getTable().getTableCell(3, 3).getPawn());
+        v.printTable(t1.getTable());
     }
 
 

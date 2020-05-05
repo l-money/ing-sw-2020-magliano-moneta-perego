@@ -12,17 +12,11 @@ public class Prometheus extends God {
     private boolean building;
     private boolean promValidation;
 
-    @Override
-    public String getName() {
-        return "Prometheus";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Tuo turno: se il tuo lavoratore\n" +
+    public Prometheus() {
+        super("Prometheus", "Tuo turno: se il tuo lavoratore\n" +
                 "non sale di livello, allora puoi\n" +
                 "costruire sia prima, sia dopo aver mosso\n" +
-                "il tuo lavoratore";
+                "il tuo lavoratore");
     }
 
     /**

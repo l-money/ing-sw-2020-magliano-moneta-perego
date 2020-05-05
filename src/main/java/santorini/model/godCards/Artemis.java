@@ -11,15 +11,9 @@ public class Artemis extends God {
     private boolean artemisEffect;
     private Mossa move2;
 
-    @Override
-    public String getName() {
-        return "Artemis";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
-                "ma non può tornare alla casella da cui è partito";
+    public Artemis() {
+        super("Artemis", "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
+                "ma non può tornare alla casella da cui è partito");
     }
 
     @Override

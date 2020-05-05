@@ -8,16 +8,13 @@ import santorini.model.God;
 public class Athena extends God {
     private Cell start;
     private boolean athenaEffect;
+    private int idMyGamer;
 
-    @Override
-    public String getName() {
-        return "Athena";
+    public Athena() {
+        super("Athena", "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\n" +
+                "in questo turno i lavoratori avversari non possono salire di livello");
     }
 
-    @Override
-    public String getDescription() {
-        return "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\nin questo turno i lavoratori avversari non possono salire di livello";
-    }
 
     /**
      * Initialize player variables with card
@@ -25,6 +22,7 @@ public class Athena extends God {
      * @param g player owner of card
      */
     public void initializeOwner(Gamer g) {
+        idMyGamer = g.getIdGamer();
 
     }
 
@@ -34,6 +32,7 @@ public class Athena extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
+        turno.setAthenaEffect(false);
         int x1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
         int y1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
         start = turno.getTable().getTableCell(x1, y1);//save the start position of the pawn
@@ -58,6 +57,7 @@ public class Athena extends God {
             //athenaEffect is true
             athenaEffect = true;
         }
+        turno.setAthenaEffect(athenaEffect);
     }
 
     /**
@@ -85,9 +85,13 @@ public class Athena extends God {
      */
     public void beforeOtherMoving(Gamer other) {
         //if athenaEffect is true, the others gamers can not go up to one level
-        if (athenaEffect) {
+        /**
+         if ((athenaEffect)&& (other.getIdGamer()!=idMyGamer)) {
             other.setLevelsUp(0);
+         System.out.println(other.getId()+" "+other.getColorGamer()+" "+other.getLevelsUp());
         }
+         */
+
     }
 
     /**
@@ -96,7 +100,6 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void afterOtherMoving(Gamer other) {
-
     }
 
     /**
@@ -116,5 +119,6 @@ public class Athena extends God {
     public void afterOtherBuilding(Gamer other) {
         other.setLevelsUp(1);
     }
+
 
 }

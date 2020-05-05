@@ -16,19 +16,14 @@ public class Minotaur extends God {
     Pawn otherPawn;
     boolean minoEffect;
 
-    @Override
-    public String getName() {
-        return "Minotaur";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Tuo spostamento: il tuo lavoratore\npuò spostarsi nella casella di un lavoratore avversario\n" +
+    public Minotaur() {
+        super("Minotaur", "Tuo spostamento: il tuo lavoratore\npuò spostarsi nella casella di un lavoratore avversario\n" +
                 "(in base alle normali regole di spostamento)\n" +
                 "se la casella successiva nella stessa direzione è libera.\n" +
                 "Il lavoratore avversario è costretto a spostarsi in quella casella\n" +
-                "(indipendentemente dal livello.";
+                "(indipendentemente dal livello.");
     }
+
 
     /**
      * Initialize player variables with card

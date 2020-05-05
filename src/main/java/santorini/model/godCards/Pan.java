@@ -7,15 +7,9 @@ import santorini.model.Pawn;
 
 public class Pan extends God {
 
-    @Override
-    public String getName() {
-        return "Pan";
-    }
-
-    @Override
-    public String getDescription() {
-        return "Condizione di vittoria: vinci\n" +
-                "anche se il tuo lavoratore scende di due o più livelli";
+    public Pan() {
+        super("Pan", "Condizione di vittoria: vinci\n" +
+                "anche se il tuo lavoratore scende di due o più livelli");
     }
 
     /**

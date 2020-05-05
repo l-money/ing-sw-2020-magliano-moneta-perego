@@ -400,12 +400,12 @@ public class TestTurno {
     public void testEffectOfPrometheusCard() {
         gamer.setMyGodCard(Prometheus);
         assertFalse(turn.getPromEffect());
-        turn.effectOfPrometheusCard();
+        turn.effectsOfCards();
         assertTrue(turn.getPromEffect());
         turn.setPromEffect(false);
         gamer.setMyGodCard(Pdor);
         assertFalse(turn.getPromEffect());
-        turn.effectOfPrometheusCard();
+        turn.effectsOfCards();
         assertTrue(!turn.getPromEffect());
     }
 
@@ -437,7 +437,7 @@ public class TestTurno {
         Mossa m6 = new Mossa(Mossa.Action.BUILD, 1, 2, 2);
         System.out.println("\n");
         do {
-            turn.effectOfPrometheusCard();
+            turn.effectsOfCards();
             assertTrue(!turn.getPromEffect());
             turn.myMovement(m0);
         } while (!turn.isValidationMove() && turn.getCount() <= 1);
@@ -445,7 +445,7 @@ public class TestTurno {
 
         turn.setCount(0);
         do {
-            turn.effectOfPrometheusCard();
+            turn.effectsOfCards();
             assertTrue(!turn.getPromEffect());
             turn.myMovement(m1);
         } while (!turn.isValidationMove() && turn.getCount() <= 1);
@@ -453,7 +453,7 @@ public class TestTurno {
 
         turn.setCount(0);
         do {
-            turn.effectOfPrometheusCard();
+            turn.effectsOfCards();
             assertTrue(!turn.getPromEffect());
             turn.myMovement(m2);
         } while (!turn.isValidationMove() && turn.getCount() <= 1);
@@ -509,7 +509,7 @@ public class TestTurno {
         Mossa win = new Mossa(Mossa.Action.MOVE, 0, 2, 2);
         Mossa build = new Mossa(Mossa.Action.BUILD, 0, 3, 3);
         do {
-            turn.effectOfPrometheusCard();
+            turn.effectsOfCards();
             assertTrue(!turn.getPromEffect());
             turn.myMovement(win);
         } while (!turn.isValidationMove() && turn.getCount() <= 1);

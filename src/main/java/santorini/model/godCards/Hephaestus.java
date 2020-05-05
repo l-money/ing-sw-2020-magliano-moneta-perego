@@ -13,17 +13,12 @@ public class Hephaestus extends God {
     private Mossa buildingPlus;
     private Cell sameBuildingCell;
 
-    @Override
-    public String getName() {
-        return "Hephaestus";
+    public Hephaestus() {
+        super("Hephaestus", "Tua costruzione: il tuo lavoratore\n" +
+                "può costruire un blocco aggiuntivo\n" +
+                "(non una cupola) al di sopra del primo blocco.");
     }
 
-    @Override
-    public String getDescription() {
-        return "Tua costruzione: il tuo lavoratore\n" +
-                "può costruire un blocco aggiuntivo\n" +
-                "(non una cupola) al di sopra del primo blocco.";
-    }
 
     /**
      * Initialize player variables with card
