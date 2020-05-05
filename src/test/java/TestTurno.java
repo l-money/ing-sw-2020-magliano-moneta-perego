@@ -414,7 +414,7 @@ public class TestTurno {
      */
     @Test
     public void testMovementAndBuilding() {
-        View v = new View();
+        View v = new View("localhost", "name");
         Pawn q = new Pawn();
         q.setIdGamer(1);
         q.setIdPawn(0);
@@ -500,7 +500,7 @@ public class TestTurno {
      */
     @Test
     public void testTheGamerWins() {
-        View v = new View();
+        View v = new View("localhost", "name");
         turn.getGamer().setMyGodCard(Pdor);
         turn.getGamer().setAPawn(0, -2, -2, -2, -2);
         turn.getTable().setACell(1, 1, 2, false, false, turn.getGamer().getPawn(0));

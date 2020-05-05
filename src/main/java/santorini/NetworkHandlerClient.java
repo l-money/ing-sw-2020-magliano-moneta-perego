@@ -104,29 +104,57 @@ public class NetworkHandlerClient implements Runnable {
         }).start();
     }
 
+    /**
+     * Sends choosen god card to server
+     *
+     * @param chooseCard choosen card
+     * @throws IOException
+     */
     public void setCard(God chooseCard) throws IOException {
         outputStream.writeObject(chooseCard);
         outputStream.flush();
     }
 
-
+    /**
+     * Sends number of players to server
+     *
+     * @param players number of players
+     * @throws IOException
+     */
     public void setPartecipanti(int players) throws IOException {
         players1 = players;
         outputStream.writeObject(players + "");
         outputStream.flush();
     }
 
-
+    /**
+     * Sends initial coordinates of player pawns to server
+     *
+     * @param coordinate initial coordinates in format x1,y1,x2,y2
+     * @throws IOException
+     */
     public void initializaPawns(String coordinate) throws IOException {
         outputStream.writeObject(coordinate);
         outputStream.flush();
     }
 
+    /**
+     * Sends a new move to server
+     *
+     * @param move
+     * @throws IOException
+     */
     public void setMovementPawn(Mossa move) throws IOException {
         outputStream.writeObject(move);
         outputStream.flush();
     }
 
+    /**
+     * Sends a new move to server
+     *
+     * @param mossa
+     * @throws IOException
+     */
     public void setBuildPawn(Mossa mossa) throws IOException {
         outputStream.writeObject(mossa);
         outputStream.flush();
