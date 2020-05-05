@@ -43,17 +43,22 @@ public class View {
         this.color = color;
     }
 
+    public void setHandlerClient(NetworkHandlerClient handlerClient) {
+        this.handlerClient = handlerClient;
+    }
+
     public Table getTable() {
         return table;
     }
 
-    public void setTable(Table table) {
+    /*public void setTable(Table table) {
         this.table = table;
-    }
+    }*/
 
 
     //metodo che stampa la table indicante livello cella e posizione pedina
-    public void printTable(Table table) {
+    public synchronized void printTable(Table table) {
+        //this.table = table;
         //printGamerInGame(gamers);
         System.out.print("\t\t\t\t\t\t[colonna]\n\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n");
         System.out.print("[riga]\t------------------------------------------\n");
@@ -194,21 +199,25 @@ public class View {
         new Thread(() -> {
             String card = "1";
             God chooseCard;
-            int number;
+            int number = -1;
             for (God g : gods) {
-                System.out.println(g.getName());
+                System.out.println(gods.indexOf(g) + "\t" + g.getName());
                 System.out.println(g.getDescription());
             }
-            System.out.println("Il numero di carte che puoi scegliere sono " + gods.size());
             try {
                 do {
-                    System.out.println("Che carta vuoi scegliere?");
+                    System.out.print("Scegli una carta: ");
                     card = br.readLine();
-                    number = Integer.parseInt(card);
+                    try {
+                        number = Integer.parseInt(card);
+                    } catch (NumberFormatException ex) {
+                        number = -1;
+                    }
                     if (number < 0 || number >= gods.size()) {
                         System.out.println("Errore carta scelta!");
                     }
                 } while (number < 0 || number >= gods.size());
+                System.out.println("Hai scelto " + gods.get(number).getName());
                 chooseCard = gods.get(number);
                 handlerClient.setCard(chooseCard);
             } catch (IOException e) {
@@ -220,7 +229,7 @@ public class View {
     /**
      * Requests to user the place where he wants to build
      */
-    public void setNewBuild() {
+    public synchronized void setNewBuild() {
         new Thread(() -> {
             String moveBuild;
             int[] positionBuild = new int[2];
@@ -247,7 +256,7 @@ public class View {
     /**
      * Requests to user the place where he wants to move
      */
-    public void setNewMove() {
+    public synchronized void setNewMove() {
         new Thread(() -> {
             String stringMove;
             String[] in;
@@ -325,7 +334,7 @@ public class View {
     /**
      * Requests init pawn positions before game starts
      */
-    public void setInitializePawn() {
+    public synchronized void setInitializePawn() {
         new Thread(() -> {
             String coordPawn0, coordPawn1;
             System.out.println("Inserisci posizioni delle pedine: ");

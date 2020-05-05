@@ -28,11 +28,7 @@ public class Turno implements Runnable {
      * @param table game field
      */
     public Turno(ArrayList<God> cards, Gamer gamer, Table table, NetworkHandlerServer handler) {
-        for (God g : cards) {
-            if (g.equals(gamer.getMyGodCard())) {
-                cards.remove(g);
-            }
-        }
+        cards.removeIf(g -> g.equals(gamer.getMyGodCard()));
         this.otherCards = cards;
         this.gamer = gamer;
         this.table = table;
@@ -212,13 +208,15 @@ public class Turno implements Runnable {
             effectsOfCards();
             move = moveRequest();
             myMovement(move);
-        }while(!validationMove && count <= 10);
+        } while (!validationMove && count < 10);
         win();
+        gameHandler.getGame().updateField();
         count = 0;
         do {
             move = buildingRequest();
             myBuilding(move);
-        }while(!validationMove && count <= 10);
+        } while (!validationBuild && count < 10);
+        gameHandler.getGame().updateField();
     }
 
     /**

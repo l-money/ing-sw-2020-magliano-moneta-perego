@@ -97,10 +97,7 @@ public class NetworkHandlerClient implements Runnable {
      */
     private void updateField(Table table) {
         new Thread(() -> {
-            /*Aggiorna il campo con quello appena arrivato dal server (table)
-            Fallo in questo thread*/
-
-
+            view.printTable(table);
         }).start();
     }
 
@@ -145,6 +142,7 @@ public class NetworkHandlerClient implements Runnable {
      * @throws IOException
      */
     public void setMovementPawn(Mossa move) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(move);
         outputStream.flush();
     }
@@ -156,6 +154,7 @@ public class NetworkHandlerClient implements Runnable {
      * @throws IOException
      */
     public void setBuildPawn(Mossa mossa) throws IOException {
+        outputStream.reset();
         outputStream.writeObject(mossa);
         outputStream.flush();
     }

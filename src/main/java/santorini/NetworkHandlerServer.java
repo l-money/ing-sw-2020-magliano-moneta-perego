@@ -17,6 +17,11 @@ public class NetworkHandlerServer implements Runnable {
     private Game game;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
+    private int i = 0, max = 0;
+
+    public Game getGame() {
+        return game;
+    }
 
     public NetworkHandlerServer() throws IOException {
         serverSocket = new ServerSocket(Parameters.PORT);
@@ -38,32 +43,48 @@ public class NetworkHandlerServer implements Runnable {
      * - A name
      * - A progress id (created from i)
      */
-    private void initGameConnections() {
+    public void initGameConnections() {
         try {
-            int i = 0;
+            i = 0;
             Socket s = serverSocket.accept();
-            inputStream = new ObjectInputStream(s.getInputStream());
-            outputStream = new ObjectOutputStream(s.getOutputStream());
-            players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
-            outputStream.writeObject(i + "");
-            outputStream.flush();
-            i++;
-            outputStream.writeObject(Parameters.command.SET_PLAYERS_NUMBER);
-            outputStream.flush();
-            int max = Integer.parseInt((String) inputStream.readObject());
+            max = initializeFirstClient(s);
             for (; i < max; i++) {
-                s = serverSocket.accept();
-                inputStream = new ObjectInputStream(s.getInputStream());
-                outputStream = new ObjectOutputStream(s.getOutputStream());
-                players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
-                outputStream.writeObject(i + "");
+                Socket s1 = serverSocket.accept();
+                initializeClient(s1);
             }
+            //wait();
             startGame();
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public int initializeFirstClient(Socket s) throws IOException, ClassNotFoundException {
+        inputStream = new ObjectInputStream(s.getInputStream());
+        outputStream = new ObjectOutputStream(s.getOutputStream());
+        players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
+        outputStream.writeObject(i + "");
+        outputStream.flush();
+        i++;
+        outputStream.writeObject(Parameters.command.SET_PLAYERS_NUMBER);
+        outputStream.flush();
+        int m = Integer.parseInt((String) inputStream.readObject());
+        return m;
+    }
+
+    public void initializeClient(Socket s) {
+        //new Thread(() -> {
+        try {
+            inputStream = new ObjectInputStream(s.getInputStream());
+            outputStream = new ObjectOutputStream(s.getOutputStream());
+            players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
+            outputStream.writeObject(i + "");
+            //notifyAll();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        //}).start();
     }
 
     /**
@@ -85,6 +106,7 @@ public class NetworkHandlerServer implements Runnable {
     public void updateField(Gamer gamer) {
         outputStream = gamer.getOutputStream();
         try {
+            outputStream.reset();
             outputStream.writeObject(game.getTable());
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,6 +154,7 @@ public class NetworkHandlerServer implements Runnable {
              command = Parameters.command.FAILED;
              break;*/
         }
+        outputStream.reset();
         outputStream.writeObject(command);
         outputStream.flush();
         inputStream = gamer.getInputStream();
@@ -162,6 +185,7 @@ public class NetworkHandlerServer implements Runnable {
      * @throws ClassNotFoundException
      */
     public String placePawns(Gamer gamer) throws IOException, ClassNotFoundException {
+        outputStream.reset();
         outputStream = gamer.getOutputStream();
         outputStream.writeObject(Parameters.command.INITIALIZE_PAWNS);
         outputStream.flush();

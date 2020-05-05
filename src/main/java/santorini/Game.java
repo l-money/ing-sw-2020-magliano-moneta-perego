@@ -33,7 +33,6 @@ public class Game implements Runnable {
     public void run() {
         cardChoice();
         placePawns();
-        updateField();
         partita();
     }
 
@@ -105,8 +104,7 @@ public class Game implements Runnable {
     public void partita() {
         while (true) {
             for (Gamer g : giocatori) {
-                ArrayList<God> gods = new ArrayList<God>();
-                gods.addAll(godCards);
+                ArrayList<God> gods = new ArrayList<God>(godCards);
                 Thread t = new Thread(new Turno(gods, g, table, handler));
                 t.start();
                 try {
