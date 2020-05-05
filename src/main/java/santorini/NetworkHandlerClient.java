@@ -133,7 +133,7 @@ public class NetworkHandlerClient implements Runnable {
      * @param coordinate initial coordinates in format x1,y1,x2,y2
      * @throws IOException
      */
-    public void initializaPawns(String coordinate) throws IOException {
+    public void initializePawns(String coordinate) throws IOException {
         outputStream.writeObject(coordinate);
         outputStream.flush();
     }
