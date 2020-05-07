@@ -36,7 +36,7 @@ public class Pan extends God {
      * @param turno
      */
     public void afterOwnerMoving(Turno turno) {
-        Pawn myPawn = turno.getGamer().getPawn(turno.getIdStartPawn());
+        Pawn myPawn = turno.getGamer().getPawn(turno.getMove().getIdPawn());
         if (((myPawn.getPastLevel() - myPawn.getPresentLevel() >= 2) &&
                 (myPawn.getPresentLevel() == 0))) {
             turno.setPanEffect(true);

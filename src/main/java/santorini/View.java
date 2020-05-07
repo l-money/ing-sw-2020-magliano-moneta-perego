@@ -1,7 +1,8 @@
 package santorini;
 
 import santorini.model.*;
-import santorini.model.godCards.Apollo;
+import santorini.model.godCards.Artemis;
+import santorini.model.godCards.Athena;
 import santorini.model.godCards.Pdor;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class View {
     private Mossa move;
     private Mossa build;
     private String movePawn;
+    private int IDP;
     private ArrayList<God> gods;
     private Thread listen;
     private String color;
@@ -69,10 +71,10 @@ public class View {
     public synchronized void printTable(Table table) {
         //this.table = table;
         //printGamerInGame(gamers);
-        System.out.print("\t\t\t\t\t\t[colonna]\n\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n");
+        System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n" + "\u001B[0m");
         System.out.print("[riga]\t------------------------------------------\n");
         for (int i = 0; i <= 4; i++) {
-            System.out.print("* " + i + " *\t");
+            System.out.print("\u001B[34m" + "* " + i + " *\t" + "\u001B[0m");
             for (int j = 0; j <= 4; j++) {
                 if (table.getTableCell(i, j).getPawn() != null) {
                     System.out.print(" |");
@@ -209,10 +211,14 @@ public class View {
             String card = "1";
             God chooseCard;
             int number = -1;
+            System.out.println("\nSCEGLI LA TUA DIVINITA'");
             for (God g : gods) {
-                System.out.println(gods.indexOf(g) + "\t" + g.getName());
-                System.out.println(g.getDescription());
+                System.out.println("\u001B[33m" + "**************************************************************" + "\u001B[0m");
+                System.out.println(gods.indexOf(g) + ":\t" + "\u001B[34m" + g.getName() + "\u001B[0m");
+                System.out.println();
+                System.out.println("\u001B[34m" + "**" + "\u001B[0m" + g.getDescription() + "\u001B[34m" + "**" + "\u001B[0m");
             }
+            System.out.println("\u001B[33m" + "**************************************************************" + "\u001B[0m");
             try {
                 do {
                     System.out.print("Scegli una carta: ");
@@ -228,16 +234,23 @@ public class View {
                         break;
                     }
                     //aggiunto Apollo di default
-                    if (number == 11) {
+                    if (number == 13) {
                         number = gods.size();
-                        gods.add(new Apollo());
+                        gods.add(new Athena());
+                        break;
+                    }
+
+                    //aggiunto Artemide di default
+                    if (number == 12) {
+                        number = gods.size();
+                        gods.add(new Artemis());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {
-                        System.out.println("Errore carta scelta!");
+                        System.err.println("Errore carta scelta!");
                     }
                 } while (number < 0 || number >= gods.size());
-                System.out.println("Hai scelto " + gods.get(number).getName());
+                System.out.println("Hai scelto " + "\u001B[34m" + gods.get(number).getName() + "\u001B[0m");
                 chooseCard = gods.get(number);
                 handlerClient.setCard(chooseCard);
             } catch (IOException e) {
@@ -263,8 +276,9 @@ public class View {
             String in[] = moveBuild.split(",");
             positionBuild[0] = Integer.parseInt(in[0]);
             positionBuild[1] = Integer.parseInt(in[1]);
-            int b = Integer.parseInt(movePawn);
-            build = new Mossa(Mossa.Action.BUILD, b, positionBuild[0], positionBuild[1]);
+            //mettere anche qui charAt
+            //int b = Integer.parseInt(movePawn);
+            build = new Mossa(Mossa.Action.BUILD, IDP, positionBuild[0], positionBuild[1]);
             handlerClient.setBuildPawn(build);
         } catch (IOException e) {
             e.printStackTrace();
@@ -280,37 +294,45 @@ public class View {
         int[] coordinateMove = new int[2];
         try {
             boolean inputok = false;
+            //System.out.println("E' il tuo turno");
             do {
-                System.out.println("E' il tuo turno");
                 System.out.println("Che pedina vuoi muovere? ");
                 movePawn = br.readLine();
-                // TODO cambiare charAt con Integer.parsInt ??
-                switch (movePawn.charAt(0)) {
-                    case '0':
-                        do {
-                            System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
-                            stringMove = br.readLine();
-                            inputok = validaCoordinate(stringMove);
-                        } while (!inputok);
-                        in = stringMove.split(",");
-                        coordinateMove[0] = Integer.parseInt(in[0]);
-                        coordinateMove[1] = Integer.parseInt(in[1]);
-                        move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
-                        break;
-                    case '1':
-                        do {
-                            System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
-                            stringMove = br.readLine();
-                            inputok = validaCoordinate(stringMove);
-                        } while (!inputok);
-                        in = stringMove.split(",");
-                        coordinateMove[0] = Integer.parseInt(in[0]);
-                        coordinateMove[1] = Integer.parseInt(in[1]);
-                        move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
-                        break;
-                    default:
-                        System.out.println("Pedina non valida");
-                        inputok = false;
+                if ((movePawn.equals("NO")) || (movePawn.equals("No")) ||
+                        (movePawn.equals("no")) || (movePawn.equals("nO"))) {
+                    move = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
+                    inputok = true;
+                } else {
+                    // TODO cambiare charAt con Integer.parsInt ??
+                    switch (movePawn.charAt(0)) {
+                        case '0':
+                            do {
+                                System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
+                                stringMove = br.readLine();
+                                inputok = validaCoordinate(stringMove);
+                            } while (!inputok);
+                            in = stringMove.split(",");
+                            coordinateMove[0] = Integer.parseInt(in[0]);
+                            coordinateMove[1] = Integer.parseInt(in[1]);
+                            move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
+                            IDP = 0;
+                            break;
+                        case '1':
+                            do {
+                                System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
+                                stringMove = br.readLine();
+                                inputok = validaCoordinate(stringMove);
+                            } while (!inputok);
+                            in = stringMove.split(",");
+                            coordinateMove[0] = Integer.parseInt(in[0]);
+                            coordinateMove[1] = Integer.parseInt(in[1]);
+                            move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
+                            IDP = 1;
+                            break;
+                        default:
+                            System.err.println("Pedina non valida");
+                            inputok = false;
+                    }
                 }
             } while (!inputok);
             handlerClient.setMovementPawn(move);
@@ -339,7 +361,7 @@ public class View {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NumberFormatException ex) {
-                System.out.println("Formato non valido, verranno impostati 2 giocatori");
+                System.err.println("Formato non valido, verranno impostati 2 giocatori");
                 players = 2;
             }
             try {
@@ -410,7 +432,7 @@ public class View {
      * This method is called if server sends an error message
      */
     public void setFailed() {
-            System.out.println("Errore generale");
+        System.err.println("Errore generale");
             System.out.println(("Nuova istruzione in arrivo: "));
     }
 

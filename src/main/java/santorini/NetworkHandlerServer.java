@@ -177,6 +177,7 @@ public class NetworkHandlerServer implements Runnable {
         }
     }
 
+
     /**
      * Requests initial pawn coords to players
      *

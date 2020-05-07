@@ -71,7 +71,7 @@ public class TestTurno {
         Pawn q = new Pawn();
         turn.getTable().setACell(1, 1, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(1, 2, 0, false, false, turn.getGamer().getPawn(1));
-        turn.setIdStartPawn(turn.getGamer().getPawn(0).getIdPawn());
+        //turn.setIdStartPawn(turn.getGamer().getPawn(0).getIdPawn());
         //cell[rowX,columnY,level]
         //move up from cell[1,1,0] to cell[2,2,1]
         turn.getTable().setACell(2, 2, 1, true, false, null);
@@ -130,7 +130,7 @@ public class TestTurno {
     @Test
     public void testBaseMovementLockUnlock() {
         Pawn q = new Pawn();
-        turn.setIdStartPawn(0);//gamer want to move  pawn0
+        //turn.setIdStartPawn(0);//gamer want to move  pawn0
         turn.getTable().setACell(0, 0, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(1));
         //pawn0 can not move, pawn1 can move
@@ -147,7 +147,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getPawn(1).getICanPlay());//pawn1 is not locked
         assertTrue(!turn.getGamer().getLoser());//gamer can move with pawn1
         //pawn0 can not move and pawn1 can not move
-        turn.setIdStartPawn(1);//gamer want to move pawn1
+        //turn.setIdStartPawn(1);//gamer want to move pawn1
         turn.getTable().setACell(3, 3, 1, false, true, null);//level 1 with dome for Atlas effect
         Mossa move1 = new Mossa(Mossa.Action.MOVE, 1, 3, 4);
         turn.baseMovement(move1);
@@ -157,7 +157,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getLoser());//gamer can not move
         //pawn0 unlocks
         turn.getGamer().setLoser(false);
-        turn.setIdStartPawn(0);//gamer want to move pawn0
+        //turn.setIdStartPawn(0);//gamer want to move pawn0
         turn.getTable().setACell(0, 1, 1, true, false, null);//cell is free
         Mossa move3 = new Mossa(Mossa.Action.MOVE, 0, 0, 1);
         turn.baseMovement(move3);
@@ -172,7 +172,7 @@ public class TestTurno {
      */
     @Test
     public void testBaseBuilding() {
-        turn.setIdStartPawn(0);
+        //turn.setIdStartPawn(0);
         turn.getTable().setACell(1, 1, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(2, 2, 1, false, false, turn.getGamer().getPawn(1));
         //pawn0 can build:
@@ -220,7 +220,7 @@ public class TestTurno {
      */
     @Test
     public void testBaseBuildingLockUnlock() {
-        turn.setIdStartPawn(1);
+        //turn.setIdStartPawn(1);
         Pawn q = new Pawn();
         turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(0, 0, 1, false, false, turn.getGamer().getPawn(1));
@@ -235,7 +235,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getPawn(0).getICanPlay());
         assertTrue(!turn.getGamer().getLoser());
         //pawn1 can not build, pawn0 can not build, gamer loses
-        turn.setIdStartPawn(0);
+        //turn.setIdStartPawn(0);
         turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(3, 4, 3, false, true, null);
         turn.getTable().setACell(4, 3, 3, false, true, null);
@@ -248,7 +248,7 @@ public class TestTurno {
         assertTrue(turn.getGamer().getLoser());
         //pawn1 unlocks
         turn.getGamer().setLoser(false);
-        turn.setIdStartPawn(1);//gamer want to move pawn1
+        //turn.setIdStartPawn(1);//gamer want to move pawn1
         turn.getTable().setACell(1, 1, 1, true, false, null);//cell is free
         Mossa move3 = new Mossa(Mossa.Action.BUILD, 1, 1, 1);
         turn.baseBuilding(move3);
@@ -263,7 +263,7 @@ public class TestTurno {
      */
     @Test
     public void testBagEmpty() {
-        turn.setIdStartPawn(0);
+        //turn.setIdStartPawn(0);
         //set empty the counterBrick of level 1
         while (turn.getTable().getBag().controlExistBrick(1)) {
             turn.getTable().getBag().extractionBrick(1);
@@ -293,7 +293,7 @@ public class TestTurno {
      */
     @Test
     public void testControlBaseWin() {
-        turn.setIdStartPawn(0);
+        //turn.setIdStartPawn(0);
         turn.getGamer().setAPawn(0, 1, 1, 1, 2);
         turn.getTable().setACell(1, 1, 2, false, false, turn.getGamer().getPawn(0));
         turn.getTable().setACell(2, 2, 3, true, false, null);
@@ -331,7 +331,7 @@ public class TestTurno {
      */
     @Test
     public void testGetMyStep() {
-        turn.setIdStartPawn(1);
+        //turn.setIdStartPawn(1);
         turn.getGamer().setAPawn(1, 1, 1, 0, 1);
         turn.getTable().setACell(1, 1, 1, false, false, turn.getGamer().getPawn(1));
         turn.getTable().setACell(2, 2, 2, true, false, null);
@@ -351,7 +351,7 @@ public class TestTurno {
      */
     @Test
     public void testGodCardEffectArtemis() {
-        turn.setIdStartPawn(0);
+        //turn.setIdStartPawn(0);
         //pawn0 moves from cell[1,1] to cell[2,2] and does a secondo move to cell[3,3]
         turn.getGamer().setAPawn(0, 0, 0, 0, 0);
         turn.getTable().setACell(1, 1, 1, false, false, turn.getGamer().getPawn(0));

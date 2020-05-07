@@ -1,15 +1,12 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
-import santorini.model.Cell;
-import santorini.model.Gamer;
-import santorini.model.God;
-import santorini.model.Mossa;
+import santorini.model.*;
 
 public class Artemis extends God {
     private Cell start;
     private boolean artemisEffect;
-    private Mossa move2;
+    private Mossa effectMove2;
 
     public Artemis() {
         super("Artemis", "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
@@ -18,12 +15,12 @@ public class Artemis extends God {
 
     @Override
     public Mossa getEffectMove() {
-        return move2;
+        return effectMove2;
     }
 
     @Override
     public void setEffectMove(Mossa effectMove) {
-        this.move2 = effectMove;
+        this.effectMove2 = effectMove;
     }
 
     /**
@@ -38,7 +35,7 @@ public class Artemis extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno the current turn
      */
     public void beforeOwnerMoving(Turno turno) {
         int startX = turno.getGamer().getPawn(turno.getMove().getIdPawn()).getRow();//save start position X
@@ -52,35 +49,52 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        artemisEffect = false;
-        //request a movement from the gamer
-        //TODO uncomment effectMove = turno.moveRequest();
-        effectMove = turno.moveRequest();
-        turno.setMove(effectMove);
+        if (turno.isValidationMove()) {
+            int idMove = turno.getMove().getIdPawn();
+            turno.getGameHandler().getGame().updateField();
+            artemisEffect = false;
+            turno.setCount(0);
+            turno.getGamer().setSteps(1);
+            //request a movement from the gamer
+            effectMove2 = turno.moveRequest();
             do {
-                artemisEffect = turno.godCardEffect(getEffectMove(), artemisEffect, 0, start);
-                //if the movement is not possible or correct, artemisEffect is false and he have to remake the movement
+                if (turno.nullEffectForGodCards(effectMove2)) {
+                    artemisEffect = true;
+                } else {
+                    if (idMove != effectMove2.getIdPawn()) {
+                        artemisEffect = false;
+                    } else {
+                        Cell end = turno.getTable().getTableCell(effectMove2.getTargetX(), effectMove2.getTargetY());
+                        if ((end.getX() == start.getX()) &&
+                                (end.getY() == start.getY())) {
+                            artemisEffect = false;
+                        } else {
+                            turno.baseMovement(effectMove2);
+                            turno.getValidationMove(turno.isValidationMove());
+                            artemisEffect = turno.isValidationMove();
+                        }
+                    }
+                }
                 if (!artemisEffect) {
                     turno.sendFailed();
-                    turno.setCount(turno.getCount() + 1);
                     //ask another movement
-                    //TODO uncomment effectMove = turno.moveRequest();
-                    effectMove = turno.moveRequest();
-                    turno.setMove(effectMove);
+                    effectMove2 = turno.moveRequest();
                 }
                 //else the movement is correct and artemisEffect is true
                 //until the movement is correct, the gamer have to insert the correct movement
-            } while (!artemisEffect && turno.getCount() <= 2);
-        turno.getGamer().setBuilds(0);
+            } while (!artemisEffect && turno.getCount() <= 5);
+            turno.setValidationMove(true);
+            turno.getMove().setIdPawn(idMove);
         }
+    }
+
 
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno the current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-
     }
 
     /**

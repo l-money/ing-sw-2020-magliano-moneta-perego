@@ -1,20 +1,24 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
-import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
 
 public class Athena extends God {
-    private Cell start;
     private boolean athenaEffect;
-    private int idMyGamer;
 
     public Athena() {
         super("Athena", "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\n" +
                 "in questo turno i lavoratori avversari non possono salire di livello");
     }
 
+    public boolean getAthenaEffect() {
+        return athenaEffect;
+    }
+
+    public void setAthenaEffect(boolean athenaEffect) {
+        this.athenaEffect = athenaEffect;
+    }
 
     /**
      * Initialize player variables with card
@@ -22,42 +26,33 @@ public class Athena extends God {
      * @param g player owner of card
      */
     public void initializeOwner(Gamer g) {
-        idMyGamer = g.getIdGamer();
 
     }
 
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
         turno.setAthenaEffect(false);
-        int x1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getRow();
-        int y1 = turno.getGamer().getPawn(turno.getIdStartPawn()).getColumn();
-        start = turno.getTable().getTableCell(x1, y1);//save the start position of the pawn
     }
 
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        athenaEffect = false;
-        int x2 = turno.getMove().getTargetX();
-        int y2 = turno.getMove().getTargetY();
-        Cell end = turno.getTable().getTableCell(x2, y2);//save the end position of the pawn
-        //if the pawn goes up to one level
-        //and the pawn is the same of the end cell and of the gamer
-        if (((end.getLevel() - start.getLevel()) == 1) &&
-                (end.getPawn() == turno.getTable().getTableCell(x2, y2).getPawn()) &&
-                (end.getPawn() == turno.getGamer().getPawn(turno.getIdStartPawn()))
-        ) {
-            //athenaEffect is true
-            athenaEffect = true;
+        if (turno.isValidationMove()) {
+            int id = turno.getMove().getIdPawn();
+            if (turno.getGamer().getPawn(id).getPresentLevel() - turno.getGamer().getPawn(id).getPastLevel() == 1) {
+                //athenaEffect is true
+                turno.setAthenaEffect(true);
+            } else {
+                turno.setAthenaEffect(false);
+            }
         }
-        turno.setAthenaEffect(athenaEffect);
     }
 
     /**
@@ -84,14 +79,6 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void beforeOtherMoving(Gamer other) {
-        //if athenaEffect is true, the others gamers can not go up to one level
-        /**
-         if ((athenaEffect)&& (other.getIdGamer()!=idMyGamer)) {
-            other.setLevelsUp(0);
-         System.out.println(other.getId()+" "+other.getColorGamer()+" "+other.getLevelsUp());
-        }
-         */
-
     }
 
     /**
@@ -117,7 +104,6 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void afterOtherBuilding(Gamer other) {
-        other.setLevelsUp(1);
     }
 
 

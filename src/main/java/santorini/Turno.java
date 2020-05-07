@@ -9,13 +9,12 @@ public class Turno implements Runnable {
     private ArrayList<God> otherCards;
     private Gamer gamer;
     private Table table;
-    private int idStartPawn;
     private Mossa move;
     private boolean validationMove;
     private boolean validationBuild;
     private boolean panEffect = false;
     private boolean promEffect = false;
-    private boolean athenaEffect = false;
+    private boolean athenaEffect;
     private NetworkHandlerServer gameHandler;
     //count is for test, it will substitute by a timer
     private int count = 0;
@@ -33,6 +32,7 @@ public class Turno implements Runnable {
         this.gamer = gamer;
         this.table = table;
         this.gameHandler = handler;
+        this.athenaEffect = athenaEffect;
     }
 
     /**
@@ -68,14 +68,6 @@ public class Turno implements Runnable {
      */
     public int getCount() {
         return count;
-    }
-
-    /**
-     * methos getIdStartPawn
-     * @return the pawn used for the movement which will be use for the building
-     */
-    public int getIdStartPawn() {
-        return idStartPawn;
     }
 
     /**
@@ -121,14 +113,6 @@ public class Turno implements Runnable {
         this.move = move;
     }
 
-    /**
-     * method setIdStartPawn
-     *
-     * @param idStartPawn the pawn used for the movement which will be use for the building
-     */
-    public void setIdStartPawn(int idStartPawn) {
-        this.idStartPawn = idStartPawn;
-    }
 
     /**
      * method isValidationMove for the Godcards
@@ -148,6 +132,23 @@ public class Turno implements Runnable {
         return validationBuild;
     }
 
+    /**
+     * method setValidationMove
+     *
+     * @param validationMove
+     */
+    public void setValidationMove(boolean validationMove) {
+        this.validationMove = validationMove;
+    }
+
+    /**
+     * method setValidationBuild
+     *
+     * @param validationBuild
+     */
+    public void setValidationBuild(boolean validationBuild) {
+        this.validationBuild = validationBuild;
+    }
 
     /**
      * method giveMeMossa
@@ -207,7 +208,7 @@ public class Turno implements Runnable {
         // Domanda:
         // Appena loser==true il giocatore smette di giocare in qualsiasi caso
         // oppure cerca di vedere se una pedina si è sbloccata??
-        if (!getGamer().getLoser() && !getGamer().isWinner()) {
+        if (!getGamer().isWinner()) {
             validationMove = false;
             validationBuild = false;
             getGamer().setSteps(1);
@@ -228,9 +229,10 @@ public class Turno implements Runnable {
                     move = buildingRequest();
                     myBuilding(move);
                 } while (!validationBuild && count < 5);
-                gameHandler.getGame().updateField();
+
             }
         }
+        gameHandler.getGame().updateField();
     }
 
     /**
@@ -253,11 +255,13 @@ public class Turno implements Runnable {
 
         }
         //Athena
-        if ((!getGamer().getMyGodCard().getName().equals("Athena")) && (athenaEffect)) {
+        //TODO review Athena effect
+        if (!getGamer().getMyGodCard().getName().equals("Athena") && (getAthenaEffect()) ){
             getGamer().setLevelsUp(0);
         } else {
-            setAthenaEffect(false);
+            getGamer().setLevelsUp(1);
         }
+
     }
 
     /**
@@ -362,7 +366,6 @@ public class Turno implements Runnable {
     public void getValidationMove(boolean vM) {
         if (!vM) {
             sendFailed();
-            //System.err.println("Mossa numero " + (count + 1) + "\tmovimento non validato");
             count++;
         } else {
             getGamer().setSteps(0);
@@ -435,14 +438,15 @@ public class Turno implements Runnable {
      * Standard win
      */
     public void controlWin() {
+        int idP = getMove().getIdPawn();
         if (panEffect) {
             getGamer().setWinner(true);
             System.out.println("HAI VINTO :" + getGamer().getName());
             getGamer().setBuilds(0);
         } else {
             if (
-                    (getGamer().getPawn(idStartPawn).getPastLevel() == 2) &&
-                            (getGamer().getPawn(idStartPawn).getPresentLevel() == 3)
+                    (getGamer().getPawn(idP).getPastLevel() == 2) &&
+                            (getGamer().getPawn(idP).getPresentLevel() == 3)
             ) {
                 getGamer().setWinner(true);
                 System.out.println("HAI VINTO :" + getGamer().getName());
@@ -481,8 +485,7 @@ public class Turno implements Runnable {
 
     /**
      * method getAthenaEffect
-     *
-     * @return true or false
+     * @return athenaEffect
      */
     public boolean getAthenaEffect() {
         return athenaEffect;
@@ -490,8 +493,7 @@ public class Turno implements Runnable {
 
     /**
      * method setAthenaEffect
-     *
-     * @param athenaEffect true or false
+     * @param athenaEffect effect of the god
      */
     public void setAthenaEffect(boolean athenaEffect) {
         this.athenaEffect = athenaEffect;

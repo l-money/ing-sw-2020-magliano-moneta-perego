@@ -103,6 +103,7 @@ public class NetworkHandlerClient implements Runnable {
         }).start();
     }
 
+
     /**
      * Sends choosen god card to server
      *
