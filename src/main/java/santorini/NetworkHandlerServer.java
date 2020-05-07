@@ -19,6 +19,7 @@ public class NetworkHandlerServer implements Runnable {
     private ObjectOutputStream outputStream;
     private int i = 0, max = 0;
 
+
     public Game getGame() {
         return game;
     }
@@ -193,4 +194,5 @@ public class NetworkHandlerServer implements Runnable {
         String posizioni = inputStream.readObject().toString();
         return posizioni;
     }
+
 }

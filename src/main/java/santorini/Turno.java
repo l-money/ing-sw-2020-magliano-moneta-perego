@@ -170,7 +170,7 @@ public class Turno implements Runnable {
      */
     public Mossa moveRequest() {
         if (!promEffect) {
-            System.out.println("Chiedo movimento al giocatore " + gamer.getId() + ":\t" + gamer.getName());
+            System.out.println("Chiedo movimento");
             move = giveMeMossa(Mossa.Action.MOVE);
         }
         return move;
@@ -182,7 +182,7 @@ public class Turno implements Runnable {
      * @return a move of typo BUILD
      */
     public Mossa buildingRequest() {
-        System.out.println("Chiedo costruzione al giocatore " + gamer.getId() + ":\t" + gamer.getName());
+        System.out.println("Chiedo costruzione");
         move = giveMeMossa(Mossa.Action.BUILD);
         return move;
     }
@@ -192,8 +192,8 @@ public class Turno implements Runnable {
      * Prints an error or sends a failed to handler
      */
     public void sendFailed() {
-        //gameHandler.sendFailed(gamer);
-        System.err.print("Errore\n");
+        gameHandler.sendFailed(gamer);
+        System.err.print("Errore_Caccoso\n");
     }
 
     /**
@@ -201,22 +201,36 @@ public class Turno implements Runnable {
      * all god cards features
      */
     public void run() {
-        count = 0;
-        validationMove = false;
-        validationBuild = false;
-        do {
-            effectsOfCards();
-            move = moveRequest();
-            myMovement(move);
-        } while (!validationMove && count < 10);
-        win();
-        gameHandler.getGame().updateField();
-        count = 0;
-        do {
-            move = buildingRequest();
-            myBuilding(move);
-        } while (!validationBuild && count < 10);
-        gameHandler.getGame().updateField();
+        //TODO
+        // Condizione di sconfitta
+        // Situazione attuale, appena loser==true, il giocatore smette di giocare immediatamente
+        // Domanda:
+        // Appena loser==true il giocatore smette di giocare in qualsiasi caso
+        // oppure cerca di vedere se una pedina si è sbloccata??
+        if (!getGamer().getLoser() && !getGamer().isWinner()) {
+            validationMove = false;
+            validationBuild = false;
+            getGamer().setSteps(1);
+            getGamer().setBuilds(1);
+            count = 0;
+            do {
+                getGamer().setSteps(1);
+                effectsOfCards();
+                move = moveRequest();
+                myMovement(move);
+            } while (!validationMove && count < 5);
+            controlWin();
+            gameHandler.getGame().updateField();
+            count = 0;
+            if (!getGamer().isWinner() && !getGamer().getLoser()) {
+                do {
+                    getGamer().setBuilds(1);
+                    move = buildingRequest();
+                    myBuilding(move);
+                } while (!validationBuild && count < 5);
+                gameHandler.getGame().updateField();
+            }
+        }
     }
 
     /**
@@ -230,13 +244,13 @@ public class Turno implements Runnable {
         setPromEffect(false);
         if ((getGamer().getMyGodCard().getName().equals("Prometheus")) && (!promEffect)) {
             System.out.println("Hai Prometheus, costruzione facoltativa ");
-            //move = buildingRequest();
+            move = buildingRequest();
             setPromEffect(true);
-            /**
+
              if (nullEffectForGodCards(move)) {
              setPromEffect(false);
              }
-             */
+
         }
         //Athena
         if ((!getGamer().getMyGodCard().getName().equals("Athena")) && (athenaEffect)) {
@@ -255,35 +269,22 @@ public class Turno implements Runnable {
                 ||
                 (controlStandardParameter(m) && m.getAction().equals(Mossa.Action.BUILD) && (promEffect))
         ) {
-            if (getGamer().getMyGodCard().getName() != "Pdor" ||
-                    getGamer().getMyGodCard() != null) {
                 gamer.getMyGodCard().beforeOwnerMoving(this);
                 for (God card : otherCards) {
                     card.beforeOtherMoving(gamer);
                 }
-            }
             baseMovement(m);
             getValidationMove(validationMove);
 
-            if (getGamer().getMyGodCard().getName() != "Pdor" ||
-                    getGamer().getMyGodCard() != null) {
                 gamer.getMyGodCard().afterOwnerMoving(this);
                 for (God card : otherCards) {
                     card.afterOtherMoving(gamer);
                 }
-            }
         } else {
-            validationMove = false;
             getValidationMove(validationMove);
             }
     }
 
-    /**
-     * method control win
-     */
-    public void win() {
-        controlWin();
-    }
 
     /**
      * method myBuilding
@@ -291,26 +292,19 @@ public class Turno implements Runnable {
     public void myBuilding(Mossa b) {
         validationBuild = false;
         if ((controlStandardParameter(b)) && (validationMove) &&
-                (b.getAction().equals(Mossa.Action.BUILD)) && (b.getIdPawn() == idStartPawn) &&
-                (count == 0)) {
-            if (getGamer().getMyGodCard().getName() != "Pdor" ||
-                    getGamer().getMyGodCard() != null) {
+                (b.getAction().equals(Mossa.Action.BUILD))) {
+
                 gamer.getMyGodCard().beforeOwnerBuilding(this);
                 for (God card : otherCards) {
                     card.beforeOtherBuilding(gamer);
                 }
-            }
             baseBuilding(b);
             getValidationBuild(validationBuild);
-            if (getGamer().getMyGodCard().getName() != "Pdor" ||
-                    getGamer().getMyGodCard() != null) {
                 gamer.getMyGodCard().afterOwnerBuilding(this);
                 for (God card : otherCards) {
                     card.afterOtherBuilding(gamer);
                 }
-            }
         } else {
-            validationBuild = false;
             getValidationBuild(validationBuild);
         }
     }
@@ -325,22 +319,24 @@ public class Turno implements Runnable {
         int k = move.getIdPawn();
         //control if the gamer can do one step
         if (getGamer().getSteps() == 0) {
-            //System.out.println("***Over: Steps = " + getGamer().getSteps() + "***");
             validationMove = true;
         } else {
                 //control the pawn can move
                 if (!table.iCanMove(start)) {
                     //if it can not, set iCanPlay false
-                    getGamer().getPawn(k).setICanPlay(false);
+                    getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
                     //control the two pawns can't move
-                    if (amILocked(this.gamer)) {
-                        this.gamer.setLoser(true);
+                    if (amILocked(getGamer())) {
+                        getGamer().setLoser(true);
+                        //getGamer().setBuilds(0);
                         validationMove = true;
                     } else {
-                        this.gamer.setLoser(false);
-                            validationMove = false;
+                        getGamer().setLoser(false);
+                        validationMove = false;
                     }
                 } else {
+                    getGamer().getPawn(move.getIdPawn()).setICanPlay(true);
+                    getGamer().setLoser(false);
                     //control the base movement of the pawn is possible
                     if (!table.controlBaseMovement(start, end)) {
                         validationMove = false;
@@ -351,8 +347,6 @@ public class Turno implements Runnable {
                         } else {
                             //do the step and change position
                             validationMove = getMyStep(start, end, p);
-                            setIdStartPawn(k);
-                            System.out.println("***movimento valido***");
                         }
 
                     }
@@ -367,8 +361,8 @@ public class Turno implements Runnable {
      */
     public void getValidationMove(boolean vM) {
         if (!vM) {
-            //sendFailed();
-            System.err.println("Mossa numero " + (count + 1) + "\tmovimento non validato");
+            sendFailed();
+            //System.err.println("Mossa numero " + (count + 1) + "\tmovimento non validato");
             count++;
         } else {
             getGamer().setSteps(0);
@@ -386,20 +380,22 @@ public class Turno implements Runnable {
         if (gamer.getBuilds() == 0) {
             validationBuild = true;
         } else {
-            //control if the id is the same
-            if (p.getIdPawn() != idStartPawn) {
-                validationBuild = false;
-            } else {
+            /**
+             //control if the id is the same
+             if (p.getIdPawn() != idStartPawn) {
+             validationBuild = false;
+             } else {
+             */
                 //control the pawn can build
                 if (!table.iCanBuild(start)) {
                     //if it can not, set iCanPlay false
-                    getGamer().getPawn(idStartPawn).setICanPlay(false);
+                    getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
                     //control the two pawns can't build
-                    if (amILocked(this.gamer)) {
-                        this.gamer.setLoser(true);
+                    if (amILocked(getGamer())) {
+                        getGamer().setLoser(true);
                         validationBuild = true;
                     } else {
-                        this.gamer.setLoser(false);
+                        getGamer().setLoser(false);
                         validationBuild = false;
                     }
                 } else {
@@ -411,14 +407,14 @@ public class Turno implements Runnable {
                         boolean b = table.build(end);
                         //control if there are bricks in the bag
                         if (!b) {
-                            this.gamer.setLoser(true);
+                            getGamer().setLoser(true);
+                            validationBuild = false;
                         }
                         validationBuild = true;
                     }
                 }
             }
         }
-    }
 
     /**
      * method getValidationBuild
@@ -427,17 +423,13 @@ public class Turno implements Runnable {
      */
     public void getValidationBuild(boolean vB) {
         if (!vB) {
-            //sendFailed();
-            System.err.println("Mossa numero " + (count + 1) + "\tcostruzione non validata");
+            sendFailed();
+            //System.err.println("Mossa numero " + (count + 1) + "\tcostruzione non validata");
             count++;
         } else {
-            if (getGamer().isWinner()) {
-            } else {
-                System.out.println("***costruzione valida***");
                 getGamer().setBuilds(0);
                     }
             }
-    }
 
     /**
      * Standard win
@@ -531,9 +523,7 @@ public class Turno implements Runnable {
     public boolean controlStandardParameter(Mossa movement) {
         if ((movement.getIdPawn() < 0) || (movement.getIdPawn() > 1) ||
                 (movement.getTargetX() < 0) || (movement.getTargetX() > 5) ||
-                (movement.getTargetY() < 0) || (movement.getTargetY() > 5) ||
-                (!gamer.getPawn(movement.getIdPawn()).getICanPlay())
-        ) {
+                (movement.getTargetY() < 0) || (movement.getTargetY() > 5)) {
             return false;
         } else {
             return true;
@@ -547,7 +537,7 @@ public class Turno implements Runnable {
      * @return if the gamer wants to do the optional movement of the god card
      */
     public boolean nullEffectForGodCards(Mossa movement) {
-        if (movement.getIdPawn() == -1 && movement.getTargetX() == -1 && movement.getTargetY() == -1) {
+        if (movement.getIdPawn() == -1 || movement.getTargetX() == -1 || movement.getTargetY() == -1) {
             return true;
         } else {
             return false;
@@ -586,6 +576,7 @@ public class Turno implements Runnable {
      */
     public boolean godCardEffect(Mossa move, boolean effect, int i, Cell specialCell) {
         if (nullEffectForGodCards(move)) {
+            System.out.println("Effetto Nullo");
             effect = true;
         } else {
             if (!controlStandardParameter(move)) {
@@ -618,7 +609,6 @@ public class Turno implements Runnable {
                                     (controlStandardParameter(move))) {
                                 getTable().getTableCell(end.getX(), end.getY()).setComplete(true);
                                 effect = true;
-                                getGamer().setBuilds(0);
                             } else {
                                 effect = false;
                             }
@@ -662,7 +652,5 @@ public class Turno implements Runnable {
         }
         return effect;
     }
-
-
 
 }

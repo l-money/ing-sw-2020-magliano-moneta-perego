@@ -97,8 +97,8 @@ public class Table implements Serializable {
     public void setACell(int x, int y, int level, boolean free, boolean complete, Pawn pawn) {
         getTableCell(x, y).setX(x);
         getTableCell(x, y).setY(y);
-        getTableCell(x, y).setPawn(pawn);
         getTableCell(x, y).setFree(free);
+        getTableCell(x, y).setPawn(pawn);
         getTableCell(x, y).setComplete(complete);
         getTableCell(x, y).setLevel(level);
         if (getTableCell(x, y).getPawn() != null) {
@@ -116,19 +116,22 @@ public class Table implements Serializable {
      */
     public boolean iCanMove(Cell myCell) {
         int k = 0;
+        int free = 0;
         ArrayList<Cell> nearCells;
-        ArrayList<Cell> nearCellsFree = new ArrayList<Cell>();
+        //create an ArrayList of near cells
         nearCells = searchAdjacentCells(myCell);
+        //save the size of the nearCells
         int l = nearCells.size();
+        //for each nearCell control I can move on it
         for (int i = 0; i < l; i++) {
             Cell index = nearCells.get(i);
             k = index.getLevel() - myCell.getLevel();
-            if ((k <= 1) && (k >= -3) && (index.isFree()) && (!index.isComplete()) &&(index.getPawn()==null)) {
-                nearCellsFree.add(index);
+            if ((k <= 1) && (index.isFree()) && (!index.isComplete()) && (index.getPawn() == null)) {
+                free = free + 1;
             }
         }
-        if (nearCellsFree.size() > 0) {
-            getTableCell(myCell.getX(), myCell.getY()).getPawn().setICanPlay(true);
+        //If nearCellsFree is not empty, the pawn can move
+        if (free > 0) {
             return true;
         } else {
             return false;
@@ -143,17 +146,16 @@ public class Table implements Serializable {
      */
     public boolean iCanBuild(Cell myCell) {
         ArrayList<Cell> nearCells = searchAdjacentCells(myCell);
-        ArrayList<Cell> nearCellsBuilds = new ArrayList<Cell>();
+        int free = 0;
         int l = nearCells.size();
         for (int i = 0; i < l; i++) {
             Cell index = nearCells.get(i);
             if ((index.isFree()) && (!index.isComplete()) && (index.getLevel() >= 0) && (index.getLevel() <= 3) &&
                     (index.getPawn()==null)) {
-                nearCellsBuilds.add(index);
+                free = free + 1;
             }
         }
-        if (nearCellsBuilds.size() > 0) {
-            getTableCell(myCell.getX(), myCell.getY()).getPawn().setICanPlay(true);
+        if (free > 0) {
             return true;
         } else {
             return false;
@@ -169,20 +171,27 @@ public class Table implements Serializable {
      */
     public boolean controlBaseMovement(Cell start, Cell end) {
         int k = end.getLevel() - start.getLevel();
-        ArrayList<Cell> nearCells = searchAdjacentCells(start);
+        ArrayList<Cell> nearCells = new ArrayList<>();
+        nearCells = searchAdjacentCells(start);
+        //
+        System.out.println("Number of near cells : " + nearCells.size());
+        //
         if (!nearCells.contains(end)) {
+            System.out.println("not nearcells");
             return false;
         } else {
-            if ((!end.isFree()) || (end.getPawn() != null)) {
+            if (end.isComplete()) {
+                System.out.println("is complete");
                 return false;
             } else {
-                if (end.isComplete()) {
+                if (end.getPawn() != null || !end.isFree()) {
+                    System.out.println("not null");
                     return false;
                 } else {
-                    if ((k <= 1) && (k >= -3) &&
-                            (start.getLevel() == start.getPawn().getPresentLevel())) {
+                    if (k <= 1) {
                         return true;
                     } else {
+                        System.out.println("salire di più livelli");
                         return false;
                     }
                 }

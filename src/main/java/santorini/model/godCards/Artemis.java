@@ -55,7 +55,7 @@ public class Artemis extends God {
         artemisEffect = false;
         //request a movement from the gamer
         //TODO uncomment effectMove = turno.moveRequest();
-        //effectMove = turno.moveRequest();
+        effectMove = turno.moveRequest();
         turno.setMove(effectMove);
             do {
                 artemisEffect = turno.godCardEffect(getEffectMove(), artemisEffect, 0, start);
@@ -65,12 +65,13 @@ public class Artemis extends God {
                     turno.setCount(turno.getCount() + 1);
                     //ask another movement
                     //TODO uncomment effectMove = turno.moveRequest();
-                    //effectMove = turno.moveRequest();
+                    effectMove = turno.moveRequest();
                     turno.setMove(effectMove);
                 }
                 //else the movement is correct and artemisEffect is true
                 //until the movement is correct, the gamer have to insert the correct movement
             } while (!artemisEffect && turno.getCount() <= 2);
+        turno.getGamer().setBuilds(0);
         }
 
     /**

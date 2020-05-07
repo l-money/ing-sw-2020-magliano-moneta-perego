@@ -2,6 +2,7 @@ package santorini.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import santorini.View;
 
 import java.io.Serializable;
 import java.util.List;
@@ -213,42 +214,50 @@ public class TestTable implements Serializable {
 
     @Test
     public void testICanMove() {
-        Pawn pawn = new Pawn();
-        Pawn q = new Pawn();
-        //case 1: I can't move
-        table.setACell(0, 0, 1, false, false, pawn);
-        Cell myCell = table.getTableCell(0, 0);
-        table.setACell(0, 1, 3, true, false, null);
-        table.setACell(1, 1, 2, false, false, q);
-        table.setACell(1, 0, 1, false, true, null);
-        assertFalse(table.iCanMove(myCell));
-        //case 2: I can move up in [0;1]
-        table.setACell(0, 1, 2, true, false, null);
-        table.setACell(1, 1, 1, false, false, q);
-        assertTrue(table.iCanMove(myCell));
-        //case 3: I can move down in [0;1],[1;1],[1,0]
-        table.setACell(0, 0, 3, false, false, pawn);
-        myCell = table.getTableCell(0, 0);
-        table.setACell(0, 1, 0, true, false, null);
-        table.setACell(1, 1, 1, true, false, null);
+        View v = new View(null, null);
+        Pawn p0 = new Pawn();
+        Pawn q1 = new Pawn();
+        p0.setIdPawn(0);
+        p0.setIdGamer(0);
+        q1.setIdPawn(1);
+        q1.setIdGamer(1);
+        table.setACell(0, 0, 0, false, false, q1);
+        table.setACell(0, 1, 3, false, true, null);
         table.setACell(1, 0, 2, true, false, null);
-        assertTrue(table.iCanMove(myCell));
+        table.setACell(1, 1, 1, false, false, p0);
+        //v.printTable(table);
+        boolean b = table.iCanMove(table.getTableCell(p0.getRow(), p0.getColumn()));
+        assertTrue(b);
+        b = table.iCanMove(table.getTableCell(q1.getRow(), q1.getColumn()));
+        assertTrue(!b);
+        table.setACell(1, 1, 1, true, false, p0);
+        //v.printTable(table);
+        b = table.iCanMove(table.getTableCell(q1.getRow(), q1.getColumn()));
+        assertTrue(b);
     }
 
     @Test
     public void testICanBuild() {
-        Pawn p = new Pawn();
-        Pawn q = new Pawn();
-        //case 1: I can't build
-        table.setACell(0, 0, 1, false, false, p);
-        Cell myCell = table.getTableCell(0, 0);
-        table.setACell(0, 1, 1, false, true, null);//dome for Atlas Effect
-        table.setACell(1, 1, 1, false, false, q);//there is q pawn
-        table.setACell(1, 0, 3, false, true, null);//the building is complete
-        assertFalse(table.iCanBuild(myCell));
-        //case 2: I can build in [1;1]
-        table.setACell(1, 1, 1, true, false, null);//the cell is free
-        assertTrue(table.iCanBuild(myCell));
+        //View v = new View(null,null);
+        Pawn p0 = new Pawn();
+        Pawn q1 = new Pawn();
+        p0.setIdPawn(0);
+        p0.setIdGamer(0);
+        q1.setIdPawn(1);
+        q1.setIdGamer(1);
+        table.setACell(0, 0, 0, false, false, q1);
+        table.setACell(0, 1, 3, false, true, null);
+        table.setACell(1, 0, 2, true, true, p0);
+        table.setACell(1, 1, 1, false, false, p0);
+        //v.printTable(table);
+        boolean b = table.iCanBuild(table.getTableCell(p0.getRow(), p0.getColumn()));
+        assertTrue(b);
+        b = table.iCanBuild(table.getTableCell(q1.getRow(), q1.getColumn()));
+        assertTrue(!b);
+        table.setACell(1, 1, 1, true, false, p0);
+        //v.printTable(table);
+        b = table.iCanBuild(table.getTableCell(q1.getRow(), q1.getColumn()));
+        assertTrue(b);
     }
 
     /**
@@ -256,27 +265,39 @@ public class TestTable implements Serializable {
      */
     @Test
     public void testControlBaseMovement() {
-        Pawn p = new Pawn();
-        Pawn q = new Pawn();
-        Cell start;
-        Cell end1, end2, end3, end4, end5;
-        table.setACell(0, 2, 1, false, false, p);
-        start = table.getTableCell(0, 2);
-        table.setACell(0, 1, 2, true, false, null);//level 2: possible movement up
-        table.setACell(0, 3, 3, true, false, null);//level 3: impossible movement
-        table.setACell(1, 1, 0, true, false, null);//level 0: possible movement down
-        table.setACell(1, 2, 2, false, false, q);//is not free: impossible movement
-        table.setACell(1, 3, 3, false, true, null);//is complete: impossible movement
-        end1 = table.getTableCell(0, 1);
-        end2 = table.getTableCell(0, 3);
-        end3 = table.getTableCell(1, 1);
-        end4 = table.getTableCell(1, 2);
-        end5 = table.getTableCell(1, 3);
-        assertTrue(table.controlBaseMovement(start, end1));
-        assertTrue(table.controlBaseMovement(start, end3));
-        assertFalse(table.controlBaseMovement(start, end2));
-        assertFalse(table.controlBaseMovement(start, end4));
-        assertFalse(table.controlBaseMovement(start, end5));
+        View v = new View(null, null);
+        Pawn p0 = new Pawn();
+        Pawn q1 = new Pawn();
+        p0.setIdPawn(0);
+        p0.setIdGamer(0);
+        q1.setIdPawn(1);
+        q1.setIdGamer(1);
+        table.setACell(0, 0, 0, false, false, q1);
+        table.setACell(0, 1, 3, false, true, null);
+        table.setACell(1, 0, 3, true, false, null);
+        table.setACell(1, 1, 1, false, false, p0);
+        table.setACell(0, 2, 2, true, false, null);
+        table.setACell(1, 2, 1, true, false, null);
+        v.printTable(table);
+        //control adjacentCells
+        boolean b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(3, 3));
+        assertFalse(b);
+        //control is not complete
+        b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(0, 1));
+        assertFalse(b);
+        //control is free and null
+        b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(0, 0));
+        assertFalse(b);
+        //control movement is possible
+        b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(1, 0));
+        assertFalse(b);
+        //control baseMovement is true
+        b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(0, 2));
+        assertTrue(b);
+        b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(1, 2));
+        assertTrue(b);
+        b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(2, 2));
+        assertTrue(b);
     }
 
     /**

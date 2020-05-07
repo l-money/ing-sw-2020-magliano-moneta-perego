@@ -15,7 +15,6 @@ public class NetworkHandlerClient implements Runnable {
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private View view;
-    private int players1;
 
     /**
      * Initialize a new connection with a game server to join in a new game
@@ -82,6 +81,8 @@ public class NetworkHandlerClient implements Runnable {
                              * per una nuova richiesta di istruzioni dal server*/
                             new Thread(() -> view.setFailed()).start();
                             break;
+                        default:
+                            break;
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
@@ -89,6 +90,7 @@ public class NetworkHandlerClient implements Runnable {
             }
         }
     }
+
 
     /**
      * Creates a new thread to update the playing field just sent from server
@@ -119,7 +121,6 @@ public class NetworkHandlerClient implements Runnable {
      * @throws IOException
      */
     public void setPartecipanti(int players) throws IOException {
-        players1 = players;
         outputStream.writeObject(players + "");
         outputStream.flush();
     }

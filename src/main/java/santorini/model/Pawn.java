@@ -24,9 +24,15 @@ public class Pawn implements Serializable {
 
 
     public Pawn() {
-        this.iCanPlay = true;
+        this.idPawn = -2;
+        this.idGamer = -2;
+        //this.row = -2;
+        //this.column = -2;
         this.presentLevel = 0;
         this.pastLevel = 0;
+        this.color = null;
+        this.iCanPlay = true;
+
     }
 
     /**

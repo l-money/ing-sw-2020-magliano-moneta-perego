@@ -1,9 +1,9 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
-import santorini.model.*;
-
-import java.io.IOException;
+import santorini.model.Gamer;
+import santorini.model.God;
+import santorini.model.Mossa;
 
 public class Atlas extends God {
     private Mossa buildDome;
@@ -12,6 +12,16 @@ public class Atlas extends God {
     public Atlas() {
         super("Atlas", "Tua costruzione: il tuo lavoratore può costruire una cupola\n" +
                 "su qualsiasi livello, compreso il terreno");
+    }
+
+    @Override
+    public Mossa getEffectMove() {
+        return buildDome;
+    }
+
+    @Override
+    public void setEffectMove(Mossa effectMove) {
+        this.buildDome = effectMove;
     }
 
     /**
@@ -46,30 +56,25 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-        //atlasEffect = false;
+        atlasEffect = false;
         //request a movement from the gamer
-            try {
-                buildDome = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
+        effectMove = turno.buildingRequest();
+        turno.setMove(effectMove);
             do {
-                turno.godCardEffect(buildDome, atlasEffect, 1, null);
+                atlasEffect = turno.godCardEffect(getEffectMove(), atlasEffect, 1, null);
                 if (!atlasEffect) {
-                    //if atlasEffect is false, the destination is incorrect, insert the correct destination
                     turno.sendFailed();
-                    //ask another destination of the build
-                    try {
-                        buildDome = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    turno.setCount(turno.getCount() + 1);
+                    //ask another movement
+                    //TODO uncomment effectMove = turno.moveRequest();
+                    effectMove = turno.buildingRequest();
+                    turno.setMove(effectMove);
+                    ;
+                } else {
+                    turno.getGamer().setBuilds(0);
                 }
-            } while (!atlasEffect);
+            } while (!atlasEffect && turno.getCount() <= 2);
+        //turno.getGamer().setBuilds(0);
         }
 
     /**

@@ -1,6 +1,7 @@
 package santorini;
 
 import santorini.model.*;
+import santorini.model.godCards.Apollo;
 import santorini.model.godCards.Pdor;
 
 import java.awt.*;
@@ -27,6 +28,15 @@ public class View {
     }
 
     /**
+     * method setHandlerClient
+     *
+     * @param handlerClient .
+     */
+    public void setHandlerClient(NetworkHandlerClient handlerClient) {
+        this.handlerClient = handlerClient;
+    }
+
+    /**
      * Initializes a new view that creates a networkhandler
      *
      * @param address address to connect network handler socket
@@ -44,9 +54,7 @@ public class View {
         this.color = color;
     }
 
-    public void setHandlerClient(NetworkHandlerClient handlerClient) {
-        this.handlerClient = handlerClient;
-    }
+
 
     public Table getTable() {
         return table;
@@ -219,6 +227,12 @@ public class View {
                         gods.add(new Pdor());
                         break;
                     }
+                    //aggiunto Apollo di default
+                    if (number == 11) {
+                        number = gods.size();
+                        gods.add(new Apollo());
+                        break;
+                    }
                     if (number < 0 || number >= gods.size()) {
                         System.out.println("Errore carta scelta!");
                     }
@@ -267,8 +281,10 @@ public class View {
         try {
             boolean inputok = false;
             do {
+                System.out.println("E' il tuo turno");
                 System.out.println("Che pedina vuoi muovere? ");
                 movePawn = br.readLine();
+                // TODO cambiare charAt con Integer.parsInt ??
                 switch (movePawn.charAt(0)) {
                     case '0':
                         do {
@@ -298,6 +314,7 @@ public class View {
                 }
             } while (!inputok);
             handlerClient.setMovementPawn(move);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,11 +6,11 @@ import santorini.model.*;
 import java.util.ArrayList;
 
 public class Apollo extends God {
-    Cell start;
-    Cell end;
-    Pawn myPawn;
-    Pawn otherPawn;
-    boolean apolloEffect;
+    private Cell start;
+    private Cell end;
+    private Pawn myPawn;
+    private Pawn otherPawn;
+    private boolean apolloEffect;
 
     public Apollo() {
         super("Apollo", "Tuo spostamento: il tuo lavoratore può spostarsi nella casella di un lavoratore avversario\n" +
@@ -34,7 +34,7 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        do {
+        apolloEffect = false;
             int i = turno.getMove().getIdPawn();
             int x = turno.getMove().getTargetX();
             int y = turno.getMove().getTargetY();
@@ -42,24 +42,17 @@ public class Apollo extends God {
             otherPawn = turno.getTable().getTableCell(x, y).getPawn();//save other pawn
             myPawn = turno.getGamer().getPawn(i);//save myPawn
             start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());//save myCell
-            apolloEffect = false;
             ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
             if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
                     (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
                     (end.getLevel() - start.getLevel() <= 1)) {
                 if ((end.getLevel() - start.getLevel() == 1) && (turno.getAthenaEffect())) {
-                    System.out.println("Effetto di Athena: non puoi salire");
                     apolloEffect = false;
                 } else {
-                    turno.getTable().getTableCell(x, y).setFree(true);
-                    turno.getTable().getTableCell(x, y).setPawn(null);
+                    turno.getTable().setACell(x, y, end.getLevel(), true, end.isComplete(), null);
                     apolloEffect = true;
                 }
             }
-                turno.baseMovement(turno.getMove());
-                turno.getValidationMove(turno.isValidationMove());
-        } while (!turno.isValidationMove() && turno.getCount() <= 2);
-        turno.getGamer().setSteps(0);
     }
 
     /**
@@ -71,9 +64,12 @@ public class Apollo extends God {
 
         if ((apolloEffect) && (turno.isValidationMove())) {
             otherPawn.setPastLevel(end.getLevel());
-            turno.getTable().setACell(start.getY(), start.getY(), start.getLevel(), false, false, otherPawn);
+            turno.getTable().setACell(start.getX(), start.getY(), start.getLevel(), false, false, otherPawn);
         }
-    }
+        if (!turno.isValidationMove() && apolloEffect) {
+            turno.getTable().setACell(end.getX(), end.getY(), end.getLevel(), false, end.isComplete(), otherPawn);
+        }
+        }
 
     /**
      * Features added by card before its owner starts building
