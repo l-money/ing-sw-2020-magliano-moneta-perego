@@ -2,7 +2,7 @@ package santorini;
 
 import santorini.model.*;
 import santorini.model.godCards.Artemis;
-import santorini.model.godCards.Athena;
+import santorini.model.godCards.Atlas;
 import santorini.model.godCards.Pdor;
 
 import java.awt.*;
@@ -235,7 +235,7 @@ public class View {
                     //aggiunto Apollo di default
                     if (number == 13) {
                         number = gods.size();
-                        gods.add(new Athena());
+                        gods.add(new Atlas());
                         break;
                     }
 
@@ -262,13 +262,13 @@ public class View {
      * Requests to user the place where he wants to build
      */
     public synchronized void setNewBuild() {
-
         String moveBuild;
         int[] positionBuild = new int[2];
         boolean valid = false;
         try {
             do {
-                System.out.println("In che cella vuoi costruire [x,y]? \nNo per non costruire ");
+                System.out.println("Per non usare il potere della divinità digitare 'No'");
+                System.out.println("In che cella vuoi costruire [x,y]?");
                 moveBuild = br.readLine();
                 if ((moveBuild.equalsIgnoreCase("NO"))) {
                     build = new Mossa(Mossa.Action.BUILD, -1, -1, -1);
@@ -302,7 +302,8 @@ public class View {
             boolean inputok = false;
             //System.out.println("E' il tuo turno");
             do {
-                System.out.println("Che pedina vuoi muovere? No per non muovere ");
+                System.out.println("Per non usare il potere della divinità digitare 'No'");
+                System.out.println("Che pedina vuoi muovere? ");
                 movePawn = br.readLine();
                 if ((movePawn.equalsIgnoreCase("NO"))) {
                     move = new Mossa(Mossa.Action.MOVE, -1, -1, -1);

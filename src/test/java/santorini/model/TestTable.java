@@ -41,11 +41,6 @@ public class TestTable implements Serializable {
                 assertNull(table.getTableCell(i, j).getPawn());
             }
         }
-        assertEquals(4, table.getBag().getCounterBrick().length);
-        assertEquals(22, table.getBag().getCounterBrick()[0]);
-        assertEquals(18, table.getBag().getCounterBrick()[1]);
-        assertEquals(14, table.getBag().getCounterBrick()[2]);
-        assertEquals(18, table.getBag().getCounterBrick()[3]);
     }
 
     /**
@@ -238,26 +233,6 @@ public class TestTable implements Serializable {
 
     @Test
     public void testICanBuild() {
-        //View v = new View(null,null);
-        Pawn p0 = new Pawn();
-        Pawn q1 = new Pawn();
-        p0.setIdPawn(0);
-        p0.setIdGamer(0);
-        q1.setIdPawn(1);
-        q1.setIdGamer(1);
-        table.setACell(0, 0, 0, false, false, q1);
-        table.setACell(0, 1, 3, false, true, null);
-        table.setACell(1, 0, 2, true, true, p0);
-        table.setACell(1, 1, 1, false, false, p0);
-        //v.printTable(table);
-        boolean b = table.iCanBuild(table.getTableCell(p0.getRow(), p0.getColumn()));
-        assertTrue(b);
-        b = table.iCanBuild(table.getTableCell(q1.getRow(), q1.getColumn()));
-        assertTrue(!b);
-        table.setACell(1, 1, 1, true, false, p0);
-        //v.printTable(table);
-        b = table.iCanBuild(table.getTableCell(q1.getRow(), q1.getColumn()));
-        assertTrue(b);
     }
 
     /**
@@ -300,56 +275,5 @@ public class TestTable implements Serializable {
         assertTrue(b);
     }
 
-    /**
-     * method tests controlBaseBuild and simple build
-     */
-    @Test
-    public void testControlBaseBuilding() {
-        Pawn p = new Pawn();
-        Pawn q = new Pawn();
-        Cell start;
-        Cell end1, end2, end3, end4, end5;
-        table.setACell(0, 2, 1, false, false, p);
-        start = table.getTableCell(0, 2);
-        //control if is possible to build
-        table.setACell(0, 1, 2, true, false, null);//level 2: I can build level 3
-        table.setACell(0, 3, 3, true, false, null);//level 3: I can build a dome
-        table.setACell(1, 1, 0, true, false, null);//level 0: I can build level 1
-        table.setACell(1, 2, 2, false, false, q);//is not free: impossible build
-        table.setACell(1, 3, 3, false, true, null);//is complete: impossible build
-        end1 = table.getTableCell(0, 1);
-        end2 = table.getTableCell(0, 3);
-        end3 = table.getTableCell(1, 1);
-        end4 = table.getTableCell(1, 2);
-        end5 = table.getTableCell(1, 3);
-        assertTrue(table.controlBaseBuilding(start, end1));
-        assertTrue(table.controlBaseBuilding(start, end2));
-        assertTrue(table.controlBaseBuilding(start, end3));
-        assertFalse(table.controlBaseBuilding(start, end4));
-        assertFalse(table.controlBaseBuilding(start, end5));
-        //build and control
-        table.build(end1);
-        table.build(end2);
-        table.build(end3);
-        assertEquals(3, end1.getLevel());
-        assertEquals(13, table.getBag().getCounterBrick()[2]);
-        assertEquals(3, end2.getLevel());
-        assertEquals(17, table.getBag().getCounterBrick()[3]);
-        assertTrue(end2.isComplete());
-        assertEquals(1, end3.getLevel());
-        assertEquals(21, table.getBag().getCounterBrick()[0]);
-        //build another brick on cell [1;1]
-        table.build(end3);
-        assertEquals(2, end3.getLevel());
-        assertEquals(17, table.getBag().getCounterBrick()[1]);
-        //I empty the brick of level 1
-        for (int i = 0; i < 21; i++) {
-            table.getBag().extractionBrick(1);
-        }
-        assertEquals(0, table.getBag().getCounterBrick()[0]);
-        end3.setLevel(0);
-        assertFalse(table.controlBaseBuilding(start, end3));
-        assertFalse(table.build(end3));
-    }
 
 }

@@ -3,7 +3,6 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Gamer;
 import santorini.model.God;
-import santorini.model.Pawn;
 
 public class Pan extends God {
 
@@ -24,7 +23,7 @@ public class Pan extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
 
@@ -33,22 +32,24 @@ public class Pan extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        Pawn myPawn = turno.getGamer().getPawn(turno.getMove().getIdPawn());
-        if (((myPawn.getPastLevel() - myPawn.getPresentLevel() >= 2) &&
-                (myPawn.getPresentLevel() == 0))) {
-            turno.setPanEffect(true);
-        } else {
-            turno.setPanEffect(false);
+        if (turno.isValidationMove()) {
+            int i = turno.getMove().getIdPawn();
+            int k = turno.getGamer().getPawn(i).getPastLevel() - turno.getGamer().getPawn(i).getPresentLevel();
+            if ((k >= 2) && turno.getGamer().getPawn(i).getPresentLevel() == 0) {
+                turno.getGamer().setWinner(true);
+                turno.printTableStatusTurn(true);
+                turno.getGameHandler().getGame().setWinner(turno.getGamer());
+            }
         }
     }
 
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
 
@@ -57,7 +58,7 @@ public class Pan extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
 

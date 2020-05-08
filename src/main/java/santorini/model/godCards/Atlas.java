@@ -1,6 +1,7 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
+import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
@@ -8,8 +9,7 @@ import santorini.model.Mossa;
 public class Atlas extends God {
     private Mossa buildDome;
     private boolean atlasEffect;
-    private int control = 0;
-    //private int IDP;
+    private boolean controlEffect;
 
     public Atlas() {
         super("Atlas", "Tua costruzione: il tuo lavoratore può costruire una cupola\n" +
@@ -41,7 +41,7 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        atlasEffect = false;
+        controlEffect = true;
     }
 
     /**
@@ -59,7 +59,39 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-
+        if (turno.isValidationMove() && controlEffect) {
+            atlasEffect = false;
+            turno.setCount(0);
+            do {
+                buildDome = turno.getMove();
+                if (turno.nullEffectForGodCards(buildDome)) {
+                    atlasEffect = true;
+                    controlEffect = false;
+                    turno.getGamer().setBuilds(1);
+                    turno.setMove(turno.buildingRequest());
+                } else {
+                    if (!turno.controlStandardParameter(buildDome)) {
+                        atlasEffect = false;
+                    } else {
+                        Cell end = turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY());
+                        if (end.isComplete() || end.getPawn() != null) {
+                            atlasEffect = false;
+                        } else {
+                            turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY()).setComplete(true);
+                            atlasEffect = true;
+                            turno.setValidationBuild(true);
+                            turno.setValidationMove(false);
+                            turno.printTableStatusTurn(turno.isValidationBuild());
+                        }
+                    }
+                    if (!atlasEffect) {
+                        turno.sendFailed();
+                        turno.setMove(turno.buildingRequest());
+                    }
+                }
+            } while (!atlasEffect && turno.getCount() > 5);
+            turno.setCount(0);
+        }
     }
 
     /**

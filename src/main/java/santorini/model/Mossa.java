@@ -1,5 +1,7 @@
 package santorini.model;
 
+import santorini.View;
+
 import java.io.Serializable;
 
 public class Mossa implements Serializable {
@@ -7,11 +9,11 @@ public class Mossa implements Serializable {
         MOVE,
         BUILD,
     }
-
     private Action action;
     private int targetX;
     private int targetY;
     private int idPawn;
+    private View view;
 
 
     public Mossa(Action action, int idPawn, int targetX, int targetY) {
@@ -104,34 +106,6 @@ public class Mossa implements Serializable {
             }
         }
     }
-
-    //TODO review this method
-    /**
-     public Mossa InputMossa() throws IOException {
-     BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-     System.out.println("Inserisci azione");
-     String a = input.readLine();
-     System.out.println("Inserisci pedina");
-     String  s = input.readLine();
-     int i = Integer.parseInt(s);
-     System.out.println("Inserisci riga");
-     s = input.readLine();
-     int x = Integer.parseInt(s);
-     System.out.println("Inserisci colonna");
-     s = input.readLine();
-     int y = Integer.parseInt(s);
-     if(a.equals("MOVE")){
-     return new Mossa(Action.MOVE,i,x,y);
-     }else{
-     if(a.equals("BUILD")){
-     return new Mossa(Action.BUILD,i,x,y);
-     }
-     else{
-     return null;
-     }
-     }
-     }
-     */
 
 }
 

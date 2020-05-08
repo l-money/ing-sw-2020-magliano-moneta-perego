@@ -10,7 +10,6 @@ public class Table implements Serializable {
     private int row = 5;
     private int column = 5;
     private Cell[][] cells;
-    private Bag bag = new Bag();
 
     /**
      * Table builder for all 25 cells in the table.
@@ -27,14 +26,6 @@ public class Table implements Serializable {
         }
     }
 
-    /**
-     * method getBag
-     *
-     * @return the bag of the table
-     */
-    public Bag getBag() {
-        return bag;
-    }
 
     /**
      * @param x cell with coordinate x.
@@ -215,8 +206,7 @@ public class Table implements Serializable {
                 if (end.isComplete()) {
                     return false;
                 } else {
-                    if ((end.getPawn() == null) && (end.getLevel() >= 0) && (end.getLevel() <= 3) &&
-                            (getBag().controlExistBrick(end.getLevel() + 1))) {
+                    if ((end.getPawn() == null) && (end.getLevel() >= 0) && (end.getLevel() <= 3)) {
                         return true;
                     } else {
                         return false;
@@ -230,11 +220,9 @@ public class Table implements Serializable {
      * method build
      *
      * @param cell in which my pawns builds
-     * @return true if the pawn builds correctly
      */
-    public boolean build(Cell cell) {
+    public void build(Cell cell) {
         int myLevel = cell.getLevel();
-        if (getBag().controlExistBrick(myLevel + 1)) {
             cell.setLevel(myLevel + 1);
             int newLevel = cell.getLevel();
             if (newLevel > 3) {
@@ -243,12 +231,7 @@ public class Table implements Serializable {
             } else {
                 cell.setLevel(newLevel);
             }
-            getBag().extractionBrick(myLevel + 1);
-            return true;
-        } else {
-            return false;
         }
-    }
 
     /**
      * Finds all cells around a specified cell in a square 3x3

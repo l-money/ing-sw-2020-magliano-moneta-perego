@@ -7,6 +7,7 @@ public class Artemis extends God {
     private Cell start;
     private boolean artemisEffect;
     private Mossa effectMove2;
+    private int idM;
 
     public Artemis() {
         super("Artemis", "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
@@ -21,6 +22,14 @@ public class Artemis extends God {
     @Override
     public void setEffectMove(Mossa effectMove) {
         this.effectMove2 = effectMove;
+    }
+
+    public int getIdM() {
+        return idM;
+    }
+
+    public void setIdM(int idM) {
+        this.idM = idM;
     }
 
     /**
@@ -38,8 +47,9 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        int startX = turno.getGamer().getPawn(turno.getMove().getIdPawn()).getRow();//save start position X
-        int startY = turno.getGamer().getPawn(turno.getMove().getIdPawn()).getColumn();//save start position Y
+        idM = turno.getMove().getIdPawn();
+        int startX = turno.getGamer().getPawn(idM).getRow();//save start position X
+        int startY = turno.getGamer().getPawn(idM).getColumn();//save start position Y
         start = turno.getTable().getTableCell(startX, startY);
     }
 
@@ -50,18 +60,21 @@ public class Artemis extends God {
      */
     public void afterOwnerMoving(Turno turno) {
         if (turno.isValidationMove()) {
-            int idMove = turno.getMove().getIdPawn();
-            turno.getGameHandler().getGame().updateField();
+            setIdM(turno.getMove().getIdPawn());
+            turno.printTableStatusTurn(turno.isValidationMove());
             artemisEffect = false;
             turno.setCount(0);
             turno.getGamer().setSteps(1);
-            //request a movement from the gamer
-            effectMove2 = turno.moveRequest();
             do {
+                effectMove2 = turno.moveRequest();
                 if (turno.nullEffectForGodCards(effectMove2)) {
                     artemisEffect = true;
                 } else {
-                    if (idMove != effectMove2.getIdPawn()) {
+                    if (idM != effectMove2.getIdPawn()) {
+                        //TODO errore in Artemide
+                        // Se il giocatore cambia pedina e poi decide di non muovere più
+                        // la view si è salvato ID dell'altra pedina
+                        // quindi fa fare solo costruzioni nelle celle adiacenti all'altra pedina
                         artemisEffect = false;
                     } else {
                         Cell end = turno.getTable().getTableCell(effectMove2.getTargetX(), effectMove2.getTargetY());
@@ -77,14 +90,12 @@ public class Artemis extends God {
                 }
                 if (!artemisEffect) {
                     turno.sendFailed();
-                    //ask another movement
-                    effectMove2 = turno.moveRequest();
                 }
                 //else the movement is correct and artemisEffect is true
                 //until the movement is correct, the gamer have to insert the correct movement
-            } while (!artemisEffect && turno.getCount() <= 5);
+            } while (!artemisEffect && turno.getCount() < 5);
             turno.setValidationMove(true);
-            turno.getMove().setIdPawn(idMove);
+            turno.getMove().setIdPawn(idM);
         }
     }
 
@@ -95,6 +106,9 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
+        if (turno.isValidationMove()) {
+            turno.getMove().setIdPawn(getIdM());
+        }
     }
 
     /**
