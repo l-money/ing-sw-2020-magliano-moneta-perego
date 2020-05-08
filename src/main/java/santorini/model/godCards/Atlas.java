@@ -41,6 +41,7 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
+        atlasEffect = false;
     }
 
     /**
@@ -58,26 +59,32 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-        if (turno.isValidationMove()) {
+        if (turno.isValidationMove() && !atlasEffect) {
             atlasEffect = false;
             buildDome = turno.getMove();
             do {
                 if (turno.nullEffectForGodCards(buildDome)) {
                     atlasEffect = true;
+                    turno.setCount(0);
                     turno.setMove(turno.buildingRequest());
                 } else {
                     if (!turno.controlStandardParameter(buildDome)) {
                         atlasEffect = false;
                     } else {
                         Cell end = turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY());
-                        if (end.isComplete() || !turno.getTable().getBag().controlExistBrick(4)) {
+                        if (end.isComplete()) {
                             atlasEffect = false;
                         } else {
-                            turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY()).setComplete(false);
-                            turno.getTable().getBag().extractionBrick(4);
-                            atlasEffect = true;
-                            turno.getGamer().setBuilds(0);
-                            turno.setValidationBuild(true);
+                            if (!turno.getTable().getBag().controlExistBrick(4)) {
+                                atlasEffect = true;
+                                turno.setMove(turno.buildingRequest());
+                            } else {
+                                turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY()).setComplete(false);
+                                turno.getTable().getBag().extractionBrick(4);
+                                atlasEffect = true;
+                                turno.getGamer().setBuilds(0);
+                                //turno.setValidationBuild(true);
+                            }
                         }
                     }
                 }
@@ -87,7 +94,6 @@ public class Atlas extends God {
                     buildDome = turno.getMove();
                 }
             } while (!atlasEffect && turno.getCount() < 5);
-            turno.setCount(0);
         }
     }
 
