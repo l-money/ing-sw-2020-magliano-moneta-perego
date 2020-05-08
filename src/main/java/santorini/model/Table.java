@@ -152,7 +152,7 @@ public class Table implements Serializable {
         for (int i = 0; i < l; i++) {
             Cell index = nearCells.get(i);
             if ((index.isFree()) && (!index.isComplete()) && (index.getLevel() >= 0) && (index.getLevel() <= 3) &&
-                    (index.getPawn()==null)) {
+                    (index.getPawn() == null)) {
                 free = free + 1;
             }
         }
@@ -202,8 +202,9 @@ public class Table implements Serializable {
 
     /**
      * method controlBaseBuild : control the pawn can build into a cell respecting the rules
+     *
      * @param start the position of the pawn
-     * @param end the destination of the building
+     * @param end   the destination of the building
      * @return true if the pawn can build  respecting the rules, else return false
      */
     public boolean controlBaseBuilding(Cell start, Cell end) {
@@ -230,6 +231,7 @@ public class Table implements Serializable {
 
     /**
      * method build
+     *
      * @param cell in which my pawns builds
      * @return true if the pawn builds correctly
      */
@@ -246,6 +248,30 @@ public class Table implements Serializable {
             }
             getBag().extractionBrick(myLevel + 1);
             return true;
-        }else {return false;}
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Finds all cells around a specified cell in a square 3x3
+     *
+     * @param x x coord of specified cell
+     * @param y y  coord of specified cell
+     * @return a 3x3 array with all cells around
+     */
+    public Cell[][] getAroundCells(int x, int y) {
+        Cell[][] around = new Cell[3][3];
+        int ix = x - 1, jy = y - 1;
+        for (int i = 0; i < 3; i++, ix++) {
+            for (int j = 0; j < 3; j++, jy++) {
+                if (i == x && j == y) {
+                    around[i][j] = null;
+                } else if (ix >= 0 && jy >= 0 && ix < 5 && jy < 5) {
+                    around[i][j] = cells[ix][jy];
+                }
+            }
+        }
+        return around;
     }
 }

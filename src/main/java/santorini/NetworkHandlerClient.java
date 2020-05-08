@@ -79,7 +79,19 @@ public class NetworkHandlerClient implements Runnable {
                         case FAILED:
                             /*Invia errore al giocatore e resta subito pronto
                              * per una nuova richiesta di istruzioni dal server*/
-                            new Thread(() -> view.setFailed()).start();
+                            String msg = inputStream.readObject().toString();
+                            new Thread(() -> view.setFailed(msg)).start();
+                            break;
+                        case WINNER:
+                            vittoria();
+                            break;
+                        case LOSER:
+                            String winner = inputStream.readObject().toString();
+                            sconfitta(winner);
+                            break;
+                        case NETWORK_ERROR:
+                            String player = inputStream.readObject().toString();
+                            networkError(player);
                             break;
                         default:
                             break;
@@ -161,5 +173,55 @@ public class NetworkHandlerClient implements Runnable {
         outputStream.flush();
     }
 
+    /**
+     * Close socket with server
+     *
+     * @throws IOException
+     */
+    public void disconnect() throws IOException {
+        outputStream.close();
+        server.close();
+    }
+
+    /**
+     * Win notify
+     */
+    public void vittoria() {
+        view.printMessage("HAI VINTO!");
+        try {
+            disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Lose notify
+     *
+     * @param winner
+     */
+    public void sconfitta(String winner) {
+        view.printMessage("HAI PERSO!");
+        view.printMessage("Ha vinto " + winner);
+        try {
+            disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Network error notify
+     *
+     * @param player
+     */
+    public void networkError(String player) {
+        view.printMessage(player + "si è disconnesso\nFine della partita");
+        System.exit(0);
+    }
 
 }

@@ -134,4 +134,38 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * Sends to all player who is the winner
+     *
+     * @param winner winner player
+     */
+    public void setWinner(Gamer winner) {
+        for (Gamer g : giocatori) {
+            try {
+                handler.winner(g, winner);
+                g.getSocket().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Notify to all clients that one user has disconnected
+     *
+     * @param disconnected disconnected player
+     */
+    public void networkError(Gamer disconnected) {
+        giocatori.remove(disconnected);
+        for (Gamer g : giocatori) {
+            try {
+                handler.notifyNetworkError(g, disconnected);
+                g.getSocket().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        System.exit(1);
+    }
+
 }

@@ -160,6 +160,7 @@ public class Turno implements Runnable {
             return gameHandler.richiediMossa(action, gamer);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            gameHandler.getGame().networkError(gamer);
         }
         return null;
     }
@@ -193,7 +194,7 @@ public class Turno implements Runnable {
      * Prints an error or sends a failed to handler
      */
     public void sendFailed() {
-        gameHandler.sendFailed(gamer);
+        gameHandler.sendFailed(gamer, "Mossa non valida\nRiprova");
         System.err.print("Errore_Caccoso\n");
     }
 

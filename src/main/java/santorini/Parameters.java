@@ -10,6 +10,9 @@ public class Parameters {
         BUILD,
         FAILED,
         NO,
+        WINNER,
+        LOSER,
+        NETWORK_ERROR,
     }
 
 

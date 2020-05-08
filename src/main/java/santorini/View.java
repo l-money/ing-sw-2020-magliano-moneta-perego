@@ -57,7 +57,6 @@ public class View {
     }
 
 
-
     public Table getTable() {
         return table;
     }
@@ -431,10 +430,79 @@ public class View {
     /**
      * This method is called if server sends an error message
      */
-    public void setFailed() {
-        System.err.println("Errore generale");
-            System.out.println(("Nuova istruzione in arrivo: "));
+    public void setFailed(String msg) {
+        System.err.println("Errore:\n" + msg);
     }
 
+    public void printMessage(String msg) {
+        System.out.println(msg);
+    }
+
+    /**
+     * Requests to user a directional input centered in choosed pawn
+     * Return coordinates of a target cell in format x,y
+     *
+     * @param t     table play field
+     * @param xPawn xcoord of pawn
+     * @param yPawn ycoord of pawn
+     * @return
+     */
+    public String getCoords(Table t, int xPawn, int yPawn) {
+        boolean errato = true;
+        Cell c = null;
+        do {
+            System.out.println("7: \uD83E\uDC54\t8: \uD83E\uDC51\t9: \uD83E\uDC55");
+            System.out.println("4: \uD83E\uDC50\t\t6: \uD83E\uDC52");
+            System.out.println("1: \uD83E\uDC57\t2: \uD83E\uDC53\t3: \uD83E\uDC56");
+            System.out.println("Inserisci movimento: ");
+            Cell[][] target = t.getAroundCells(xPawn, yPawn);
+            String s = null;
+            try {
+                s = br.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            switch (s.charAt(0)) {
+                case 1:
+                    errato = false;
+                    c = target[2][0];
+                    break;
+                case 2:
+                    errato = false;
+                    c = target[2][1];
+                    break;
+                case 3:
+                    errato = false;
+                    c = target[2][2];
+                    break;
+                case 4:
+                    errato = false;
+                    c = target[1][0];
+                    break;
+                case 6:
+                    errato = false;
+                    c = target[1][2];
+                    break;
+                case 7:
+                    errato = false;
+                    c = target[0][0];
+                    break;
+                case 8:
+                    errato = false;
+                    c = target[0][1];
+                    break;
+                case 9:
+                    errato = false;
+                    c = target[0][2];
+                    break;
+                default:
+                    errato = true;
+            }
+            if (errato) {
+                System.out.println("Input non corretto");
+            }
+        } while (errato || c == null);
+        return c.getX() + "," + c.getY();
+    }
 
 }
