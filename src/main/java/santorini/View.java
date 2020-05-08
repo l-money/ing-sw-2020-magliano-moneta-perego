@@ -1,8 +1,8 @@
 package santorini;
 
 import santorini.model.*;
-import santorini.model.godCards.Artemis;
 import santorini.model.godCards.Athena;
+import santorini.model.godCards.Atlas;
 import santorini.model.godCards.Pdor;
 
 import java.awt.*;
@@ -242,7 +242,7 @@ public class View {
                     //aggiunto Artemide di default
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Artemis());
+                        gods.add(new Atlas());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {
@@ -270,14 +270,23 @@ public class View {
             do {
                 System.out.println("In che cella vuoi costruire [x,y]? ");
                 moveBuild = br.readLine();
-                valid = validaCoordinate(moveBuild);
+                //TODO mettere la condizione no
+                if ((moveBuild.equals("NO")) || (moveBuild.equals("No")) ||
+                        (moveBuild.equals("no")) || (moveBuild.equals("nO"))) {
+                    build = new Mossa(Mossa.Action.BUILD, -1, -1, -1);
+                    valid = true;
+                } else {
+                    valid = validaCoordinate(moveBuild);
+                    if (valid) {
+                        String in[] = moveBuild.split(",");
+                        positionBuild[0] = Integer.parseInt(in[0]);
+                        positionBuild[1] = Integer.parseInt(in[1]);
+                        //mettere anche qui charAt
+                        //int b = Integer.parseInt(movePawn);
+                        build = new Mossa(Mossa.Action.BUILD, IDP, positionBuild[0], positionBuild[1]);
+                    }
+                }
             } while (!valid);
-            String in[] = moveBuild.split(",");
-            positionBuild[0] = Integer.parseInt(in[0]);
-            positionBuild[1] = Integer.parseInt(in[1]);
-            //mettere anche qui charAt
-            //int b = Integer.parseInt(movePawn);
-            build = new Mossa(Mossa.Action.BUILD, IDP, positionBuild[0], positionBuild[1]);
             handlerClient.setBuildPawn(build);
         } catch (IOException e) {
             e.printStackTrace();

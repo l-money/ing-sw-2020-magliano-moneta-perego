@@ -124,48 +124,6 @@ public class TestTurno {
         assertEquals(q, turn.getTable().getTableCell(3, 3).getPawn());
     }
 
-    /**
-     * method that tests when a pawn is lock or unlock and if the gamer lose the game because he can not move
-     */
-    @Test
-    public void testBaseMovementLockUnlock() {
-        Pawn q = new Pawn();
-        //turn.setIdStartPawn(0);//gamer want to move  pawn0
-        turn.getTable().setACell(0, 0, 0, false, false, turn.getGamer().getPawn(0));
-        turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(1));
-        //pawn0 can not move, pawn1 can move
-        turn.getTable().setACell(0, 1, 1, false, false, q);//there is another pawn
-        turn.getTable().setACell(1, 0, 2, true, false, null);//level 2
-        turn.getTable().setACell(1, 1, 2, false, true, null);//level 2 with dome for Atlas effect
-        turn.getTable().setACell(3, 3, 1, false, false, null);//level 1 free
-        turn.getTable().setACell(3, 4, 2, false, false, null);//level 2
-        turn.getTable().setACell(4, 3, 3, false, true, null);//level with dome
-        Mossa move0 = new Mossa(Mossa.Action.MOVE, 0, 1, 1);
-        turn.baseMovement(move0);
-        assertTrue(!turn.isValidationMove());//I can not move with pawn0
-        assertTrue(!turn.getGamer().getPawn(0).getICanPlay());//pawn0 is locked
-        assertTrue(turn.getGamer().getPawn(1).getICanPlay());//pawn1 is not locked
-        assertTrue(!turn.getGamer().getLoser());//gamer can move with pawn1
-        //pawn0 can not move and pawn1 can not move
-        //turn.setIdStartPawn(1);//gamer want to move pawn1
-        turn.getTable().setACell(3, 3, 1, false, true, null);//level 1 with dome for Atlas effect
-        Mossa move1 = new Mossa(Mossa.Action.MOVE, 1, 3, 4);
-        turn.baseMovement(move1);
-        assertTrue(turn.isValidationMove());//validationMove is true for exit from do-while
-        assertTrue(!turn.getGamer().getPawn(0).getICanPlay());//pawn0 is locked
-        assertTrue(!turn.getGamer().getPawn(1).getICanPlay());//pawn1 is locked
-        assertTrue(turn.getGamer().getLoser());//gamer can not move
-        //pawn0 unlocks
-        turn.getGamer().setLoser(false);
-        //turn.setIdStartPawn(0);//gamer want to move pawn0
-        turn.getTable().setACell(0, 1, 1, true, false, null);//cell is free
-        Mossa move3 = new Mossa(Mossa.Action.MOVE, 0, 0, 1);
-        turn.baseMovement(move3);
-        assertTrue(turn.isValidationMove());
-        //assertTrue(turn.getGamer().getPawn(0).getICanPlay());//pawn0 is not locked
-        assertTrue(!turn.getGamer().getPawn(1).getICanPlay());//pawn1 is locked
-        assertTrue(!turn.getGamer().getLoser());//gamer can move
-    }
 
     /**
      * method that tests the base building
@@ -215,48 +173,14 @@ public class TestTurno {
         assertEquals(turn.getGamer().getPawn(1), turn.getTable().getTableCell(2, 2).getPawn());
     }
 
-    /**
-     * method that tests when a pawn is lock or unlock and if the gamer lose the game because he can not build
-     */
     @Test
-    public void testBaseBuildingLockUnlock() {
-        //turn.setIdStartPawn(1);
-        Pawn q = new Pawn();
-        turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
-        turn.getTable().setACell(0, 0, 1, false, false, turn.getGamer().getPawn(1));
-        //pawn1 can not build but pawn0 can, gamer doesn't lose
-        turn.getTable().setACell(0, 1, 3, false, true, null);
-        turn.getTable().setACell(1, 0, 3, false, true, null);
-        turn.getTable().setACell(1, 1, 1, false, false, q);
-        Mossa m0 = new Mossa(Mossa.Action.BUILD, 1, 1, 1);
-        turn.baseBuilding(m0);
-        assertFalse(turn.isValidationBuild());
-        assertTrue(!turn.getGamer().getPawn(1).getICanPlay());
-        assertTrue(turn.getGamer().getPawn(0).getICanPlay());
-        assertTrue(!turn.getGamer().getLoser());
-        //pawn1 can not build, pawn0 can not build, gamer loses
-        //turn.setIdStartPawn(0);
-        turn.getTable().setACell(4, 4, 0, false, false, turn.getGamer().getPawn(0));
-        turn.getTable().setACell(3, 4, 3, false, true, null);
-        turn.getTable().setACell(4, 3, 3, false, true, null);
-        turn.getTable().setACell(3, 3, 3, false, true, null);
-        Mossa m1 = new Mossa(Mossa.Action.BUILD, 0, 3, 3);
-        turn.baseBuilding(m1);
-        assertTrue(turn.isValidationBuild());//validationBuild is true for exit from do-while
-        assertTrue(!turn.getGamer().getPawn(1).getICanPlay());
-        assertTrue(!turn.getGamer().getPawn(0).getICanPlay());
-        assertTrue(turn.getGamer().getLoser());
-        //pawn1 unlocks
-        turn.getGamer().setLoser(false);
-        //turn.setIdStartPawn(1);//gamer want to move pawn1
-        turn.getTable().setACell(1, 1, 1, true, false, null);//cell is free
-        Mossa move3 = new Mossa(Mossa.Action.BUILD, 1, 1, 1);
-        turn.baseBuilding(move3);
-        assertTrue(turn.isValidationBuild());
-        //assertTrue(turn.getGamer().getPawn(1).getICanPlay());//pawn1 is not locked
-        assertTrue(!turn.getGamer().getPawn(0).getICanPlay());//pawn0 is locked
-        assertTrue(!turn.getGamer().getLoser());//gamer can move
+    public void TestAthenaEffect() {
+        turn.setAthenaEffect(false);
+        assertTrue(!turn.getAthenaEffect());
+        turn.setAthenaEffect(true);
+        assertTrue(turn.getAthenaEffect());
     }
+
 
     /**
      * method that tests when a pawn can not build because there are not bricks into the bag

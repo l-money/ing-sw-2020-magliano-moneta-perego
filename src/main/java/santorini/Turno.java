@@ -14,7 +14,8 @@ public class Turno implements Runnable {
     private boolean validationBuild;
     private boolean panEffect = false;
     private boolean promEffect = false;
-    private boolean athenaEffect;
+    private boolean athenaEffect = false;
+    private int AG;
     private NetworkHandlerServer gameHandler;
     //count is for test, it will substitute by a timer
     private int count = 0;
@@ -150,6 +151,14 @@ public class Turno implements Runnable {
         this.validationBuild = validationBuild;
     }
 
+    public int getAG() {
+        return AG;
+    }
+
+    public void setAG(int AG) {
+        this.AG = AG;
+    }
+
     /**
      * method giveMeMossa
      * @param action the action of the gamer (MOVE or BUILD)
@@ -212,6 +221,7 @@ public class Turno implements Runnable {
         if (!getGamer().isWinner()) {
             validationMove = false;
             validationBuild = false;
+            getAG();
             getGamer().setSteps(1);
             getGamer().setBuilds(1);
             count = 0;
@@ -257,7 +267,7 @@ public class Turno implements Runnable {
         }
         //Athena
         //TODO review Athena effect
-        if (!getGamer().getMyGodCard().getName().equals("Athena") && (getAthenaEffect()) ){
+        if (athenaEffect) {
             getGamer().setLevelsUp(0);
         } else {
             getGamer().setLevelsUp(1);
@@ -296,22 +306,23 @@ public class Turno implements Runnable {
      */
     public void myBuilding(Mossa b) {
         validationBuild = false;
-        if ((controlStandardParameter(b)) && (validationMove) &&
-                (b.getAction().equals(Mossa.Action.BUILD))) {
-
-                gamer.getMyGodCard().beforeOwnerBuilding(this);
+        gamer.getMyGodCard().beforeOwnerBuilding(this);
                 for (God card : otherCards) {
                     card.beforeOtherBuilding(gamer);
                 }
+
+        if ((controlStandardParameter(b)) && (validationMove) &&
+                (b.getAction().equals(Mossa.Action.BUILD))) {
             baseBuilding(b);
             getValidationBuild(validationBuild);
+        } else {
+            getValidationBuild(validationBuild);
+        }
                 gamer.getMyGodCard().afterOwnerBuilding(this);
                 for (God card : otherCards) {
                     card.afterOtherBuilding(gamer);
                 }
-        } else {
-            getValidationBuild(validationBuild);
-        }
+
     }
 
     /**

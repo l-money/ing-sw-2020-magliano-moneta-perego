@@ -1,6 +1,7 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
+import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
@@ -8,6 +9,7 @@ import santorini.model.Mossa;
 public class Atlas extends God {
     private Mossa buildDome;
     private boolean atlasEffect;
+    //private int IDP;
 
     public Atlas() {
         super("Atlas", "Tua costruzione: il tuo lavoratore può costruire una cupola\n" +
@@ -39,6 +41,7 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
+        atlasEffect = false;
     }
 
     /**
@@ -56,26 +59,43 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-        atlasEffect = false;
-        //request a movement from the gamer
-        effectMove = turno.buildingRequest();
-        turno.setMove(effectMove);
+        if (turno.isValidationMove() && !atlasEffect) {
+            atlasEffect = false;
+            buildDome = turno.getMove();
             do {
-                atlasEffect = turno.godCardEffect(getEffectMove(), atlasEffect, 1, null);
+                if (turno.nullEffectForGodCards(buildDome)) {
+                    atlasEffect = true;
+                    turno.setCount(0);
+                    turno.setMove(turno.buildingRequest());
+                } else {
+                    if (!turno.controlStandardParameter(buildDome)) {
+                        atlasEffect = false;
+                    } else {
+                        Cell end = turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY());
+                        if (end.isComplete()) {
+                            atlasEffect = false;
+                        } else {
+                            if (!turno.getTable().getBag().controlExistBrick(4)) {
+                                atlasEffect = true;
+                                turno.setMove(turno.buildingRequest());
+                            } else {
+                                turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY()).setComplete(false);
+                                turno.getTable().getBag().extractionBrick(4);
+                                atlasEffect = true;
+                                turno.getGamer().setBuilds(0);
+                                //turno.setValidationBuild(true);
+                            }
+                        }
+                    }
+                }
                 if (!atlasEffect) {
                     turno.sendFailed();
-                    turno.setCount(turno.getCount() + 1);
-                    //ask another movement
-                    //TODO uncomment effectMove = turno.moveRequest();
-                    effectMove = turno.buildingRequest();
-                    turno.setMove(effectMove);
-                    ;
-                } else {
-                    turno.getGamer().setBuilds(0);
+                    turno.setMove(turno.buildingRequest());
+                    buildDome = turno.getMove();
                 }
-            } while (!atlasEffect && turno.getCount() <= 2);
-        //turno.getGamer().setBuilds(0);
+            } while (!atlasEffect && turno.getCount() < 5);
         }
+    }
 
     /**
      * Features added by card after its owner starts building
@@ -83,7 +103,6 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-        turno.getGamer().setBuilds(1);
     }
 
     /**
