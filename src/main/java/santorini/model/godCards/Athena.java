@@ -5,20 +5,12 @@ import santorini.model.Gamer;
 import santorini.model.God;
 
 public class Athena extends God {
-    private boolean athenaEffect;
 
     public Athena() {
         super("Athena", "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\n" +
                 "in questo turno i lavoratori avversari non possono salire di livello");
     }
 
-    public boolean getAthenaEffect() {
-        return athenaEffect;
-    }
-
-    public void setAthenaEffect(boolean athenaEffect) {
-        this.athenaEffect = athenaEffect;
-    }
 
     /**
      * Initialize player variables with card
@@ -79,6 +71,7 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void beforeOtherMoving(Gamer other) {
+
     }
 
     /**
@@ -87,6 +80,7 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void afterOtherMoving(Gamer other) {
+
     }
 
     /**
