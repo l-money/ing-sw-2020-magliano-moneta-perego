@@ -3,12 +3,14 @@ package santorini.model;
 import santorini.Turno;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class God implements Serializable {
     protected Gamer owner;
     protected String name, description;
     protected Table table;
     protected Mossa effectMove;
+    protected ArrayList<Gamer> others;
 
 
     public God(String n, String desc) {
@@ -38,6 +40,11 @@ public abstract class God implements Serializable {
 
     public Mossa getEffectMove() {
         return effectMove;
+    }
+
+    public void setOthers(ArrayList<Gamer> gamers) {
+        others = new ArrayList<>(gamers);
+        others.remove(getOwner());
     }
 
     public void setEffectMove(Mossa effectMove) {

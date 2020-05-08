@@ -173,13 +173,6 @@ public class TestTurno {
         assertEquals(turn.getGamer().getPawn(1), turn.getTable().getTableCell(2, 2).getPawn());
     }
 
-    @Test
-    public void TestAthenaEffect() {
-        turn.setAthenaEffect(false);
-        assertTrue(!turn.getAthenaEffect());
-        turn.setAthenaEffect(true);
-        assertTrue(turn.getAthenaEffect());
-    }
 
 
     /**

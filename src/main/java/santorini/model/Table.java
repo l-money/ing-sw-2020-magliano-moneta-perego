@@ -174,9 +174,6 @@ public class Table implements Serializable {
         int k = end.getLevel() - start.getLevel();
         ArrayList<Cell> nearCells = new ArrayList<>();
         nearCells = searchAdjacentCells(start);
-        //
-        System.out.println("Number of near cells : " + nearCells.size());
-        //
         if (!nearCells.contains(end)) {
             System.out.println("not nearcells");
             return false;

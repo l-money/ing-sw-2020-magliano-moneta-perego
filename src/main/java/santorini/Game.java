@@ -51,7 +51,7 @@ public class Game implements Runnable {
                     int x2 = Integer.parseInt(pos[2]);
                     int y2 = Integer.parseInt(pos[3]);
                     if (!table.getTableCell(x1, y1).isFree() || !table.getTableCell(x2, y2).isFree()) {
-                        handler.sendFailed(g);
+                        handler.sendFailed(g, "Posizione già occupata");
                         done = false;
                     } else {
                         done = true;
@@ -91,6 +91,8 @@ public class Game implements Runnable {
             try {
                 God god = this.handler.chooseCard(cards, g);
                 g.setMyGodCard(god);
+                god.setOwner(g);
+                god.setOthers(giocatori);
                 cards.remove(god);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("problema con cast della carta o con la trasmissione");

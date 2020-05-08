@@ -1,8 +1,8 @@
 package santorini;
 
 import santorini.model.*;
+import santorini.model.godCards.Artemis;
 import santorini.model.godCards.Athena;
-import santorini.model.godCards.Atlas;
 import santorini.model.godCards.Pdor;
 
 import java.awt.*;
@@ -242,7 +242,7 @@ public class View {
                     //aggiunto Artemide di default
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Atlas());
+                        gods.add(new Artemis());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {
@@ -268,11 +268,9 @@ public class View {
         boolean valid = false;
         try {
             do {
-                System.out.println("In che cella vuoi costruire [x,y]? ");
+                System.out.println("In che cella vuoi costruire [x,y]? \nNo per non costruire ");
                 moveBuild = br.readLine();
-                //TODO mettere la condizione no
-                if ((moveBuild.equals("NO")) || (moveBuild.equals("No")) ||
-                        (moveBuild.equals("no")) || (moveBuild.equals("nO"))) {
+                if ((moveBuild.equalsIgnoreCase("NO"))) {
                     build = new Mossa(Mossa.Action.BUILD, -1, -1, -1);
                     valid = true;
                 } else {
@@ -304,14 +302,12 @@ public class View {
             boolean inputok = false;
             //System.out.println("E' il tuo turno");
             do {
-                System.out.println("Che pedina vuoi muovere? ");
+                System.out.println("Che pedina vuoi muovere? No per non muovere ");
                 movePawn = br.readLine();
-                if ((movePawn.equals("NO")) || (movePawn.equals("No")) ||
-                        (movePawn.equals("no")) || (movePawn.equals("nO"))) {
+                if ((movePawn.equalsIgnoreCase("NO"))) {
                     move = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
                     inputok = true;
                 } else {
-                    // TODO cambiare charAt con Integer.parsInt ??
                     switch (movePawn.charAt(0)) {
                         case '0':
                             do {

@@ -5,10 +5,12 @@ import santorini.model.Gamer;
 import santorini.model.God;
 
 public class Athena extends God {
+    private boolean athenaEffect;
 
     public Athena() {
         super("Athena", "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\n" +
                 "in questo turno i lavoratori avversari non possono salire di livello");
+
     }
 
 
@@ -27,7 +29,7 @@ public class Athena extends God {
      * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        turno.setAthenaEffect(false);
+        athenaEffect = false;
     }
 
     /**
@@ -40,9 +42,15 @@ public class Athena extends God {
             int id = turno.getMove().getIdPawn();
             if (turno.getGamer().getPawn(id).getPresentLevel() - turno.getGamer().getPawn(id).getPastLevel() == 1) {
                 //athenaEffect is true
-                turno.setAthenaEffect(true);
+                athenaEffect = true;
+                for (Gamer g : others) {
+                    g.setLevelsUp(0);
+                }
             } else {
-                turno.setAthenaEffect(false);
+                athenaEffect = false;
+                for (Gamer g : others) {
+                    g.setLevelsUp(1);
+                }
             }
         }
     }
@@ -98,6 +106,7 @@ public class Athena extends God {
      * @param other player to customize
      */
     public void afterOtherBuilding(Gamer other) {
+
     }
 
 

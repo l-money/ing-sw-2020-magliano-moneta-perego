@@ -46,7 +46,7 @@ public class Apollo extends God {
             if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
                     (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
                     (end.getLevel() - start.getLevel() <= 1)) {
-                if ((end.getLevel() - start.getLevel() == 1) && (turno.getAthenaEffect())) {
+                if ((end.getLevel() - start.getLevel() == 1) && turno.getGamer().getLevelsUp() == 0) {
                     apolloEffect = false;
                 } else {
                     turno.getTable().setACell(x, y, end.getLevel(), true, end.isComplete(), null);
