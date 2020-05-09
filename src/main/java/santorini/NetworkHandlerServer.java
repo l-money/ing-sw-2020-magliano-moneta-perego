@@ -269,6 +269,9 @@ public class NetworkHandlerServer implements Runnable {
         outputStream = to.getOutputStream();
         try {
             outputStream.reset();
+            outputStream.writeObject(Parameters.command.MESSAGE);
+            outputStream.flush();
+            outputStream.reset();
             outputStream.writeObject(msg);
             outputStream.flush();
         } catch (IOException e) {
