@@ -40,6 +40,7 @@ public class Game implements Runnable {
      * Requests to all clients to place their pawns
      */
     public void placePawns() {
+        handler.updateField(giocatori.get(0));
         for (Gamer g : giocatori) {
             boolean done = false;
             do {
@@ -71,7 +72,10 @@ public class Game implements Runnable {
                          */
                         updateField();
                     }
-                } catch (IOException | ClassNotFoundException e) {
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    networkError(g);
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             } while (!done);
@@ -94,8 +98,10 @@ public class Game implements Runnable {
                 god.setOwner(g);
                 god.setOthers(giocatori);
                 cards.remove(god);
-            } catch (IOException | ClassNotFoundException e) {
-                System.out.println("problema con cast della carta o con la trasmissione");
+            } catch (IOException e) {
+                networkError(g);
+            } catch (ClassNotFoundException e) {
+                System.out.println("problema con cast della carta");
                 e.printStackTrace();
             }
         }
@@ -144,8 +150,8 @@ public class Game implements Runnable {
     public void setWinner(Gamer winner) {
         for (Gamer g : giocatori) {
             try {
+                handler.updateField(g);
                 handler.winner(g, winner);
-                g.getSocket().close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -162,12 +168,22 @@ public class Game implements Runnable {
         for (Gamer g : giocatori) {
             try {
                 handler.notifyNetworkError(g, disconnected);
-                g.getSocket().close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         System.exit(1);
+    }
+
+    /**
+     * Sends a message to all players connected in this match
+     *
+     * @param message message to send
+     */
+    public void broadcastMessage(String message) {
+        for (Gamer g : giocatori) {
+            handler.sendMessage(g, message);
+        }
     }
 
 }

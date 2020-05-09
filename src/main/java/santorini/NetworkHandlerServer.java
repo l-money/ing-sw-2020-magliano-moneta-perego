@@ -61,6 +61,15 @@ public class NetworkHandlerServer implements Runnable {
 
     }
 
+    /**
+     * Initialize parameter of first client connected and asks him the number of players
+     * in the match
+     *
+     * @param s first connected client's socket
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public int initializeFirstClient(Socket s) throws IOException, ClassNotFoundException {
         inputStream = new ObjectInputStream(s.getInputStream());
         outputStream = new ObjectOutputStream(s.getOutputStream());
@@ -74,6 +83,11 @@ public class NetworkHandlerServer implements Runnable {
         return m;
     }
 
+    /**
+     * Initialize all parameters to gamer class after user is connected
+     *
+     * @param s just connected client's socket
+     */
     public void initializeClient(Socket s) {
         //new Thread(() -> {
         try {
@@ -243,6 +257,24 @@ public class NetworkHandlerServer implements Runnable {
         outputStream.reset();
         outputStream.writeObject(who.getName());
         outputStream.flush();
+    }
+
+    /**
+     * Sends a text message to a specified player
+     *
+     * @param to  specified player
+     * @param msg text message
+     */
+    public void sendMessage(Gamer to, String msg) {
+        outputStream = to.getOutputStream();
+        try {
+            outputStream.reset();
+            outputStream.writeObject(msg);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+            game.networkError(to);
+        }
     }
 
 }

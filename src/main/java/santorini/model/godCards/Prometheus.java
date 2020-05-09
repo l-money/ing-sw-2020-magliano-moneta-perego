@@ -3,7 +3,7 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Gamer;
 import santorini.model.God;
-
+//G
 public class Prometheus extends God {
 
 

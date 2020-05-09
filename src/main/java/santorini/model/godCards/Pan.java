@@ -3,7 +3,7 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Gamer;
 import santorini.model.God;
-
+//P
 public class Pan extends God {
 
     public Pan() {

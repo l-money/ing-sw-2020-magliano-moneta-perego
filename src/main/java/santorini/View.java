@@ -23,7 +23,8 @@ public class View {
     private ArrayList<God> gods;
     private Thread listen;
     private String color;
-    private int ID;
+    private int ID, currentPawn, counter = 0;
+    private boolean inTurno = false;
 
     public void setID(int ID) {
         this.ID = ID;
@@ -61,15 +62,23 @@ public class View {
         return table;
     }
 
-    /*public void setTable(Table table) {
+
+    public synchronized void setTable(Table table) {
         this.table = table;
-    }*/
+        counter++;
+        if (counter > 2) {
+            inTurno = false;
+        }
 
+    }
 
-    //metodo che stampa la table indicante livello cella e posizione pedina
-    public synchronized void printTable(Table table) {
+    /**
+     * Prints field status on CLI
+     */
+    public synchronized void printTable() {
         //this.table = table;
         //printGamerInGame(gamers);
+
         System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n" + "\u001B[0m");
         System.out.print("[riga]\t------------------------------------------\n");
         for (int i = 0; i <= 4; i++) {
@@ -81,7 +90,7 @@ public class View {
                 } else {
                     System.out.print(" |\t");
                     if (table.getTableCell(i, j).isComplete()) {
-                        System.out.print("\u001B[45m" + "\u001B[0m");
+                        System.out.print("\u001B[45m" /*+ "\u001B[0m"*/);
                     } else {
                         System.out.print("\u001B[0m");
                     }
@@ -259,95 +268,66 @@ public class View {
     }
 
     /**
-     * Requests to user the place where he wants to build
+     * Requests to user a new action
+     *
+     * @param action action type BUILD or MOVE
      */
-    public synchronized void setNewBuild() {
-        String moveBuild;
-        int[] positionBuild = new int[2];
-        boolean valid = false;
+    public void setNewAction(Mossa.Action action) {
         try {
-            do {
-                System.out.println("Per non usare il potere della divinità digitare 'No'");
-                System.out.println("In che cella vuoi costruire [x,y]?");
-                moveBuild = br.readLine();
-                if ((moveBuild.equalsIgnoreCase("NO"))) {
-                    build = new Mossa(Mossa.Action.BUILD, -1, -1, -1);
-                    valid = true;
-                } else {
-                    valid = validaCoordinate(moveBuild);
-                    if (valid) {
-                        String in[] = moveBuild.split(",");
-                        positionBuild[0] = Integer.parseInt(in[0]);
-                        positionBuild[1] = Integer.parseInt(in[1]);
-                        //mettere anche qui charAt
-                        //int b = Integer.parseInt(movePawn);
-                        build = new Mossa(Mossa.Action.BUILD, IDP, positionBuild[0], positionBuild[1]);
-                    }
-                }
-            } while (!valid);
-            handlerClient.setBuildPawn(build);
-        } catch (IOException e) {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Requests to user the place where he wants to move
-     */
-    public synchronized void setNewMove() {
         String stringMove;
         String[] in;
         int[] coordinateMove = new int[2];
         try {
             boolean inputok = false;
-            //System.out.println("E' il tuo turno");
-            do {
-                System.out.println("Per non usare il potere della divinità digitare 'No'");
-                System.out.println("Che pedina vuoi muovere? ");
-                movePawn = br.readLine();
-                if ((movePawn.equalsIgnoreCase("NO"))) {
-                    move = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
-                    inputok = true;
-                } else {
-                    switch (movePawn.charAt(0)) {
-                        case '0':
-                            do {
-                                System.out.println("Inserisci movimento per la pedina 1 [x,y]: ");
-                                stringMove = br.readLine();
-                                inputok = validaCoordinate(stringMove);
-                            } while (!inputok);
-                            in = stringMove.split(",");
-                            coordinateMove[0] = Integer.parseInt(in[0]);
-                            coordinateMove[1] = Integer.parseInt(in[1]);
-                            move = new Mossa(Mossa.Action.MOVE, 0, coordinateMove[0], coordinateMove[1]);
-                            IDP = 0;
-                            break;
-                        case '1':
-                            do {
-                                System.out.println("Inserisci movimento per la pedina 2 [x,y]: ");
-                                stringMove = br.readLine();
-                                inputok = validaCoordinate(stringMove);
-                            } while (!inputok);
-                            in = stringMove.split(",");
-                            coordinateMove[0] = Integer.parseInt(in[0]);
-                            coordinateMove[1] = Integer.parseInt(in[1]);
-                            move = new Mossa(Mossa.Action.MOVE, 1, coordinateMove[0], coordinateMove[1]);
-                            IDP = 1;
-                            break;
-                        default:
-                            System.err.println("Pedina non valida");
-                            inputok = false;
-                    }
-                }
-            } while (!inputok);
-            handlerClient.setMovementPawn(move);
-
+            counter = 0;
+            if (!inTurno) {
+                currentPawn = readPawn();
+                inTurno = true;
+            }
+            stringMove = getCoords(table, table.getXYPawn(ID, currentPawn, true), table.getXYPawn(ID, currentPawn, false), action);
+            if (stringMove == null) {
+                move = new Mossa(action, -1, -1, -1);
+                handlerClient.sendAction(move);
+                return;
+            }
+            in = stringMove.split(",");
+            coordinateMove[0] = Integer.parseInt(in[0]);
+            coordinateMove[1] = Integer.parseInt(in[1]);
+            move = new Mossa(action, currentPawn, coordinateMove[0], coordinateMove[1]);
+            handlerClient.sendAction(move);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
+    /**
+     * Requests to user which pawn wants to use in this turn
+     *
+     * @return pawn id
+     */
+    private int readPawn() {
+        do {
+            System.out.print("Che pedina vuoi usare in questo turno? :  ");
+            try {
+                movePawn = br.readLine();
+                switch (movePawn.charAt(0)) {
+                    case '0':
+                        return 0;
+                    case '1':
+                        return 1;
+                    default:
+                        System.out.println("Pedina non valida");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } while (true);
+    }
 
     /**
      * Requests to player how many user has to be in the match
@@ -381,6 +361,11 @@ public class View {
      * Requests init pawn positions before game starts
      */
     public synchronized void setInitializePawn() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String coordPawn0, coordPawn1;
         System.out.println("Inserisci posizioni delle pedine: ");
         boolean valid;
@@ -440,6 +425,11 @@ public class View {
         System.err.println("Errore:\n" + msg);
     }
 
+    /**
+     * Prints on CLI a generic nofitication message
+     *
+     * @param msg message text
+     */
     public void printMessage(String msg) {
         System.out.println(msg);
     }
@@ -453,14 +443,22 @@ public class View {
      * @param yPawn ycoord of pawn
      * @return
      */
-    public String getCoords(Table t, int xPawn, int yPawn) {
+    public String getCoords(Table t, int xPawn, int yPawn, Mossa.Action cmd) {
         boolean errato = true;
         Cell c = null;
         do {
+            switch (cmd) {
+                case MOVE:
+                    System.out.println("Nuova mossa:");
+                    break;
+                case BUILD:
+                    System.out.println("Nuova costruzione:");
+                    break;
+            }
             System.out.println("7: \uD83E\uDC54\t8: \uD83E\uDC51\t9: \uD83E\uDC55");
-            System.out.println("4: \uD83E\uDC50\t\t6: \uD83E\uDC52");
+            System.out.println("4: \uD83E\uDC50\t5: no\t6: \uD83E\uDC52");
             System.out.println("1: \uD83E\uDC57\t2: \uD83E\uDC53\t3: \uD83E\uDC56");
-            System.out.println("Inserisci movimento: ");
+            System.out.print("Inserisci direzione: ");
             Cell[][] target = t.getAroundCells(xPawn, yPawn);
             String s = null;
             try {
@@ -469,46 +467,101 @@ public class View {
                 e.printStackTrace();
             }
             switch (s.charAt(0)) {
-                case 1:
+                case '1':
                     errato = false;
                     c = target[2][0];
                     break;
-                case 2:
+                case '2':
                     errato = false;
                     c = target[2][1];
                     break;
-                case 3:
+                case '3':
                     errato = false;
                     c = target[2][2];
                     break;
-                case 4:
+                case '4':
                     errato = false;
                     c = target[1][0];
                     break;
-                case 6:
+                case '5':
+                    return null;
+                case '6':
                     errato = false;
                     c = target[1][2];
                     break;
-                case 7:
+                case '7':
                     errato = false;
                     c = target[0][0];
                     break;
-                case 8:
+                case '8':
                     errato = false;
                     c = target[0][1];
                     break;
-                case 9:
+                case '9':
                     errato = false;
                     c = target[0][2];
                     break;
                 default:
                     errato = true;
             }
-            if (errato) {
+            if (errato || c == null) {
                 System.out.println("Input non corretto");
+                printTable();
+                counter = 0;
             }
         } while (errato || c == null);
         return c.getX() + "," + c.getY();
+    }
+
+    /**
+     * Win notify
+     */
+    public void vittoria() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        printMessage("HAI VINTO!");
+        try {
+            handlerClient.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Lose notify
+     *
+     * @param winner
+     */
+    public void sconfitta(String winner) {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        printMessage("HAI PERSO!");
+        printMessage("Ha vinto " + winner);
+        try {
+            handlerClient.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            System.exit(0);
+        }
+    }
+
+    /**
+     * Network error notify
+     *
+     * @param player
+     */
+    public void networkError(String player) {
+        printMessage(player + " si è disconnesso\nFine della partita");
+        System.exit(0);
     }
 
 }

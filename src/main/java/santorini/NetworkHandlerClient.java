@@ -62,11 +62,11 @@ public class NetworkHandlerClient implements Runnable {
                     switch (cmd) {
                         case BUILD:
                             /*Chiedi una nuova myBuilding*/
-                            new Thread(() -> view.setNewBuild()).start();
+                            new Thread(() -> view.setNewAction(Mossa.Action.BUILD)).start();
                             break;
                         case MOVE:
                             /*Chiedi una nuova myMovement*/
-                            new Thread(() -> view.setNewMove()).start();
+                            new Thread(() -> view.setNewAction(Mossa.Action.MOVE)).start();
                             break;
                         case SET_PLAYERS_NUMBER:
                             /*Chiedi il numero di giocatori*/
@@ -83,16 +83,19 @@ public class NetworkHandlerClient implements Runnable {
                             new Thread(() -> view.setFailed(msg)).start();
                             break;
                         case WINNER:
-                            vittoria();
+                            view.vittoria();
                             break;
                         case LOSER:
                             String winner = inputStream.readObject().toString();
-                            sconfitta(winner);
+                            view.sconfitta(winner);
                             break;
                         case NETWORK_ERROR:
                             String player = inputStream.readObject().toString();
-                            networkError(player);
+                            view.networkError(player);
                             break;
+                        case MESSAGE:
+                            String msgs = inputStream.readObject().toString();
+                            view.printMessage(msgs);
                         default:
                             break;
                     }
@@ -111,7 +114,8 @@ public class NetworkHandlerClient implements Runnable {
      */
     private void updateField(Table table) {
         new Thread(() -> {
-            view.printTable(table);
+            view.setTable(table);
+            view.printTable();
         }).start();
     }
 
@@ -155,23 +159,12 @@ public class NetworkHandlerClient implements Runnable {
      * @param move
      * @throws IOException
      */
-    public void setMovementPawn(Mossa move) throws IOException {
+    public void sendAction(Mossa move) throws IOException {
         outputStream.reset();
         outputStream.writeObject(move);
         outputStream.flush();
     }
 
-    /**
-     * Sends a new move to server
-     *
-     * @param mossa
-     * @throws IOException
-     */
-    public void setBuildPawn(Mossa mossa) throws IOException {
-        outputStream.reset();
-        outputStream.writeObject(mossa);
-        outputStream.flush();
-    }
 
     /**
      * Close socket with server
@@ -183,46 +176,7 @@ public class NetworkHandlerClient implements Runnable {
         server.close();
     }
 
-    /**
-     * Win notify
-     */
-    public void vittoria() {
-        view.printMessage("HAI VINTO!");
-        try {
-            disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            System.exit(0);
-        }
-    }
 
-    /**
-     * Lose notify
-     *
-     * @param winner
-     */
-    public void sconfitta(String winner) {
-        view.printMessage("HAI PERSO!");
-        view.printMessage("Ha vinto " + winner);
-        try {
-            disconnect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            System.exit(0);
-        }
-    }
-
-    /**
-     * Network error notify
-     *
-     * @param player
-     */
-    public void networkError(String player) {
-        view.printMessage(player + "si è disconnesso\nFine della partita");
-        System.exit(0);
-    }
 
 
 }

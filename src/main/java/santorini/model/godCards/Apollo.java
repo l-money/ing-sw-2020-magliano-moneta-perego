@@ -4,7 +4,7 @@ import santorini.Turno;
 import santorini.model.*;
 
 import java.util.ArrayList;
-
+//FINITA
 public class Apollo extends God {
     private Cell start;
     private Cell end;

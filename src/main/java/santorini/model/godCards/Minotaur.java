@@ -7,7 +7,7 @@ import santorini.model.God;
 import santorini.model.Pawn;
 
 import java.util.ArrayList;
-
+//P
 public class Minotaur extends God {
     Cell start;
     Cell end;

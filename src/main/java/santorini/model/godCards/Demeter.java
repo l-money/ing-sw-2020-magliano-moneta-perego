@@ -7,7 +7,7 @@ import santorini.model.God;
 import santorini.model.Mossa;
 
 import java.io.IOException;
-
+//G
 public class Demeter extends God {
     private Cell positionFirstBuilding;
     private boolean demeterEffect;

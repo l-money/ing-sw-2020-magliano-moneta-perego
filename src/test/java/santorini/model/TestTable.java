@@ -253,7 +253,8 @@ public class TestTable implements Serializable {
         table.setACell(1, 1, 1, false, false, p0);
         table.setACell(0, 2, 2, true, false, null);
         table.setACell(1, 2, 1, true, false, null);
-        v.printTable(table);
+        v.setTable(table);
+        v.printTable();
         //control adjacentCells
         boolean b = table.controlBaseMovement(table.getTableCell(1, 1), table.getTableCell(3, 3));
         assertFalse(b);

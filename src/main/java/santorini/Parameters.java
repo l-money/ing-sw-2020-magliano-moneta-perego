@@ -13,6 +13,7 @@ public class Parameters {
         WINNER,
         LOSER,
         NETWORK_ERROR,
+        MESSAGE,
     }
 
 

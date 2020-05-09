@@ -3,7 +3,7 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Gamer;
 import santorini.model.God;
-
+//P
 public class Pdor extends God {
 
     public Pdor() {

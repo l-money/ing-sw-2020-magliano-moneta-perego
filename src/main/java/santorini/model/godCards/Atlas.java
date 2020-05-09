@@ -5,7 +5,7 @@ import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
-
+//P
 public class Atlas extends God {
     private Mossa buildDome;
     private boolean atlasEffect;

@@ -2,7 +2,7 @@ package santorini.model.godCards;
 
 import santorini.Turno;
 import santorini.model.*;
-
+//FINITA
 public class Artemis extends God {
     private Cell start;
     private boolean artemisEffect;

@@ -223,15 +223,15 @@ public class Table implements Serializable {
      */
     public void build(Cell cell) {
         int myLevel = cell.getLevel();
-            cell.setLevel(myLevel + 1);
-            int newLevel = cell.getLevel();
-            if (newLevel > 3) {
-                cell.setLevel(3);
-                cell.setComplete(true);
-            } else {
-                cell.setLevel(newLevel);
-            }
+        cell.setLevel(myLevel + 1);
+        int newLevel = cell.getLevel();
+        if (newLevel > 3) {
+            cell.setLevel(3);
+            cell.setComplete(true);
+        } else {
+            cell.setLevel(newLevel);
         }
+    }
 
     /**
      * Finds all cells around a specified cell in a square 3x3
@@ -244,8 +244,9 @@ public class Table implements Serializable {
         Cell[][] around = new Cell[3][3];
         int ix = x - 1, jy = y - 1;
         for (int i = 0; i < 3; i++, ix++) {
+            jy = y - 1;
             for (int j = 0; j < 3; j++, jy++) {
-                if (i == x && j == y) {
+                if (ix == x && jy == y) {
                     around[i][j] = null;
                 } else if (ix >= 0 && jy >= 0 && ix < 5 && jy < 5) {
                     around[i][j] = cells[ix][jy];
@@ -254,4 +255,28 @@ public class Table implements Serializable {
         }
         return around;
     }
+
+    /**
+     * Looks for a specified client's pawn
+     *
+     * @param player player ID
+     * @param pawnID pawn ID
+     * @param X      coordinate type. true: X false: Y
+     * @return X or Y coordinate of pawn depending by X boolean
+     */
+    public int getXYPawn(int player, int pawnID, boolean X) {
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < column; j++) {
+                if (cells[i][j].getPawn() != null && cells[i][j].getPawn().getIdGamer() == player && cells[i][j].getPawn().getIdPawn() == pawnID) {
+                    if (X) {
+                        return i;
+                    } else {
+                        return j;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
 }
