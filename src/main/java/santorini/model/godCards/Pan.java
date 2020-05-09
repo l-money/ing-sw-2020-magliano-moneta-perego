@@ -42,6 +42,8 @@ public class Pan extends God {
                 turno.getGamer().setWinner(true);
                 turno.printTableStatusTurn(true);
                 turno.getGameHandler().getGame().setWinner(turno.getGamer());
+            } else {
+                turno.printTableStatusTurn(turno.isValidationMove());
             }
         }
     }

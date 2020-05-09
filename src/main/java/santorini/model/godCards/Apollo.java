@@ -69,6 +69,7 @@ public class Apollo extends God {
         if (!turno.isValidationMove() && apolloEffect) {
             turno.getTable().setACell(end.getX(), end.getY(), end.getLevel(), false, end.isComplete(), otherPawn);
         }
+        turno.printTableStatusTurn(turno.isValidationMove());
         }
 
     /**

@@ -15,6 +15,7 @@ public class Minotaur extends God {
     Pawn myPawn;
     Pawn otherPawn;
     boolean minoEffect;
+    boolean printerStatus = true;
 
     public Minotaur() {
         super("Minotaur", "Tuo spostamento: il tuo lavoratore\npuò spostarsi nella casella di un lavoratore avversario\n" +
@@ -37,80 +38,81 @@ public class Minotaur extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
-        end = turno.getTable().getTableCell(end.getX(), end.getY());
-        myPawn = turno.getGamer().getPawn(turno.getMove().getIdPawn());
-        otherPawn = turno.getTable().getTableCell(end.getX(), end.getY()).getPawn();
+        printerStatus = true;
+        int x = turno.getMove().getTargetX();
+        int y = turno.getMove().getTargetY();
+        int i = turno.getMove().getIdPawn();
+        int idG = turno.getGamer().getIdGamer();
+        end = turno.getTable().getTableCell(x, y);
+        myPawn = turno.getGamer().getPawn(i);
+        otherPawn = turno.getTable().getTableCell(x, y).getPawn();
+        //int idO = otherPawn.getIdGamer();
         start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
-        do {
-            turno.getTable().getTableCell(end.getX(), end.getY()).setFree(false);
-            turno.getTable().getTableCell(end.getX(), end.getY()).setPawn(otherPawn);
+        ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
             minoEffect = false;
-            ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
-            if (!nearCells.contains(end)) {
+        if (!nearCells.contains(end)) {
+            minoEffect = false;
+        } else {
+            if (end.isComplete() || end.getPawn() == null) {
                 minoEffect = false;
             } else {
-                if (end.isFree() || end.isComplete()) {
+                if (otherPawn.getIdGamer() == idG &&
+                        turno.getGamer().getColorGamer().equals(otherPawn.getColorPawn())) {
                     minoEffect = false;
                 } else {
-                    if ((otherPawn.getIdGamer() == turno.getGamer().getIdGamer())) {
+                    if (end.getLevel() - start.getLevel() > 1) {
                         minoEffect = false;
                     } else {
-                        int[] k = coordinateNextCell(start, end);
-                        if ((!possiblePush(k))) {
+                        if ((end.getLevel() - start.getLevel() == 1) && turno.getGamer().getLevelsUp() == 0) {
                             minoEffect = false;
                         } else {
-                            nextCell = turno.getTable().getTableCell(k[0], k[1]);
-                            if (controlIsFree(nextCell)) {
-                                minoEffect = true;
-                            } else {
+                            int[] k = coordinateNextCell(start, end);
+                            if ((!possiblePush(k))) {
                                 minoEffect = false;
+                            } else {
+                                nextCell = turno.getTable().getTableCell(k[0], k[1]);
+                                if (controlIsFree(nextCell)) {
+                                    turno.getTable().getTableCell(x, y).setFree(true);
+                                    turno.getTable().getTableCell(x, y).setPawn(null);
+                                    minoEffect = true;
+                                } else {
+                                    minoEffect = false;
+                                }
                             }
                         }
                     }
                 }
             }
-            if (minoEffect) {
-                turno.getTable().getTableCell(end.getX(), end.getY()).setFree(true);
-                turno.getTable().getTableCell(end.getX(), end.getY()).setPawn(null);
-                turno.baseMovement(turno.getMove());
-                turno.getValidationMove(turno.isValidationMove());
-
-                minoEffect = turno.isValidationMove();
-            } else {
-                turno.baseMovement(turno.getMove());
-                turno.getValidationMove(turno.isValidationMove());
-
+        }
+        printerStatus = minoEffect;
             }
-        } while (!turno.isValidationMove());
-        turno.getGamer().setSteps(0);
-    }
 
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
         if (minoEffect && turno.isValidationMove()) {
             int x = nextCell.getX();
             int y = nextCell.getY();
             otherPawn.setPastLevel(end.getLevel());
-            otherPawn.setPresentLevel(nextCell.getLevel());
-            otherPawn.setRow(x);
-            otherPawn.setColumn(y);
-            turno.getTable().getTableCell(x, y).setFree(false);
-            turno.getTable().getTableCell(x, y).setPawn(otherPawn);
+            turno.getTable().setACell(x, y, nextCell.getLevel(), false, nextCell.isComplete(), otherPawn);
+            turno.printTableStatusTurn(true);
+            printerStatus = false;
         }
-
+        if (!minoEffect && turno.isValidationMove()) {
+            turno.printTableStatusTurn(true);
+        }
     }
 
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
 
@@ -119,10 +121,9 @@ public class Minotaur extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-        turno.getGamer().setSteps(1);
     }
 
     /**
@@ -176,20 +177,6 @@ public class Minotaur extends God {
     }
 
     /**
-     * method existCoordinate
-     *
-     * @param x my coordinate
-     * @return true if 0<=x<=4, or return false
-     */
-    public boolean existCoordinate(int x) {
-        if ((x >= -1) && (x <= 4)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
      * method coordinateNextCell: for the Minotaur Effect
      *
      * @param start my position
@@ -208,7 +195,7 @@ public class Minotaur extends God {
             return coordinateNext;
         } else {
             if ((row == 0)) {
-                //same row, control the column
+                //same row, printerStatus the column
                 if ((end.getY() + column >= 0) && (end.getY() + column <= 4)) {
                     coordinateNext[0] = end.getX();
                     coordinateNext[1] = end.getY() + column;
@@ -220,7 +207,7 @@ public class Minotaur extends God {
                 }
             } else {
                 if ((column == 0)) {
-                    //same column, control the row
+                    //same column, printerStatus the row
                     if ((end.getX() + row >= 0) && (end.getX() + row <= 4)) {
                         coordinateNext[0] = end.getX() + row;
                         coordinateNext[1] = end.getY();
@@ -235,7 +222,7 @@ public class Minotaur extends God {
                         //movement on the \diagonal
                         int i = end.getX() + row;
                         int j = end.getY() + column;
-                        if ((i == j) && (i >= 0) && (i <= 4)) {
+                        if ((i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
                             coordinateNext[0] = i;
                             coordinateNext[1] = j;
                             return coordinateNext;

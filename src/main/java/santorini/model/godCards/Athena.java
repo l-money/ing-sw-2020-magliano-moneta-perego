@@ -29,6 +29,9 @@ public class Athena extends God {
      * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
+        if (athenaEffect) {
+            turno.getGameHandler().getGame().broadcastMessage("Effetto di Athena annullato.\n");
+        }
         athenaEffect = false;
     }
 
@@ -47,11 +50,13 @@ public class Athena extends God {
                     g.setLevelsUp(0);
                 }
             } else {
+                //set others levelsUp == 1
                 athenaEffect = false;
                 for (Gamer g : others) {
                     g.setLevelsUp(1);
                 }
             }
+            turno.printTableStatusTurn(turno.isValidationMove());
         }
     }
 
@@ -70,7 +75,12 @@ public class Athena extends God {
      * @param turno
      */
     public void afterOwnerBuilding(Turno turno) {
-
+        if (athenaEffect && turno.isValidationBuild()) {
+            for (Gamer g : others) {
+                turno.getGameHandler().sendMessage(g, "\u001B[34m" + turno.getGamer().getName() + " è salito di livello con Athena.\n" +
+                        "In questo turno non puoi salire di livello." + "\u001B[0m" + "\n");
+            }
+        }
     }
 
     /**

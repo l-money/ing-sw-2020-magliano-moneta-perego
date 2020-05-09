@@ -50,7 +50,7 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
-
+        turno.printTableStatusTurn(turno.isValidationMove());
     }
 
     /**
@@ -62,6 +62,8 @@ public class Atlas extends God {
         if (turno.isValidationMove() && controlEffect) {
             atlasEffect = false;
             turno.setCount(0);
+            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Atlas, puoi costruire una cupola dove vuoi.\n" +
+                    "Se non vuoi costruire la cupola scegli l'opzione 'No'" + "\u001B[0m" + "\n");
             do {
                 buildDome = turno.getMove();
                 if (turno.nullEffectForGodCards(buildDome)) {

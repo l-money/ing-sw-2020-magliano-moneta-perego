@@ -6,8 +6,6 @@ import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
 
-import java.io.IOException;
-//G
 public class Demeter extends God {
     private Cell positionFirstBuilding;
     private boolean demeterEffect;
@@ -57,35 +55,6 @@ public class Demeter extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-        int startX = turno.getMove().getTargetX();
-        int startY = turno.getMove().getTargetY();
-        positionFirstBuilding = turno.getTable().getTableCell(startX, startY);
-        //demeterEffect = true;
-        try {
-            build2 = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        do {
-            turno.getGamer().setBuilds(1);
-            turno.godCardEffect(build2, demeterEffect, 2, positionFirstBuilding);
-            if (!demeterEffect) {
-                //if demeterEffect is false, the destination is incorrect, insert the correct destination
-                turno.sendFailed();
-                //ask another destination of the build
-                try {
-                    build2 = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                    }
-                }
-
-        } while (!demeterEffect);
-        turno.getGamer().setBuilds(1);
 
     }
 

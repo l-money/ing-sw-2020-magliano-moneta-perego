@@ -6,8 +6,6 @@ import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
 
-import java.io.IOException;
-//G
 public class Hephaestus extends God {
     private boolean HEffect;
     private Mossa buildingPlus;
@@ -62,31 +60,6 @@ public class Hephaestus extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-        int x = turno.getMove().getTargetX();
-        int y = turno.getMove().getTargetY();
-        sameBuildingCell = turno.getTable().getTableCell(x, y);
-            try {
-                buildingPlus = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        do {
-            turno.getGamer().setBuilds(1);
-            turno.godCardEffect(buildingPlus, HEffect, 3, sameBuildingCell);
-            if (!HEffect) {
-                turno.sendFailed();
-                //ask another destination of the build
-                try {
-                    buildingPlus = turno.getGameHandler().richiediMossa(Mossa.Action.BUILD, getOwner());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        } while (!HEffect);
     }
 
     /**

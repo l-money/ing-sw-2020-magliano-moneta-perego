@@ -198,13 +198,11 @@ public class Turno implements Runnable {
      * all god cards features
      */
     public void run() {
-        //TODO
-        // Condizione di sconfitta
-        // Situazione attuale, appena loser==true, il giocatore smette di giocare immediatamente
-        // Domanda:
-        // Appena loser==true il giocatore smette di giocare in qualsiasi caso
-        // oppure cerca di vedere se una pedina si è sbloccata??
         if (!getGamer().getLoser()) {
+            getGameHandler().getGame().broadcastMessage("Turno di :" + getGamer().getName() + "\n");
+            getGameHandler().sendMessage(getGamer(), "E' il tuo turno\n");
+            getGameHandler().sendMessage(getGamer(), "Nome: " + getGamer().getName() + " Carta: " +
+                    getGamer().getMyGodCard().getName() + " Colore: " + getGamer().getColorGamer() + "\n");
             validationMove = false;
             validationBuild = false;
             getGamer().setSteps(1);
@@ -214,6 +212,7 @@ public class Turno implements Runnable {
                 move = moveRequest();
                 myMovement();
             } while (!validationMove && count < 5);
+            methodLoser(validationMove, count, getGamer());
             controlWin();
             count = 0;
             if (!getGamer().getLoser()) {
@@ -221,8 +220,9 @@ public class Turno implements Runnable {
                     getGamer().setBuilds(1);
                     move = buildingRequest();
                     myBuilding();
+                    printTableStatusTurn(validationBuild);
                 } while (!validationBuild && count < 5);
-
+                methodLoser(validationBuild, count, getGamer());
             }
         }
     }
@@ -330,7 +330,6 @@ public class Turno implements Runnable {
             sendFailed();
             count++;
         } else {
-            printTableStatusTurn(validationMove);
             getGamer().setSteps(0);
         }
     }
@@ -380,7 +379,6 @@ public class Turno implements Runnable {
             sendFailed();
             count++;
         } else {
-            printTableStatusTurn(validationBuild);
                 getGamer().setBuilds(0);
                     }
             }
@@ -472,79 +470,6 @@ public class Turno implements Runnable {
     }
 
     /**
-     * method godCardEffect
-     *
-     * @param move         the move effect of the card, not nullEffect
-     * @param effect       if move is correct, effect is true, else is false
-     * @param i            the case of the effect
-     * @param specialCell the past position of the pawn
-     * @return the effect: true or false
-     */
-    public boolean godCardEffect(Mossa move, boolean effect, int i, Cell specialCell) {
-        if (nullEffectForGodCards(move)) {
-            System.out.println("Effetto Nullo");
-            effect = true;
-        } else {
-            if (!controlStandardParameter(move)) {
-                effect = false;
-            } else {
-                Pawn myPawn = getGamer().getPawn(move.getIdPawn());
-                Cell end = getTable().getTableCell(move.getTargetX(), move.getTargetY());
-                Cell start = getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
-                switch (i) {
-                    case 1:
-                        if (move.getAction() == Mossa.Action.BUILD) {
-                            ArrayList<Cell> nearCells = getTable().searchAdjacentCells(start);
-                            if ((nearCells.contains(end)) && (end.getLevel() >= 0) && (end.getLevel() <= 3) &&
-                                    (end.isFree()) && (!end.isComplete()) && (end.getPawn() == null) &&
-                                    (controlStandardParameter(move))) {
-                                getTable().getTableCell(end.getX(), end.getY()).setComplete(true);
-                                effect = true;
-                            } else {
-                                effect = false;
-                            }
-                        } else {
-                            effect = false;
-                        }
-                        break;
-                    case 2:
-                        if (move.getAction() == Mossa.Action.BUILD) {
-                            if (move.getTargetY() == specialCell.getX() &&
-                                    move.getTargetY() == specialCell.getY()) {
-                                effect = false;
-                            } else {
-                                baseBuilding(move);
-                                getValidationBuild(validationBuild);
-                                effect = isValidationBuild();
-                            }
-                        } else {
-                            effect = false;
-                        }
-                        break;
-                    case 3:
-                        if (move.getAction() == Mossa.Action.BUILD) {
-                            if ((move.getTargetX() == specialCell.getX()) &&
-                                    (move.getTargetY() == specialCell.getY())) {
-                                baseBuilding(move);
-                                getValidationBuild(validationBuild);
-                                effect = isValidationBuild();
-                            } else {
-                                effect = false;
-                            }
-                        } else {
-                            effect = false;
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-        return effect;
-    }
-
-    /**
      * method printTableStatusTurn
      *
      * @param b if is true, print status, else print false
@@ -552,6 +477,14 @@ public class Turno implements Runnable {
     public void printTableStatusTurn(boolean b) {
         if (b) {
             gameHandler.getGame().updateField();
+        }
+    }
+
+    public void methodLoser(boolean b, int i, Gamer g) {
+        if ((!b) && (i >= 5)) {
+            g.setLoser(true);
+        } else {
+            g.setLoser(false);
         }
     }
 

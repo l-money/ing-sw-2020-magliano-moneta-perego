@@ -1,8 +1,8 @@
 package santorini;
 
 import santorini.model.*;
-import santorini.model.godCards.Artemis;
-import santorini.model.godCards.Atlas;
+import santorini.model.godCards.Minotaur;
+import santorini.model.godCards.Pan;
 import santorini.model.godCards.Pdor;
 
 import java.awt.*;
@@ -19,7 +19,6 @@ public class View {
     private Mossa move;
     private Mossa build;
     private String movePawn;
-    private int IDP;
     private ArrayList<God> gods;
     private Thread listen;
     private String color;
@@ -244,14 +243,14 @@ public class View {
                     //aggiunto Apollo di default
                     if (number == 13) {
                         number = gods.size();
-                        gods.add(new Atlas());
+                        gods.add(new Pan());
                         break;
                     }
 
-                    //aggiunto Artemide di default
+                    //aggiunto Minotauro di default
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Artemis());
+                        gods.add(new Minotaur());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {
@@ -321,7 +320,7 @@ public class View {
                     case '1':
                         return 1;
                     default:
-                        System.out.println("Pedina non valida");
+                        System.err.println("Pedina non valida");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -383,7 +382,7 @@ public class View {
                 coordPawn1 = br.readLine();
                 valid = validaCoordinate(coordPawn1);
                 if (!valid) {
-                    System.out.println("Formato coordinate non valido");
+                    System.err.println("Formato coordinate non valido");
                 }
             } while (!valid);
             handlerClient.initializePawns(coordPawn0 + "," + coordPawn1);
@@ -456,7 +455,7 @@ public class View {
                     break;
             }
             System.out.println("7: \uD83E\uDC54\t8: \uD83E\uDC51\t9: \uD83E\uDC55");
-            System.out.println("4: \uD83E\uDC50\t5: no\t6: \uD83E\uDC52");
+            System.out.println("4: \uD83E\uDC50\t5: No\t6: \uD83E\uDC52");
             System.out.println("1: \uD83E\uDC57\t2: \uD83E\uDC53\t3: \uD83E\uDC56");
             System.out.print("Inserisci direzione: ");
             Cell[][] target = t.getAroundCells(xPawn, yPawn);
@@ -505,7 +504,7 @@ public class View {
                     errato = true;
             }
             if (errato || c == null) {
-                System.out.println("Input non corretto");
+                System.err.println("--Input non corretto--");
                 printTable();
                 counter = 0;
             }
@@ -560,7 +559,7 @@ public class View {
      * @param player
      */
     public void networkError(String player) {
-        printMessage(player + " si è disconnesso\nFine della partita");
+        printMessage(player + " Si è disconnesso\nFine della partita");
         System.exit(0);
     }
 
