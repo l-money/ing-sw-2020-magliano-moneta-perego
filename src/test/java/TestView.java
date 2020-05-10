@@ -36,7 +36,7 @@ public class TestView {
     @Test
     public void testColorCellPawn(){
         System.out.print("\n****New table****\n\n");
-        view.printGamerInGame(gamers);
+        //view.printGamerInGame(gamers);
         view.setTable(view.getTable());
         view.printTable();
         System.out.print("\n****pawns in table****\n\n");
@@ -68,38 +68,6 @@ public class TestView {
         view.getTable().setACell(2, 0, 3, false, true, null);
         view.setTable(view.getTable());
         view.printTable();
-    }
-
-    /**
-     * method that tests the coordinate in input
-     */
-    @Test
-    public void testGiveMeStringCoordinate() {
-        String s1 = "A";
-        String s2 = "3;2";
-        String s3 = "6,2";
-        String s4 = "2,3";
-        String s5 = "A,3";
-        int[] coordinate;
-        coordinate = view.giveMeStringCoordinate(s1);
-        assertEquals(-1, coordinate[0]);
-        assertEquals(-1, coordinate[1]);
-
-        coordinate = view.giveMeStringCoordinate(s2);
-        assertEquals(-1, coordinate[0]);
-        assertEquals(-1, coordinate[1]);
-
-        coordinate = view.giveMeStringCoordinate(s3);
-        assertEquals(-1, coordinate[0]);
-        assertEquals(-1, coordinate[1]);
-
-        coordinate = view.giveMeStringCoordinate(s5);
-        assertEquals(-1, coordinate[0]);
-        assertEquals(-1, coordinate[1]);
-
-        coordinate = view.giveMeStringCoordinate(s4);
-        assertEquals(2, coordinate[0]);
-        assertEquals(3, coordinate[1]);
     }
 
     /**

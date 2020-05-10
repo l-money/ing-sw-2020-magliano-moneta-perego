@@ -1,8 +1,8 @@
 package santorini;
 
 import santorini.model.*;
-import santorini.model.godCards.Minotaur;
-import santorini.model.godCards.Pan;
+import santorini.model.godCards.Artemis;
+import santorini.model.godCards.Atlas;
 import santorini.model.godCards.Pdor;
 
 import java.awt.*;
@@ -129,14 +129,6 @@ public class View {
         }
     }
 
-    public void printGamerInGame(ArrayList<Gamer> gamers) {
-        int k = gamers.size();
-        for (int i = 0; i < k; i++) {
-            System.out.print("Giocatore " + (i + 1) + ": " + gamers.get(i).getName() + "\t\tCarta: " + gamers.get(i).getMyGodCard().getName() + "\t\tColore: ");
-            printColor(gamers.get(i).getColorGamer());
-        }
-        System.out.println();
-    }
 
     public void printColor(Color color) {
         if (color == Color.YELLOW) {
@@ -154,41 +146,6 @@ public class View {
         }
     }
 
-    /**
-     * NON SERVE
-     * giveMeStringCoordinate
-     *
-     * @param s the input string with coordinate, the correct syntax is: x,y
-     * @return the coordinate x = row and y = column
-     */
-    public int[] giveMeStringCoordinate(String s) {
-        int l = s.length();
-        int[] cordinate = new int[2];
-        cordinate[0] = -1;
-        cordinate[1] = -1;
-        if (l != 3) {
-            System.err.println("Errore: sintassi non corretta");
-        } else {
-            char[] c = new char[l];
-            for (int i = 0; i < l; i++) {
-                c[i] = s.charAt(i);
-            }
-            if (c[1] != ',') {
-                System.err.println("Errore: sintassi non corretta");
-            } else {
-                int x = Character.getNumericValue(c[0]);
-                int y = Character.getNumericValue(c[2]);
-                if ((x < 0) || (x > 4) || (y < 0) || (y > 4)) {
-                    System.err.println("Errore: valori non esistenti");
-                } else {
-                    cordinate[0] = x;
-                    cordinate[1] = y;
-                }
-
-            }
-        }
-        return cordinate;
-    }
 
     /**
      * method noGodEffect
@@ -243,14 +200,14 @@ public class View {
                     //aggiunto Apollo di default
                     if (number == 13) {
                         number = gods.size();
-                        gods.add(new Pan());
+                        gods.add(new Artemis());
                         break;
                     }
 
                     //aggiunto Minotauro di default
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Minotaur());
+                        gods.add(new Atlas());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {

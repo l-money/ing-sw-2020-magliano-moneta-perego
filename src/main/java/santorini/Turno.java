@@ -2,8 +2,11 @@ package santorini;
 
 import santorini.model.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Turno implements Runnable {
     private ArrayList<God> otherCards;
@@ -13,8 +16,21 @@ public class Turno implements Runnable {
     private boolean validationMove;
     private boolean validationBuild;
     private NetworkHandlerServer gameHandler;
-    //count is for test, it will substitute by a timer
+    //count : 5 number of attempts
     private int count = 0;
+    //TODO
+    private TimerTask task0 = new TimerTask() {
+        @Override
+        public void run() {
+        }
+    };
+    private TimerTask task1 = new TimerTask() {
+        @Override
+        public void run() {
+        }
+    };
+    private Timer myTimer0 = new Timer();
+    private Timer myTimer1 = new Timer();
 
     /**
      * Turn initialization for a specified player
@@ -23,6 +39,7 @@ public class Turno implements Runnable {
      * @param gamer player that has to play
      * @param table game field
      */
+    //TODO vedere meglio la gestione dei messaggi
     public Turno(ArrayList<God> cards, Gamer gamer, Table table, NetworkHandlerServer handler) {
         cards.removeIf(g -> g.equals(gamer.getMyGodCard()));
         this.otherCards = cards;
@@ -30,6 +47,7 @@ public class Turno implements Runnable {
         this.table = table;
         this.gameHandler = handler;
     }
+
 
     /**
      * method getTable
@@ -189,20 +207,23 @@ public class Turno implements Runnable {
      * Prints an error or sends a failed to handler
      */
     public void sendFailed() {
-        gameHandler.sendFailed(gamer, "Mossa non valida\nRiprova");
-        System.err.print("Errore\n");
+        gameHandler.sendFailed(gamer, "Mossa non valida,riprova");
     }
 
     /**
      * Executes in new Thread all player turn with
      * all god cards features
      */
+    // TODO aggiustare le stampe e i timer
     public void run() {
+        myTimer0.schedule(task0, 30000);
+        myTimer0.cancel();
+        myTimer0 = new Timer();
         if (!getGamer().getLoser()) {
             getGameHandler().getGame().broadcastMessage("Turno di :" + getGamer().getName() + "\n");
-            getGameHandler().sendMessage(getGamer(), "E' il tuo turno\n");
-            getGameHandler().sendMessage(getGamer(), "Nome: " + getGamer().getName() + " Carta: " +
-                    getGamer().getMyGodCard().getName() + " Colore: " + getGamer().getColorGamer() + "\n");
+            getGameHandler().sendMessage(getGamer(), "E' il tuo turno");
+            getGameHandler().sendMessage(getGamer(), "Carta: " + "\u001B[34m" + getGamer().getMyGodCard().getName() + "\u001B[0m");
+            getGameHandler().sendMessage(getGamer(), "Colore: " + printMyColor(getGamer()));
             validationMove = false;
             validationBuild = false;
             getGamer().setSteps(1);
@@ -225,6 +246,9 @@ public class Turno implements Runnable {
                 methodLoser(validationBuild, count, getGamer());
             }
         }
+        //myTimer1.schedule(task1,10000);
+        //myTimer1.cancel();
+        //myTimer1 = new Timer();
     }
 
 
@@ -246,6 +270,7 @@ public class Turno implements Runnable {
                     card.afterOtherMoving(gamer);
                 }
         } else {
+            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Coordinate non calide##" + "\u001B[0m");
             getValidationMove(validationMove);
             }
     }
@@ -266,6 +291,7 @@ public class Turno implements Runnable {
             baseBuilding(getMove());
             getValidationBuild(validationBuild);
         } else {
+            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Coordinate non calide##" + "\u001B[0m");
             getValidationBuild(validationBuild);
         }
                 gamer.getMyGodCard().afterOwnerBuilding(this);
@@ -290,11 +316,11 @@ public class Turno implements Runnable {
                 //control the pawn can move
                 if (!table.iCanMove(start)) {
                     //if it can not, set iCanPlay false
+                    getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Nessuna casella adiacente libera##" + "\u001B[0m");
                     getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
                     //control the two pawns can't move
                     if (amILocked(getGamer())) {
                         getGamer().setLoser(true);
-                        //getGamer().setBuilds(0);
                         validationMove = true;
                     } else {
                         getGamer().setLoser(false);
@@ -305,10 +331,12 @@ public class Turno implements Runnable {
                     getGamer().setLoser(false);
                     //control the base movement of the pawn is possible
                     if (!table.controlBaseMovement(start, end)) {
+                        getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "###Non puoi muoverti qui" + "\u001B[0m");
                         validationMove = false;
                     } else {
                         //control if the pawn can go up on level
                         if ((gamer.getLevelsUp() == 0) && (end.getLevel() - start.getLevel() == 1)) {
+                            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "###Non puoi salire di livello" + "\u001B[0m");
                             validationMove = false;
                         } else {
                             //do the step and change position
@@ -327,8 +355,9 @@ public class Turno implements Runnable {
      */
     public void getValidationMove(boolean vM) {
         if (!vM) {
-            sendFailed();
+            //sendFailed();
             count++;
+            getGameHandler().sendMessage(getGamer(), "Tentativi rimanenti: " + (5 - count));
         } else {
             getGamer().setSteps(0);
         }
@@ -348,6 +377,7 @@ public class Turno implements Runnable {
                 //control the pawn can build
                 if (!table.iCanBuild(start)) {
                     //if it can not, set iCanPlay false
+                    getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "###Nessuna casella adiacente disponibile" + "\u001B[0m");
                     getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
                     //control the two pawns can't build
                     if (amILocked(getGamer())) {
@@ -360,6 +390,7 @@ public class Turno implements Runnable {
                 } else {
                     //control the base build of the pawn is possible
                     if (!table.controlBaseBuilding(start, end)) {
+                        getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "###Non puoi costruire qui" + "\u001B[0m");
                         validationBuild = false;
                     } else {
                         //do the build
@@ -376,8 +407,9 @@ public class Turno implements Runnable {
      */
     public void getValidationBuild(boolean vB) {
         if (!vB) {
-            sendFailed();
+            //sendFailed();
             count++;
+            getGameHandler().sendMessage(getGamer(), "Tentativi rimanenti: " + (5 - count));
         } else {
                 getGamer().setBuilds(0);
                     }
@@ -394,6 +426,7 @@ public class Turno implements Runnable {
             ) {
                 getGamer().setWinner(true);
                 getGameHandler().getGame().setWinner(getGamer());
+                getGameHandler().getGame().broadcastMessage("FINE PARTITA");
             } else {
                 getGamer().setWinner(false);
             }
@@ -480,11 +513,45 @@ public class Turno implements Runnable {
         }
     }
 
-    public void methodLoser(boolean b, int i, Gamer g) {
+    /**
+     * method methodLoser
+     *
+     * @param b validationMove or validationBuild
+     * @param i count
+     * @param g the current gamer
+     */
+    private void methodLoser(boolean b, int i, Gamer g) {
+        //exceeded the number of attempts
         if ((!b) && (i >= 5)) {
             g.setLoser(true);
+            getGameHandler().sendMessage(g, "Hai esaurito i tentativi!!!");
         } else {
             g.setLoser(false);
+        }
+        //general control of defeat
+        if (g.getLoser()) {
+            getGameHandler().getGame().broadcastMessage(g.getName() + " ha perso!!!");
+        }
+    }
+
+    /**
+     * method printMyColor
+     *
+     * @param g the gamer
+     */
+    private String printMyColor(Gamer g) {
+        if (g.getColorGamer() == Color.YELLOW) {
+            return "\u001B[33m" + "Giallo" + "\u001B[0m";
+        } else {
+            if (g.getColorGamer() == Color.RED) {
+                return "\u001B[31m" + "Rosso" + "\u001B[0m";
+            } else {
+                if (g.getColorGamer() == Color.BLUE) {
+                    return "\u001B[36m" + "Blu" + "\u001B[0m";
+                } else {
+                    return "No color";
+                }
+            }
         }
     }
 

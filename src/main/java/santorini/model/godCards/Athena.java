@@ -30,7 +30,7 @@ public class Athena extends God {
      */
     public void beforeOwnerMoving(Turno turno) {
         if (athenaEffect) {
-            turno.getGameHandler().getGame().broadcastMessage("Effetto di Athena annullato.\n");
+            turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Athena annullato.\n" + "\u001B[0m");
         }
         athenaEffect = false;
     }
@@ -41,7 +41,15 @@ public class Athena extends God {
      * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
+
         if (turno.isValidationMove()) {
+
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
+
             int id = turno.getMove().getIdPawn();
             if (turno.getGamer().getPawn(id).getPresentLevel() - turno.getGamer().getPawn(id).getPastLevel() == 1) {
                 //athenaEffect is true
@@ -56,7 +64,7 @@ public class Athena extends God {
                     g.setLevelsUp(1);
                 }
             }
-            turno.printTableStatusTurn(turno.isValidationMove());
+
         }
     }
 
@@ -75,10 +83,18 @@ public class Athena extends God {
      * @param turno
      */
     public void afterOwnerBuilding(Turno turno) {
-        if (athenaEffect && turno.isValidationBuild()) {
-            for (Gamer g : others) {
-                turno.getGameHandler().sendMessage(g, "\u001B[34m" + turno.getGamer().getName() + " è salito di livello con Athena.\n" +
-                        "In questo turno non puoi salire di livello." + "\u001B[0m" + "\n");
+        if (turno.isValidationBuild()) {
+            //broadcast message of building
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            //turno.printTableStatusTurn(turno.isValidationBuild());
+
+            if (athenaEffect) {
+                for (Gamer g : others) {
+                    turno.getGameHandler().sendMessage(g, "\u001B[34m" + turno.getGamer().getName() + " è salito di livello con Athena.\n" +
+                            "In questo turno non puoi salire di livello." + "\u001B[0m" + "\n");
+                }
             }
         }
     }

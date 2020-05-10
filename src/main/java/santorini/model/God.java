@@ -12,7 +12,7 @@ public abstract class God implements Serializable {
     protected Mossa effectMove;
     protected ArrayList<Gamer> others;
 
-
+    //TODO rivedere i messaggi per le divinità
     public God(String n, String desc) {
         this.name = n;
         this.description = desc;

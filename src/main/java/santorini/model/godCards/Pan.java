@@ -36,6 +36,12 @@ public class Pan extends God {
      */
     public void afterOwnerMoving(Turno turno) {
         if (turno.isValidationMove()) {
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+        }
+
+        if (turno.isValidationMove()) {
             int i = turno.getMove().getIdPawn();
             int k = turno.getGamer().getPawn(i).getPastLevel() - turno.getGamer().getPawn(i).getPresentLevel();
             if ((k >= 2) && turno.getGamer().getPawn(i).getPresentLevel() == 0) {
@@ -43,6 +49,7 @@ public class Pan extends God {
                 turno.printTableStatusTurn(true);
                 turno.getGameHandler().getGame().setWinner(turno.getGamer());
             } else {
+                //print status of the table
                 turno.printTableStatusTurn(turno.isValidationMove());
             }
         }
@@ -63,7 +70,11 @@ public class Pan extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-
+        if (turno.isValidationBuild()) {
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //turno.printTableStatusTurn(turno.isValidationBuild());
+        }
     }
 
     /**

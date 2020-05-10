@@ -5,6 +5,7 @@ import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.God;
 import santorini.model.Mossa;
+
 //P
 public class Atlas extends God {
     private Mossa buildDome;
@@ -50,7 +51,16 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        turno.printTableStatusTurn(turno.isValidationMove());
+        if (turno.isValidationMove()) {
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
+            //Atlas effect
+            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Atlas, puoi costruire una cupola dove vuoi.\n" +
+                    "Se non vuoi costruire la cupola scegli l'opzione 'No'" + "\u001B[0m" + "\n");
+        }
     }
 
     /**
@@ -62,8 +72,6 @@ public class Atlas extends God {
         if (turno.isValidationMove() && controlEffect) {
             atlasEffect = false;
             turno.setCount(0);
-            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Atlas, puoi costruire una cupola dove vuoi.\n" +
-                    "Se non vuoi costruire la cupola scegli l'opzione 'No'" + "\u001B[0m" + "\n");
             do {
                 buildDome = turno.getMove();
                 if (turno.nullEffectForGodCards(buildDome)) {
@@ -83,6 +91,8 @@ public class Atlas extends God {
                             atlasEffect = true;
                             turno.setValidationBuild(true);
                             turno.setValidationMove(false);
+                            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
                             turno.printTableStatusTurn(turno.isValidationBuild());
                         }
                     }
@@ -102,7 +112,11 @@ public class Atlas extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-
+        if (turno.isValidationBuild() && atlasEffect && !controlEffect) {
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //turno.printTableStatusTurn(turno.isValidationBuild());
+        }
     }
 
     /**

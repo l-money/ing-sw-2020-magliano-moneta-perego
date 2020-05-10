@@ -103,6 +103,11 @@ public class Minotaur extends God {
             turno.getTable().setACell(x, y, nextCell.getLevel(), false, nextCell.isComplete(), otherPawn);
             turno.printTableStatusTurn(true);
             printerStatus = false;
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
         }
         if (!minoEffect && turno.isValidationMove()) {
             turno.printTableStatusTurn(true);
@@ -124,6 +129,11 @@ public class Minotaur extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
+        if (turno.isValidationBuild()) {
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //turno.printTableStatusTurn(turno.isValidationBuild());
+        }
     }
 
     /**

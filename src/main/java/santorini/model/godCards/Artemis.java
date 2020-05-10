@@ -1,7 +1,11 @@
 package santorini.model.godCards;
 
 import santorini.Turno;
-import santorini.model.*;
+import santorini.model.Cell;
+import santorini.model.Gamer;
+import santorini.model.God;
+import santorini.model.Mossa;
+
 //FINITA
 public class Artemis extends God {
     private Cell start;
@@ -9,6 +13,8 @@ public class Artemis extends God {
     private boolean printerStatus = true;
     private Mossa effectMove2;
     private int idM;
+    private boolean control = true;
+
 
     public Artemis() {
         super("Artemis", "Tuo spostamento: il tuo lavoratore può spostarsi una volta in più\n" +
@@ -65,6 +71,7 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void beforeOwnerMoving(Turno turno) {
+        control = true;
         printerStatus = true;
         idM = turno.getMove().getIdPawn();
         int startX = turno.getGamer().getPawn(idM).getRow();//save start position X
@@ -79,18 +86,27 @@ public class Artemis extends God {
      */
     public void afterOwnerMoving(Turno turno) {
         if (turno.isValidationMove()) {
-            setIdM(turno.getMove().getIdPawn());
-            turno.printTableStatusTurn(turno.isValidationMove());
+            if (printerStatus) {
+                //broadcast message of movement
+                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                        " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                //print status of the table
+                turno.printTableStatusTurn(turno.isValidationMove());
+                printerStatus = false;
+            }
             artemisEffect = false;
+            setIdM(turno.getMove().getIdPawn());
             turno.setCount(0);
             turno.getGamer().setSteps(1);
-            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Artemis, puoi muoverti una volta in più.\n" +
-                    "Se non vuoi muoverti scegli l'opzione 'No'" + "\u001B[0m\"\n");
+
             do {
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Artemis, puoi muoverti una volta in più.\n" +
+                        "Se non vuoi muoverti scegli l'opzione 'No'" + "\u001B[0m");
                 effectMove2 = turno.moveRequest();
                 if (turno.nullEffectForGodCards(effectMove2)) {
                     artemisEffect = true;
                     printerStatus = false;
+                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato" + "\u001B[0m");
                 } else {
                     if (idM != effectMove2.getIdPawn()) {
                         artemisEffect = false;
@@ -98,17 +114,30 @@ public class Artemis extends God {
                         Cell end = turno.getTable().getTableCell(effectMove2.getTargetX(), effectMove2.getTargetY());
                         if ((end.getX() == start.getX()) &&
                                 (end.getY() == start.getY())) {
+                            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi tornare indietro##" + "\u001B[0m");
                             artemisEffect = false;
                         } else {
                             turno.baseMovement(effectMove2);
                             turno.getValidationMove(turno.isValidationMove());
                             artemisEffect = turno.isValidationMove();
+                            printerStatus = artemisEffect;
+                            //if printStatus=true, the move is validate, send message and print table
+                            if (artemisEffect) {
+                                //broadcast message of movement
+                                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                                        " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                                //print status of the table
+                                turno.printTableStatusTurn(true);
+                                turno.getMove().setIdPawn(effectMove2.getIdPawn());
+                                turno.getMove().setTargetX(effectMove2.getTargetX());
+                                turno.getMove().setTargetY(effectMove2.getTargetY());
+                            }
                         }
                     }
                 }
-                if (!artemisEffect) {
-                    turno.sendFailed();
-                }
+                //if (!artemisEffect) {
+                //  //turno.sendFailed();
+                //}
                 //else the movement is correct and artemisEffect is true
                 //until the movement is correct, the gamer have to insert the correct movement
             } while (!artemisEffect && turno.getCount() < 5);
@@ -116,10 +145,7 @@ public class Artemis extends God {
             turno.getMove().setIdPawn(idM);
         }
 
-        if (artemisEffect && !printerStatus) {
-        } else {
-            turno.printTableStatusTurn(turno.isValidationMove());
-        }
+
     }
 
 
@@ -129,9 +155,9 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-        if (turno.isValidationMove()) {
-            turno.getMove().setIdPawn(getIdM());
-        }
+        //if (turno.isValidationMove()) {
+        // turno.getMove().setIdPawn(getIdM());
+        //}
     }
 
     /**
@@ -140,7 +166,11 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-        turno.getGamer().setSteps(1);
+        if (turno.isValidationBuild()) {
+            //broadcast message of building
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+        }
     }
 
     /**

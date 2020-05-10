@@ -61,15 +61,25 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
-
         if ((apolloEffect) && (turno.isValidationMove())) {
             otherPawn.setPastLevel(end.getLevel());
             turno.getTable().setACell(start.getX(), start.getY(), start.getLevel(), false, false, otherPawn);
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
         }
         if (!turno.isValidationMove() && apolloEffect) {
             turno.getTable().setACell(end.getX(), end.getY(), end.getLevel(), false, end.isComplete(), otherPawn);
         }
-        turno.printTableStatusTurn(turno.isValidationMove());
+        if ((!apolloEffect) && (turno.isValidationMove())) {
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
+        }
         }
 
     /**
@@ -87,7 +97,11 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-        turno.getGamer().setSteps(1);
+        if (turno.isValidationBuild()) {
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //turno.printTableStatusTurn(turno.isValidationBuild());
+        }
     }
 
     /**
