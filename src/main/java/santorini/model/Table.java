@@ -48,7 +48,7 @@ public class Table implements Serializable {
         int i;
         int j;
         ArrayList<Cell> searchCell;
-        searchCell = new ArrayList<Cell>();
+        searchCell = new ArrayList<>();
         x = pointCell.getX();
         y = pointCell.getY();
         for (i = x - 1; i < x + 2; i++) {
@@ -59,6 +59,25 @@ public class Table implements Serializable {
             }
         }
         return searchCell;
+    }
+
+    /**
+     * method tablePerimetralCells
+     *
+     * @param t my table
+     * @return perimetralCells
+     */
+    public ArrayList<Cell> tablePerimetralCells(Table t) {
+        ArrayList<Cell> perimetralCells = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            perimetralCells.add(t.getTableCell(0, i));
+            perimetralCells.add(t.getTableCell(4, i));
+        }
+        for (int i = 1; i < 4; i++) {
+            perimetralCells.add(t.getTableCell(i, 0));
+            perimetralCells.add(t.getTableCell(i, 4));
+        }
+        return perimetralCells;
     }
 
     /**

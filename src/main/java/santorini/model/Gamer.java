@@ -335,5 +335,23 @@ public class Gamer {
         getPawn(idPawn).setPresentLevel(present);
     }
 
+    /**
+     * method otherPawn
+     *
+     * @param p my pawn
+     * @return the other pawn
+     */
+    public Pawn otherPawn(Pawn p) {
+        int i = p.getIdPawn();
+        switch (i) {
+            case 0:
+                return pawn1;
+            case 1:
+                return pawn0;
+            default:
+                return null;
+        }
+    }
+
 }
 

@@ -1,9 +1,9 @@
 package santorini;
 
 import santorini.model.*;
-import santorini.model.godCards.Hephaestus;
+import santorini.model.godCards.Chronus;
 import santorini.model.godCards.Pdor;
-import santorini.model.godCards.Prometheus;
+import santorini.model.godCards.Zeus;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -34,6 +34,7 @@ public class View {
     public void setID(int ID) {
         this.ID = ID;
     }
+
 
     /**
      * method setHandlerClient
@@ -206,14 +207,14 @@ public class View {
 
                     if (number == 13) {
                         number = gods.size();
-                        gods.add(new Prometheus());
+                        gods.add(new Zeus());
                         break;
                     }
 
 
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Hephaestus());
+                        gods.add(new Chronus());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {

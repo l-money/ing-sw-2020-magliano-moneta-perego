@@ -26,11 +26,10 @@ public class Extraction implements Serializable {
         gods.add(new Pan());
         gods.add(new Hephaestus());
         gods.add(new Prometheus());
+        //avanzate
+        gods.add(new Zeus());
+        gods.add(new Chronus());
         /**
-         gods.add(new Zeus());
-         gods.add(new Demeter());
-         gods.add(new Hephaestus());
-         gods.add(new Zeus());
          gods.add(new Poseidon());
          gods.add(new Hera());
          gods.add(new Triton());

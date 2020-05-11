@@ -233,7 +233,6 @@ public class Turno implements Runnable {
             count = 0;
             do {
                 if (!getGamer().getMyGodCard().getName().equals("Prometheus")) {
-                    System.out.println("GVNN");
                     move = moveRequest();
                 }
                 myMovement();
@@ -243,7 +242,7 @@ public class Turno implements Runnable {
             count = 0;
             if (!getGamer().getLoser()) {
                 do {
-                    getGamer().setBuilds(1);
+                    //getGamer().setBuilds(1);
                     move = buildingRequest();
                     myBuilding();
                     printTableStatusTurn(validationBuild);
@@ -391,6 +390,7 @@ public class Turno implements Runnable {
                         getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi più costruire##" + "\u001B[0m");
                     } else {
                         getGamer().setLoser(false);
+                        getGameHandler().sendMessage(getGamer(), "Puoi muovere pedina " + getMove().getIdPawn());
                         validationBuild = false;
                     }
                 } else {
@@ -453,16 +453,9 @@ public class Turno implements Runnable {
         } else {
             //TODO
             // Se ho la pedina bloccata non mi fa selezionare l'altra di default, come risolvo?
-            if (((!p0.getICanPlay()) && (p1.getICanPlay()))) {
-                m.setMyMossa(m.getAction(), p1.getIdPawn(), p1.getRow(), p1.getColumn());
-            }
-            if (((p0.getICanPlay()) && (!p1.getICanPlay()))) {
-                m.setMyMossa(m.getAction(), p0.getIdPawn(), p0.getRow(), p0.getColumn());
-            }
-            getGameHandler().sendMessage(getGamer(), "Puoi muovere pedina " + m.getIdPawn());
             return false;
         }
-    }
+        }
 
     /**
      * method controlStandardParameter

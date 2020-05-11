@@ -5,6 +5,7 @@ import org.junit.Test;
 import santorini.View;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -157,82 +158,67 @@ public class TestTable implements Serializable {
     @Test
     public void testSetACell() {
         Pawn p = new Pawn();
-        assertEquals(2, table.getTableCell(2, 2).getX());
-        assertEquals(2, table.getTableCell(2, 2).getY());
-        assertEquals(0, table.getTableCell(2, 2).getLevel());
-        assertTrue(table.getTableCell(2, 2).isFree());
-        assertFalse(table.getTableCell(2, 2).isComplete());
-        assertNull(table.getTableCell(2, 2).getPawn());
-        table.setACell(2, 2, 1, false, false, p);
-        assertEquals(2, table.getTableCell(2, 2).getX());
-        assertEquals(2, table.getTableCell(2, 2).getY());
-        assertEquals(1, table.getTableCell(2, 2).getLevel());
-        assertFalse(table.getTableCell(2, 2).isFree());
-        assertFalse(table.getTableCell(2, 2).isComplete());
-        assertNotNull(table.getTableCell(2, 2).getPawn());
-        assertEquals(1, table.getTableCell(2, 2).getPawn().getPresentLevel());
-        assertEquals(2, table.getTableCell(2, 2).getPawn().getRow());
-        assertEquals(2, table.getTableCell(2, 2).getPawn().getColumn());
-        //test the hierarchy of level>complete>free>pawn
-        //case 1: level
-        table.setACell(2, 2, 4, true, true, p);
-        assertEquals(3, table.getTableCell(2, 2).getLevel());
-        assertFalse(table.getTableCell(2, 2).isFree());
-        assertTrue(table.getTableCell(2, 2).isComplete());
-        assertNull(table.getTableCell(2, 2).getPawn());
-        //case 2 complete
-        table.setACell(2, 2, 2, true, true, p);
-        assertEquals(2, table.getTableCell(2, 2).getLevel());
-        assertFalse(table.getTableCell(2, 2).isFree());
-        assertTrue(table.getTableCell(2, 2).isComplete());
-        assertNull(table.getTableCell(2, 2).getPawn());
-        //case 3: free
-        table.setACell(2, 2, 3, true, false, p);
-        assertEquals(3, table.getTableCell(2, 2).getLevel());
-        assertTrue(table.getTableCell(2, 2).isFree());
-        assertFalse(table.getTableCell(2, 2).isComplete());
-        assertNull(table.getTableCell(2, 2).getPawn());
-        //case 4 pawn
-        table.setACell(2, 2, 1, false, false, p);
-        assertEquals(1, table.getTableCell(2, 2).getLevel());
-        assertFalse(table.getTableCell(2, 2).isFree());
-        assertFalse(table.getTableCell(2, 2).isComplete());
-        assertEquals(p, table.getTableCell(2, 2).getPawn());
-        //case 5 pawn null
-        table.setACell(2, 2, 0, true, false, null);
-        assertEquals(0, table.getTableCell(2, 2).getLevel());
-        assertTrue(table.getTableCell(2, 2).isFree());
-        assertFalse(table.getTableCell(2, 2).isComplete());
-        assertNull(table.getTableCell(2, 2).getPawn());
+        table.setACell(0, 0, 1, true, false, null);
+        Cell c = table.getTableCell(0, 0);
+        assertEquals(0, c.getX());
+        assertEquals(0, c.getY());
+        assertEquals(1, c.getLevel());
+        assertTrue(c.isFree());
+        assertTrue(!c.isComplete());
+        assertNull(c.getPawn());
+        table.setACell(0, 1, 2, true, false, p);
+        c = table.getTableCell(0, 1);
+        assertEquals(0, c.getX());
+        assertEquals(1, c.getY());
+        assertEquals(2, c.getLevel());
+        assertTrue(!c.isFree());
+        assertTrue(!c.isComplete());
+        assertEquals(p, c.getPawn());
+        table.setACell(0, 1, 2, false, true, null);
+        c = table.getTableCell(0, 1);
+        assertEquals(0, c.getX());
+        assertEquals(1, c.getY());
+        assertEquals(2, c.getLevel());
+        assertTrue(c.isComplete());
+        assertNull(c.getPawn());
+        table.setACell(0, 1, 4, true, true, p);
+        c = table.getTableCell(0, 1);
+        assertEquals(0, c.getX());
+        assertEquals(1, c.getY());
+        assertEquals(3, c.getLevel());
+        assertTrue(c.isFree());
+        assertTrue(c.isComplete());
+        assertNull(c.getPawn());
+
     }
 
 
     @Test
     public void testICanMove() {
-        View v = new View(null, null);
         Pawn p0 = new Pawn();
-        Pawn q1 = new Pawn();
-        p0.setIdPawn(0);
-        p0.setIdGamer(0);
-        q1.setIdPawn(1);
-        q1.setIdGamer(1);
-        table.setACell(0, 0, 0, false, false, q1);
+        Pawn q0 = new Pawn();
+        table.setACell(0, 0, 0, false, false, p0);
+        Cell s = table.getTableCell(0, 0);
         table.setACell(0, 1, 3, false, true, null);
         table.setACell(1, 0, 2, true, false, null);
-        table.setACell(1, 1, 1, false, false, p0);
+        table.setACell(1, 1, 1, false, false, q0);
+        assertFalse(table.iCanMove(s));
+        table.setACell(1, 1, 1, true, false, null);
+        assertTrue(table.iCanMove(s));
         //v.printTable(table);
-        boolean b = table.iCanMove(table.getTableCell(p0.getRow(), p0.getColumn()));
-        assertTrue(b);
-        b = table.iCanMove(table.getTableCell(q1.getRow(), q1.getColumn()));
-        assertTrue(!b);
-        table.setACell(1, 1, 1, true, false, p0);
-        //v.printTable(table);
-        b = table.iCanMove(table.getTableCell(q1.getRow(), q1.getColumn()));
-        assertTrue(b);
+
     }
 
     @Test
     public void testICanBuild() {
+        Pawn p0 = new Pawn();
+        table.setACell(0, 0, 1, false, false, p0);
+        table.setACell(0, 1, 3, false, true, null);
+        table.setACell(1, 0, 3, false, true, null);
+        table.setACell(1, 1, 3, false, true, null);
+        assertFalse(table.iCanBuild(table.getTableCell(p0.getRow(), p0.getColumn())));
+        table.setACell(1, 1, 2, true, false, null);
+        assertTrue(table.iCanBuild(table.getTableCell(p0.getRow(), p0.getColumn())));
     }
 
     /**
@@ -276,5 +262,37 @@ public class TestTable implements Serializable {
         assertTrue(b);
     }
 
+    @Test
+    public void testBaseBuilding() {
+        Pawn p0 = new Pawn();
+        Pawn q0 = new Pawn();
+        table.setACell(0, 0, 1, false, false, p0);
+        table.setACell(0, 1, 3, false, true, null);
+        table.setACell(1, 0, 3, true, false, null);
+        table.setACell(1, 1, 2, false, false, q0);
+        Cell s = table.getTableCell(p0.getRow(), p0.getColumn());
+        assertFalse(table.controlBaseBuilding(s, table.getTableCell(3, 1)));
+        assertFalse(table.controlBaseBuilding(s, table.getTableCell(0, 1)));
+        assertFalse(table.controlBaseBuilding(s, table.getTableCell(1, 1)));
+        table.setACell(1, 1, 2, true, false, null);
+        assertTrue(table.controlBaseBuilding(s, table.getTableCell(1, 1)));
+    }
+
+    /**
+     * method that tests the perimetral cells of the table
+     */
+    @Test
+    public void testPerimetralCells() {
+        ArrayList<Cell> pCells;
+        pCells = table.tablePerimetralCells(table);
+        assertEquals(16, pCells.size());
+        assertTrue(pCells.contains(table.getTableCell(0, 0)));
+        assertTrue(pCells.contains(table.getTableCell(1, 0)));
+        assertTrue(pCells.contains(table.getTableCell(3, 0)));
+        assertTrue(pCells.contains(table.getTableCell(4, 3)));
+        assertTrue(!pCells.contains(table.getTableCell(1, 1)));
+        assertTrue(!pCells.contains(table.getTableCell(2, 3)));
+        assertTrue(!pCells.contains(table.getTableCell(3, 1)));
+    }
 
 }

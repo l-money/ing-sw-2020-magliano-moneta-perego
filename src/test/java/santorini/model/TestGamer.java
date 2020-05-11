@@ -169,4 +169,16 @@ public class TestGamer implements Serializable {
         assertEquals(1, gamer.getPawn(1).getPastLevel());
         assertEquals(2, gamer.getPawn(1).getPresentLevel());
     }
+
+    /**
+     * method that tests otherPawn
+     */
+    @Test
+    public void testOtherPawn() {
+        Pawn k;
+        k = gamer.otherPawn(gamer.getPawn(0));
+        assertEquals(k, gamer.getPawn(1));
+        k = gamer.otherPawn(gamer.getPawn(1));
+        assertEquals(k, gamer.getPawn(0));
+    }
 }
