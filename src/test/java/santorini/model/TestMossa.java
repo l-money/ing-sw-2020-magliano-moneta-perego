@@ -76,13 +76,4 @@ public class TestMossa {
         assertEquals(2, k.getTargetX());
         assertEquals(3, k.getTargetY());
     }
-
-    //TODO review this method
-/**
-     @Test public void testInputMossa() throws IOException {
-     Mossa m;
-     m = move.InputMossa();
-     System.out.println(m.getIdPawn());
-     }
-     */
 }

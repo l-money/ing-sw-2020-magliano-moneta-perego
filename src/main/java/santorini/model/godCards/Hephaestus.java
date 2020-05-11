@@ -9,7 +9,7 @@ import santorini.model.Mossa;
 public class Hephaestus extends God {
     private boolean HEffect;
     private Mossa buildingPlus;
-    private Cell sameBuildingCell;
+    boolean printerStatus = true;
 
     public Hephaestus() {
         super("Hephaestus", "Tua costruzione: il tuo lavoratore\n" +
@@ -42,6 +42,13 @@ public class Hephaestus extends God {
      * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
+        if (turno.isValidationMove()) {
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
+        }
 
     }
 
@@ -60,6 +67,62 @@ public class Hephaestus extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
+        if (turno.isValidationBuild()) {
+            if (printerStatus) {
+                //broadcast message of building
+                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                        "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                //print table
+                turno.printTableStatusTurn(printerStatus);
+                printerStatus = false;
+            }
+            HEffect = false;
+            turno.setCount(0);
+            int x = turno.getMove().getTargetX();
+            int y = turno.getMove().getTargetY();
+            Cell pastB = turno.getTable().getTableCell(x, y);
+            if (pastB.isComplete()) {
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Costruzione " +
+                        "completata" + "\u001B[0m");
+            } else {
+                //I could build on it again
+                do {
+                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Hephaestus, puoi costruire una volta in più\n" +
+                            "nella casella precedentemente scelta. " +
+                            "\nSe vuoi costruire, selezionala nuovamente." +
+                            "\nSe non vuoi costruire scegli l'opzione 'No'" + "\u001B[0m");
+                    buildingPlus = turno.buildingRequest();
+                    if (turno.nullEffectForGodCards(buildingPlus)) {
+                        HEffect = true;
+                        printerStatus = false;
+                        turno.getValidationBuild(true);
+                        turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato " + "\u001B[0m");
+                    } else {
+                        Cell end = turno.getTable().getTableCell(buildingPlus.getTargetX(), buildingPlus.getTargetY());
+                        if (pastB != end) {
+                            HEffect = false;
+                            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire " +
+                                    "in un'altra casella##" + "\u001B[0m");
+                            turno.getValidationBuild(false);
+                        } else {
+                            int l = end.getLevel() + 1;
+                            turno.getTable().getTableCell(buildingPlus.getTargetX(), buildingPlus.getTargetY()).setLevel(l);
+                            turno.getValidationBuild(true);
+                            HEffect = true;
+                            printerStatus = true;
+                        }
+                    }
+                } while (!HEffect && turno.getCount() < 5);
+            }
+            if (HEffect && printerStatus) {
+                turno.setMove(buildingPlus);
+                //broadcast message of building
+                turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Hephaestus" + "\u001B[0m");
+                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                        "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            }
+            printerStatus = true;
+        }
     }
 
     /**

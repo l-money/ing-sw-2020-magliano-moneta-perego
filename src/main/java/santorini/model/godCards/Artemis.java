@@ -98,7 +98,6 @@ public class Artemis extends God {
             setIdM(turno.getMove().getIdPawn());
             turno.setCount(0);
             turno.getGamer().setSteps(1);
-
             do {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Artemis, puoi muoverti una volta in più.\n" +
                         "Se non vuoi muoverti scegli l'opzione 'No'" + "\u001B[0m");
@@ -155,6 +154,7 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
+        //save the id pawn I use for the move
         //if (turno.isValidationMove()) {
         // turno.getMove().setIdPawn(getIdM());
         //}

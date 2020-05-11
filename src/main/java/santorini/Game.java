@@ -60,16 +60,6 @@ public class Game implements Runnable {
                         table.setACell(x2, y2, 0, false, false, g.getPawn(1));
                         g.setAPawn(0, x1, y1, 0, 0);
                         g.setAPawn(1, x2, y2, 0, 0);
-                        /**
-                         g.getPawn(0).setRow(x1);
-                         g.getPawn(0).setColumn(y1);
-                         g.getPawn(1).setRow(x2);
-                         g.getPawn(1).setColumn(x2); //TODO ERRORE!!!
-                         table.getTableCell(x1, y1).setFree(false);
-                         table.getTableCell(x1, y1).setPawn(g.getPawn(0));
-                         table.getTableCell(x2, y2).setFree(false);
-                         table.getTableCell(x2, y2).setPawn(g.getPawn(1));
-                         */
                         updateField();
                     }
                 } catch (IOException e) {

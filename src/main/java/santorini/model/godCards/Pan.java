@@ -46,7 +46,7 @@ public class Pan extends God {
             int k = turno.getGamer().getPawn(i).getPastLevel() - turno.getGamer().getPawn(i).getPresentLevel();
             if ((k >= 2) && turno.getGamer().getPawn(i).getPresentLevel() == 0) {
                 turno.getGamer().setWinner(true);
-                turno.printTableStatusTurn(true);
+                turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Pan" + "\u001B[0m");
                 turno.getGameHandler().getGame().setWinner(turno.getGamer());
             } else {
                 //print status of the table

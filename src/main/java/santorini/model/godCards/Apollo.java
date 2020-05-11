@@ -100,7 +100,6 @@ public class Apollo extends God {
         if (turno.isValidationBuild()) {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            //turno.printTableStatusTurn(turno.isValidationBuild());
         }
     }
 

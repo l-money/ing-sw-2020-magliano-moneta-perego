@@ -7,9 +7,10 @@ import santorini.model.God;
 import santorini.model.Mossa;
 
 public class Demeter extends God {
-    private Cell positionFirstBuilding;
+    private Cell firstBuilding;
     private boolean demeterEffect;
     private Mossa build2;
+    private boolean printerStatus = true;
 
     public Demeter() {
         super("Demeter", "Tua costruzione: il tuo lavoratore\npuò costruire una volta in più\nma non nella stessa cella");
@@ -38,6 +39,13 @@ public class Demeter extends God {
      * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
+        if (turno.isValidationMove()) {
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
+        }
 
     }
 
@@ -55,7 +63,51 @@ public class Demeter extends God {
      * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
-
+        if (turno.isValidationBuild()) {
+            if (printerStatus) {
+                //broadcast message of building
+                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                        "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                //print table
+                turno.printTableStatusTurn(printerStatus);
+                printerStatus = false;
+            }
+            firstBuilding = turno.getTable().getTableCell(turno.getMove().getTargetX(), turno.getMove().getTargetY());
+            demeterEffect = false;
+            turno.setCount(0);
+            turno.getGamer().setBuilds(1);
+            do {
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Demeter, puoi costruire una volta in più, ma\n" +
+                        "non nella stessa casella precedente. " +
+                        "\nSe non vuoi costruire scegli l'opzione 'No'" + "\u001B[0m");
+                build2 = turno.buildingRequest();
+                if (turno.nullEffectForGodCards(build2)) {
+                    demeterEffect = true;
+                    printerStatus = false;
+                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato " + "\u001B[0m");
+                } else {
+                    if ((firstBuilding.getX() == build2.getTargetX()) &&
+                            (firstBuilding.getY() == build2.getTargetY())) {
+                        demeterEffect = false;
+                        turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire" +
+                                " nella stessa casella precedente##" + "\u001B[0m");
+                        turno.getValidationBuild(false);
+                    } else {
+                        turno.baseBuilding(build2);
+                        turno.getValidationBuild(turno.isValidationBuild());
+                        demeterEffect = turno.isValidationBuild();
+                        printerStatus = demeterEffect;
+                    }
+                }
+            } while (!demeterEffect && turno.getCount() < 5);
+            if (demeterEffect && printerStatus) {
+                turno.setMove(build2);
+                //broadcast message of building
+                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                        "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            }
+        }
+        printerStatus = true;
     }
 
     /**

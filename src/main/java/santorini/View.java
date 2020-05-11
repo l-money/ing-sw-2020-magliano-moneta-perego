@@ -1,9 +1,9 @@
 package santorini;
 
 import santorini.model.*;
-import santorini.model.godCards.Artemis;
-import santorini.model.godCards.Atlas;
+import santorini.model.godCards.Hephaestus;
 import santorini.model.godCards.Pdor;
+import santorini.model.godCards.Prometheus;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -25,6 +25,12 @@ public class View {
     private int ID, currentPawn, counter = 0;
     private boolean inTurno = false;
 
+
+    /**
+     * method setID
+     *
+     * @param ID curretn ID pawn
+     */
     public void setID(int ID) {
         this.ID = ID;
     }
@@ -177,12 +183,12 @@ public class View {
             int number = -1;
             System.out.println("\nSCEGLI LA TUA DIVINITA'");
             for (God g : gods) {
-                System.out.println("\u001B[33m" + "**************************************************************" + "\u001B[0m");
+                System.out.println("\u001B[33m" + "**********************************************************************" + "\u001B[0m");
                 System.out.println(gods.indexOf(g) + ":\t" + "\u001B[34m" + g.getName() + "\u001B[0m");
                 System.out.println();
                 System.out.println("\u001B[34m" + "**" + "\u001B[0m" + g.getDescription() + "\u001B[34m" + "**" + "\u001B[0m");
             }
-            System.out.println("\u001B[33m" + "**************************************************************" + "\u001B[0m");
+            System.out.println("\u001B[33m" + "**********************************************************************" + "\u001B[0m");
             try {
                 do {
                     System.out.print("Scegli una carta: ");
@@ -197,17 +203,17 @@ public class View {
                         gods.add(new Pdor());
                         break;
                     }
-                    //aggiunto Apollo di default
+
                     if (number == 13) {
                         number = gods.size();
-                        gods.add(new Artemis());
+                        gods.add(new Prometheus());
                         break;
                     }
 
-                    //aggiunto Minotauro di default
+
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Atlas());
+                        gods.add(new Hephaestus());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {
@@ -277,7 +283,7 @@ public class View {
                     case '1':
                         return 1;
                     default:
-                        System.err.println("Pedina non valida");
+                        System.err.println("--Pedina non valida--");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -302,7 +308,7 @@ public class View {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (NumberFormatException ex) {
-                System.err.println("Formato non valido, verranno impostati 2 giocatori");
+                System.err.println("--Formato non valido, verranno impostati 2 giocatori--");
                 players = 2;
             }
             try {
@@ -331,7 +337,7 @@ public class View {
                 coordPawn0 = br.readLine();
                 valid = validaCoordinate(coordPawn0);
                 if (!valid) {
-                    System.out.println("Formato coordinate non valido");
+                    System.err.println("--Formato coordinate non valido--");
                 }
             } while (!valid);
             do {
@@ -339,7 +345,7 @@ public class View {
                 coordPawn1 = br.readLine();
                 valid = validaCoordinate(coordPawn1);
                 if (!valid) {
-                    System.err.println("Formato coordinate non valido");
+                    System.err.println("--Formato coordinate non valido--");
                 }
             } while (!valid);
             handlerClient.initializePawns(coordPawn0 + "," + coordPawn1);

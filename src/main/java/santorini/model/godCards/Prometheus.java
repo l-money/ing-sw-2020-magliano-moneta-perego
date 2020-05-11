@@ -3,8 +3,14 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Gamer;
 import santorini.model.God;
+import santorini.model.Mossa;
+
 //G
 public class Prometheus extends God {
+    private boolean promEffect = false;
+    private boolean printStatus = false;
+    private Mossa promBuild;
+    private int control = 0;
 
 
     public Prometheus() {
@@ -29,6 +35,48 @@ public class Prometheus extends God {
      * @param turno
      */
     public void beforeOwnerMoving(Turno turno) {
+        promEffect = false;
+        printStatus = false;
+        if (control == 0) {
+            do {
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Prometheus, se costruisci sia prima,\n" +
+                        "sia dopo il movimento, non puoi salire di livello." +
+                        "\nSe non vuoi attivare l'effetto, scegli l'opzione 'No'" + "\u001B[0m");
+                promBuild = turno.buildingRequest();
+                if (turno.nullEffectForGodCards(promBuild)) {
+                    promEffect = true;
+                    printStatus = false;
+                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato " + "\u001B[0m");
+                    control++;
+                    turno.getGamer().setLevelsUp(1);
+                } else {
+                    turno.baseBuilding(promBuild);
+                    promEffect = turno.isValidationBuild();
+                    printStatus = promEffect;
+                    turno.getValidationBuild(promEffect);
+                }
+                if (promEffect && printStatus) {
+                    turno.setMove(promBuild);
+                    turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" +
+                            "Effetto di Prometheus attivato" + "\u001B[0m");
+                    //broadcast message of building
+                    turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                            "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                    //print table status
+                    turno.printTableStatusTurn(promEffect);
+                    //set levelsUp = 0
+                    turno.getGamer().setLevelsUp(0);
+                    control++;
+                    turno.setCount(0);
+                }
+            } while (!promEffect && turno.getCount() < 5);
+            turno.methodLoser(promEffect, turno.getCount(), turno.getGamer());
+            if (turno.getGamer().getLoser()) {
+                turno.getGamer().setSteps(0);
+                turno.getGamer().setBuilds(0);
+            }
+        }
+        turno.setMove(turno.moveRequest());
     }
 
     /**
@@ -37,7 +85,14 @@ public class Prometheus extends God {
      * @param turno
      */
     public void afterOwnerMoving(Turno turno) {
-
+        if (turno.isValidationMove()) {
+            //broadcast message of movement
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
+                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(turno.isValidationMove());
+            control = 0;
+        }
     }
 
     /**
@@ -55,6 +110,10 @@ public class Prometheus extends God {
      * @param turno
      */
     public void afterOwnerBuilding(Turno turno) {
+        if (turno.isValidationBuild()) {
+            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                    "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+        }
     }
 
     /**

@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.*;
 
-
+//TODO
+// ALL TESTS OF THIS TESTCLASS
 public class TestTurno {
     private Turno turn;
     private Table table;
@@ -25,7 +26,6 @@ public class TestTurno {
     public void before() {
         table = new Table();
         gamer = new Gamer(null, "Hercules", 0, null, null);
-        //gamerHandler = new NetworkHandlerServer();
         Athena = new Athena();
         Prometheus = new Prometheus();
         Pdor = new Pdor();
@@ -33,7 +33,6 @@ public class TestTurno {
         godCards.add(Pdor);
         godCards.add(Athena);
         godCards.add(Prometheus);
-
         turn = new Turno(godCards, gamer, table, gamerHandler);
     }
 
@@ -57,7 +56,6 @@ public class TestTurno {
     /**
      * method that tests the first control of the move selected by the client
      */
-    //TODO simulate a client typing of the move
     @Test
     public void testFirstControlOfMovement() {
     }
