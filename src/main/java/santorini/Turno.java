@@ -591,7 +591,7 @@ public class Turno implements Runnable {
             getGameHandler().sendMessage(gamer, "\u001B[31m" + "##La pedina 0 è bloccata##" + "\u001B[31m");
             getGameHandler().sendLockedPawn(0, gamer, true);
             getGameHandler().sendLockedPawn(1, gamer, false);
-        } else if (b0 && b1) {
+        } else {
             gamer.getPawn(1).setICanPlay(true);
             gamer.getPawn(0).setICanPlay(true);
             gamer.setLoser(false);
