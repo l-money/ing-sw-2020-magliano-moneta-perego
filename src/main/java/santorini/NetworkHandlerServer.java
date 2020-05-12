@@ -295,4 +295,15 @@ public class NetworkHandlerServer implements Runnable {
 
     }
 
+    public void switchPawn(Gamer g) {
+        outputStream = g.getOutputStream();
+        try {
+            outputStream.reset();
+            outputStream.writeObject(Parameters.command.SWITCH_PAWN);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

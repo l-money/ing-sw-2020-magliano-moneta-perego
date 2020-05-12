@@ -68,6 +68,15 @@ public class View {
         this.color = color;
     }
 
+    public void switchCurrentPawn() {
+        switch (currentPawn) {
+            case 0:
+                currentPawn = 1;
+                break;
+            default:
+                currentPawn = 0;
+        }
+    }
 
     public Table getTable() {
         return table;
