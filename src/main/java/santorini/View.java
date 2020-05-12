@@ -24,6 +24,7 @@ public class View {
     private String color;
     private int ID, currentPawn, counter = 0;
     private boolean inTurno = false;
+    private boolean[] pawnEnabled = new boolean[2];
 
 
     /**
@@ -56,7 +57,13 @@ public class View {
         br = new BufferedReader(new InputStreamReader(System.in));
         handlerClient = new NetworkHandlerClient(address, name, this);
         listen = new Thread(handlerClient);
+        pawnEnabled[0] = true;
+        pawnEnabled[1] = true;
         listen.start();
+    }
+
+    public void disablePawn(int n) {
+        pawnEnabled[n] = false;
     }
 
     public void setColor(String color) {
@@ -72,9 +79,6 @@ public class View {
     public synchronized void setTable(Table table) {
         this.table = table;
         counter++;
-        if (counter > 2) {
-            inTurno = false;
-        }
 
     }
 
@@ -280,9 +284,17 @@ public class View {
                 movePawn = br.readLine();
                 switch (movePawn.charAt(0)) {
                     case '0':
-                        return 0;
+                        if (pawnEnabled[0]) {
+                            return 0;
+                        } else {
+                            System.err.println("--Pedina non bloccata--");
+                        }
                     case '1':
-                        return 1;
+                        if (pawnEnabled[1]) {
+                            return 1;
+                        } else {
+                            System.err.println("--Pedina non bloccata--");
+                        }
                     default:
                         System.err.println("--Pedina non valida--");
                 }
@@ -394,6 +406,14 @@ public class View {
      * @param msg message text
      */
     public void printMessage(String msg) {
+        if (msg.contains("Turno di :")) {
+            inTurno = false;
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println(msg);
     }
 

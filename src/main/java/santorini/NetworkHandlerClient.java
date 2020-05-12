@@ -95,7 +95,10 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case MESSAGE:
                             String msgs = inputStream.readObject().toString();
-                            view.printMessage(msgs);
+                            new Thread(() -> view.printMessage(msgs)).start();
+                        case LOCKED_PAWN:
+                            view.disablePawn(Integer.parseInt(inputStream.readObject().toString()));
+                            break;
                         default:
                             break;
                     }
@@ -175,8 +178,6 @@ public class NetworkHandlerClient implements Runnable {
         outputStream.close();
         server.close();
     }
-
-
 
 
 }

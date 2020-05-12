@@ -14,6 +14,7 @@ public class Parameters {
         LOSER,
         NETWORK_ERROR,
         MESSAGE,
+        LOCKED_PAWN,
     }
 
 
