@@ -280,14 +280,14 @@ public class NetworkHandlerServer implements Runnable {
         }
     }
 
-    public void sendLockedPawn(int i, Gamer g) {
+    public void sendLockedPawn(int i, Gamer g, boolean locked) {
         outputStream = g.getOutputStream();
         try {
             outputStream.reset();
             outputStream.writeObject(Parameters.command.LOCKED_PAWN);
             outputStream.flush();
             outputStream.reset();
-            outputStream.writeObject(i + "");
+            outputStream.writeObject(i + "," + locked);
             outputStream.flush();
         } catch (IOException e) {
             e.printStackTrace();

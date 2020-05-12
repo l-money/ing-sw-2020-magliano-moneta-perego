@@ -98,7 +98,8 @@ public class NetworkHandlerClient implements Runnable {
                             new Thread(() -> view.printMessage(msgs)).start();
                             break;
                         case LOCKED_PAWN:
-                            view.disablePawn(Integer.parseInt(inputStream.readObject().toString()));
+                            String params[] = inputStream.readObject().toString().split(",");
+                            view.disablePawn(Integer.parseInt(params[0]), !Boolean.parseBoolean(params[1]));
                             break;
                         default:
                             break;

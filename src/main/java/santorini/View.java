@@ -60,8 +60,8 @@ public class View {
         listen.start();
     }
 
-    public void disablePawn(int n) {
-        pawnEnabled[n] = false;
+    public void disablePawn(int n, boolean enabled) {
+        pawnEnabled[n] = enabled;
     }
 
     public void setColor(String color) {

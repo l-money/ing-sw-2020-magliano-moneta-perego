@@ -575,22 +575,28 @@ public class Turno implements Runnable {
             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi più muoverti##" + "\u001B[0m");
             getGameHandler().getGame().broadcastMessage(gamer.getName() + " ha perso!!!");
             gamer.setLoser(true);
+            getGameHandler().sendLockedPawn(1, gamer, true);
+            getGameHandler().sendLockedPawn(0, gamer, true);
         } else if (b0 && !b1) {
             gamer.getPawn(0).setICanPlay(true);
             gamer.getPawn(1).setICanPlay(false);
             gamer.setLoser(false);
             getGameHandler().sendMessage(gamer, "\u001B[31m" + "##La pedina 1 è bloccata##" + "\u001B[31m");
-            getGameHandler().sendLockedPawn(1, gamer);
+            getGameHandler().sendLockedPawn(1, gamer, true);
+            getGameHandler().sendLockedPawn(0, gamer, false);
         } else if (!b0 && b1) {
             gamer.getPawn(1).setICanPlay(true);
             gamer.getPawn(0).setICanPlay(false);
             gamer.setLoser(false);
             getGameHandler().sendMessage(gamer, "\u001B[31m" + "##La pedina 0 è bloccata##" + "\u001B[31m");
-            getGameHandler().sendLockedPawn(0, gamer);
+            getGameHandler().sendLockedPawn(0, gamer, true);
+            getGameHandler().sendLockedPawn(1, gamer, false);
         } else if (b0 && b1) {
             gamer.getPawn(1).setICanPlay(true);
             gamer.getPawn(0).setICanPlay(true);
             gamer.setLoser(false);
+            getGameHandler().sendLockedPawn(0, gamer, false);
+            getGameHandler().sendLockedPawn(1, gamer, false);
         }
     }
 
