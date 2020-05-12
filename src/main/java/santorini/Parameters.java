@@ -15,6 +15,7 @@ public class Parameters {
         NETWORK_ERROR,
         MESSAGE,
         LOCKED_PAWN,
+        SWITCH_PAWN,
     }
 
 

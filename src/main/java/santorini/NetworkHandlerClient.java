@@ -101,6 +101,9 @@ public class NetworkHandlerClient implements Runnable {
                             String params[] = inputStream.readObject().toString().split(",");
                             view.disablePawn(Integer.parseInt(params[0]), !Boolean.parseBoolean(params[1]));
                             break;
+                        case SWITCH_PAWN:
+                            view.switchCurrentPawn();
+                            break;
                         default:
                             break;
                     }
