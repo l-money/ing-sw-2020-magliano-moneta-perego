@@ -97,6 +97,8 @@ public class Chronus extends God {
                 turno.getGameHandler().getGame().setWinner(turno.getGamer());
             } else {
                 towers = 0;
+                //print status of the table
+                turno.printTableStatusTurn(true);
             }
         }
     }

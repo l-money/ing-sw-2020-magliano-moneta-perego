@@ -73,7 +73,8 @@ public class Pan extends God {
         if (turno.isValidationBuild()) {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            //turno.printTableStatusTurn(turno.isValidationBuild());
+            //print status of the table
+            turno.printTableStatusTurn(true);
         }
     }
 

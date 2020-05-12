@@ -230,14 +230,12 @@ public class Turno implements Runnable {
                 do {
                     move = buildingRequest();
                     myBuilding();
-                    printTableStatusTurn(validationBuild);
                 } while (!validationBuild && count < 5);
                 methodLoser(validationBuild, count, getGamer());
             }
         }
     }
-
-
+    
     /**
      * method myMovement
      */
@@ -252,11 +250,7 @@ public class Turno implements Runnable {
             baseMovement(getMove());
             getValidationMove(validationMove);
 
-            try {
                 gamer.getMyGodCard().afterOwnerMoving(this);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             for (God card : otherCards) {
                     card.afterOtherMoving(gamer);
                 }
@@ -599,7 +593,4 @@ public class Turno implements Runnable {
             getGameHandler().sendLockedPawn(1, gamer, false);
         }
     }
-
-
-
 }

@@ -104,6 +104,8 @@ public class Demeter extends God {
                 //broadcast message of building
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                //print status of the table
+                turno.printTableStatusTurn(true);
             }
         }
         printerStatus = true;

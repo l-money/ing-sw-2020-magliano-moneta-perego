@@ -94,6 +94,8 @@ public class Zeus extends God {
                 turno.getGameHandler().getGame().broadcastMessage("Per effetto di Zeus.");
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                //print status of the table
+                turno.printTableStatusTurn(true);
             }
         }
     }
@@ -105,12 +107,13 @@ public class Zeus extends God {
      */
     @Override
     public void afterOwnerBuilding(Turno turno) {
-        if (turno.isValidationBuild()) {
+        if (turno.isValidationBuild() && zeusEffect && !printStatus) {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(true);
         }
-
     }
 
     /**

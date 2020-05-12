@@ -218,14 +218,14 @@ public class View {
 
                     if (number == 13) {
                         number = gods.size();
-                        gods.add(new Chronus());
+                        gods.add(new Hestia());
                         break;
                     }
 
 
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Hephaestus());
+                        gods.add(new Ares());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {

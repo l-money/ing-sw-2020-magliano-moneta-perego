@@ -164,6 +164,7 @@ public class Artemis extends God {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            turno.printTableStatusTurn(true);
         }
     }
 

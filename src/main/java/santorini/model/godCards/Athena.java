@@ -88,7 +88,7 @@ public class Athena extends God {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
-            //turno.printTableStatusTurn(turno.isValidationBuild());
+            turno.printTableStatusTurn(true);
 
             if (athenaEffect) {
                 for (Gamer g : others) {

@@ -89,7 +89,7 @@ public class Prometheus extends God {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
-            turno.printTableStatusTurn(turno.isValidationMove());
+            turno.printTableStatusTurn(true);
             control = 0;
         }
     }
@@ -112,6 +112,8 @@ public class Prometheus extends God {
         if (turno.isValidationBuild()) {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
+            turno.printTableStatusTurn(true);
         }
     }
 

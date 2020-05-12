@@ -69,7 +69,7 @@ public abstract class God implements Serializable {
     /**
      * Features added by card after its owner does his moves
      */
-    public abstract void afterOwnerMoving(Turno turno) throws InterruptedException;
+    public abstract void afterOwnerMoving(Turno turno);
 
     /**
      * Features added by card before its owner starts building
