@@ -2,7 +2,6 @@ package santorini.model.godCards;
 
 import santorini.Turno;
 import santorini.model.Gamer;
-import santorini.model.God;
 import santorini.model.Mossa;
 import santorini.model.Pawn;
 
@@ -20,10 +19,10 @@ public class Poseidon extends God {
     /**
      * Initialize player variables with card
      *
-     * @param g player owner of card
+     * @param turno player owner of card
      */
     @Override
-    public void initializeOwner(Gamer g) {
+    public void initializeOwner(Turno turno) {
 
     }
 

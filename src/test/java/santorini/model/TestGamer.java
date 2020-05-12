@@ -5,6 +5,7 @@ import org.junit.Test;
 import santorini.model.godCards.Apollo;
 import santorini.model.godCards.Artemis;
 import santorini.model.godCards.Athena;
+import santorini.model.godCards.God;
 
 import java.awt.*;
 import java.io.ObjectInputStream;

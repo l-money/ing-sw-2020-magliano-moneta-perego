@@ -2,11 +2,9 @@ package santorini.model.godCards;
 
 import santorini.Turno;
 import santorini.model.Gamer;
-import santorini.model.God;
-import santorini.model.Table;
 
 public class Chronus extends God {
-    private int k = 0;
+    private int towers = 0;
 
     public Chronus() {
         super("Chronus", "Condizione di vittoria: vinci anche quando\n" +
@@ -17,11 +15,26 @@ public class Chronus extends God {
     /**
      * Initialize player variables with card
      *
-     * @param g player owner of card
+     * @param turno player owner of card
      */
     @Override
-    public void initializeOwner(Gamer g) {
-
+    public void initializeOwner(Turno turno) {
+        towers = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if ((turno.getTable().getTableCell(i, j).isComplete()) &&
+                        (turno.getTable().getTableCell(i, j).getLevel() == 3)) {
+                    towers++;
+                }
+            }
+        }
+        if (towers >= 5) {
+            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto di Chronus " + "\u001B[0m");
+            turno.getGamer().setWinner(true);
+            turno.getGameHandler().getGame().setWinner(turno.getGamer());
+        } else {
+            towers = 0;
+        }
     }
 
     /**
@@ -31,8 +44,6 @@ public class Chronus extends God {
      */
     @Override
     public void beforeOwnerMoving(Turno turno) {
-        k = 0;
-
     }
 
     /**
@@ -48,23 +59,7 @@ public class Chronus extends God {
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
             turno.printTableStatusTurn(turno.isValidationMove());
-            Table t = turno.getTable();
-            int k = 0;
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; i < 5; j++) {
-                    if ((t.getTableCell(i, j).isComplete()) && (t.getTableCell(i, j).getLevel() == 3)) {
-                        k++;
-                    }
-                }
-            }
-            if (k >= 5) {
-                turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Chronos" + "\u001B[0m");
-                turno.getGameHandler().getGame().setWinner(turno.getGamer());
-            } else {
-                k = 0;
-            }
         }
-
     }
 
     /**
@@ -74,7 +69,6 @@ public class Chronus extends God {
      */
     @Override
     public void beforeOwnerBuilding(Turno turno) {
-
     }
 
     /**
@@ -84,10 +78,26 @@ public class Chronus extends God {
      */
     @Override
     public void afterOwnerBuilding(Turno turno) {
-        if ((k == 0) && turno.isValidationBuild()) {
+        if (turno.isValidationBuild()) {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            towers = 0;
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if ((turno.getTable().getTableCell(i, j).isComplete()) &&
+                            (turno.getTable().getTableCell(i, j).getLevel() == 3)) {
+                        towers++;
+                    }
+                }
+            }
+            if (towers >= 5) {
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto di Chronus " + "\u001B[0m");
+                turno.getGamer().setWinner(true);
+                turno.getGameHandler().getGame().setWinner(turno.getGamer());
+            } else {
+                towers = 0;
+            }
         }
     }
 

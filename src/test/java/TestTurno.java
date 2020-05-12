@@ -4,6 +4,7 @@ import santorini.NetworkHandlerServer;
 import santorini.Turno;
 import santorini.model.*;
 import santorini.model.godCards.Athena;
+import santorini.model.godCards.God;
 import santorini.model.godCards.Pdor;
 import santorini.model.godCards.Prometheus;
 

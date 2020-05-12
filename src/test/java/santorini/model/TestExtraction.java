@@ -2,6 +2,7 @@ package santorini.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import santorini.model.godCards.God;
 
 import java.util.List;
 

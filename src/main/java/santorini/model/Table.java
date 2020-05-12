@@ -127,7 +127,6 @@ public class Table implements Serializable {
     public boolean iCanMove(Cell myCell) {
         int k = 0;
         int free = 0;
-        int lockdown = 0;
         ArrayList<Cell> nearCells;
         //create an ArrayList of near cells
         nearCells = searchAdjacentCells(myCell);

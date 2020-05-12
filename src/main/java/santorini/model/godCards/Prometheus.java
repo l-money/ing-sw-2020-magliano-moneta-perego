@@ -2,7 +2,6 @@ package santorini.model.godCards;
 
 import santorini.Turno;
 import santorini.model.Gamer;
-import santorini.model.God;
 import santorini.model.Mossa;
 
 //G
@@ -23,18 +22,9 @@ public class Prometheus extends God {
     /**
      * Initialize player variables with card
      *
-     * @param g player owner of card
+     * @param turno player owner of card
      */
-    public void initializeOwner(Gamer g) {
-
-    }
-
-    /**
-     * Features added by card before its owner does his moves
-     *
-     * @param turno
-     */
-    public void beforeOwnerMoving(Turno turno) {
+    public void initializeOwner(Turno turno) {
         promEffect = false;
         printStatus = false;
         if (control == 0) {
@@ -66,6 +56,7 @@ public class Prometheus extends God {
                     turno.printTableStatusTurn(promEffect);
                     //set levelsUp = 0
                     turno.getGamer().setLevelsUp(0);
+                    turno.getGamer().setBuilds(1);
                     control++;
                     turno.setCount(0);
                 }
@@ -76,7 +67,15 @@ public class Prometheus extends God {
                 turno.getGamer().setBuilds(0);
             }
         }
-        turno.setMove(turno.moveRequest());
+    }
+
+    /**
+     * Features added by card before its owner does his moves
+     *
+     * @param turno
+     */
+    public void beforeOwnerMoving(Turno turno) {
+
     }
 
     /**

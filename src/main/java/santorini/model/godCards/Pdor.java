@@ -2,7 +2,7 @@ package santorini.model.godCards;
 
 import santorini.Turno;
 import santorini.model.Gamer;
-import santorini.model.God;
+
 //P
 public class Pdor extends God {
 
@@ -24,7 +24,7 @@ public class Pdor extends God {
     }
 
     @Override
-    public void initializeOwner(Gamer g) {
+    public void initializeOwner(Turno turno) {
 
 
     }

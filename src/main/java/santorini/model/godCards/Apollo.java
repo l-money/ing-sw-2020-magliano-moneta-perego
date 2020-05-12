@@ -22,9 +22,9 @@ public class Apollo extends God {
     /**
      * Initialize player variables with card
      *
-     * @param g player owner of card
+     * @param turno player owner of card
      */
-    public void initializeOwner(Gamer g) {
+    public void initializeOwner(Turno turno) {
 
     }
 

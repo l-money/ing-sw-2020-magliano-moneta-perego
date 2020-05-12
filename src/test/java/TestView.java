@@ -2,7 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 import santorini.View;
 import santorini.model.Gamer;
-import santorini.model.God;
+import santorini.model.godCards.God;
 import santorini.model.Mossa;
 import santorini.model.godCards.Pdor;
 

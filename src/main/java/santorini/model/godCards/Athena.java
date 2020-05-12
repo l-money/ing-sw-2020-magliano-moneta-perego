@@ -2,7 +2,7 @@ package santorini.model.godCards;
 
 import santorini.Turno;
 import santorini.model.Gamer;
-import santorini.model.God;
+
 //FINITA
 public class Athena extends God {
     private boolean athenaEffect;
@@ -17,9 +17,9 @@ public class Athena extends God {
     /**
      * Initialize player variables with card
      *
-     * @param g player owner of card
+     * @param turno player owner of card
      */
-    public void initializeOwner(Gamer g) {
+    public void initializeOwner(Turno turno) {
 
     }
 

@@ -3,7 +3,6 @@ package santorini.model.godCards;
 import santorini.Turno;
 import santorini.model.Cell;
 import santorini.model.Gamer;
-import santorini.model.God;
 import santorini.model.Mossa;
 
 public class Hephaestus extends God {
@@ -21,9 +20,9 @@ public class Hephaestus extends God {
     /**
      * Initialize player variables with card
      *
-     * @param g player owner of card
+     * @param turno player owner of card
      */
-    public void initializeOwner(Gamer g) {
+    public void initializeOwner(Turno turno) {
 
     }
 

@@ -1,7 +1,7 @@
 package santorini;
 
 import santorini.model.Gamer;
-import santorini.model.God;
+import santorini.model.godCards.God;
 import santorini.model.Mossa;
 import santorini.model.Mossa.Action;
 

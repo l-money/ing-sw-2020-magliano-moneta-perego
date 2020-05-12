@@ -2,7 +2,7 @@ package santorini;
 
 import santorini.model.Extraction;
 import santorini.model.Gamer;
-import santorini.model.God;
+import santorini.model.godCards.God;
 import santorini.model.Table;
 
 import java.io.IOException;

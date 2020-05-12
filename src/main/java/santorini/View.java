@@ -1,9 +1,7 @@
 package santorini;
 
 import santorini.model.*;
-import santorini.model.godCards.Chronus;
-import santorini.model.godCards.Pdor;
-import santorini.model.godCards.Zeus;
+import santorini.model.godCards.*;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -211,14 +209,14 @@ public class View {
 
                     if (number == 13) {
                         number = gods.size();
-                        gods.add(new Zeus());
+                        gods.add(new Chronus());
                         break;
                     }
 
 
                     if (number == 12) {
                         number = gods.size();
-                        gods.add(new Chronus());
+                        gods.add(new Hephaestus());
                         break;
                     }
                     if (number < 0 || number >= gods.size()) {
@@ -287,16 +285,19 @@ public class View {
                         if (pawnEnabled[0]) {
                             return 0;
                         } else {
-                            System.err.println("--Pedina non bloccata--");
+                            System.err.println("--Pedina  bloccata--");
                         }
+                        break;
                     case '1':
                         if (pawnEnabled[1]) {
                             return 1;
                         } else {
-                            System.err.println("--Pedina non bloccata--");
+                            System.err.println("--Pedina bloccata--");
                         }
+                        break;
                     default:
-                        System.err.println("--Pedina non valida--");
+                        System.err.println("--Pedina valida--");
+                        break;
                 }
             } catch (IOException e) {
                 e.printStackTrace();

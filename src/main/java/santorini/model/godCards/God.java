@@ -1,6 +1,9 @@
-package santorini.model;
+package santorini.model.godCards;
 
 import santorini.Turno;
+import santorini.model.Gamer;
+import santorini.model.Mossa;
+import santorini.model.Table;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,9 +57,9 @@ public abstract class God implements Serializable {
     /**
      * Initialize player variables with card
      *
-     * @param g player owner of card
+     * @param turno player owner of card
      */
-    public abstract void initializeOwner(Gamer g);
+    public abstract void initializeOwner(Turno turno);
 
     /**
      * Features added by card before its owner does his moves
@@ -66,7 +69,7 @@ public abstract class God implements Serializable {
     /**
      * Features added by card after its owner does his moves
      */
-    public abstract void afterOwnerMoving(Turno turno);
+    public abstract void afterOwnerMoving(Turno turno) throws InterruptedException;
 
     /**
      * Features added by card before its owner starts building
@@ -80,12 +83,14 @@ public abstract class God implements Serializable {
 
     /**
      * Features added by card before other player does his moves
+     *
      * @param other player to customize
      */
     public abstract void beforeOtherMoving(Gamer other);
 
     /**
      * Features added by card after other player does his moves
+     *
      * @param other player to customize
      */
     public abstract void afterOtherMoving(Gamer other);
