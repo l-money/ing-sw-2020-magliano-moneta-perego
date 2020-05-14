@@ -96,11 +96,11 @@ public class Hestia extends God {
                     ArrayList<Cell> perimetralCells = turno.getTable().tablePerimetralCells(turno.getTable());
                     if (perimetralCells.contains(end)) {
                         hestiaEffect = false;
-                        turno.getValidationBuild(false);
+                        turno.getValidation(false);
                         turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire su una casella perimetrale##" + "\u001B[0m");
                     } else {
                         turno.baseBuilding(hestiaBuild);
-                        turno.getValidationBuild(turno.isValidationBuild());
+                        turno.getValidation(turno.isValidationBuild());
                         hestiaEffect = turno.isValidationBuild();
                         printStatus = hestiaEffect;
                     }

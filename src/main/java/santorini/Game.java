@@ -5,11 +5,12 @@ import santorini.model.Gamer;
 import santorini.model.godCards.God;
 import santorini.model.Table;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game implements Runnable {
-    private final ArrayList<Gamer> giocatori;
+    private final ArrayList<Gamer> playersInGame;
     /*god cards sono quelle attive nella partita
      * passa una copia di questa lista al turno
      * rifai la classe extraction con la shuffle della collection*/
@@ -18,12 +19,21 @@ public class Game implements Runnable {
     private final NetworkHandlerServer handler;
 
     /**
+     * method getPlayersInGame
+     *
+     * @return the players in game
+     */
+    public ArrayList<Gamer> getPlayersInGame() {
+        return playersInGame;
+    }
+
+    /**
      * Game initialization
      *
      * @param gamers player list.  Number handled by connection manager
      */
     public Game(ArrayList<Gamer> gamers, NetworkHandlerServer networkHandlerServer) {
-        giocatori = gamers;
+        playersInGame = gamers;
         this.handler = networkHandlerServer;
     }
 
@@ -40,8 +50,14 @@ public class Game implements Runnable {
      * Requests to all clients to place their pawns
      */
     public void placePawns() {
-        handler.updateField(giocatori.get(0));
-        for (Gamer g : giocatori) {
+        handler.updateField(playersInGame.get(0));
+        for (Gamer g : playersInGame) {
+            broadcastMessage(g.getName() + " sta posizionando le sue pedine");
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             boolean done = false;
             do {
                 try {
@@ -78,20 +94,32 @@ public class Game implements Runnable {
      */
     public void cardChoice() {
         Extraction ex = new Extraction();
-        godCards = ex.extractionGods(giocatori.size());
+        godCards = ex.extractionGods(playersInGame.size());
         ArrayList<God> cards = new ArrayList<>();
         cards.addAll(godCards);
-        for (Gamer g : giocatori) {
+        for (Gamer g : playersInGame) {
+            broadcastMessage(g.getName() + " sta scegliendo la carta");
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             try {
                 God god = this.handler.chooseCard(cards, g);
                 g.setMyGodCard(god);
                 god.setOwner(g);
-                god.setOthers(giocatori);
+                god.setOthers(playersInGame);
                 cards.remove(god);
             } catch (IOException e) {
                 networkError(g);
             } catch (ClassNotFoundException e) {
                 System.out.println("problema con cast della carta");
+                e.printStackTrace();
+            }
+            broadcastMessage(g.getName() + " ha scelto: " + "\u001B[34m" + g.getMyGodCard().getName() + "\u001B[0m");
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -106,8 +134,21 @@ public class Game implements Runnable {
      * Cicle continue until someone wins
      */
     public void partita() {
+        broadcastMessage("\nINIZIO PARTITA");
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        int i = 1;
+        for (Gamer g : playersInGame) {
+            broadcastMessage("Giocatore " + i + " : " + g.getName() + "\t\t\t" +
+                    "Carta : " + g.getMyGodCard().getName() + "\t\t\tColore : " + printColor(g.getColorGamer()));
+            i++;
+        }
+        broadcastMessage("\n");
         while (true) {
-            for (Gamer g : giocatori) {
+            for (Gamer g : playersInGame) {
                 ArrayList<God> gods = new ArrayList<God>(godCards);
                 Thread t = new Thread(new Turno(gods, g, table, handler));
                 t.start();
@@ -127,7 +168,7 @@ public class Game implements Runnable {
      * Sends to all clients the game field status
      */
     public void updateField() {
-        for (Gamer g : giocatori) {
+        for (Gamer g : playersInGame) {
             handler.updateField(g);
         }
     }
@@ -138,7 +179,7 @@ public class Game implements Runnable {
      * @param winner winner player
      */
     public void setWinner(Gamer winner) {
-        for (Gamer g : giocatori) {
+        for (Gamer g : playersInGame) {
             try {
                 handler.updateField(g);
                 handler.winner(g, winner);
@@ -154,8 +195,8 @@ public class Game implements Runnable {
      * @param disconnected disconnected player
      */
     public void networkError(Gamer disconnected) {
-        giocatori.remove(disconnected);
-        for (Gamer g : giocatori) {
+        playersInGame.remove(disconnected);
+        for (Gamer g : playersInGame) {
             try {
                 handler.notifyNetworkError(g, disconnected);
             } catch (IOException e) {
@@ -171,8 +212,24 @@ public class Game implements Runnable {
      * @param message message to send
      */
     public void broadcastMessage(String message) {
-        for (Gamer g : giocatori) {
+        for (Gamer g : playersInGame) {
             handler.sendMessage(g, message);
+        }
+    }
+
+    private String printColor(Color color) {
+        if (color == Color.YELLOW) {
+            return "Giallo";
+        } else {
+            if (color == Color.RED) {
+                return "Rosso";
+            } else {
+                if (color == Color.BLUE) {
+                    return "Blu";
+                } else {
+                    return "No color";
+                }
+            }
         }
     }
 

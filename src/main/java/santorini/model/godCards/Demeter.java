@@ -90,10 +90,10 @@ public class Demeter extends God {
                         demeterEffect = false;
                         turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire" +
                                 " nella stessa casella precedente##" + "\u001B[0m");
-                        turno.getValidationBuild(false);
+                        turno.getValidation(false);
                     } else {
                         turno.baseBuilding(build2);
-                        turno.getValidationBuild(turno.isValidationBuild());
+                        turno.getValidation(turno.isValidationBuild());
                         demeterEffect = turno.isValidationBuild();
                         printerStatus = demeterEffect;
                     }
@@ -102,6 +102,7 @@ public class Demeter extends God {
             if (demeterEffect && printerStatus) {
                 turno.setMove(build2);
                 //broadcast message of building
+                turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Demeter. " + "\u001B[0m");
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
                 //print status of the table

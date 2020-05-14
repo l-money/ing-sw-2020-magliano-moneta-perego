@@ -93,9 +93,6 @@ public class View {
      * Prints field status on CLI
      */
     public synchronized void printTable() {
-        //this.table = table;
-        //printGamerInGame(gamers);
-
         System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n" + "\u001B[0m");
         System.out.print("[riga]\t------------------------------------------\n");
         for (int i = 0; i <= 4; i++) {
@@ -146,24 +143,6 @@ public class View {
             }
         }
     }
-
-
-    public void printColor(Color color) {
-        if (color == Color.YELLOW) {
-            System.out.println("Giallo");
-        } else {
-            if (color == Color.RED) {
-                System.out.println("Rosso");
-            } else {
-                if (color == Color.BLUE) {
-                    System.out.println("Blu");
-                } else {
-                    System.out.println("No color");
-                }
-            }
-        }
-    }
-
 
     /**
      * method noGodEffect
@@ -216,23 +195,10 @@ public class View {
                         break;
                     }
 
-                    if (number == 13) {
-                        number = gods.size();
-                        gods.add(new Hestia());
-                        break;
-                    }
-
-
-                    if (number == 12) {
-                        number = gods.size();
-                        gods.add(new Ares());
-                        break;
-                    }
                     if (number < 0 || number >= gods.size()) {
                         System.err.println("Errore carta scelta!");
                     }
                 } while (number < 0 || number >= gods.size());
-                System.out.println("Hai scelto " + "\u001B[34m" + gods.get(number).getName() + "\u001B[0m");
                 chooseCard = gods.get(number);
                 handlerClient.setCard(chooseCard);
             } catch (IOException e) {
@@ -347,12 +313,12 @@ public class View {
      */
     public synchronized void setInitializePawn() {
         try {
-            Thread.sleep(200);
+            Thread.sleep(300);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         String coordPawn0, coordPawn1;
-        System.out.println("Inserisci posizioni delle pedine: ");
+        System.out.println("\nInserisci posizioni delle pedine: ");
         boolean valid;
         try {
             do {

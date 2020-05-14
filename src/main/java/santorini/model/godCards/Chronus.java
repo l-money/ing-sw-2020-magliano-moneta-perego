@@ -2,9 +2,9 @@ package santorini.model.godCards;
 
 import santorini.Turno;
 import santorini.model.Gamer;
+import santorini.model.Table;
 
 public class Chronus extends God {
-    private int towers = 0;
 
     public Chronus() {
         super("Chronus", "Condizione di vittoria: vinci anche quando\n" +
@@ -19,28 +19,17 @@ public class Chronus extends God {
      */
     @Override
     public void initializeOwner(Turno turno) {
-        towers = 0;
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if ((turno.getTable().getTableCell(i, j).isComplete()) &&
-                        (turno.getTable().getTableCell(i, j).getLevel() == 3)) {
-                    towers++;
-                }
-            }
-        }
-        if (towers >= 5) {
+        if (ChronosWins(turno.getTable())) {
             turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto di Chronus " + "\u001B[0m");
             turno.getGamer().setWinner(true);
             turno.getGameHandler().getGame().setWinner(turno.getGamer());
-        } else {
-            towers = 0;
         }
     }
 
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno the current turn
      */
     @Override
     public void beforeOwnerMoving(Turno turno) {
@@ -49,7 +38,7 @@ public class Chronus extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno the current turn
      */
     @Override
     public void afterOwnerMoving(Turno turno) {
@@ -58,14 +47,14 @@ public class Chronus extends God {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
-            turno.printTableStatusTurn(turno.isValidationMove());
+            turno.printTableStatusTurn(true);
         }
     }
 
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno the current turn
      */
     @Override
     public void beforeOwnerBuilding(Turno turno) {
@@ -74,7 +63,7 @@ public class Chronus extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno the current turn
      */
     @Override
     public void afterOwnerBuilding(Turno turno) {
@@ -82,21 +71,11 @@ public class Chronus extends God {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            towers = 0;
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 5; j++) {
-                    if ((turno.getTable().getTableCell(i, j).isComplete()) &&
-                            (turno.getTable().getTableCell(i, j).getLevel() == 3)) {
-                        towers++;
-                    }
-                }
-            }
-            if (towers >= 5) {
+            if (ChronosWins(turno.getTable())) {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto di Chronus " + "\u001B[0m");
                 turno.getGamer().setWinner(true);
                 turno.getGameHandler().getGame().setWinner(turno.getGamer());
             } else {
-                towers = 0;
                 //print status of the table
                 turno.printTableStatusTurn(true);
             }
@@ -142,4 +121,24 @@ public class Chronus extends God {
     public void afterOtherBuilding(Gamer other) {
 
     }
+
+    /**
+     * method ChronosWins
+     *
+     * @param t the current table
+     * @return true if there are at least five towers (complete building) on the table, otherwise false
+     */
+    private boolean ChronosWins(Table t) {
+        int towers = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if ((t.getTableCell(i, j).isComplete()) &&
+                        (t.getTableCell(i, j).getLevel() == 3)) {
+                    towers++;
+                }
+            }
+        }
+        return towers >= 5;
+    }
+
 }

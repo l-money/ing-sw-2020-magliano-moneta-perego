@@ -46,6 +46,7 @@ public class Turno implements Runnable {
 
     /**
      * method getGamer
+     *
      * @return the gamer
      */
     public Gamer getGamer() {
@@ -54,6 +55,7 @@ public class Turno implements Runnable {
 
     /**
      * getMove
+     *
      * @return the move
      */
     public Mossa getMove() {
@@ -72,6 +74,7 @@ public class Turno implements Runnable {
 
     /**
      * method getGameHandler
+     *
      * @return the gameHandler
      */
     public NetworkHandlerServer getGameHandler() {
@@ -107,6 +110,7 @@ public class Turno implements Runnable {
 
     /**
      * method setMove
+     *
      * @param move my new mossa
      */
     public void setMove(Mossa move) {
@@ -135,7 +139,7 @@ public class Turno implements Runnable {
     /**
      * method setValidationMove
      *
-     * @param validationMove
+     * @param validationMove boolean for validate the movement
      */
     public void setValidationMove(boolean validationMove) {
         this.validationMove = validationMove;
@@ -144,7 +148,7 @@ public class Turno implements Runnable {
     /**
      * method setValidationBuild
      *
-     * @param validationBuild
+     * @param validationBuild boolean for validate the movement
      */
     public void setValidationBuild(boolean validationBuild) {
         this.validationBuild = validationBuild;
@@ -153,6 +157,7 @@ public class Turno implements Runnable {
 
     /**
      * method giveMeMossa
+     *
      * @param action the action of the gamer (MOVE or BUILD)
      * @return the move
      */
@@ -172,8 +177,8 @@ public class Turno implements Runnable {
      * @return a move of typo MOVE
      */
     public Mossa moveRequest() {
-            System.out.println("Chiedo movimento");
-            move = giveMeMossa(Mossa.Action.MOVE);
+        System.out.println("Chiedo movimento");
+        move = giveMeMossa(Mossa.Action.MOVE);
         return move;
     }
 
@@ -202,17 +207,16 @@ public class Turno implements Runnable {
      */
     public void run() {
         try {
-            Thread.sleep(300);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         firstLockdown(getGamer());
-        //Qui chiamo notifica bloccato
         if (!getGamer().getLoser()) {
             getGameHandler().getGame().broadcastMessage("Turno di :" + getGamer().getName() + "\n");
-            getGameHandler().sendMessage(getGamer(), "E' il tuo turno");
-            getGameHandler().sendMessage(getGamer(), "Carta: " + "\u001B[34m" + getGamer().getMyGodCard().getName() + "\u001B[0m");
-            getGameHandler().sendMessage(getGamer(), "Colore: " + printMyColor(getGamer()));
+            getGameHandler().sendMessage(getGamer(), "E' il tuo turno\n" +
+                    "Carta: " + "\u001B[34m" + getGamer().getMyGodCard().getName() + "\u001B[0m" +
+                    "\nColore: " + printMyColor(getGamer()));
             validationMove = false;
             validationBuild = false;
             getGamer().setSteps(1);
@@ -220,10 +224,15 @@ public class Turno implements Runnable {
             count = 0;
             do {
                 gamer.getMyGodCard().initializeOwner(this);
-                    move = moveRequest();
+                move = moveRequest();
                 myMovement();
             } while (!validationMove && count < 5);
             methodLoser(validationMove, count, getGamer());
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             controlWin();
             count = 0;
             if (!getGamer().getLoser()) {
@@ -235,11 +244,11 @@ public class Turno implements Runnable {
             }
         }
     }
-    
+
     /**
      * method myMovement
      */
-    public void myMovement() {
+    private void myMovement() {
         validationMove = false;
         gamer.getMyGodCard().beforeOwnerMoving(this);
         for (God card : otherCards) {
@@ -248,41 +257,40 @@ public class Turno implements Runnable {
 
         if ((controlStandardParameter(getMove()) && getMove().getAction().equals(Mossa.Action.MOVE))) {
             baseMovement(getMove());
-            getValidationMove(validationMove);
+            getValidation(validationMove);
 
-                gamer.getMyGodCard().afterOwnerMoving(this);
+            gamer.getMyGodCard().afterOwnerMoving(this);
             for (God card : otherCards) {
-                    card.afterOtherMoving(gamer);
-                }
+                card.afterOtherMoving(gamer);
+            }
         } else {
             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Coordinate non valide##" + "\u001B[0m");
-            getValidationMove(validationMove);
-            }
+            getValidation(validationMove);
+        }
     }
 
 
     /**
      * method myBuilding
      */
-    public void myBuilding() {
+    private void myBuilding() {
         validationBuild = false;
         gamer.getMyGodCard().beforeOwnerBuilding(this);
-                for (God card : otherCards) {
-                    card.beforeOtherBuilding(gamer);
-                }
-
+        for (God card : otherCards) {
+            card.beforeOtherBuilding(gamer);
+        }
         if ((controlStandardParameter(getMove())) && (validationMove) &&
                 (getMove().getAction().equals(Mossa.Action.BUILD))) {
             baseBuilding(getMove());
-            getValidationBuild(validationBuild);
+            getValidation(validationBuild);
         } else {
-            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Coordinate non calide##" + "\u001B[0m");
-            getValidationBuild(validationBuild);
+            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Coordinate non valide##" + "\u001B[0m");
+            getValidation(validationBuild);
         }
-                gamer.getMyGodCard().afterOwnerBuilding(this);
-                for (God card : otherCards) {
-                    card.afterOtherBuilding(gamer);
-                }
+        gamer.getMyGodCard().afterOwnerBuilding(this);
+        for (God card : otherCards) {
+            card.afterOtherBuilding(gamer);
+        }
 
     }
 
@@ -297,56 +305,32 @@ public class Turno implements Runnable {
         if (getGamer().getSteps() == 0) {
             validationMove = true;
         } else {
-            /**
-             //control the pawn can move
-             if (!table.iCanMove(start)) {
-             //if it can not, set iCanPlay false
-             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Nessuna casella adiacente libera##" + "\u001B[0m");
-             getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
-             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Pedina "
-             + getGamer().getPawn(move.getIdPawn()).getIdPawn() + " bloccata##" + "\u001B[0m");
-             //control the two pawns can't move
-             if (amILocked(getGamer(), getMove())) {
-             getGamer().setLoser(true);
-             validationMove = true;
-             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi più muoverti##" + "\u001B[0m");
-             } else {
-             getGamer().setLoser(false);
-             validationMove = false;
-             }
-             } else {
-             getGamer().getPawn(move.getIdPawn()).setICanPlay(true);
-             getGamer().setLoser(false);
-             */
-                    //control the base movement of the pawn is possible
-                    if (!table.controlBaseMovement(start, end)) {
-                        getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi muoverti qui##" + "\u001B[0m");
-                        validationMove = false;
-                    } else {
-                        //control if the pawn can go up on level
-                        if ((gamer.getLevelsUp() == 0) && (end.getLevel() - start.getLevel() == 1)) {
-                            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi salire di livello##" + "\u001B[0m");
-                            validationMove = false;
-                        } else {
-                            //do the step and change position
-                            validationMove = getMyStep(start, end, p);
-                        }
-
-                    }
+            //control the base movement of the pawn is possible
+            if (!table.controlBaseMovement(start, end)) {
+                getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi muoverti qui##" + "\u001B[0m");
+                validationMove = false;
+            } else {
+                //control if the pawn can go up on level
+                if ((gamer.getLevelsUp() == 0) && (end.getLevel() - start.getLevel() == 1)) {
+                    getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi salire di livello##" + "\u001B[0m");
+                    validationMove = false;
+                } else {
+                    //do the step and change position
+                    validationMove = getMyStep(start, end, p);
                 }
+
             }
+        }
+    }
 
     /**
-     * method getValidationMove
+     * method getValidation
      * Control if the movement is valid
-     * TODO remember to remove the comments
      */
-    public void getValidationMove(boolean vM) {
-        if (!vM) {
+    public void getValidation(boolean v) {
+        if (!v) {
             count++;
             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "Tentativi rimanenti: " + (5 - count) + "\u001B[0m");
-        } else {
-            getGamer().setSteps(0);
         }
     }
 
@@ -361,87 +345,35 @@ public class Turno implements Runnable {
         if (gamer.getBuilds() == 0) {
             validationBuild = true;
         } else {
-            /**
-             //control the pawn can build
-             if (!table.iCanBuild(start)) {
-             //if it can not, set iCanPlay false
-             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Nessuna casella adiacente disponibile##" + "\u001B[0m");
-             getGamer().getPawn(move.getIdPawn()).setICanPlay(false);
-             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Pedina"
-             + getGamer().getPawn(move.getIdPawn()).getIdPawn() + " bloccata##" + "\u001B[0m");
-             //control the two pawns can't build
-             if (amILocked(getGamer(), getMove())) {
-             getGamer().setLoser(true);
-             validationBuild = true;
-             getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi più costruire##" + "\u001B[0m");
-             } else {
-             getGamer().setLoser(false);
-             getGameHandler().sendMessage(getGamer(), "Puoi muovere pedina " + getMove().getIdPawn());
-             validationBuild = false;
-             }
-             } else {
-             */
-                    //control the base build of the pawn is possible
-                    if (!table.controlBaseBuilding(start, end)) {
-                        getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi costruire qui##" + "\u001B[0m");
-                        validationBuild = false;
-                    } else {
-                        //do the build
-                        table.build(end);
-                        validationBuild = true;
-                    }
-                    }
-                }
-
-    /**
-     * method getValidationBuild
-     * Control if the building is valid
-     */
-    public void getValidationBuild(boolean vB) {
-        if (!vB) {
-            count++;
-            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "Tentativi rimanenti: " + (5 - count) + "\u001B[0m");
-        } else {
-                getGamer().setBuilds(0);
-                    }
+            //control the base build of the pawn is possible
+            if (!table.controlBaseBuilding(start, end)) {
+                getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi costruire qui##" + "\u001B[0m");
+                validationBuild = false;
+            } else {
+                //do the build
+                table.build(end);
+                validationBuild = true;
             }
+        }
+    }
 
     /**
      * Standard win
      */
-    public void controlWin() {
+    private void controlWin() {
         int idP = getMove().getIdPawn();
-            if (
-                    (getGamer().getPawn(idP).getPastLevel() == 2) &&
-                            (getGamer().getPawn(idP).getPresentLevel() == 3)
-            ) {
-                getGamer().setWinner(true);
-                getGameHandler().getGame().setWinner(getGamer());
-                getGameHandler().getGame().broadcastMessage("FINE PARTITA");
-            } else {
-                getGamer().setWinner(false);
-            }
-        }
-
-
-    /**
-     * method amILocked
-     *
-     * @return true if at least one pawn can move and  build, otherwise false
-     */
-
-
-    private boolean amILocked(Gamer gamer, Mossa m) {
-        Pawn p0 = gamer.getPawn(0);
-        Pawn p1 = gamer.getPawn(1);
-        //Controllo se entrambe sono bloccate
-        if ((!p0.getICanPlay()) && (!p1.getICanPlay())) {
-            //Sono entrambe bloccate, il giocatore ha perso
-            return true;
+        if (
+                (getGamer().getPawn(idP).getPastLevel() == 2) &&
+                        (getGamer().getPawn(idP).getPresentLevel() == 3)
+        ) {
+            getGamer().setWinner(true);
+            getGameHandler().getGame().setWinner(getGamer());
+            getGameHandler().getGame().broadcastMessage("FINE PARTITA");
         } else {
-            return false;
+            getGamer().setWinner(false);
         }
-        }
+    }
+
 
     /**
      * method controlStandardParameter
@@ -449,13 +381,9 @@ public class Turno implements Runnable {
      * @return true if the parameters are valid, or return false
      */
     public boolean controlStandardParameter(Mossa movement) {
-        if ((movement.getIdPawn() < 0) || (movement.getIdPawn() > 1) ||
-                (movement.getTargetX() < 0) || (movement.getTargetX() > 5) ||
-                (movement.getTargetY() < 0) || (movement.getTargetY() > 5)) {
-            return false;
-        } else {
-            return true;
-        }
+        return (movement.getIdPawn() >= 0) && (movement.getIdPawn() <= 1) &&
+                (movement.getTargetX() >= 0) && (movement.getTargetX() <= 5) &&
+                (movement.getTargetY() >= 0) && (movement.getTargetY() <= 5);
     }
 
     /**
@@ -465,11 +393,7 @@ public class Turno implements Runnable {
      * @return if the gamer wants to do the optional movement of the god card
      */
     public boolean nullEffectForGodCards(Mossa movement) {
-        if (movement.getIdPawn() == -1 || movement.getTargetX() == -1 || movement.getTargetY() == -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return movement.getIdPawn() == -1 || movement.getTargetX() == -1 || movement.getTargetY() == -1;
     }
 
     /**
@@ -480,7 +404,7 @@ public class Turno implements Runnable {
      * @param myPawn    the pawn which moves
      * @return true
      */
-    public boolean getMyStep(Cell startCell, Cell endCell, Pawn myPawn) {
+    private boolean getMyStep(Cell startCell, Cell endCell, Pawn myPawn) {
         int x1 = startCell.getX();
         int y1 = startCell.getY();
         int l1 = startCell.getLevel();
@@ -515,16 +439,15 @@ public class Turno implements Runnable {
         //exceeded the number of attempts
         if ((!b) && (i >= 5)) {
             g.setLoser(true);
-            getGameHandler().sendMessage(g, "Hai esaurito i tentativi!!!");
+            getGameHandler().sendMessage(g, "\u001B[31m" + "##Hai esaurito i tentativi##\nHai perso." + "\u001B[0m");
+            getGameHandler().getGame().broadcastMessage(getGamer().getName() + " ha esaurito i tentativi disponibili");
         } else {
             g.setLoser(false);
         }
         //general control of defeat
         if (g.getLoser()) {
             getGameHandler().getGame().broadcastMessage(g.getName() + " ha perso!!!");
-            //TODO Se un giocatore perde, al turno dopo il gioactore non può selezionare la pedina
-            // gli rimane la stessa del turno precedente da muovere e per costruire
-            // risolvere questo problema e probelma di disconnessione.
+            endOfTheMatch(getGameHandler());
         }
     }
 
@@ -555,42 +478,71 @@ public class Turno implements Runnable {
      * @param gamer the current gamer
      *              control if the pawns are locked or not
      */
-    public void firstLockdown(Gamer gamer) {
-        Pawn p0 = gamer.getPawn(0);
-        Pawn p1 = gamer.getPawn(1);
-        Cell p0Cell = table.getTableCell(p0.getRow(), p0.getColumn());
-        Cell p1Cell = table.getTableCell(p1.getRow(), p1.getColumn());
-        boolean b0 = table.iCanMove(p0Cell);
-        boolean b1 = table.iCanMove(p1Cell);
-        if (!b0 && !b1) {
-            gamer.getPawn(0).setICanPlay(false);
-            gamer.getPawn(1).setICanPlay(false);
-            getGameHandler().sendMessage(gamer, "\u001B[31m" + "##Hai entrambe le pedine bloccate##" + "\u001B[31m");
-            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi più muoverti##" + "\u001B[0m");
-            getGameHandler().getGame().broadcastMessage(gamer.getName() + " ha perso!!!");
-            gamer.setLoser(true);
-            getGameHandler().sendLockedPawn(1, gamer, true);
-            getGameHandler().sendLockedPawn(0, gamer, true);
-        } else if (b0 && !b1) {
-            gamer.getPawn(0).setICanPlay(true);
-            gamer.getPawn(1).setICanPlay(false);
-            gamer.setLoser(false);
-            getGameHandler().sendMessage(gamer, "\u001B[31m" + "##La pedina 1 è bloccata##" + "\u001B[31m");
-            getGameHandler().sendLockedPawn(1, gamer, true);
-            getGameHandler().sendLockedPawn(0, gamer, false);
-        } else if (!b0 && b1) {
-            gamer.getPawn(1).setICanPlay(true);
-            gamer.getPawn(0).setICanPlay(false);
-            gamer.setLoser(false);
-            getGameHandler().sendMessage(gamer, "\u001B[31m" + "##La pedina 0 è bloccata##" + "\u001B[31m");
-            getGameHandler().sendLockedPawn(0, gamer, true);
-            getGameHandler().sendLockedPawn(1, gamer, false);
-        } else {
-            gamer.getPawn(1).setICanPlay(true);
-            gamer.getPawn(0).setICanPlay(true);
-            gamer.setLoser(false);
-            getGameHandler().sendLockedPawn(0, gamer, false);
-            getGameHandler().sendLockedPawn(1, gamer, false);
+    private void firstLockdown(Gamer gamer) {
+        if (!gamer.getLoser()) {
+            Pawn p0 = gamer.getPawn(0);
+            Pawn p1 = gamer.getPawn(1);
+            Cell p0Cell = table.getTableCell(p0.getRow(), p0.getColumn());
+            Cell p1Cell = table.getTableCell(p1.getRow(), p1.getColumn());
+            boolean b0 = table.iCanMove(p0Cell);
+            boolean b1 = table.iCanMove(p1Cell);
+            if (!b0 && !b1) {
+                gamer.getPawn(0).setICanPlay(false);
+                gamer.getPawn(1).setICanPlay(false);
+                //message for the gamer
+                getGameHandler().sendMessage(gamer, "\u001B[31m" + "##Hai entrambe le pedine bloccate.##\n" +
+                        "##Non puoi più muoverti.##\nHai perso" + "\u001B[0m");
+                //message for all the players
+                getGameHandler().getGame().broadcastMessage(getGamer() + " non può più muoversi");
+                gamer.setLoser(true);
+                getGameHandler().sendLockedPawn(1, gamer, true);
+                getGameHandler().sendLockedPawn(0, gamer, true);
+                endOfTheMatch(getGameHandler());
+            } else if (!b1) {
+                gamer.getPawn(0).setICanPlay(true);
+                gamer.getPawn(1).setICanPlay(false);
+                gamer.setLoser(false);
+                getGameHandler().sendMessage(gamer, "\u001B[31m" + "##La pedina 1 è bloccata##" + "\u001B[0m");
+                getGameHandler().sendLockedPawn(1, gamer, true);
+                getGameHandler().sendLockedPawn(0, gamer, false);
+            } else if (!b0) {
+                gamer.getPawn(1).setICanPlay(true);
+                gamer.getPawn(0).setICanPlay(false);
+                gamer.setLoser(false);
+                getGameHandler().sendMessage(gamer, "\u001B[31m" + "##La pedina 0 è bloccata##" + "\u001B[0m");
+                getGameHandler().sendLockedPawn(0, gamer, true);
+                getGameHandler().sendLockedPawn(1, gamer, false);
+            } else {
+                gamer.getPawn(1).setICanPlay(true);
+                gamer.getPawn(0).setICanPlay(true);
+                gamer.setLoser(false);
+                getGameHandler().sendLockedPawn(0, gamer, false);
+                getGameHandler().sendLockedPawn(1, gamer, false);
+            }
         }
     }
+
+    /**
+     * method endOfTheMatch
+     *
+     * @param h the networkHandlerServer
+     *          The method controls if the match will end for pawns locked or number of attempts exhausted of the gamers
+     */
+    private void endOfTheMatch(NetworkHandlerServer h) {
+        int p = h.getGame().getPlayersInGame().size();
+        int k = 0;
+        for (int i = 0; i < p; i++) {
+            if (h.getGame().getPlayersInGame().get(i).getLoser()) {
+                k++;
+            }
+        }
+        if (k == (p - 1)) {
+            for (int i = 0; i < p; i++) {
+                if (!h.getGame().getPlayersInGame().get(i).getLoser()) {
+                    h.getGame().setWinner(h.getGame().getPlayersInGame().get(i));
+                }
+            }
+        }
+    }
+
 }

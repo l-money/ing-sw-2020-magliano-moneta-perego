@@ -108,8 +108,8 @@ public class Triton extends God {
                     setIdM(turno.getMove().getIdPawn());
                     turno.setCount(0);
                     turno.getGamer().setSteps(1);
-                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Sei su una casella perimetraole" + "\u001B[0m");
-                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Tritone, puoi muoverti una volta in più.\n" +
+                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "\"Sei su una casella perimetrale.\n" +
+                            "Hai Triton, puoi muoverti una volta in più.\n" +
                             "Se non vuoi muoverti scegli l'opzione 'No'." + "\u001B[0m");
                     tritonMove = turno.moveRequest();
                     if (turno.nullEffectForGodCards(tritonMove)) {
@@ -126,7 +126,7 @@ public class Triton extends God {
                             tritonEffect = false;
                         } else {
                             turno.baseMovement(tritonMove);
-                            turno.getValidationMove(turno.isValidationMove());
+                            turno.getValidation(turno.isValidationMove());
                             tritonEffect = turno.isValidationMove();
                             printStatus = tritonEffect;
                             if (tritonEffect) {

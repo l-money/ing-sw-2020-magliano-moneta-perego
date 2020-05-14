@@ -61,26 +61,21 @@ public class Apollo extends God {
      * @param turno the current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        if ((apolloEffect) && (turno.isValidationMove())) {
-            otherPawn.setPastLevel(end.getLevel());
-            turno.getTable().setACell(start.getX(), start.getY(), start.getLevel(), false, false, otherPawn);
+        if (turno.isValidationMove()) {
+            if (apolloEffect) {
+                otherPawn.setPastLevel(end.getLevel());
+                turno.getTable().setACell(start.getX(), start.getY(), start.getLevel(), false, false, otherPawn);
+                turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Apollo" + "\u001B[0m");
+            }
             //broadcast message of movement
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
             turno.printTableStatusTurn(turno.isValidationMove());
-        }
-        if (!turno.isValidationMove() && apolloEffect) {
+        } else if (!turno.isValidationMove() && apolloEffect) {
             turno.getTable().setACell(end.getX(), end.getY(), end.getLevel(), false, end.isComplete(), otherPawn);
         }
-        if ((!apolloEffect) && (turno.isValidationMove())) {
-            //broadcast message of movement
-            turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
-                    " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            //print status of the table
-            turno.printTableStatusTurn(turno.isValidationMove());
-        }
-        }
+    }
 
     /**
      * Features added by card before its owner starts building

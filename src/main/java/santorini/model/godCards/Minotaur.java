@@ -95,21 +95,23 @@ public class Minotaur extends God {
      * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
-        if (minoEffect && turno.isValidationMove()) {
-            int x = nextCell.getX();
-            int y = nextCell.getY();
-            otherPawn.setPastLevel(end.getLevel());
-            turno.getTable().setACell(x, y, nextCell.getLevel(), false, nextCell.isComplete(), otherPawn);
-            turno.printTableStatusTurn(true);
-            printerStatus = false;
+        if (turno.isValidationMove()) {
+            if (minoEffect) {
+                int x = nextCell.getX();
+                int y = nextCell.getY();
+                otherPawn.setPastLevel(end.getLevel());
+                turno.getTable().setACell(x, y, nextCell.getLevel(), false, nextCell.isComplete(), otherPawn);
+                turno.printTableStatusTurn(true);
+                printerStatus = false;
+                turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Minotaur" + "\u001B[0m");
+            }
             //broadcast message of movement
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
-            turno.printTableStatusTurn(turno.isValidationMove());
-        }
-        if (!minoEffect && turno.isValidationMove()) {
             turno.printTableStatusTurn(true);
+        } else if (!turno.isValidationMove() && minoEffect) {
+            turno.getTable().setACell(end.getX(), end.getY(), end.getLevel(), false, end.isComplete(), otherPawn);
         }
     }
 

@@ -116,7 +116,7 @@ public class Artemis extends God {
                             artemisEffect = false;
                         } else {
                             turno.baseMovement(effectMove2);
-                            turno.getValidationMove(turno.isValidationMove());
+                            turno.getValidation(turno.isValidationMove());
                             artemisEffect = turno.isValidationMove();
                             printerStatus = artemisEffect;
                             //if printStatus=true, the move is validate, send message and print table

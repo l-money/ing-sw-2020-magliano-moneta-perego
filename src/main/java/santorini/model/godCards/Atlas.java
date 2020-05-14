@@ -88,14 +88,14 @@ public class Atlas extends God {
                 } else {
                     if (!turno.controlStandardParameter(buildDome)) {
                         atlasEffect = false;
-                        turno.getValidationBuild(false);
+                        turno.getValidation(false);
                         turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Coordinate non valide##" + "\u001B[0m");
                         turno.setMove(turno.buildingRequest());
                     } else {
                         Cell end = turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY());
                         if (end.isComplete() || end.getPawn() != null) {
                             atlasEffect = false;
-                            turno.getValidationBuild(false);
+                            turno.getValidation(false);
                             turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire qui##" + "\u001B[0m");
                             turno.setMove(turno.buildingRequest());
                         } else {
@@ -111,6 +111,8 @@ public class Atlas extends God {
                     //broadcast message of building
                     turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                             "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                    //print table status
+                    turno.printTableStatusTurn(true);
                     turno.getGamer().setBuilds(0);
                     turno.setValidationBuild(true);
                 }

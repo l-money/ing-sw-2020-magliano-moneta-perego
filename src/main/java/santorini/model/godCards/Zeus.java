@@ -53,14 +53,15 @@ public class Zeus extends God {
             turno.printTableStatusTurn(turno.isValidationMove());
             //Zeus effect
             if (turno.getTable().getTableCell(turno.getMove().getTargetX(), turno.getMove().getTargetY()).getLevel() == 3) {
-                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Non puoi costruire sotto di te una cupola" + "\u001B[0m");
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato.\n" +
+                        "Non puoi costruire sotto di te una cupola." + "\u001B[0m");
                 zeusEffect = true;
             } else {
                 zeusEffect = false;
                 myCell = turno.getTable().getTableCell(turno.getMove().getTargetX(), turno.getMove().getTargetY());
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Zeus, puoi costruire un livello sotto di te.\n" +
                         "Se vuoi costruire scegli una casella adiacente qualsiasi." +
-                        "\nSe non vuoi costruire scegli l'opzione 'No'." + "\u001B[0m");
+                        "\nSe non vuoi costruire sotto di te scegli l'opzione 'No'." + "\u001B[0m");
             }
         }
     }
@@ -68,7 +69,7 @@ public class Zeus extends God {
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerBuilding(Turno turno) {
@@ -88,11 +89,11 @@ public class Zeus extends God {
                 printStatus = true;
                 turno.getGamer().setBuilds(0);
             }
-            if (zeusEffect && printStatus) {
+            if (printStatus) {
                 turno.setMove(zeusBuild);
                 //broadcast message of building
-                turno.getGameHandler().getGame().broadcastMessage("Per effetto di Zeus.");
-                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
+                turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Zeus." + "\u001B[0m");
+                turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito sotto di se in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
                 //print status of the table
                 turno.printTableStatusTurn(true);

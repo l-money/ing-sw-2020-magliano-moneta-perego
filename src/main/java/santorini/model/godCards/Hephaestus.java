@@ -94,7 +94,7 @@ public class Hephaestus extends God {
                     if (turno.nullEffectForGodCards(buildingPlus)) {
                         HEffect = true;
                         printerStatus = false;
-                        turno.getValidationBuild(true);
+                        turno.getValidation(true);
                         turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato " + "\u001B[0m");
                     } else {
                         Cell end = turno.getTable().getTableCell(buildingPlus.getTargetX(), buildingPlus.getTargetY());
@@ -102,11 +102,11 @@ public class Hephaestus extends God {
                             HEffect = false;
                             turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire " +
                                     "in un'altra casella##" + "\u001B[0m");
-                            turno.getValidationBuild(false);
+                            turno.getValidation(false);
                         } else {
                             int l = end.getLevel() + 1;
                             turno.getTable().getTableCell(buildingPlus.getTargetX(), buildingPlus.getTargetY()).setLevel(l);
-                            turno.getValidationBuild(true);
+                            turno.getValidation(true);
                             HEffect = true;
                             printerStatus = true;
                         }

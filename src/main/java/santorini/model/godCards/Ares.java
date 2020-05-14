@@ -6,9 +6,6 @@ import santorini.model.*;
 import java.util.ArrayList;
 
 public class Ares extends God {
-    private Mossa aresBuild;
-    private boolean aresEffect;
-    private boolean printStatus;
 
     public Ares() {
         super("Ares", "Fine del tuo turno: puoi rimuovere un blocco libero\n" +
@@ -27,7 +24,7 @@ public class Ares extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerMoving(Turno turno) {
@@ -37,7 +34,7 @@ public class Ares extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerMoving(Turno turno) {
@@ -54,7 +51,7 @@ public class Ares extends God {
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerBuilding(Turno turno) {
@@ -64,7 +61,7 @@ public class Ares extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerBuilding(Turno turno) {
@@ -82,22 +79,20 @@ public class Ares extends God {
                         "adiacente alla pedina che non hai mosso." +
                         "Se non vuoi demolire scegli l'opzione 'No'." + "\u001B[0m");
                 turno.setCount(0);
-                aresEffect = false;
-                printStatus = false;
+                boolean aresEffect = false;
+                boolean printStatus = false;
                 do {
                     turno.getGameHandler().sendMessage(turno.getGamer(), "Stai giocando con la pedina " + start.getPawn().getIdPawn());
-                    aresBuild = turno.buildingRequest();
+                    Mossa aresBuild = turno.buildingRequest();
                     if (turno.nullEffectForGodCards(aresBuild)) {
                         aresEffect = true;
-                        printStatus = false;
                         turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato" + "\u001B[0m");
                         turno.setValidationBuild(true);
                     } else {
                         Cell end = turno.getTable().getTableCell(aresBuild.getTargetX(), aresBuild.getTargetY());
                         if (end.isComplete() || end.getPawn() != null || end.getLevel() == 0) {
-                            aresEffect = false;
                             turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi demolire qui##" + "\u001B[0m");
-                            turno.getValidationBuild(false);
+                            turno.getValidation(false);
                         } else {
                             aresEffect = true;
                             printStatus = true;
@@ -168,11 +163,11 @@ public class Ares extends God {
      */
     private int floorCells(Cell start, Table t) {
         int k = 0;
-        ArrayList<Cell> AC;
-        AC = t.searchAdjacentCells(start);
-        int l = AC.size();
+        ArrayList<Cell> adjacentCells;
+        adjacentCells = t.searchAdjacentCells(start);
+        int l = adjacentCells.size();
         for (int i = 0; i < l; i++) {
-            if (AC.get(i).getLevel() > 0 && AC.get(i).getLevel() <= 3 && AC.get(i).getPawn() == null && !AC.get(i).isComplete()) {
+            if (adjacentCells.get(i).getLevel() > 0 && adjacentCells.get(i).getLevel() <= 3 && adjacentCells.get(i).getPawn() == null && !adjacentCells.get(i).isComplete()) {
                 k++;
             }
         }

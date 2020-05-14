@@ -43,7 +43,7 @@ public class Prometheus extends God {
                     turno.baseBuilding(promBuild);
                     promEffect = turno.isValidationBuild();
                     printStatus = promEffect;
-                    turno.getValidationBuild(promEffect);
+                    turno.getValidation(promEffect);
                 }
                 if (promEffect && printStatus) {
                     turno.setMove(promBuild);

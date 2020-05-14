@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 import static junit.framework.TestCase.*;
 
-//TODO
-// ALL TESTS OF THIS TESTCLASS
 public class TestTurno {
     private Turno turn;
     private Table table;
@@ -54,11 +52,16 @@ public class TestTurno {
         assertTrue(!turn.controlStandardParameter(move04));
     }
 
-    /**
-     * method that tests the first control of the move selected by the client
-     */
     @Test
-    public void testFirstControlOfMovement() {
+    public void nullEffectForGodCards() {
+        Mossa m0 = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
+        Mossa m1 = new Mossa(Mossa.Action.BUILD, -1, -1, -1);
+        Mossa m2 = new Mossa(Mossa.Action.MOVE, 1, 1, 1);
+        Mossa m3 = new Mossa(Mossa.Action.BUILD, 0, 2, 2);
+        assertTrue(turn.nullEffectForGodCards(m0));
+        assertTrue(turn.nullEffectForGodCards(m1));
+        assertFalse(turn.nullEffectForGodCards(m2));
+        assertFalse(turn.nullEffectForGodCards(m3));
     }
-    
+
 }
