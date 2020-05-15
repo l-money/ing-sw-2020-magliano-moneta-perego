@@ -24,7 +24,6 @@ public class Extraction implements Serializable {
         gods.add(new Hephaestus());
         gods.add(new Minotaur());
         gods.add(new Pan());
-        gods.add(new Hephaestus());
         gods.add(new Prometheus());
         //avanzate
         gods.add(new Ares());
@@ -32,11 +31,6 @@ public class Extraction implements Serializable {
         gods.add(new Hestia());
         gods.add(new Triton());
         gods.add(new Zeus());
-        /**
-         gods.add(new Poseidon());
-         gods.add(new Hera());
-
-         */
         Collections.shuffle(gods);
     }
 

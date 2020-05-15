@@ -194,6 +194,11 @@ public class View {
                         gods.add(new Pdor());
                         break;
                     }
+                    if (number == 10) {
+                        number = gods.size();
+                        gods.add(new Hephaestus());
+                        break;
+                    }
 
                     if (number < 0 || number >= gods.size()) {
                         System.err.println("Errore carta scelta!");

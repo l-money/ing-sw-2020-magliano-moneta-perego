@@ -211,8 +211,8 @@ public class Turno implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        firstLockdown(getGamer());
         if (!getGamer().getLoser()) {
+            firstLockdown(getGamer());
             getGameHandler().getGame().broadcastMessage("Turno di :" + getGamer().getName() + "\n");
             getGameHandler().sendMessage(getGamer(), "E' il tuo turno\n" +
                     "Carta: " + "\u001B[34m" + getGamer().getMyGodCard().getName() + "\u001B[0m" +
@@ -489,6 +489,7 @@ public class Turno implements Runnable {
             if (!b0 && !b1) {
                 gamer.getPawn(0).setICanPlay(false);
                 gamer.getPawn(1).setICanPlay(false);
+                //controllo che sono proprio bloccato??
                 //message for the gamer
                 getGameHandler().sendMessage(gamer, "\u001B[31m" + "##Hai entrambe le pedine bloccate.##\n" +
                         "##Non puoi più muoverti.##\nHai perso" + "\u001B[0m");

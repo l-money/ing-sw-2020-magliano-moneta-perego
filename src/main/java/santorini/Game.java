@@ -135,16 +135,11 @@ public class Game implements Runnable {
      */
     public void partita() {
         broadcastMessage("\nINIZIO PARTITA");
+        playersInMatch(playersInGame);
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        int i = 1;
-        for (Gamer g : playersInGame) {
-            broadcastMessage("Giocatore " + i + " : " + g.getName() + "\t\t\t" +
-                    "Carta : " + g.getMyGodCard().getName() + "\t\t\tColore : " + printColor(g.getColorGamer()));
-            i++;
         }
         broadcastMessage("\n");
         while (true) {
@@ -230,6 +225,13 @@ public class Game implements Runnable {
                     return "No color";
                 }
             }
+        }
+    }
+
+    private void playersInMatch(ArrayList<Gamer> gamers) {
+        for (Gamer g : gamers) {
+            broadcastMessage("Giocatore : " + g.getName() + "\t\t\t" +
+                    "Carta : " + g.getMyGodCard().getName() + "\t\t\tColore : " + printColor(g.getColorGamer()));
         }
     }
 
