@@ -31,7 +31,7 @@ public class Hestia extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerMoving(Turno turno) {
@@ -41,7 +41,7 @@ public class Hestia extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerMoving(Turno turno) {
@@ -57,7 +57,7 @@ public class Hestia extends God {
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerBuilding(Turno turno) {
@@ -67,7 +67,7 @@ public class Hestia extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerBuilding(Turno turno) {
@@ -97,7 +97,7 @@ public class Hestia extends God {
                     if (perimetralCells.contains(end)) {
                         hestiaEffect = false;
                         turno.getValidation(false);
-                        turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire su una casella perimetrale##" + "\u001B[0m");
+                        turno.getGameHandler().sendFailed(turno.getGamer(), "##Non puoi costruire su una casella perimetrale##");
                     } else {
                         turno.baseBuilding(hestiaBuild);
                         turno.getValidation(turno.isValidationBuild());

@@ -29,7 +29,7 @@ public class Zeus extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerMoving(Turno turno) {
@@ -41,7 +41,7 @@ public class Zeus extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerMoving(Turno turno) {
@@ -104,7 +104,7 @@ public class Zeus extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerBuilding(Turno turno) {

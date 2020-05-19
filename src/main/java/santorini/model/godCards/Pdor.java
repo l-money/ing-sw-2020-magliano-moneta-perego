@@ -56,6 +56,14 @@ public class Pdor extends God {
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
             turno.printTableStatusTurn(true);
+            if (turno.getGamer().getPawn(turno.getMove().getIdPawn()).getPastLevel() == 2 &&
+                    turno.getGamer().getPawn(turno.getMove().getIdPawn()).getPresentLevel() == 3) {
+                turno.getGameHandler().getGame().broadcastMessage("PDOR HA VINTO!!!!!!\n" +
+                        "ORA TU MIO ELETTO, TI GUADAGNERAI IL PANE COL SUDORE DELLA FRONTE\n" +
+                        "SI, E MIGRERAI, E ROMPERAI LE BALLE AI POPOLI DEL NORD\n" +
+                        "MENTRE TU...TU...TU PARTORIARI CON DOLORE\n" +
+                        "QUESTA E' LA PAROLA DI PDOR");
+            }
         }
     }
 

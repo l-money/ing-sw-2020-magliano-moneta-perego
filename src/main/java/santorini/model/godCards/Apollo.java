@@ -4,11 +4,9 @@ import santorini.Turno;
 import santorini.model.*;
 
 import java.util.ArrayList;
-//FINITA
 public class Apollo extends God {
     private Cell start;
     private Cell end;
-    private Pawn myPawn;
     private Pawn otherPawn;
     private boolean apolloEffect;
 
@@ -40,14 +38,14 @@ public class Apollo extends God {
             int y = turno.getMove().getTargetY();
             end = turno.getTable().getTableCell(x, y);//save end cell
             otherPawn = turno.getTable().getTableCell(x, y).getPawn();//save other pawn
-            myPawn = turno.getGamer().getPawn(i);//save myPawn
-            start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());//save myCell
+        Pawn myPawn = turno.getGamer().getPawn(i);//save myPawn
+        start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());//save myCell
             ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
             if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
                     (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
                     (end.getLevel() - start.getLevel() <= 1)) {
                 if ((end.getLevel() - start.getLevel() == 1) && turno.getGamer().getLevelsUp() == 0) {
-                    apolloEffect = false;
+                    //apolloEffect = false;
                 } else {
                     turno.getTable().setACell(x, y, end.getLevel(), true, end.isComplete(), null);
                     apolloEffect = true;

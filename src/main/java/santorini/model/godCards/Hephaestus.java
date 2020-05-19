@@ -100,8 +100,8 @@ public class Hephaestus extends God {
                         Cell end = turno.getTable().getTableCell(buildingPlus.getTargetX(), buildingPlus.getTargetY());
                         if (pastB != end) {
                             HEffect = false;
-                            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire " +
-                                    "in un'altra casella##" + "\u001B[0m");
+                            turno.getGameHandler().sendFailed(turno.getGamer(), "##Non puoi costruire " +
+                                    "in un'altra casella##");
                             turno.getValidation(false);
                         } else {
                             int l = end.getLevel() + 1;

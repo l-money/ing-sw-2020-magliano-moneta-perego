@@ -176,7 +176,6 @@ public class Turno implements Runnable {
      * @return a move of typo MOVE
      */
     public Mossa moveRequest() {
-        System.out.println("Chiedo movimento");
         move = giveMeMossa(Mossa.Action.MOVE);
         return move;
     }
@@ -187,18 +186,10 @@ public class Turno implements Runnable {
      * @return a move of typo BUILD
      */
     public Mossa buildingRequest() {
-        System.out.println("Chiedo costruzione");
         move = giveMeMossa(Mossa.Action.BUILD);
         return move;
     }
 
-    /**
-     * method sendFailed
-     * Prints an error or sends a failed to handler
-     */
-    public void sendFailed() {
-        gameHandler.sendFailed(gamer, "Mossa non valida,riprova");
-    }
 
     /**
      * Executes in new Thread all player turn with
@@ -206,13 +197,14 @@ public class Turno implements Runnable {
      */
     public void run() {
         try {
-            Thread.sleep(500);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         if (!getGamer().getLoser()) {
             firstLockdown(getGamer());
-            getGameHandler().getGame().broadcastMessage("Turno di :" + getGamer().getName() + "\n");
+            getGameHandler().getGame().broadcastMessage("\n|*****************************************************|\n" +
+                    "Turno di :" + getGamer().getName());
             getGameHandler().sendMessage(getGamer(), "E' il tuo turno\n" +
                     "Carta: " + "\u001B[34m" + getGamer().getMyGodCard().getName() + "\u001B[0m" +
                     "\nColore: " + printMyColor(getGamer()));
@@ -221,19 +213,25 @@ public class Turno implements Runnable {
             getGamer().setSteps(1);
             getGamer().setBuilds(1);
             count = 0;
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             do {
                 gamer.getMyGodCard().initializeOwner(this);
                 move = moveRequest();
                 myMovement();
             } while (!validationMove && count < 5);
             methodLoser(validationMove, count, getGamer());
+
+            controlWin();
+            count = 0;
             try {
-                Thread.sleep(500);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            controlWin();
-            count = 0;
             if (!getGamer().getLoser()) {
                 do {
                     move = buildingRequest();
@@ -263,7 +261,7 @@ public class Turno implements Runnable {
                 card.afterOtherMoving(gamer);
             }
         } else {
-            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Coordinate non valide##" + "\u001B[0m");
+            getGameHandler().sendFailed(getGamer(), "##Coordinate non valide##");
             getValidation(validationMove);
         }
     }
@@ -283,7 +281,7 @@ public class Turno implements Runnable {
             baseBuilding(getMove());
             getValidation(validationBuild);
         } else {
-            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Coordinate non valide##" + "\u001B[0m");
+            getGameHandler().sendFailed(getGamer(), "##Coordinate non valide##");
             getValidation(validationBuild);
         }
         gamer.getMyGodCard().afterOwnerBuilding(this);
@@ -306,12 +304,12 @@ public class Turno implements Runnable {
         } else {
             //control the base movement of the pawn is possible
             if (!table.controlBaseMovement(start, end)) {
-                getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi muoverti qui##" + "\u001B[0m");
+                getGameHandler().sendFailed(getGamer(), "##Non puoi muoverti qui##");
                 validationMove = false;
             } else {
                 //control if the pawn can go up on level
                 if ((gamer.getLevelsUp() == 0) && (end.getLevel() - start.getLevel() == 1)) {
-                    getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi salire di livello##" + "\u001B[0m");
+                    getGameHandler().sendFailed(getGamer(), "##Non puoi salire di livello##");
                     validationMove = false;
                 } else {
                     //do the step and change position
@@ -346,7 +344,7 @@ public class Turno implements Runnable {
         } else {
             //control the base build of the pawn is possible
             if (!table.controlBaseBuilding(start, end)) {
-                getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "##Non puoi costruire qui##" + "\u001B[0m");
+                getGameHandler().sendFailed(getGamer(), "##Non puoi costruire qui##");
                 validationBuild = false;
             } else {
                 //do the build
@@ -438,14 +436,13 @@ public class Turno implements Runnable {
         //exceeded the number of attempts
         if ((!b) && (i >= 5)) {
             g.setLoser(true);
-            getGameHandler().sendMessage(g, "\u001B[31m" + "##Hai esaurito i tentativi##\nHai perso." + "\u001B[0m");
+            getGameHandler().sendFailed(g, "##Hai esaurito i tentativi##\n");
             getGameHandler().getGame().broadcastMessage(getGamer().getName() + " ha esaurito i tentativi disponibili");
         } else {
             g.setLoser(false);
         }
         //general control of defeat
         if (g.getLoser()) {
-            getGameHandler().getGame().broadcastMessage(g.getName() + " ha perso!!!");
             endOfTheMatch(getGameHandler());
         }
     }
@@ -490,8 +487,8 @@ public class Turno implements Runnable {
                 gamer.getPawn(1).setICanPlay(false);
                 //controllo che sono proprio bloccato??
                 //message for the gamer
-                getGameHandler().sendMessage(gamer, "\u001B[31m" + "##Hai entrambe le pedine bloccate.##\n" +
-                        "##Non puoi più muoverti.##\nHai perso" + "\u001B[0m");
+                getGameHandler().sendFailed(gamer, "##Hai entrambe le pedine bloccate.##\n" +
+                        "##Non puoi più muoverti.##\n");
                 //message for all the players
                 getGameHandler().getGame().broadcastMessage(getGamer() + " non può più muoversi");
                 gamer.setLoser(true);

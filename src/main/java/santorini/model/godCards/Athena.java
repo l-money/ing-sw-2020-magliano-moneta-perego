@@ -71,7 +71,7 @@ public class Athena extends God {
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
 
@@ -80,7 +80,7 @@ public class Athena extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
         if (turno.isValidationBuild()) {

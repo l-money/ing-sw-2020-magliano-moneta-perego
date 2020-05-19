@@ -76,7 +76,7 @@ public class Ares extends God {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Non puoi demolire nulla intorno a te" + "\u001B[0m");
             } else {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Ares, puoi demolire una costruzione\n" +
-                        "adiacente alla pedina che non hai mosso." +
+                        "adiacente alla pedina che non hai mosso.\n" +
                         "Se non vuoi demolire scegli l'opzione 'No'." + "\u001B[0m");
                 turno.setCount(0);
                 boolean aresEffect = false;
@@ -91,7 +91,7 @@ public class Ares extends God {
                     } else {
                         Cell end = turno.getTable().getTableCell(aresBuild.getTargetX(), aresBuild.getTargetY());
                         if (end.isComplete() || end.getPawn() != null || end.getLevel() == 0) {
-                            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi demolire qui##" + "\u001B[0m");
+                            turno.getGameHandler().sendFailed(turno.getGamer(), "##Non puoi demolire qui##");
                             turno.getValidation(false);
                         } else {
                             aresEffect = true;

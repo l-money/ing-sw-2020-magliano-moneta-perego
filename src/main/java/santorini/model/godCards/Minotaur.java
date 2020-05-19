@@ -48,7 +48,6 @@ public class Minotaur extends God {
         end = turno.getTable().getTableCell(x, y);
         myPawn = turno.getGamer().getPawn(i);
         otherPawn = turno.getTable().getTableCell(x, y).getPawn();
-        //int idO = otherPawn.getIdGamer();
         start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
         ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
             minoEffect = false;
@@ -180,12 +179,8 @@ public class Minotaur extends God {
      * @param cell my cell
      * @return true if is free and not complete
      */
-    public boolean controlIsFree(Cell cell) {
-        if ((cell.isFree()) && (!cell.isComplete())) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean controlIsFree(Cell cell) {
+        return (cell.isFree()) && (!cell.isComplete());
     }
 
     /**
@@ -195,7 +190,7 @@ public class Minotaur extends God {
      * @param end   my destination
      * @return the coordinate, if they exist, of the next cell of end in the same direction of start
      */
-    public int[] coordinateNextCell(Cell start, Cell end) {
+    private int[] coordinateNextCell(Cell start, Cell end) {
         int[] coordinateNext = new int[2];
         int column = end.getY() - start.getY();
         int row = end.getX() - start.getX();
@@ -273,11 +268,7 @@ public class Minotaur extends God {
      * @param x the two coordinate of the next cell
      * @return true if: the next cell has row and column and, the next cell exists; or return false
      */
-    public boolean possiblePush(int[] x) {
-        if ((x.length == 2) && (x[0] != -10) && (x[1] != -10)) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean possiblePush(int[] x) {
+        return (x.length == 2) && (x[0] != -10) && (x[1] != -10);
     }
 }

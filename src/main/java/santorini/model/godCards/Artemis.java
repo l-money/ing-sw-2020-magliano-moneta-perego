@@ -112,7 +112,7 @@ public class Artemis extends God {
                         Cell end = turno.getTable().getTableCell(effectMove2.getTargetX(), effectMove2.getTargetY());
                         if ((end.getX() == start.getX()) &&
                                 (end.getY() == start.getY())) {
-                            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi tornare indietro##" + "\u001B[0m");
+                            turno.getGameHandler().sendFailed(turno.getGamer(), "##Non puoi tornare indietro##");
                             artemisEffect = false;
                         } else {
                             turno.baseMovement(effectMove2);
@@ -148,10 +148,6 @@ public class Artemis extends God {
      * @param turno the current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
-        //save the id pawn I use for the move
-        //if (turno.isValidationMove()) {
-        // turno.getMove().setIdPawn(getIdM());
-        //}
     }
 
     /**
