@@ -18,5 +18,11 @@ public class Parameters {
         SWITCH_PAWN,
     }
 
+    public static enum Color {
+        RED,
+        YELLOW,
+        BLUE,
+    }
+
 
 }

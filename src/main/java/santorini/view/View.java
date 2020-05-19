@@ -26,6 +26,8 @@ public abstract class View {
 
     public void setHandlerClient(NetworkHandlerClient handlerClient) {
         this.handlerClient = handlerClient;
+        listen = new Thread(handlerClient);
+        listen.start();
     }
 
     public void switchCurrentPawn() {

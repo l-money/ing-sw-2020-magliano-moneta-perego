@@ -29,17 +29,6 @@ public class CLIView extends View {
 
 
     /**
-     * method setHandlerClient
-     *
-     * @param handlerClient .
-     */
-    public void setHandlerClient(NetworkHandlerClient handlerClient) {
-        this.handlerClient = handlerClient;
-        listen = new Thread(handlerClient);
-        listen.start();
-    }
-
-    /**
      * Initializes a new view that creates a networkhandler
      *
      * @param handler network handler of connection
@@ -203,7 +192,7 @@ public class CLIView extends View {
     @Override
     public void setNewAction(Mossa.Action action) {
         try {
-            Thread.sleep(200);
+            Thread.sleep(400);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -305,7 +294,7 @@ public class CLIView extends View {
     @Override
     public synchronized void setInitializePawn() {
         try {
-            Thread.sleep(300);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -100,7 +100,7 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case MESSAGE:
                             String msgs = inputStream.readObject().toString();
-                            new Thread(() -> view.printMessage(msgs)).start();
+                            view.printMessage(msgs);
                             break;
                         case LOCKED_PAWN:
                             String params[] = inputStream.readObject().toString().split(",");
@@ -115,6 +115,7 @@ public class NetworkHandlerClient implements Runnable {
                 }
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
+                System.exit(1);
             }
         }
     }

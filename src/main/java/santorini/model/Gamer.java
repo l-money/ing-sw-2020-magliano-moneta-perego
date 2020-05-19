@@ -1,6 +1,5 @@
 package santorini.model;
 
-import javafx.scene.paint.Color;
 import santorini.model.godCards.God;
 
 import java.io.ObjectInputStream;
