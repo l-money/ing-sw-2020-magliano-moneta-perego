@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import santorini.view.CLIView;
+import santorini.view.LoginUser2;
 import santorini.view.View;
 
 import java.io.BufferedReader;
@@ -49,7 +50,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("####\t" + getClass().getClassLoader().getResource("loginuser2.fxml"));
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("loginuser2.fxml")));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("loginuser2.fxml")));
+        LoginUser2 controller = new LoginUser2();
+        controller.setStage(primaryStage);
+        loader.setController(controller);
+        Parent root = loader.load();
         Scene s = new Scene(root);
         primaryStage.setScene(s);
         primaryStage.show();

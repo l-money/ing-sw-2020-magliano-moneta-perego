@@ -1,6 +1,5 @@
 package santorini.view;
 
-import javafx.scene.paint.Color;
 import santorini.NetworkHandlerClient;
 import santorini.model.*;
 import santorini.model.godCards.*;
@@ -64,6 +63,7 @@ public class CLIView extends View {
      */
     @Override
     public synchronized void printTable() {
+        table = getTable();
         System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n" + "\u001B[0m");
         System.out.print("[riga]\t------------------------------------------\n");
         for (int i = 0; i <= 4; i++) {

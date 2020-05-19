@@ -1,25 +1,23 @@
 package santorini.view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import santorini.model.Mossa;
 import santorini.model.godCards.God;
 
 import java.util.ArrayList;
 
 public class ViewController extends View {
-    @FXML
-    private Button search;
+
+
+    public ViewController() {
+
+    }
 
     @FXML
     public void initialize() {
-        System.out.println("INITIALIZE");
-        search.setOnAction(event -> handleButton());
+
     }
 
-    private void handleButton() {
-        System.out.println("CIAO");
-    }
 
     @Override
     public void chooseCards(ArrayList<God> gods) {

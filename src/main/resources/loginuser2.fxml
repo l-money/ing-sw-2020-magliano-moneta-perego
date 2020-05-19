@@ -7,8 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="442.0" prefWidth="388.0" style="-fx-background-color: #C9E4FF;" styleClass="root2"
-            stylesheets="@style.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="santorini.view.LoginUser2">
+            stylesheets="@style.css" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="connect" layoutX="144.0" layoutY="338.0" mnemonicParsing="false" prefHeight="50.0"
               prefWidth="101.0" text="CONNECT" textFill="#0b4696">
