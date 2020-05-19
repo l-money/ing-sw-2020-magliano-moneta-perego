@@ -6,6 +6,9 @@ import santorini.model.godCards.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
+//TODO Accortezze
+// Quando metto input non corretto mi stampa nuovamente la table e richiede la mossa
+// limitare questo input a 5 tentativi o con un timer
 public class Game implements Runnable {
     private final ArrayList<Gamer> playersInGame;
     /*god cards sono quelle attive nella partita
@@ -132,13 +135,13 @@ public class Game implements Runnable {
      */
     public void partita() {
         broadcastMessage("\nINIZIO PARTITA");
-        playersInMatch(playersInGame);
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        broadcastMessage("\n");
+        playersInMatch(playersInGame);
+        //broadcastMessage("\n");
         while (true) {
             for (Gamer g : playersInGame) {
                 ArrayList<God> gods = new ArrayList<God>(godCards);

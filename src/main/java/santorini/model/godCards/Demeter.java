@@ -88,8 +88,8 @@ public class Demeter extends God {
                     if ((firstBuilding.getX() == build2.getTargetX()) &&
                             (firstBuilding.getY() == build2.getTargetY())) {
                         demeterEffect = false;
-                        turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire" +
-                                " nella stessa casella precedente##" + "\u001B[0m");
+                        turno.getGameHandler().sendFailed(turno.getGamer(), "##Non puoi costruire" +
+                                " nella stessa casella precedente##");
                         turno.getValidation(false);
                     } else {
                         turno.baseBuilding(build2);

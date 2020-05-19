@@ -87,7 +87,7 @@ public class Triton extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerMoving(Turno turno) {
@@ -104,9 +104,9 @@ public class Triton extends God {
             ArrayList<Cell> perimetralCells = turno.getTable().tablePerimetralCells(turno.getTable());
             if (perimetralCells.contains(myCell)) {
                 tritonEffect = false;
+                turno.setCount(0);
                 do {
                     setIdM(turno.getMove().getIdPawn());
-                    turno.setCount(0);
                     turno.getGamer().setSteps(1);
                     turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "\"Sei su una casella perimetrale.\n" +
                             "Hai Triton, puoi muoverti una volta in più.\n" +
@@ -118,12 +118,14 @@ public class Triton extends God {
                         turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato" + "\u001B[0m");
                     } else if (idM != tritonMove.getIdPawn()) {
                         tritonEffect = false;
+                        turno.getValidation(false);
                     } else {
                         Cell end = turno.getTable().getTableCell(tritonMove.getTargetX(), tritonMove.getTargetY());
                         if ((end.getX() == start.getX()) &&
                                 (end.getY() == start.getY())) {
-                            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi tornare indietro##" + "\u001B[0m");
+                            turno.getGameHandler().sendFailed(turno.getGamer(), "##Non puoi tornare indietro##");
                             tritonEffect = false;
+                            turno.getValidation(false);
                         } else {
                             turno.baseMovement(tritonMove);
                             turno.getValidation(turno.isValidationMove());

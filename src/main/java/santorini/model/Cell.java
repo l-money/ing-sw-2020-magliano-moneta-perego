@@ -45,9 +45,9 @@ public class Cell implements Serializable {
         level = newLevel;
         if (level == 4) {
             level = MAX_LEVEL;
-            setComplete(true);
             setFree(false);
             setPawn(null);
+            setComplete(true);
         }
     }
 

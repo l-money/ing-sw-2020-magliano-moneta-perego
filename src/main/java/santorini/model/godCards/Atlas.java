@@ -89,14 +89,14 @@ public class Atlas extends God {
                     if (!turno.controlStandardParameter(buildDome)) {
                         atlasEffect = false;
                         turno.getValidation(false);
-                        turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Coordinate non valide##" + "\u001B[0m");
+                        turno.getGameHandler().sendFailed(turno.getGamer(), "##Coordinate non valide##");
                         turno.setMove(turno.buildingRequest());
                     } else {
                         Cell end = turno.getTable().getTableCell(buildDome.getTargetX(), buildDome.getTargetY());
                         if (end.isComplete() || end.getPawn() != null) {
                             atlasEffect = false;
                             turno.getValidation(false);
-                            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[31m" + "##Non puoi costruire qui##" + "\u001B[0m");
+                            turno.getGameHandler().sendFailed(turno.getGamer(), "##Non puoi costruire qui##");
                             turno.setMove(turno.buildingRequest());
                         } else {
                             turno.getTable().getTableCell(end.getX(), end.getY()).setComplete(true);

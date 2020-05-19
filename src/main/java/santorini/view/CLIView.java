@@ -1,6 +1,5 @@
 package santorini.view;
 
-import javafx.scene.paint.Color;
 import santorini.NetworkHandlerClient;
 import santorini.model.*;
 import santorini.model.godCards.*;
@@ -96,7 +95,7 @@ public class CLIView extends View {
             }
         }
     }
-
+//"\u001B[43m" +
 
     public void colorCellPawn(Pawn pawn) {
         if (pawn.getColorPawn().equals(Color.YELLOW)) {
@@ -168,7 +167,7 @@ public class CLIView extends View {
                     }
                     if (number == 10) {
                         number = gods.size();
-                        gods.add(new Hephaestus());
+                        gods.add(new Triton());
                         break;
                     }
 

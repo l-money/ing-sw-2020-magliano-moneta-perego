@@ -46,14 +46,16 @@ public class TestCell {
      *//*
     @Test
     public void testCellLevel() {
+        cell.setLevel(0);
+        assertEquals(0,cell.getLevel());
         cell.setLevel(1);
-        assertEquals(1, cell.getLevel());
+        assertEquals(1,cell.getLevel());
+        cell.setLevel(2);
+        assertEquals(2,cell.getLevel());
         cell.setLevel(3);
-        assertEquals(3, cell.getLevel());
+        assertEquals(3,cell.getLevel());
         cell.setLevel(4);
-        assertEquals(3, cell.getLevel());
-        assertTrue(cell.isComplete());
-        assertFalse(cell.isFree());
+        assertEquals(3,cell.getLevel());
     }
 
     *//**
@@ -61,23 +63,8 @@ public class TestCell {
      *//*
     @Test
     public void testCellFree() {
-        Pawn pawn = new Pawn();
-        //case 1:pawn into the cell
-        cell.setPawn(pawn);
-        assertFalse(cell.isFree());
-        assertNotNull(cell.getPawn());
-        //case 2:set free = set pawn null
         cell.setFree(true);
         assertTrue(cell.isFree());
-        assertNull(cell.getPawn());
-        //case 3:set not free
-        cell.setFree(false);
-        assertFalse(cell.isFree());
-        //case 4:
-        cell.setPawn(pawn);
-        cell.setFree(true);
-        assertTrue(cell.isFree());
-        assertNull(cell.getPawn());
     }
 
     *//**
@@ -89,11 +76,10 @@ public class TestCell {
         cell.setComplete(true);
         assertEquals(2, cell.getLevel());
         assertTrue(cell.isComplete());
-        assertFalse(cell.isFree());
-        cell.setLevel(4);
+        cell.setLevel(3);
+        cell.setComplete(false);
         assertEquals(3, cell.getLevel());
-        assertTrue(cell.isComplete());
-        assertFalse(cell.isFree());
+        assertTrue(!cell.isComplete());
     }
 
 */
