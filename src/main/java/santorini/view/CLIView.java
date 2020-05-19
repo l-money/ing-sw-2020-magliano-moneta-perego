@@ -1,28 +1,21 @@
-package santorini;
+package santorini.view;
 
+import javafx.scene.paint.Color;
+import santorini.NetworkHandlerClient;
 import santorini.model.*;
 import santorini.model.godCards.*;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class View {
+public class CLIView extends View {
 
-    private Table table;
-    private BufferedReader br;
-    private NetworkHandlerClient handlerClient;
-    private Mossa move;
+
+    private final BufferedReader br;
     private Mossa build;
-    private String movePawn;
     private ArrayList<God> gods;
-    private Thread listen;
-    private String color;
-    private int ID, currentPawn, counter = 0;
-    private boolean inTurno = false;
-    private boolean[] pawnEnabled = new boolean[2];
 
 
     /**
@@ -42,56 +35,45 @@ public class View {
      */
     public void setHandlerClient(NetworkHandlerClient handlerClient) {
         this.handlerClient = handlerClient;
+        listen = new Thread(handlerClient);
+        listen.start();
     }
 
     /**
      * Initializes a new view that creates a networkhandler
      *
-     * @param address address to connect network handler socket
-     * @param name    player name in game
+     * @param handler network handler of connection
      */
-    public View(String address, String name) {
+    public CLIView(NetworkHandlerClient handler) {
         table = new Table();
         br = new BufferedReader(new InputStreamReader(System.in));
-        handlerClient = new NetworkHandlerClient(address, name, this);
+        handlerClient = handler;
         listen = new Thread(handlerClient);
         pawnEnabled[0] = true;
         pawnEnabled[1] = true;
         listen.start();
     }
 
-    public void disablePawn(int n, boolean enabled) {
-        pawnEnabled[n] = enabled;
+    public CLIView() {
+        table = new Table();
+        br = new BufferedReader(new InputStreamReader(System.in));
+        pawnEnabled[0] = true;
+        pawnEnabled[1] = true;
     }
 
     public void setColor(String color) {
-        this.color = color;
-    }
-
-    public void switchCurrentPawn() {
-        switch (currentPawn) {
-            case 0:
-                currentPawn = 1;
-                break;
-            default:
-                currentPawn = 0;
-        }
-    }
-
-    public Table getTable() {
-        return table;
     }
 
 
-    public synchronized void setTable(Table table) {
-        this.table = table;
-        counter++;
 
-    }
+
+
+
 
     /**
      * Prints field status on CLI
      */
+    @Override
     public synchronized void printTable() {
         System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n" + "\u001B[0m");
         System.out.print("[riga]\t------------------------------------------\n");
@@ -167,6 +149,7 @@ public class View {
      *
      * @param gods List of available cards
      */
+    @Override
     public void chooseCards(ArrayList<God> gods) {
         new Thread(() -> {
             String card = "1";
@@ -217,6 +200,7 @@ public class View {
      *
      * @param action action type BUILD or MOVE
      */
+    @Override
     public void setNewAction(Mossa.Action action) {
         try {
             Thread.sleep(200);
@@ -234,6 +218,7 @@ public class View {
                 inTurno = true;
             }
             stringMove = getCoords(table, table.getXYPawn(ID, currentPawn, true), table.getXYPawn(ID, currentPawn, false), action);
+            Mossa move;
             if (stringMove == null) {
                 move = new Mossa(action, -1, -1, -1);
                 handlerClient.sendAction(move);
@@ -259,7 +244,7 @@ public class View {
         do {
             System.out.print("Che pedina vuoi usare in questo turno? :  ");
             try {
-                movePawn = br.readLine();
+                String movePawn = br.readLine();
                 switch (movePawn.charAt(0)) {
                     case '0':
                         if (pawnEnabled[0]) {
@@ -288,6 +273,7 @@ public class View {
     /**
      * Requests to player how many user has to be in the match
      */
+    @Override
     public void setNumeroGiocatori() {
         new Thread(() -> {
             String partecipanti = null;
@@ -316,6 +302,7 @@ public class View {
     /**
      * Requests init pawn positions before game starts
      */
+    @Override
     public synchronized void setInitializePawn() {
         try {
             Thread.sleep(300);
@@ -377,6 +364,7 @@ public class View {
     /**
      * This method is called if server sends an error message
      */
+    @Override
     public void setFailed(String msg) {
         System.err.println("Errore:\n" + msg);
     }
@@ -386,6 +374,7 @@ public class View {
      *
      * @param msg message text
      */
+    @Override
     public void printMessage(String msg) {
         if (msg.contains("Turno di :")) {
             inTurno = false;
@@ -501,6 +490,7 @@ public class View {
      *
      * @param winner
      */
+    @Override
     public void sconfitta(String winner) {
         try {
             Thread.sleep(200);
@@ -523,6 +513,7 @@ public class View {
      *
      * @param player
      */
+    @Override
     public void networkError(String player) {
         printMessage(player + " Si è disconnesso\nFine della partita");
         System.exit(0);

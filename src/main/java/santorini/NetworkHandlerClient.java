@@ -3,6 +3,7 @@ package santorini;
 import santorini.model.godCards.God;
 import santorini.model.Mossa;
 import santorini.model.Table;
+import santorini.view.View;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -22,9 +23,9 @@ public class NetworkHandlerClient implements Runnable {
      * @param address server address
      * @param name    player name
      */
-    public NetworkHandlerClient(String address, String name, View view) {
-        this.view = view;
+    public NetworkHandlerClient(String address, String name, View v) throws IOException {
         try {
+            this.view = v;
             server = new Socket(address, Parameters.PORT);
             outputStream = new ObjectOutputStream(server.getOutputStream());
             inputStream = new ObjectInputStream(server.getInputStream());
@@ -32,9 +33,13 @@ public class NetworkHandlerClient implements Runnable {
             outputStream.flush();
             int id = Integer.parseInt(inputStream.readObject().toString());
             view.setID(id);
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setView(View view) {
+        this.view = view;
     }
 
     @Override

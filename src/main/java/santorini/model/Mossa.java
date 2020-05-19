@@ -1,6 +1,6 @@
 package santorini.model;
 
-import santorini.View;
+import santorini.view.View;
 
 import java.io.Serializable;
 

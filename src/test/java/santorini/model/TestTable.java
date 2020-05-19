@@ -2,7 +2,7 @@ package santorini.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import santorini.View;
+import santorini.view.View;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -226,7 +226,7 @@ public class TestTable implements Serializable {
      */
     @Test
     public void testControlBaseMovement() {
-        View v = new View(null, null);
+        View v = new View(null);
         Pawn p0 = new Pawn();
         Pawn q1 = new Pawn();
         p0.setIdPawn(0);

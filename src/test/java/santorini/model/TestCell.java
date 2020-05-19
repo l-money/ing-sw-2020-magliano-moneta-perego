@@ -11,17 +11,17 @@ import static org.junit.Assert.*;
 
 public class TestCell {
 
-    private Cell cell;
+    /*private Cell cell;
 
     @Before
     public void before() {
         cell = new Cell();
     }
 
-    /**
+    *//**
      * method that tests if the level is 1
      * and if the level is 4 the cell is complete.
-     */
+     *//*
     @Test
     public void testStartCell() {
         assertEquals(0, cell.getLevel());
@@ -30,9 +30,9 @@ public class TestCell {
         assertNull(cell.getPawn());
     }
 
-    /**
+    *//**
      * method that tests the coordinate of the cell
-     */
+     *//*
     @Test
     public void testCoordinateCell() {
         cell.setX(0);
@@ -41,9 +41,9 @@ public class TestCell {
         assertEquals(0, cell.getY());
     }
 
-    /**
+    *//**
      * method that tests the level of the cell
-     */
+     *//*
     @Test
     public void testCellLevel() {
         cell.setLevel(1);
@@ -56,9 +56,9 @@ public class TestCell {
         assertFalse(cell.isFree());
     }
 
-    /**
+    *//**
      * method that tests if a cell is free or not
-     */
+     *//*
     @Test
     public void testCellFree() {
         Pawn pawn = new Pawn();
@@ -80,9 +80,9 @@ public class TestCell {
         assertNull(cell.getPawn());
     }
 
-    /**
+    *//**
      * method that tests is a cell is complete
-     */
+     *//*
     @Test
     public void testCellComplete() {
         cell.setLevel(2);
@@ -96,5 +96,5 @@ public class TestCell {
         assertFalse(cell.isFree());
     }
 
-
+*/
 }

@@ -1,9 +1,9 @@
 package santorini;
 
+import javafx.scene.paint.Color;
 import santorini.model.*;
 import santorini.model.godCards.God;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 

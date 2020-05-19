@@ -1,8 +1,8 @@
 package santorini.model;
 
+import javafx.scene.paint.Color;
 import santorini.model.godCards.God;
 
-import java.awt.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;

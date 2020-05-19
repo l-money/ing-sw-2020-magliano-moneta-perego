@@ -93,7 +93,7 @@ public class NetworkHandlerServer implements Runnable {
         try {
             inputStream = new ObjectInputStream(s.getInputStream());
             outputStream = new ObjectOutputStream(s.getOutputStream());
-            players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
+            players.add(new Gamer(s, handleDoubleName(inputStream.readObject().toString()), i, inputStream, outputStream));
             outputStream.writeObject(i + "");
             outputStream.flush();
             //notifyAll();
@@ -101,6 +101,26 @@ public class NetworkHandlerServer implements Runnable {
             e.printStackTrace();
         }
         //}).start();
+    }
+
+    private String handleDoubleName(String name) {
+        int i = 0;
+        for (Gamer g : players) {
+            if (i == 0) {
+                if (g.getName().equals(name)) {
+                    i++;
+                }
+            } else {
+                if (g.getName().equals(name + "-" + i)) {
+                    i++;
+                }
+            }
+        }
+        if (i == 0) {
+            return name;
+        } else {
+            return name + "-" + i;
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package santorini.model;
 
-import java.awt.*;
+import javafx.scene.paint.Color;
+
 import java.io.Serializable;
 
 /**
