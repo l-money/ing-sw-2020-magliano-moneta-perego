@@ -2,7 +2,9 @@ package santorini.view;
 
 import santorini.NetworkHandlerClient;
 import santorini.model.*;
-import santorini.model.godCards.*;
+import santorini.model.godCards.God;
+import santorini.model.godCards.Pdor;
+import santorini.model.godCards.Triton;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,14 +51,7 @@ public class CLIView extends View {
         pawnEnabled[1] = true;
     }
 
-    public void setColor(String color) {
-    }
-
-
-
-
-
-
+    //public void setColor(String newColor) { }
 
     /**
      * Prints field status on CLI
@@ -88,16 +83,6 @@ public class CLIView extends View {
         }
     }
 
-    //metodo che ricerca in quali celle hanno la cupola
-    public void searchLevelMax(Table table) {
-        for (int i = 0; i <= 4; i++) {
-            for (int j = 0; j <= 4; j++) {
-
-            }
-        }
-    }
-//"\u001B[43m" +
-
     public void colorCellPawn(Pawn pawn) {
         if (pawn.getColorPawn().equals(Color.YELLOW)) {
             System.out.print("\u001B[34m" + "\u001B[43m" + "(" + pawn.getIdPawn() + ")" + "\u001B[0m");
@@ -116,31 +101,18 @@ public class CLIView extends View {
     }
 
     /**
-     * method noGodEffect
-     *
-     * @param no the input string of the gamer
-     * @return the noEffect if the syntax is correct, or return null
-     */
-
-    public Mossa noGodEffect(String no) {
-        if ((no.equals("NO")) || (no.equals("No")) || (no.equals("no"))) {
-            Mossa noEffect;
-            noEffect = new Mossa(Mossa.Action.MOVE, -1, -1, -1);
-            return noEffect;
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * Shows to user available card with description
-     * then request a choice
+     * Then request a choice
+     * The gamer has 3 attempts to choose the card
+     * If he failed with attempts, the game selects the first card and assigns it to the gamer
+     * The last one card is automatically assigned to the last gamer
      *
      * @param gods List of available cards
      */
     @Override
     public void chooseCards(ArrayList<God> gods) {
         new Thread(() -> {
+            int countDown = 3;
             String card = "1";
             God chooseCard;
             int number = -1;
@@ -153,29 +125,45 @@ public class CLIView extends View {
             }
             System.out.println("\u001B[33m" + "**********************************************************************" + "\u001B[0m");
             try {
-                do {
-                    System.out.print("Scegli una carta: ");
-                    card = br.readLine();
-                    try {
-                        number = Integer.parseInt(card);
-                    } catch (NumberFormatException ex) {
-                        number = -1;
-                    }
-                    if (number == 8) {
-                        number = gods.size();
-                        gods.add(new Pdor());
-                        break;
-                    }
-                    if (number == 10) {
-                        number = gods.size();
-                        gods.add(new Triton());
-                        break;
-                    }
+                if (gods.size() > 1) {
+                    do {
+                        System.out.print("Scegli una carta: ");
+                        card = br.readLine();
+                        try {
+                            number = Integer.parseInt(card);
+                        } catch (NumberFormatException ex) {
+                            number = -1;
+                        }
+                        if (number == 8) {
+                            number = gods.size();
+                            gods.add(new Pdor());
+                            break;
+                        }
+                        if (number == 10) {
+                            number = gods.size();
+                            gods.add(new Triton());
+                            break;
+                        }
 
-                    if (number < 0 || number >= gods.size()) {
-                        System.err.println("Errore carta scelta!");
-                    }
-                } while (number < 0 || number >= gods.size());
+                        if (number < 0 || number >= gods.size()) {
+                            System.err.println("Errore carta scelta!");
+                            countDown--;
+                            if (countDown == 0) {
+                                System.err.println("Selezione automatica della carta");
+                                number = 0;
+                            } else {
+                                System.err.println("Tentativi rimanenti :" + countDown);
+                            }
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } while (number < 0 || number >= gods.size());
+                } else {
+                    number = 0;
+                }
                 chooseCard = gods.get(number);
                 handlerClient.setCard(chooseCard);
             } catch (IOException e) {
@@ -261,6 +249,7 @@ public class CLIView extends View {
 
     /**
      * Requests to player how many user has to be in the match
+     * The game assigns two players of default
      */
     @Override
     public void setNumeroGiocatori() {
@@ -290,9 +279,13 @@ public class CLIView extends View {
 
     /**
      * Requests init pawn positions before game starts
+     * The gamer has 3 attempts for place each of his pawn
+     * If he failed with attempts, the game positions the pawns in a random cell of the table
+     *
      */
     @Override
     public synchronized void setInitializePawn() {
+        int countDown;
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
@@ -302,20 +295,68 @@ public class CLIView extends View {
         System.out.println("\nInserisci posizioni delle pedine: ");
         boolean valid;
         try {
+            countDown = 3;
             do {
                 System.out.println("Inserisci cordinata pedina 1 [x,y]: ");
                 coordPawn0 = br.readLine();
-                valid = validaCoordinate(coordPawn0);
+                valid = validaCoordinate(coordPawn0, getTable());
                 if (!valid) {
-                    System.err.println("--Formato coordinate non valido--");
+                    System.err.println("--Coordinate non valide--");
+                    countDown--;
+                    if (countDown == 0) {
+                        System.err.println("Posizionamento casuale della pedina 0");
+                        for (int i = 0; i < 4; i++) {
+                            for (int j = 0; j < 4; j++) {
+                                Cell cell = getTable().getTableCell(i, j);
+                                if (cell.isFree()) {
+                                    coordPawn0 = i + "," + j;
+                                    valid = validaCoordinate(coordPawn0, getTable());
+                                }
+                            }
+                        }
+                        System.err.println("Pedina 0 posizionata in: " + coordPawn0);
+                    } else {
+                        System.err.println("Tentativi rimanenti :" + countDown);
+                    }
+                }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             } while (!valid);
+            countDown = 3;
             do {
                 System.out.println("Inserisci cordinata pedina 2 [x,y]: ");
                 coordPawn1 = br.readLine();
-                valid = validaCoordinate(coordPawn1);
+                valid = validaCoordinate(coordPawn1, getTable());
+                if (coordPawn1.equals(coordPawn0)) {
+                    valid = false;
+                    System.err.println("Posizione occupata da pedina 0");
+                }
                 if (!valid) {
-                    System.err.println("--Formato coordinate non valido--");
+                    System.err.println("--Coordinate non valide--");
+                    countDown--;
+                    if (countDown == 0) {
+                        System.err.println("Posizionamento casuale della pedina 1");
+                        for (int i = 3; i > -1; i--) {
+                            for (int j = 0; j < 5; j++) {
+                                Cell cell = getTable().getTableCell(i, j);
+                                if (cell.isFree()) {
+                                    coordPawn1 = i + "," + j;
+                                    valid = validaCoordinate(coordPawn1, getTable());
+                                }
+                            }
+                        }
+                        System.err.println("Pedina 1 posizionata in: " + coordPawn1);
+                    } else {
+                        System.err.println("Tentativi rimanenti :" + countDown);
+                    }
+                }
+                try {
+                    Thread.sleep(150);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             } while (!valid);
             handlerClient.initializePawns(coordPawn0 + "," + coordPawn1);
@@ -330,7 +371,7 @@ public class CLIView extends View {
      * @param coords coordinates in format x,y
      * @return true if string format is x,y and x,y are int ∈{0,4}; false otherwise
      */
-    private boolean validaCoordinate(String coords) {
+    private boolean validaCoordinate(String coords, Table t) {
         String[] c = coords.split(",");
         if (c.length != 2) {
             return false;
@@ -340,8 +381,11 @@ public class CLIView extends View {
             if (i < 0 || i > 4) {
                 return false;
             }
-            i = Integer.parseInt(c[1]);
-            if (i < 0 || i > 4) {
+            int j = Integer.parseInt(c[1]);
+            if (j < 0 || j > 4) {
+                return false;
+            }
+            if (t.getTableCell(i, j).getPawn() != null) {
                 return false;
             }
             return true;
@@ -379,13 +423,16 @@ public class CLIView extends View {
     /**
      * Requests to user a directional input centered in choosed pawn
      * Return coordinates of a target cell in format x,y
+     * The gamer has 3 attempts for move or build correctly
+     * If he failed with attempts, the game disconnects the gamer
      *
      * @param t     table play field
      * @param xPawn xcoord of pawn
      * @param yPawn ycoord of pawn
-     * @return
+     * @return the coordinate of the move
      */
-    public String getCoords(Table t, int xPawn, int yPawn, Mossa.Action cmd) {
+    public String getCoords(Table t, int xPawn, int yPawn, Mossa.Action cmd) throws IOException {
+        int countDown = 3;
         boolean errato = true;
         Cell c = null;
         do {
@@ -448,10 +495,37 @@ public class CLIView extends View {
             }
             if (errato || c == null) {
                 System.err.println("--Input non corretto--");
-                printTable();
+                countDown--;
+                if (countDown == 0) {
+                    printMessage("Hai esaurito i tentativi\nDisconnessione");
+                    //TODO gestire eccezione EOFException lato server
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        handlerClient.disconnect();
+                        handlerClient.getServer().close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        System.exit(0);
+                    }
+                } else {
+                    System.err.println("Tentativi rimanenti :" + countDown);
+                }
                 counter = 0;
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                printTable();
             }
         } while (errato || c == null);
+        printTable();
         return c.getX() + "," + c.getY();
     }
 

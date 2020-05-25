@@ -38,6 +38,10 @@ public class NetworkHandlerClient implements Runnable {
         }
     }
 
+    public Socket getServer() {
+        return server;
+    }
+
     public void setView(View view) {
         this.view = view;
     }

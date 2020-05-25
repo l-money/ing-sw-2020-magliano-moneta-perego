@@ -155,12 +155,12 @@ public class Turno implements Runnable {
 
 
     /**
-     * method giveMeMossa
+     * method giveMeMove
      *
      * @param action the action of the gamer (MOVE or BUILD)
      * @return the move
      */
-    public Mossa giveMeMossa(Mossa.Action action) {
+    private Mossa giveMeMove(Mossa.Action action) {
         try {
             return gameHandler.richiediMossa(action, gamer);
         } catch (IOException | ClassNotFoundException e) {
@@ -176,7 +176,7 @@ public class Turno implements Runnable {
      * @return a move of typo MOVE
      */
     public Mossa moveRequest() {
-        move = giveMeMossa(Mossa.Action.MOVE);
+        move = giveMeMove(Mossa.Action.MOVE);
         return move;
     }
 
@@ -186,7 +186,7 @@ public class Turno implements Runnable {
      * @return a move of typo BUILD
      */
     public Mossa buildingRequest() {
-        move = giveMeMossa(Mossa.Action.BUILD);
+        move = giveMeMove(Mossa.Action.BUILD);
         return move;
     }
 
@@ -195,7 +195,10 @@ public class Turno implements Runnable {
      * Executes in new Thread all player turn with
      * all god cards features
      */
+    //TODO rivedere alcune relazioni tra tentativi e effetto carte divinità
+    // Esempio: Prometheus, Ares
     public void run() {
+        int maxAttempts = 3;
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
@@ -218,11 +221,14 @@ public class Turno implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            do {
-                gamer.getMyGodCard().initializeOwner(this);
+            gamer.getMyGodCard().initializeOwner(this);
+            //do
+            while (!validationMove && count < maxAttempts) {
+                //gamer.getMyGodCard().initializeOwner(this);
                 move = moveRequest();
                 myMovement();
-            } while (!validationMove && count < 5);
+            }
+            //while (!validationMove && count < maxAttempts);
             methodLoser(validationMove, count, getGamer());
 
             controlWin();
@@ -233,10 +239,12 @@ public class Turno implements Runnable {
                 e.printStackTrace();
             }
             if (!getGamer().getLoser()) {
-                do {
+                //do
+                while (!validationBuild && count < maxAttempts) {
                     move = buildingRequest();
                     myBuilding();
-                } while (!validationBuild && count < 5);
+                }
+                //while (!validationBuild && count < maxAttempts);
                 methodLoser(validationBuild, count, getGamer());
             }
         }
@@ -327,7 +335,7 @@ public class Turno implements Runnable {
     public void getValidation(boolean v) {
         if (!v) {
             count++;
-            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "Tentativi rimanenti: " + (5 - count) + "\u001B[0m");
+            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "Tentativi rimanenti: " + (3 - count) + "\u001B[0m");
         }
     }
 
@@ -434,10 +442,10 @@ public class Turno implements Runnable {
      */
     public void methodLoser(boolean b, int i, Gamer g) {
         //exceeded the number of attempts
-        if ((!b) && (i >= 5)) {
+        if ((!b) && (i >= 3)) {
             g.setLoser(true);
-            getGameHandler().sendFailed(g, "##Hai esaurito i tentativi##\n");
-            getGameHandler().getGame().broadcastMessage(getGamer().getName() + " ha esaurito i tentativi disponibili");
+            getGameHandler().sendFailed(g, "##Hai esaurito i tentativi##");
+            getGameHandler().getGame().broadcastMessage(getGamer().getName() + " ha esaurito i tentativi disponibili, è' fuori dal gioco");
         } else {
             g.setLoser(false);
         }
@@ -523,7 +531,7 @@ public class Turno implements Runnable {
      * method endOfTheMatch
      *
      * @param h the networkHandlerServer
-     *          The method controls if the match will end for pawns locked or number of attempts exhausted of the gamers
+     * The method controls if the match will end for pawns locked or number of attempts exhausted of the gamers
      */
     private void endOfTheMatch(NetworkHandlerServer h) {
         int p = h.getGame().getPlayersInGame().size();
