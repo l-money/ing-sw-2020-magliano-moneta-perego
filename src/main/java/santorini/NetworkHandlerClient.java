@@ -51,6 +51,10 @@ public class NetworkHandlerClient implements Runnable {
         listen();
     }
 
+    public View getView() {
+        return view;
+    }
+
     /**
      * Creates a new loop thread ready for listen to commands
      * from game server

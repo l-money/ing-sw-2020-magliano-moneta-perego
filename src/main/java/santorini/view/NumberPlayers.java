@@ -24,6 +24,12 @@ public class NumberPlayers {
     private Button threePlayers;
     private Stage stage;
 
+    public int getPlayers() {
+        return players;
+    }
+
+    private int players = 0;
+
     DropShadow shadow = new DropShadow();
 
     @FXML
@@ -33,6 +39,21 @@ public class NumberPlayers {
         twoPlayers.setOnAction(event -> chooseCard2());
         threePlayers.setOnAction(event -> chooseCard3());
         wait.setOnAction(event -> waitWindow());
+    }
+
+    public void chooseCard2() {
+        this.players = 2;
+        stage.close();
+    }
+
+    public NumberPlayers(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void chooseCard3() {
+        this.players = 3;
+        stage.close();
+
     }
 
 
@@ -60,7 +81,7 @@ public class NumberPlayers {
         this.stage = stage;
     }
 
-    private void chooseCard2() {
+    /*private void chooseCard2() {
         stage.close();
         try {
             stage.setTitle("Carte Divinità");
@@ -104,7 +125,7 @@ public class NumberPlayers {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void waitWindow() {
         stage.close();

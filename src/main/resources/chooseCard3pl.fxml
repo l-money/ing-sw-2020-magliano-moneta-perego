@@ -16,7 +16,7 @@
                  onMouseClicked="#clickGod1" onMouseEntered="#imageGod1In" onMouseExited="#imageGod1Out"
                  pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Project_Images/Project_Images/GodCards/Apollo.png"/>
+            <Image url="@images/GodCards/Apollo.png"/>
          </image>
          <cursor>
             <Cursor fx:constant="HAND"/>
@@ -25,7 +25,7 @@
       <ImageView fx:id="god2" fitHeight="209.0" fitWidth="145.0" layoutX="285.0" layoutY="80.0" pickOnBounds="true"
                  preserveRatio="true">
          <image>
-            <Image url="@Project_Images/Project_Images/GodCards/Ares.png"/>
+            <Image url="@images/GodCards/Ares.png"/>
          </image>
          <cursor>
             <Cursor fx:constant="HAND"/>
@@ -34,7 +34,7 @@
       <ImageView fitHeight="209.0" fitWidth="146.0" layoutX="506.0" layoutY="80.0" pickOnBounds="true"
                  preserveRatio="true">
          <image>
-            <Image url="@Project_Images/Project_Images/GodCards/Artemis.png"/>
+            <Image url="@images/GodCards/Artemis.png"/>
          </image>
          <cursor>
             <Cursor fx:constant="HAND"/>
@@ -45,7 +45,7 @@
             <ImageView fitHeight="123.0" fitWidth="153.0" layoutX="13.0" layoutY="13.0" pickOnBounds="true"
                        preserveRatio="true">
                <image>
-                  <Image url="@Project_Images/Project_Images/Powers/ApolloPower.png"/>
+                  <Image url="@images/GodsPower/ApolloPower.png"/>
                </image>
             </ImageView>
          </children>

@@ -1,18 +1,32 @@
 package santorini.view;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import santorini.model.Cell;
 import santorini.model.Mossa;
 import santorini.model.Table;
 import santorini.model.godCards.God;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ViewController extends View {
 
+    private Stage thisStage;
+    private Stage overlayedStage;
 
     public ViewController() {
 
+    }
+
+    public void setThisStage(Stage thisStage) {
+        this.thisStage = thisStage;
     }
 
     @FXML
@@ -23,6 +37,38 @@ public class ViewController extends View {
 
     @Override
     public void chooseCards(ArrayList<God> gods) {
+        Platform.runLater(() -> {
+            overlayedStage.close();
+            Stage dialog = new Stage();
+            Parent root;
+            FXMLLoader loader = null;
+            CardChoice cc = null;
+            try {
+                switch (gods.size()) {
+                    case 1:
+                        break;
+                    case 2:
+                        loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("chooseCard2pl.fxml")));
+                        cc = new ChooseCard2pl(gods);
+                        cc.setStage(dialog);
+                        loader.setController(cc);
+                        break;
+                    case 3:
+                        break;
+                }
+                root = loader.load();
+                Scene s = new Scene(root);
+                dialog.setScene(s);
+                dialog.initOwner(thisStage);
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
+                dialog.showAndWait();
+                handlerClient.setCard(cc.getChoosed());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
     @Override
@@ -32,7 +78,33 @@ public class ViewController extends View {
 
     @Override
     public void setNumeroGiocatori() {
+        Platform.runLater(() -> {
+            Stage dialog = new Stage();
+            Parent root;
+            try {
+                FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("numberPlayers.fxml")));
+                NumberPlayers numberPlayersController = new NumberPlayers(dialog);
+                loader.setController(numberPlayersController);
+                root = loader.load();
+                Scene s = new Scene(root);
+                dialog.setScene(s);
+                dialog.initOwner(thisStage);
+                dialog.initModality(Modality.APPLICATION_MODAL);
+                //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
+                dialog.showAndWait();
+                handlerClient.setPartecipanti(numberPlayersController.getPlayers());
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
+                Scene s1 = new Scene(root);
+                dialog.setScene(s1);
+                overlayedStage = dialog;
+                dialog.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
     }
+
 
     @Override
     public void setFailed(String msg) {
@@ -69,68 +141,6 @@ public class ViewController extends View {
 
     }
 
-    /**
-     * method selectionCardGUI
-     *
-     * @param gods the gods choose by the extraction for the game
-     */
-    public void selectionCardGUI(ArrayList<God> gods /**scena dove ci sono le carte*/) {
-        //*** = nella scena i-esima metto l'immagine di quella carta
-        int l = gods.size();
-        for (int i = 0; i < l; i++) {
-            String s = gods.get(i).getName();
-            switch (s) {
-                case "Apollo":
-                    //nella scena nella posizione i-esima metto l'immagine di Apollo
-                    break;
-                case "Apres":
-                    //***
-                    break;
-                case "Artemis":
-                    //***
-                    break;
-                case "Athena":
-                    //***
-                    break;
-                case "Atlas":
-                    //***
-                    break;
-                case "Chronus":
-                    //***
-                    break;
-                case "Demeter":
-                    //***
-                    break;
-                case "Hephaestus":
-                    //***
-                    break;
-                case "Hestia":
-                    //***
-                    break;
-                case "Minotaur":
-                    //***
-                    break;
-                case "Pan":
-                    //***
-                    break;
-                case "Pdor":
-                    //***
-                    break;
-                case "Prometheus":
-                    //***
-                    break;
-                case "Triton":
-                    //***
-                    break;
-                case "Zeus":
-                    //***
-                    break;
-                default:
-                    //metto immagine vuota
-                    break;
-            }
-        }
-    }
 
 //AGGIORNAMENTO TABLE = QUESTA MERDA LOOL :P
 
@@ -231,7 +241,6 @@ public class ViewController extends View {
             }
         }
     }
-
 
 
 }

@@ -18,13 +18,14 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </ImageView>
-        <ImageView fitHeight="247.0" fitWidth="163.0" layoutX="420.0" layoutY="71.0" pickOnBounds="true"
-                   preserveRatio="true">
+        <ImageView fx:id="secondGod" fitHeight="247.0" fitWidth="163.0" layoutX="420.0" layoutY="71.0"
+                   onMouseClicked="#clickSecondGod" onMouseEntered="#secondGodDescription" onMouseExited="#secondGodOut"
+                   pickOnBounds="true" preserveRatio="true">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </ImageView>
-        <Label layoutX="166.0" layoutY="349.0" prefHeight="24.0" prefWidth="123.0" text="NOME DIO 1">
+        <Label fx:id="label1" layoutX="166.0" layoutY="349.0" prefHeight="24.0" prefWidth="123.0" text="NOME DIO 1">
             <textFill>
                 <LinearGradient endX="1.0" endY="1.0">
                     <stops>
@@ -34,7 +35,7 @@
                 </LinearGradient>
             </textFill>
         </Label>
-        <Label layoutX="471.0" layoutY="349.0" prefHeight="24.0" prefWidth="138.0" text="NOME DIO 2">
+        <Label fx:id="label2" layoutX="471.0" layoutY="349.0" prefHeight="24.0" prefWidth="138.0" text="NOME DIO 2">
             <textFill>
                 <LinearGradient endX="1.0" endY="1.0">
                     <stops>
@@ -44,7 +45,7 @@
                 </LinearGradient>
             </textFill>
         </Label>
-        <TextArea layoutX="153.0" layoutY="401.0" prefHeight="117.0" prefWidth="403.0"
+        <TextArea fx:id="description" layoutX="153.0" layoutY="401.0" prefHeight="117.0" prefWidth="403.0"
                   text="Descrizione del Dio se passi sopra il mouse alla divinità"/>
     </children>
 </AnchorPane>

@@ -45,7 +45,6 @@ public class LoginUser2 {
     public void initialize() {
         System.out.println("LoginUser");
         connect.setOnAction(event -> readParameters());
-        connect.setOnAction(event -> windowPlayers());
     }
 
     //prova finestra da aprire: FUNZIONA
@@ -96,23 +95,12 @@ public class LoginUser2 {
 //    }
 
     private void windowPlayers() {
-        stage.close();
         try {
-            stage.setTitle("Numero Giocatori");
-            //stage.getIcons().add(new Image("images/cm_boardgame.png"));
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("numberPlayers.fxml")));
-//            ViewController controller = new ViewController();
-//
-//            controller.setHandlerClient(handlerClient);
-//            handlerClient.setView(controller);
-//
-//            loader.setController(controller);
-//            LoginUser2 controller = new LoginUser2();
-//            controller.setStage(stage);
-//            loader.setController(controller);
-            NumberPlayers controller = new NumberPlayers();
-            controller.setStage(stage);
-            loader.setController(controller);
+            /*Aggiungi qua il file fxml della finestra da aprire*/
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("playTable.fxml")));
+            ViewController vc = (ViewController) handlerClient.getView();
+            vc.setThisStage(stage);
+            loader.setController(vc);
             Parent root = loader.load();
             Scene s = new Scene(root);
             stage.setScene(s);
@@ -139,18 +127,21 @@ public class LoginUser2 {
             return;
         }
         try {
-            handlerClient = new NetworkHandlerClient(a, n, null);
+            ViewController vc = new ViewController();
+            handlerClient = new NetworkHandlerClient(a, n, vc);
+            vc.setHandlerClient(handlerClient);
         } catch (IOException ex) {
             alert.setHeaderText("Connessione non riuscita!");
             alert.showAndWait();
             return;
         }
-        alert = new Alert(Alert.AlertType.INFORMATION);
+        /*alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Notifica di rete");
         alert.setHeaderText("Connessione stabilita con successo");
         alert.setContentText(null);
-
-        alert.showAndWait();
+        alert.showAndWait();*/
+        //stage.close();
+        windowPlayers();
     }
 
 

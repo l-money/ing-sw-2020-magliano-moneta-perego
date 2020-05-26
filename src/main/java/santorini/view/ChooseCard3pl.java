@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import santorini.model.godCards.God;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ChooseCard3pl {
+public class ChooseCard3pl implements CardChoice {
 
     @FXML
     private Button changeBut;
@@ -44,6 +45,7 @@ public class ChooseCard3pl {
 
     private Stage stage;
     private List<String> images;
+    private God choosed;
 
     DropShadow shadow = new DropShadow();
 
@@ -152,5 +154,10 @@ public class ChooseCard3pl {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    @Override
+    public God getChoosed() {
+        return this.choosed;
     }
 }

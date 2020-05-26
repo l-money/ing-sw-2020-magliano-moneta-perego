@@ -39,7 +39,7 @@
 }
 
 .game1 {
-    -fx-background-image: url('Project_Images/Project_Images/Players/Gamer_1.png');
+    -fx-background-image: url('images/Players/Gamer_1.png');
     -fx-background-size: cover;
 }
 

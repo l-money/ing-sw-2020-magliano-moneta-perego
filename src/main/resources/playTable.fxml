@@ -30,19 +30,19 @@
         <ImageView fitHeight="112.0" fitWidth="87.0" layoutX="21.0" layoutY="20.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@Project_Images/Project_Images/Players/Gamer_1.png"/>
+                <Image url="@images/Players/Gamer_1.png"/>
             </image>
         </ImageView>
         <ImageView fitHeight="112.0" fitWidth="87.0" layoutX="27.0" layoutY="252.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@Project_Images/Project_Images/Players/Gamer_2.png"/>
+                <Image url="@images/Players/Gamer_2.png"/>
             </image>
         </ImageView>
         <ImageView fitHeight="112.0" fitWidth="87.0" layoutX="610.0" layoutY="252.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
-                <Image url="@Project_Images/Project_Images/Players/Gamer_3.png"/>
+                <Image url="@images/Players/Gamer_3.png"/>
             </image>
         </ImageView>
     </children>
