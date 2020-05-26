@@ -11,7 +11,7 @@ import java.util.ArrayList;
 // limitare questo input a 5 tentativi o con un timer
 public class Game implements Runnable {
     private final ArrayList<Gamer> playersInGame;
-    /*god cards sono quelle attive nella partita
+    /*god cards sono quelle attive nella matchGame
      * passa una copia di questa lista al turno
      * rifai la classe extraction con la shuffle della collection*/
     private ArrayList<God> godCards;
@@ -43,13 +43,13 @@ public class Game implements Runnable {
     public void run() {
         cardChoice();
         placePawns();
-        partita();
+        matchGame();
     }
 
     /**
      * Requests to all clients to place their pawns
      */
-    public void placePawns() {
+    private void placePawns() {
         handler.updateField(playersInGame.get(0));
         for (Gamer g : playersInGame) {
             broadcastMessage(g.getName() + " sta posizionando le sue pedine");
@@ -133,7 +133,7 @@ public class Game implements Runnable {
      * Game loop.  Each cicle ask to a player to do his moves
      * Cicle continue until someone wins
      */
-    public void partita() {
+    public void matchGame() {
         broadcastMessage("\nINIZIO PARTITA");
         try {
             Thread.sleep(200);

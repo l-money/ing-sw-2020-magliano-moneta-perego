@@ -100,7 +100,7 @@ public class Minotaur extends God {
                 int y = nextCell.getY();
                 otherPawn.setPastLevel(end.getLevel());
                 turno.getTable().setACell(x, y, nextCell.getLevel(), false, nextCell.isComplete(), otherPawn);
-                turno.printTableStatusTurn(true);
+                //turno.printTableStatusTurn(true);
                 printerStatus = false;
                 turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Minotaur" + "\u001B[0m");
             }

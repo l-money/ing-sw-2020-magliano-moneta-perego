@@ -108,7 +108,7 @@ public class Ares extends God {
                         turno.printTableStatusTurn(true);
                         turno.setValidationBuild(true);
                     }
-                } while (!aresEffect && turno.getCount() < 5);
+                } while (!aresEffect && turno.getCount() < 3);
                 turno.methodLoser(aresEffect, turno.getCount(), turno.getGamer());
             }
         }

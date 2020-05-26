@@ -25,7 +25,6 @@ public class ViewController extends View {
 
     @Override
     public void chooseCards(ArrayList<God> gods) {
-
     }
 
     @Override
@@ -35,7 +34,6 @@ public class ViewController extends View {
 
     @Override
     public void setNumeroGiocatori() {
-
     }
 
     @Override
