@@ -14,7 +14,7 @@ public class Turno implements Runnable {
     private boolean validationMove;
     private boolean validationBuild;
     private NetworkHandlerServer gameHandler;
-    //count : 5 number of attempts
+    //count : 3 number of attempts
     private int count = 0;
 
     /**
@@ -24,7 +24,6 @@ public class Turno implements Runnable {
      * @param gamer player that has to play
      * @param table game field
      */
-    //TODO vedere meglio la gestione dei messaggi
     public Turno(ArrayList<God> cards, Gamer gamer, Table table, NetworkHandlerServer handler) {
         cards.removeIf(g -> g.equals(gamer.getMyGodCard()));
         this.otherCards = cards;
@@ -195,8 +194,6 @@ public class Turno implements Runnable {
      * Executes in new Thread all player turn with
      * all god cards features
      */
-    //TODO rivedere alcune relazioni tra tentativi e effetto carte divinità
-    // Esempio: Prometheus, Ares
     public void run() {
         int maxAttempts = 3;
         try {

@@ -60,7 +60,7 @@ public class Prometheus extends God {
                     control++;
                     turno.setCount(0);
                 }
-            } while (!promEffect && turno.getCount() < 5);
+            } while (!promEffect && turno.getCount() < 3);
             turno.methodLoser(promEffect, turno.getCount(), turno.getGamer());
             if (turno.getGamer().getLoser()) {
                 turno.getGamer().setSteps(0);

@@ -2,9 +2,10 @@ package santorini.view;
 
 import santorini.NetworkHandlerClient;
 import santorini.model.*;
+import santorini.model.godCards.Ares;
 import santorini.model.godCards.God;
 import santorini.model.godCards.Pdor;
-import santorini.model.godCards.Triton;
+import santorini.model.godCards.Prometheus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -141,7 +142,12 @@ public class CLIView extends View {
                         }
                         if (number == 10) {
                             number = gods.size();
-                            gods.add(new Triton());
+                            gods.add(new Prometheus());
+                            break;
+                        }
+                        if (number == 11) {
+                            number = gods.size();
+                            gods.add(new Ares());
                             break;
                         }
 
