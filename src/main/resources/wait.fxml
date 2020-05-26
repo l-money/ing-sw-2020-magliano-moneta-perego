@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="232.0" prefWidth="400.0" styleClass="root7" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="35.0" prefWidth="122.0"
+               style="-fx-background-color: #556B2F; -fx-background-radius: 20;" text="Attendi..."
+               textAlignment="CENTER" textFill="#cbcd79">
+            <font>
+                <Font name="AR BLANCA" size="29.0"/>
+            </font>
+        </Label>
+    </children>
+    <cursor>
+        <Cursor fx:constant="WAIT"/>
+    </cursor>
+</AnchorPane>

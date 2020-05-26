@@ -1,6 +1,9 @@
 package santorini.view;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import santorini.model.Mossa;
 import santorini.model.godCards.God;
 
@@ -8,6 +11,7 @@ import java.util.ArrayList;
 
 public class ViewController extends View {
 
+    Stage stage;
 
     public ViewController() {
 

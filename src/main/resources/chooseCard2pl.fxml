@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<AnchorPane prefHeight="537.0" prefWidth="714.0" styleClass="root4" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fx:id="firstGod" fitHeight="247.0" fitWidth="163.0" layoutX="126.0" layoutY="71.0"
+                   onMouseClicked="#clickFirstGod" onMouseEntered="#firstGodDescription" onMouseExited="#firstGodOut"
+                   pickOnBounds="true" preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </ImageView>
+        <ImageView fitHeight="247.0" fitWidth="163.0" layoutX="420.0" layoutY="71.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </ImageView>
+        <Label layoutX="166.0" layoutY="349.0" prefHeight="24.0" prefWidth="123.0" text="NOME DIO 1">
+            <textFill>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="RED"/>
+                        <Stop color="WHITE" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </textFill>
+        </Label>
+        <Label layoutX="471.0" layoutY="349.0" prefHeight="24.0" prefWidth="138.0" text="NOME DIO 2">
+            <textFill>
+                <LinearGradient endX="1.0" endY="1.0">
+                    <stops>
+                        <Stop color="RED"/>
+                        <Stop color="WHITE" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </textFill>
+        </Label>
+        <TextArea layoutX="153.0" layoutY="401.0" prefHeight="117.0" prefWidth="403.0"
+                  text="Descrizione del Dio se passi sopra il mouse alla divinità"/>
+    </children>
+</AnchorPane>

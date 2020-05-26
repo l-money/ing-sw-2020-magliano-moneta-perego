@@ -1,9 +1,45 @@
-/*
 .root {
-     -fx-background-image: url('images/SantoriniBoard.png');
-     -fx-background-size: cover;
- }*/
+    -fx-background-image: url('images/SantoriniBoard.png');
+    -fx-background-size: cover;
+}
+
 .root2 {
     -fx-background-image: url('images/loginbackground.png');
     -fx-background-size: cover;
 }
+
+.root3 {
+    -fx-background-image: url('images/StartGame684x588.png');
+    -fx-background-size: cover;
+}
+
+.root4 {
+    -fx-background-image: url('images/Odyssey_UI_Backdrop.png');
+    -fx-background-size: cover;
+}
+
+.root5 {
+    -fx-background-image: url('images/Odyssey-Olimpus261x463.png');
+    -fx-background-size: cover;
+}
+
+.root6 {
+    -fx-background-image: url('images/Odyssey-Cerberus.png');
+    -fx-background-size: cover;
+}
+
+.root7 {
+    -fx-background-image: url('images/rsz_odyssey-cyclops.png');
+    -fx-background-size: cover;
+}
+
+.root8 {
+    -fx-background-image: url('images/rsz_bg_modeselect.png');
+    -fx-background-size: cover;
+}
+
+.game1 {
+    -fx-background-image: url('Project_Images/Project_Images/Players/Gamer_1.png');
+    -fx-background-size: cover;
+}
+

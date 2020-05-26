@@ -66,21 +66,21 @@ public class TestPawn {
     /**
      * method that tests colorPawn, the team of the pawn
      */
-    @Test
-    public void testColorPawn() {
-        pawn.setColorPawn(Color.GREEN);
-        assertEquals(Color.GREEN, pawn.getColorPawn());
-        pawn.setIdGamer(0);
-        assertEquals(Color.YELLOW, pawn.getColorPawn());
-        pawn.setIdGamer(1);
-        assertEquals(Color.RED, pawn.getColorPawn());
-        pawn.setIdGamer(2);
-        assertEquals(Color.BLUE, pawn.getColorPawn());
-        pawn.setIdGamer(3);
-        assertNull(pawn.getColorPawn());
-        pawn.setColorPawn(Color.BLACK);
-        assertEquals(Color.BLACK, pawn.getColorPawn());
-    }
+////    @Test
+////    public void testColorPawn() {
+//        pawn.setColorPawn(Color.GREEN);
+//        assertEquals(Color.GREEN, pawn.getColorPawn());
+//        pawn.setIdGamer(0);
+//        assertEquals(Color.YELLOW, pawn.getColorPawn());
+//        pawn.setIdGamer(1);
+//        assertEquals(Color.RED, pawn.getColorPawn());
+//        pawn.setIdGamer(2);
+//        assertEquals(Color.BLUE, pawn.getColorPawn());
+//        pawn.setIdGamer(3);
+//        assertNull(pawn.getColorPawn());
+//        pawn.setColorPawn(Color.BLACK);
+//        assertEquals(Color.BLACK, pawn.getColorPawn());
+//    }
 
     /**
      * method that tests the pawn's position

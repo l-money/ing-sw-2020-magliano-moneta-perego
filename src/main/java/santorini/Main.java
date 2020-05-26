@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import santorini.view.CLIView;
 import santorini.view.LoginUser2;
+import santorini.view.StartGame;
 import santorini.view.View;
 
 import java.io.BufferedReader;
@@ -46,12 +48,27 @@ public class Main extends Application {
             launch(a);
         }
     }
-
+/*
     @Override
     public void start(Stage primaryStage) throws Exception {
         System.out.println("####\t" + getClass().getClassLoader().getResource("loginuser2.fxml"));
         FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("loginuser2.fxml")));
         LoginUser2 controller = new LoginUser2();
+        controller.setStage(primaryStage);
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene s = new Scene(root);
+        primaryStage.setScene(s);
+        primaryStage.show();
+    }*/
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Start Game");
+        primaryStage.getIcons().add(new Image("images/cm_boardgame.png"));
+        System.out.println("####\t" + getClass().getClassLoader().getResource("startGame.fxml"));
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("startGame.fxml")));
+        StartGame controller = new StartGame();
         controller.setStage(primaryStage);
         loader.setController(controller);
         Parent root = loader.load();
