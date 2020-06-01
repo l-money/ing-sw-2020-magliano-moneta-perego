@@ -5,6 +5,7 @@ import santorini.model.Mossa;
 import santorini.model.Table;
 import santorini.view.View;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -122,7 +123,7 @@ public class NetworkHandlerClient implements Runnable {
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("Connessione al server persa\nFine della partita");
                 System.exit(1);
             }
         }

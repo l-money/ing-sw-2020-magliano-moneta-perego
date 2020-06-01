@@ -4,6 +4,7 @@ import santorini.model.*;
 import santorini.model.godCards.*;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 //TODO Accortezze
@@ -17,6 +18,7 @@ public class Game implements Runnable {
     private ArrayList<God> godCards;
     private Table table = new Table();
     private final NetworkHandlerServer handler;
+    private Thread currentTurno;
 
     /**
      * method getPlayersInGame
@@ -145,10 +147,10 @@ public class Game implements Runnable {
         while (true) {
             for (Gamer g : playersInGame) {
                 ArrayList<God> gods = new ArrayList<God>(godCards);
-                Thread t = new Thread(new Turno(gods, g, table, handler));
-                t.start();
+                currentTurno = new Thread(new Turno(gods, g, table, handler));
+                currentTurno.start();
                 try {
-                    t.join();
+                    currentTurno.join();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -191,14 +193,18 @@ public class Game implements Runnable {
      */
     public void networkError(Gamer disconnected) {
         playersInGame.remove(disconnected);
-        for (Gamer g : playersInGame) {
-            try {
-                handler.notifyNetworkError(g, disconnected);
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            for (Gamer g : playersInGame) {
+                try {
+                    handler.notifyNetworkError(g, disconnected);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+        } finally {
+            handler.getPartita().interrupt();
+            currentTurno.interrupt();
         }
-        System.exit(1);
     }
 
     /**
