@@ -108,17 +108,28 @@ public class ViewController extends View {
                 //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
                 dialog.showAndWait();
                 handlerClient.setPartecipanti(numberPlayersController.getPlayers());
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
-                Scene s1 = new Scene(root);
-                dialog.setScene(s1);
-                overlayedStage = dialog;
-                overlayedStage.setTitle("Attendi...");
-                overlayedStage.setResizable(false);
-                dialog.show();
+                waitDialog("Attendi...");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
+
+    }
+
+    public void waitDialog(String title) {
+        Stage dialog = new Stage();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
+            Scene s1 = new Scene(root);
+            dialog.setScene(s1);
+            overlayedStage = dialog;
+            overlayedStage.setTitle(title);
+            overlayedStage.setResizable(false);
+            dialog.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

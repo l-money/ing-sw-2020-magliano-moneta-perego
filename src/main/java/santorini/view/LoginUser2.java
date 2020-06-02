@@ -105,6 +105,7 @@ public class LoginUser2 {
             Scene s = new Scene(root);
             stage.setScene(s);
             stage.show();
+            vc.waitDialog("Attendi...");
         } catch (IOException e) {
             e.printStackTrace();
         }

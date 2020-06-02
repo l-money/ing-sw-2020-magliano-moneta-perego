@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.util.Objects;
 
 public class Main extends Application {
+    public static boolean test = false;
     public static void main(String[] a) {
         //System.out.println(a[0]);
         if (a.length > 0 && a[0].equals("--cli")) {
@@ -48,6 +49,9 @@ public class Main extends Application {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else if (a.length > 0 && a[0].equals("--test")) {
+            test = true;
+            launch(a);
         } else {
             launch(a);
         }
@@ -68,17 +72,28 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Start Game");
-        primaryStage.getIcons().add(new Image("images/cm_boardgame.png"));
-        System.out.println("####\t" + getClass().getClassLoader().getResource("startGame.fxml"));
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("startGame.fxml")));
-        StartGame controller = new StartGame();
-        controller.setStage(primaryStage);
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene s = new Scene(root);
-        primaryStage.setScene(s);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        if (test) {
+            FXMLLoader lo = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("playTable.fxml")));
+            /*Metti come controller un controller di test*/
+            /*TestController tc = new TestController(/**EVENTUALI ARGS)*/
+            /*lo.setController(tc);*/
+            Parent root = lo.load();
+            Scene s = new Scene(root);
+            primaryStage.setScene(s);
+            primaryStage.show();
+        } else {
+            primaryStage.setTitle("Start Game");
+            primaryStage.getIcons().add(new Image("images/cm_boardgame.png"));
+            System.out.println("####\t" + getClass().getClassLoader().getResource("startGame.fxml"));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("startGame.fxml")));
+            StartGame controller = new StartGame();
+            controller.setStage(primaryStage);
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene s = new Scene(root);
+            primaryStage.setScene(s);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        }
     }
 }
