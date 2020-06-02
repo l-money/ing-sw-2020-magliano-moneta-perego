@@ -8,9 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import santorini.model.Cell;
 import santorini.model.Mossa;
-import santorini.model.Table;
 import santorini.model.godCards.God;
 
 import java.io.IOException;
@@ -169,106 +167,6 @@ public class ViewController extends View {
 
     }
 
-
-//AGGIORNAMENTO TABLE = QUESTA MERDA LOOL :P
-
-    public void updateTableGUI(Table t /**, griglia della gui 5x5*/) {
-        // ### = ritorno immagine livello = x, giocatore (colore) = y, pedina = z
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                Cell cell = t.getTableCell(i, j);
-                //casella della gtiglia (i,j)
-                switch (cell.getLevel()) {
-                    case 0:
-                        if (cell.getPawn() != null) {
-                            if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdPawn() == 0) {
-                                //x=0,y=giallo,z=0
-                            } else if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdGamer() == 1) {
-                                //x=0,y=giallo,z=1
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdPawn() == 0) {
-                                //x=0,y=rosso,z=0
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdGamer() == 1) {
-                                //x=0,y=rosso,z=1
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdPawn() == 0) {
-                                //x=0,y=blu,z=0
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdGamer() == 1) {
-                                //x=0,y=blu,z=1
-                            }
-                        } else if (cell.isComplete()) {
-                            //l=0 + dome
-                        } else {
-                            //no image
-                        }
-                        break;
-                    case 1:
-                        if (cell.getPawn() != null) {
-                            if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdPawn() == 0) {
-                                //x=1,y=giallo,z=0
-                            } else if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdGamer() == 1) {
-                                //x=1,y=giallo,z=1
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdPawn() == 0) {
-                                //x=1,y=rosso,z=0
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdGamer() == 1) {
-                                //x=1,y=rosso,z=1
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdPawn() == 0) {
-                                //x=1,y=blu,z=0
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdGamer() == 1) {
-                                //x=1,y=blu,z=1
-                            }
-                        } else if (cell.isComplete()) {
-                            //l=1 + dome
-                        } else {
-                            //l=1
-                        }
-                        break;
-                    case 2:
-                        if (cell.getPawn() != null) {
-                            if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdPawn() == 0) {
-                                //x=2,y=giallo,z=0
-                            } else if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdGamer() == 1) {
-                                //x=2,y=giallo,z=1
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdPawn() == 0) {
-                                //x=2,y=rosso,z=0
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdGamer() == 1) {
-                                //x=2,y=rosso,z=1
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdPawn() == 0) {
-                                //x=2,y=blu,z=0
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdGamer() == 1) {
-                                //x=2,y=blu,z=1
-                            }
-                        } else if (cell.isComplete()) {
-                            //l=2 + dome
-                        } else {
-                            //l=2
-                        }
-                        break;
-                    case 3:
-                        if (cell.getPawn() != null) {
-                            if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdPawn() == 0) {
-                                //x=3,y=giallo,z=0
-                            } else if (cell.getPawn().getIdGamer() == 0 && cell.getPawn().getIdGamer() == 1) {
-                                //x=3,y=giallo,z=1
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdPawn() == 0) {
-                                //x=3,y=rosso,z=0
-                            } else if (cell.getPawn().getIdGamer() == 1 && cell.getPawn().getIdGamer() == 1) {
-                                //x=3,y=rosso,z=1
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdPawn() == 0) {
-                                //x=3,y=blu,z=0
-                            } else if (cell.getPawn().getIdGamer() == 2 && cell.getPawn().getIdGamer() == 1) {
-                                //x=3,y=blu,z=1
-                            }
-                        } else if (cell.isComplete()) {
-                            //l=3 + dome = complete
-                        } else {
-                            //l=3
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
 
 
 }

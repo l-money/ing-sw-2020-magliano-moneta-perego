@@ -94,7 +94,8 @@ public class Zeus extends God {
                 //broadcast message of building
                 turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Zeus." + "\u001B[0m");
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito sotto di se in: " +
-                        "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                        "[" + turno.getGamer().getPawn(turno.getMove().getIdPawn()).getRow() +
+                        "," + turno.getGamer().getPawn(turno.getMove().getIdPawn()).getColumn() + "]");
                 //print status of the table
                 turno.printTableStatusTurn(true);
             }

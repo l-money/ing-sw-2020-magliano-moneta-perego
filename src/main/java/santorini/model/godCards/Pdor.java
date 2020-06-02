@@ -36,12 +36,14 @@ public class Pdor extends God {
 
     @Override
     public void afterOwnerMoving(Turno turno) {
+
         if (turno.isValidationMove()) {
             //broadcast message of movement
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             turno.printTableStatusTurn(true);
         }
+
     }
 
     @Override
@@ -51,6 +53,7 @@ public class Pdor extends God {
 
     @Override
     public void afterOwnerBuilding(Turno turno) {
+
         if (turno.isValidationBuild()) {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
@@ -65,6 +68,7 @@ public class Pdor extends God {
                         "QUESTA E' LA PAROLA DI PDOR");
             }
         }
+
     }
 
     @Override

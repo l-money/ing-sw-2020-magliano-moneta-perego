@@ -214,20 +214,16 @@ public class Turno implements Runnable {
             getGamer().setBuilds(1);
             count = 0;
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             gamer.getMyGodCard().initializeOwner(this);
-            //do
             while (!validationMove && count < maxAttempts) {
-                //gamer.getMyGodCard().initializeOwner(this);
                 move = moveRequest();
                 myMovement();
             }
-            //while (!validationMove && count < maxAttempts);
             methodLoser(validationMove, count, getGamer());
-
             controlWin();
             count = 0;
             try {
@@ -236,12 +232,10 @@ public class Turno implements Runnable {
                 e.printStackTrace();
             }
             if (!getGamer().getLoser()) {
-                //do
                 while (!validationBuild && count < maxAttempts) {
                     move = buildingRequest();
                     myBuilding();
                 }
-                //while (!validationBuild && count < maxAttempts);
                 methodLoser(validationBuild, count, getGamer());
             }
         }
@@ -317,7 +311,6 @@ public class Turno implements Runnable {
                     getGameHandler().sendFailed(getGamer(), "##Non puoi salire di livello##");
                     validationMove = false;
                 } else {
-                    //do the step and change position
                     validationMove = getMyStep(start, end, p);
                 }
 
@@ -332,7 +325,9 @@ public class Turno implements Runnable {
     public void getValidation(boolean v) {
         if (!v) {
             count++;
-            getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "Tentativi rimanenti: " + (3 - count) + "\u001B[0m");
+            if (count > 0) {
+                getGameHandler().sendMessage(getGamer(), "\u001B[31m" + "Tentativi rimanenti: " + (3 - count) + "\u001B[0m");
+            }
         }
     }
 
@@ -442,7 +437,7 @@ public class Turno implements Runnable {
         if ((!b) && (i >= 3)) {
             g.setLoser(true);
             getGameHandler().sendFailed(g, "##Hai esaurito i tentativi##");
-            getGameHandler().getGame().broadcastMessage(getGamer().getName() + " ha esaurito i tentativi disponibili, è' fuori dal gioco");
+            getGameHandler().getGame().broadcastMessage(getGamer().getName() + " ha esaurito i tentativi disponibili, è fuori dal gioco");
         } else {
             g.setLoser(false);
         }

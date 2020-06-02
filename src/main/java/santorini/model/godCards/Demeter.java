@@ -43,7 +43,7 @@ public class Demeter extends God {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             //print status of the table
-            turno.printTableStatusTurn(turno.isValidationMove());
+            turno.printTableStatusTurn(true);
         }
 
     }
