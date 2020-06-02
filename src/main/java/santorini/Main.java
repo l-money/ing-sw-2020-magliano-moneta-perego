@@ -6,10 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import santorini.view.CLIView;
-import santorini.view.LoginUser2;
-import santorini.view.StartGame;
-import santorini.view.View;
+import santorini.view.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -75,8 +72,11 @@ public class Main extends Application {
         if (test) {
             FXMLLoader lo = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("playTable.fxml")));
             /*Metti come controller un controller di test*/
+            TestTable controller = new TestTable();
             /*TestController tc = new TestController(/**EVENTUALI ARGS)*/
+            controller.setStage(primaryStage);
             /*lo.setController(tc);*/
+            lo.setController(controller);
             Parent root = lo.load();
             Scene s = new Scene(root);
             primaryStage.setScene(s);
