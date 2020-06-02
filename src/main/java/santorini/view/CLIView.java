@@ -2,10 +2,7 @@ package santorini.view;
 
 import santorini.NetworkHandlerClient;
 import santorini.model.*;
-import santorini.model.godCards.Ares;
-import santorini.model.godCards.God;
-import santorini.model.godCards.Pdor;
-import santorini.model.godCards.Prometheus;
+import santorini.model.godCards.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -147,7 +144,7 @@ public class CLIView extends View {
                         }
                         if (number == 11) {
                             number = gods.size();
-                            gods.add(new Ares());
+                            gods.add(new Hephaestus());
                             break;
                         }
 
@@ -528,10 +525,8 @@ public class CLIView extends View {
                     e.printStackTrace();
                 }
             } else {
-                printTable();
             }
         } while (errato || c == null);
-        printTable();
         return c.getX() + "," + c.getY();
     }
 

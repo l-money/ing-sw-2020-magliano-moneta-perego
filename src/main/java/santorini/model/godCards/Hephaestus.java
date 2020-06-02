@@ -82,7 +82,7 @@ public class Hephaestus extends God {
             Cell pastB = turno.getTable().getTableCell(x, y);
             if (pastB.isComplete()) {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Costruzione " +
-                        "completata" + "\u001B[0m");
+                        "completa" + "\u001B[0m");
             } else {
                 //I could build on it again
                 do {
@@ -111,7 +111,7 @@ public class Hephaestus extends God {
                             printerStatus = true;
                         }
                     }
-                } while (!HEffect && turno.getCount() < 5);
+                } while (!HEffect && turno.getCount() < 3);
             }
             if (HEffect && printerStatus) {
                 turno.setMove(buildingPlus);
@@ -120,6 +120,7 @@ public class Hephaestus extends God {
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
             }
+            turno.methodLoser(HEffect, turno.getCount(), turno.getGamer());
             printerStatus = true;
         }
     }
