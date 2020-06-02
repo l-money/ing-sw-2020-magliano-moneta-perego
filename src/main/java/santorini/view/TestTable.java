@@ -10,4 +10,8 @@ public class TestTable {
     public void setStage(Stage primaryStage) {
         this.stage = primaryStage;
     }
+
+    public void initialize() {
+
+    }
 }

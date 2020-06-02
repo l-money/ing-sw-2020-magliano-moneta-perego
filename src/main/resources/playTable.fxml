@@ -10,7 +10,8 @@
 <AnchorPane prefHeight="400.0" prefWidth="704.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane gridLinesVisible="true" layoutX="208.0" layoutY="56.0" prefHeight="292.0" prefWidth="295.0">
+        <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="208.0" layoutY="56.0" prefHeight="292.0"
+                  prefWidth="295.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
