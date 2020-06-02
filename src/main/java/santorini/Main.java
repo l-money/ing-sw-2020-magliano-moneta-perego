@@ -39,8 +39,12 @@ public class Main extends Application {
         } else if (a.length > 0 && a[0].equals("--server")) {
             try {
                 System.out.println("Starting server...");
-                NetworkHandlerServer handlerServer = new NetworkHandlerServer();
-                handlerServer.initGameConnections();
+                while (true) {
+                    System.out.println("New Match created");
+                    NetworkHandlerServer handlerServer = new NetworkHandlerServer();
+                    handlerServer.initGameConnections();
+                    System.out.println("New Match started");
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }

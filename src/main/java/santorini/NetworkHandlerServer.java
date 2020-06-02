@@ -13,15 +13,20 @@ import java.util.ArrayList;
 
 public class NetworkHandlerServer implements Runnable {
     private ServerSocket serverSocket;
-    private ArrayList<Gamer> players = new ArrayList<Gamer>();
+    private ArrayList<Gamer> players = new ArrayList<>();
     private Game game;
     private ObjectInputStream inputStream;
     private ObjectOutputStream outputStream;
+    private Thread partita;
     private int i = 0, max = 0;
 
 
     public Game getGame() {
         return game;
+    }
+
+    public Thread getPartita() {
+        return partita;
     }
 
     public NetworkHandlerServer() throws IOException {
@@ -130,7 +135,13 @@ public class NetworkHandlerServer implements Runnable {
     public void startGame() {
         if (players.size() == 2 || players.size() == 3) {
             game = new Game(players, this);
-            new Thread(game).start();
+            partita = new Thread(game);
+            partita.start();
+            try {
+                serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
