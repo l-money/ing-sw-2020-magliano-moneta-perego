@@ -1,51 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.LinearGradient?>
-<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="537.0" prefWidth="714.0" styleClass="root4" stylesheets="@style.css"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fx:id="firstGod" fitHeight="247.0" fitWidth="163.0" layoutX="126.0" layoutY="71.0"
+        <ImageView fx:id="firstGod" fitHeight="247.0" fitWidth="163.0" layoutX="152.0" layoutY="31.0"
                    onMouseClicked="#clickFirstGod" onMouseEntered="#firstGodDescription" onMouseExited="#firstGodOut"
                    pickOnBounds="true" preserveRatio="true">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </ImageView>
-        <ImageView fx:id="secondGod" fitHeight="247.0" fitWidth="163.0" layoutX="420.0" layoutY="71.0"
+        <ImageView fx:id="secondGod" fitHeight="247.0" fitWidth="163.0" layoutX="420.0" layoutY="31.0"
                    onMouseClicked="#clickSecondGod" onMouseEntered="#secondGodDescription" onMouseExited="#secondGodOut"
                    pickOnBounds="true" preserveRatio="true">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </ImageView>
-        <Label fx:id="label1" layoutX="166.0" layoutY="349.0" prefHeight="24.0" prefWidth="123.0" text="NOME DIO 1">
-            <textFill>
-                <LinearGradient endX="1.0" endY="1.0">
-                    <stops>
-                        <Stop color="RED"/>
-                        <Stop color="WHITE" offset="1.0"/>
-                    </stops>
-                </LinearGradient>
-            </textFill>
+        <Label fx:id="label2" alignment="CENTER" layoutX="420.0" layoutY="289.0" prefHeight="26.0" prefWidth="163.0"
+               style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-color: Gold; -fx-border-radius: 30; -fx-border-width: 2;"
+               text="NOME DIO 2">
+            <font>
+                <Font name="AR BLANCA" size="20.0"/>
+            </font>
         </Label>
-        <Label fx:id="label2" layoutX="471.0" layoutY="349.0" prefHeight="24.0" prefWidth="138.0" text="NOME DIO 2">
-            <textFill>
-                <LinearGradient endX="1.0" endY="1.0">
-                    <stops>
-                        <Stop color="RED"/>
-                        <Stop color="WHITE" offset="1.0"/>
-                    </stops>
-                </LinearGradient>
-            </textFill>
+        <Label fx:id="label1" alignment="CENTER" layoutX="152.0" layoutY="289.0" prefHeight="26.0" prefWidth="163.0"
+               style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: gold; -fx-border-width: 2;"
+               text="NOME DIO 1">
+            <font>
+                <Font name="AR BLANCA" size="20.0"/>
+            </font>
         </Label>
-        <TextArea fx:id="description" layoutX="153.0" layoutY="401.0" prefHeight="117.0" prefWidth="403.0"
-                  text="Descrizione del Dio se passi sopra il mouse alla divinità"/>
+        <ImageView fx:id="powerGod" fitHeight="123.0" fitWidth="153.0" layoutX="108.0" layoutY="372.0"
+                   pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D/>
+            </viewport>
+        </ImageView>
+        <Pane layoutX="301.0" layoutY="342.0" prefHeight="183.0" prefWidth="378.0"
+              style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-color: Gold; -fx-border-radius: 30; -fx-border-width: 2;">
+            <children>
+                <Label fx:id="description" alignment="TOP_CENTER" layoutY="2.0" prefHeight="188.0" prefWidth="378.0"
+                       text="PROVA CARTA" textAlignment="CENTER">
+                    <font>
+                        <Font name="AR BLANCA" size="16.0"/>
+                    </font>
+                </Label>
+            </children>
+        </Pane>
     </children>
 </AnchorPane>

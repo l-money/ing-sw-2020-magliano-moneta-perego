@@ -74,6 +74,7 @@ public class Main extends Application {
         Parent root = loader.load();
         Scene s = new Scene(root);
         primaryStage.setScene(s);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }

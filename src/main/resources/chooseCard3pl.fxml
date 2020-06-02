@@ -1,58 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="537.0"
             prefWidth="714.0" styleClass="root4" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="god1" fitHeight="209.0" fitWidth="135.0" layoutX="64.0" layoutY="79.0"
-                 onMouseClicked="#clickGod1" onMouseEntered="#imageGod1In" onMouseExited="#imageGod1Out"
+      <ImageView fx:id="firstGod" fitHeight="247.0" fitWidth="165.0" layoutX="56.0" layoutY="42.0"
+                 onMouseClicked="#clickFirstGod" onMouseEntered="#firstGodIn" onMouseExited="#firstGodOut"
                  pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/GodCards/Apollo.png"/>
-         </image>
          <cursor>
             <Cursor fx:constant="HAND"/>
          </cursor>
       </ImageView>
-      <ImageView fx:id="god2" fitHeight="209.0" fitWidth="145.0" layoutX="285.0" layoutY="80.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <image>
-            <Image url="@images/GodCards/Ares.png"/>
-         </image>
+      <ImageView fx:id="secondGod" fitHeight="247.0" fitWidth="165.0" layoutX="287.0" layoutY="42.0"
+                 onMouseClicked="#clickSecondGod" onMouseEntered="#secondGodIn" onMouseExited="#secondGodOut"
+                 pickOnBounds="true" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND"/>
          </cursor>
       </ImageView>
-      <ImageView fitHeight="209.0" fitWidth="146.0" layoutX="506.0" layoutY="80.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <image>
-            <Image url="@images/GodCards/Artemis.png"/>
-         </image>
+      <ImageView fx:id="thirdGod" fitHeight="247.0" fitWidth="165.0" layoutX="507.0" layoutY="42.0"
+                 onMouseClicked="#clickThirdGod" onMouseEntered="#thirdGodIn" onMouseExited="#thirdGodOut"
+                 pickOnBounds="true" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND"/>
          </cursor>
       </ImageView>
       <Pane layoutX="74.0" layoutY="352.0" prefHeight="160.0" prefWidth="166.0">
          <children>
-            <ImageView fitHeight="123.0" fitWidth="153.0" layoutX="13.0" layoutY="13.0" pickOnBounds="true"
-                       preserveRatio="true">
-               <image>
-                  <Image url="@images/GodsPower/ApolloPower.png"/>
-               </image>
-            </ImageView>
+            <ImageView fx:id="godPower" fitHeight="123.0" fitWidth="153.0" layoutX="26.0" layoutY="19.0"
+                       pickOnBounds="true" preserveRatio="true"/>
          </children>
       </Pane>
-      <TextArea layoutX="263.0" layoutY="352.0" prefHeight="160.0" prefWidth="285.0"/>
-      <Button fx:id="inserisciPedine" layoutX="589.0" layoutY="384.0" mnemonicParsing="false"
-              onMouseClicked="#inserisciPedine" prefHeight="54.0" prefWidth="103.0" text="Inserisci Pawn"/>
-      <Button fx:id="changeBut" layoutX="315.0" layoutY="25.0" mnemonicParsing="false" text="Button"/>
+      <Label fx:id="label1" alignment="CENTER" layoutX="57.0" layoutY="302.0" prefHeight="26.0" prefWidth="163.0"
+             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2;"
+             text="NOME DIO 1" textFill="#0a0a0a">
+         <font>
+            <Font name="AR BLANCA" size="20.0"/>
+         </font>
+      </Label>
+      <Label fx:id="label3" alignment="CENTER" layoutX="508.0" layoutY="302.0" prefHeight="26.0" prefWidth="163.0"
+             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2;"
+             text="NOME DIO 3" textFill="#0a0a0a">
+         <font>
+            <Font name="AR BLANCA" size="20.0"/>
+         </font>
+      </Label>
+      <Label fx:id="label2" alignment="CENTER" layoutX="289.0" layoutY="302.0" prefHeight="26.0" prefWidth="163.0"
+             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2;"
+             text="NOME DIO 2" textFill="#0a0a0a">
+         <font>
+            <Font name="AR BLANCA" size="20.0"/>
+         </font>
+      </Label>
+      <Pane layoutX="302.0" layoutY="341.0" prefHeight="183.0" prefWidth="378.0"
+            style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-color: Gold; -fx-border-radius: 30; -fx-border-width: 2;">
+         <children>
+            <Label fx:id="descriptionGod" alignment="TOP_CENTER" layoutY="2.0" prefHeight="183.0" prefWidth="378.0"
+                   text="PROVA CARTA" textAlignment="CENTER">
+               <font>
+                  <Font name="AR BLANCA" size="16.0"/>
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

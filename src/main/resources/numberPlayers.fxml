@@ -37,6 +37,5 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </Button>
-        <Button fx:id="wait" layoutX="204.0" layoutY="195.0" mnemonicParsing="false" text="Wait"/>
     </children>
 </AnchorPane>

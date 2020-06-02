@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="537.0" prefWidth="714.0" styleClass="root4" stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <ImageView fx:id="firstGod" fitHeight="247.0" fitWidth="165.0" layoutX="275.0" layoutY="35.0"
+                   onMouseClicked="#clickFirstGod" onMouseEntered="#firstGodIn" onMouseExited="#firstGodOut"
+                   pickOnBounds="true" preserveRatio="true"/>
+        <Label fx:id="label1" alignment="CENTER" layoutX="276.0" layoutY="297.0" prefHeight="26.0" prefWidth="163.0"
+               style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold;"
+               text="NOME DIO 1">
+            <font>
+                <Font name="AR BLANCA" size="20.0"/>
+            </font>
+        </Label>
+        <Pane layoutX="301.0" layoutY="343.0" prefHeight="183.0" prefWidth="378.0"
+              style="-fx-background-radius: 30; -fx-background-color: #C0C0C0; -fx-border-color: gold; -fx-border-radius: 30; -fx-border-width: 1.8;">
+            <children>
+                <Label fx:id="descriptionGod" alignment="TOP_CENTER" layoutY="1.0" prefHeight="183.0" prefWidth="378.0"
+                       text="PROVA CARTA">
+                    <font>
+                        <Font size="16.0"/>
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <ImageView fx:id="powerGod" fitHeight="123.0" fitWidth="153.0" layoutX="111.0" layoutY="373.0"
+                   pickOnBounds="true" preserveRatio="true"/>
+    </children>
+</AnchorPane>

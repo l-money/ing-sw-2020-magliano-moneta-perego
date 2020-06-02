@@ -21,7 +21,7 @@ public class Minotaur extends God {
                 "(in base alle normali regole di spostamento)\n" +
                 "se la casella successiva nella stessa direzione è libera.\n" +
                 "Il lavoratore avversario è costretto a spostarsi in quella casella\n" +
-                "(indipendentemente dal livello.");
+                "(indipendentemente dal livello).");
     }
 
 

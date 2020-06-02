@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class NumberPlayers {
-    @FXML
-    private Button wait;
 
     @FXML
     private Button twoPlayers;
@@ -38,7 +36,6 @@ public class NumberPlayers {
         //connect.setOnAction(event -> readParameters());
         twoPlayers.setOnAction(event -> chooseCard2());
         threePlayers.setOnAction(event -> chooseCard3());
-        wait.setOnAction(event -> waitWindow());
     }
 
     public void chooseCard2() {
@@ -127,30 +124,30 @@ public class NumberPlayers {
         }
     }*/
 
-    private void waitWindow() {
-        stage.close();
-        try {
-            stage.setTitle("Wait..");
-            //stage.getIcons().add(new Image("images/cm_boardgame.png"));
-            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
-//            ViewController controller = new ViewController();
-//
-//            controller.setHandlerClient(handlerClient);
-//            handlerClient.setView(controller);
-//
-//            loader.setController(controller);
-//            LoginUser2 controller = new LoginUser2();
+//    private void waitWindow() {
+//        stage.close();
+//        try {
+//            stage.setTitle("Wait..");
+//            //stage.getIcons().add(new Image("images/cm_boardgame.png"));
+//            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
+////            ViewController controller = new ViewController();
+////
+////            controller.setHandlerClient(handlerClient);
+////            handlerClient.setView(controller);
+////
+////            loader.setController(controller);
+////            LoginUser2 controller = new LoginUser2();
+////            controller.setStage(stage);
+////            loader.setController(controller);
+//            Wait controller = new Wait();
 //            controller.setStage(stage);
 //            loader.setController(controller);
-            Wait controller = new Wait();
-            controller.setStage(stage);
-            loader.setController(controller);
-            Parent root = loader.load();
-            Scene s = new Scene(root);
-            stage.setScene(s);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//            Parent root = loader.load();
+//            Scene s = new Scene(root);
+//            stage.setScene(s);
+//            stage.show();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
