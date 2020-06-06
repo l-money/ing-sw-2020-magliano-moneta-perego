@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="540.0" prefWidth="960.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="284.0" layoutY="76.0" prefHeight="393.0"
-                  prefWidth="396.0">
+        <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" layoutX="284.0" layoutY="76.0"
+                  prefHeight="393.0" prefWidth="396.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -27,23 +31,41 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
         </GridPane>
-        <ImageView fitHeight="112.0" fitWidth="87.0" layoutX="41.0" layoutY="31.0" pickOnBounds="true"
+        <ImageView fitHeight="128.0" fitWidth="106.0" layoutX="34.0" layoutY="36.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
                 <Image url="@images/Players/Gamer_1.png"/>
             </image>
         </ImageView>
-        <ImageView fitHeight="112.0" fitWidth="87.0" layoutX="39.0" layoutY="371.0" pickOnBounds="true"
+        <ImageView fitHeight="144.0" fitWidth="79.0" layoutX="39.0" layoutY="371.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
                 <Image url="@images/Players/Gamer_2.png"/>
             </image>
         </ImageView>
-        <ImageView fitHeight="112.0" fitWidth="87.0" layoutX="850.0" layoutY="382.0" pickOnBounds="true"
+        <ImageView fitHeight="124.0" fitWidth="84.0" layoutX="834.0" layoutY="40.0" pickOnBounds="true"
                    preserveRatio="true">
             <image>
                 <Image url="@images/Players/Gamer_3.png"/>
             </image>
         </ImageView>
+        <Button fx:id="sendMove" layoutX="329.0" layoutY="490.0" mnemonicParsing="false" prefHeight="35.0"
+                prefWidth="110.0" style="-fx-background-radius: 30;" text="Manda Mossa">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+        <Button fx:id="jumpMove" layoutX="528.0" layoutY="489.0" mnemonicParsing="false" prefHeight="34.0"
+                prefWidth="109.0" style="-fx-background-radius: 30;" text="Salta Mossa">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </Button>
+        <TextArea fx:id="textArea" layoutX="736.0" layoutY="383.0" prefHeight="155.0" prefWidth="222.0"
+                  styleClass="text-area" stylesheets="@style.css" text="Prova a scrivere" wrapText="true">
+            <font>
+                <Font size="16.0"/>
+            </font>
+        </TextArea>
     </children>
 </AnchorPane>

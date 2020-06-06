@@ -6,6 +6,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -25,6 +26,13 @@ public class TestTable {
 
     @FXML
     private GridPane gridPane;
+
+    @FXML
+    private Button sendMove, jumpMove;
+
+    @FXML
+    private TextArea textArea;
+
     //private ImageView[][] imageView;
     private Button[][] buttons;
     private Stage stage;
@@ -182,7 +190,7 @@ public class TestTable {
                     //"images/.../I_" + t.getTableCell(i,j).getLevel() + "_dome.png"
                     //Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Apollo.png")), 58, 53, true, false);
                     bt[i][j] = new Button();
-                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Apollo.png")), 58, 53, true, false),
+                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/Levels/Tower.png")), 58, 53, true, false),
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j].setBackground(new Background(myBI));
