@@ -10,7 +10,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -90,105 +89,21 @@ public class TestTable {
         table.setACell(4, 4, 0, false, true, null);
         table.setACell(3, 3, 2, true, false, null);
         table.setACell(3, 4, 2, true, false, null);
-        printTableStatusB(table, buttons);
-        lightMyPawnsB(table, buttons, gamer.getId());
-        //printTableStatus(table, imageView);
-        //lightMyPawns(table, imageView, gamer.getId());
+        printTableStatus(table, buttons);
+        lightMyPawns(table, buttons, gamer.getId());
     }
-
-    //Prototipo: Se trova celle con pedine mette immagine di apollo
-    public void initializeCells(Table t, ImageView[][] imageView) {
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                if (t.getTableCell(x, y).getPawn() != null) {
-                    Image i = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Apollo.png")), 58, 53, true, false);
-                    imageView[x][y] = new ImageView();
-                    imageView[x][y].setImage(i);
-                    imageView[x][y].setFitHeight(58);
-                    imageView[x][y].setFitWidth(53);
-                    gridPane.add(imageView[x][y], y, x);
-                }
-            }
-        }
-    }
-
-    //Prototipo: le pedine di gamer0 sono cliccabili, le pedine gamer1 non cliccabili
-    public void myPawns(Table t, Gamer g, ImageView[][] imageView) {
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                if (t.getTableCell(x, y).getPawn() != null && t.getTableCell(x, y).getPawn().getIdGamer() == g.getIdGamer()) {
-                    imageView[x][y].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent e) {
-                            ImageView im;
-                            im = (ImageView) e.getSource();
-                            im.setEffect(shadow);
-                            System.out.println("Row: " + GridPane.getRowIndex(im));
-                            System.out.println("Column: " + GridPane.getColumnIndex(im));
-                            int a = GridPane.getRowIndex(im);
-                            int b = GridPane.getColumnIndex(im);
-                            System.out.print("Id pedina: " + t.getTableCell(a, b).getPawn().getIdPawn());
-                            System.out.println("\tId Giocatore: " + t.getTableCell(a, b).getPawn().getIdGamer());
-                            imageView[a][b + 1].setEffect(lighting);
-                        }
-                    });
-
-                }
-            }
-        }
-    }
-
 
     /**
      * //TODO: DA SISTEMARE CON LE IMMAGINI APPROPRIATE
      * Metodo per popolare la table
      *
-     * @param t     table da gioco
-     * @param image tabella di immagini
-     *              ImageView[][] image
+     * @param t  table da gioco
+     * @param bt tabella di bottoni
      */
-    public void printTableStatus(Table t, ImageView[][] image) {
+    public void printTableStatus(Table t, Button[][] bt) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (t.getTableCell(i, j).isComplete()) {
-                    //mettere immagine con livello + cupola con la seguente sintassi
-                    //"images/.../I_" + t.getTableCell(i,j).getLevel() + "_dome.png"
-                    Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Apollo.png")), 58, 53, true, false);
-                    image[i][j] = new ImageView();
-                    image[i][j].setImage(im);
-                    gridPane.add(image[i][j], j, i);
-                } else if (t.getTableCell(i, j).getPawn() != null) {
-                    //mettere immagine con livello + cupola con la seguente sintassi
-                    //"images/.../I_" + t.getTableCell(i,j).getLevel() + "_" + t.getTableCell(i,j).getPawn().getIdGamer()" + "_" + t.getTableCell(i,j).getPawn().getIdPawn() + ".png"
-                    Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Ares.png")), 58, 53, true, false);
-                    image[i][j] = new ImageView();
-                    image[i][j].setImage(im);
-                    gridPane.add(image[i][j], j, i);
-                } else if (t.getTableCell(i, j).getLevel() != 0) {
-                    //mettere immagine con solo livello con la seguente sintassi
-                    //"images/.../I_" + t.getTableCell(i,j).getLevel() + ".png"
-                    Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Pan.png")), 58, 53, true, false);
-                    image[i][j] = new ImageView();
-                    image[i][j].setImage(im);
-                    gridPane.add(image[i][j], j, i);
-                } else {
-                    //mettere immagine vuota se il livello è 0
-                    Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Zeus.png")), 58, 53, true, false);
-                    image[i][j] = new ImageView();
-                    image[i][j].setImage(im);
-                    gridPane.add(image[i][j], j, i);
-                }
-            }
-        }
-    }
-
-    public void printTableStatusB(Table t, Button[][] bt) {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (t.getTableCell(i, j).isComplete()) {
-                    //mettere immagine con livello + cupola con la seguente sintassi
-                    //"images/.../I_" + t.getTableCell(i,j).getLevel() + "_dome.png"
-                    //Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Apollo.png")), 58, 53, true, false);
                     bt[i][j] = new Button();
                     BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/Levels/Tower.png")), 58, 53, true, false),
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
@@ -201,9 +116,8 @@ public class TestTable {
                 } else if (t.getTableCell(i, j).getPawn() != null) {
                     //mettere immagine con livello + cupola con la seguente sintassi
                     //"images/.../I_" + t.getTableCell(i,j).getLevel() + "_" + t.getTableCell(i,j).getPawn().getIdGamer()" + "_" + t.getTableCell(i,j).getPawn().getIdPawn() + ".png"
-                    Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Ares.png")), 58, 53, true, false);
                     bt[i][j] = new Button();
-                    BackgroundImage myBI = new BackgroundImage(im,
+                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Ares.png")), 58, 53, true, false),
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j].setBackground(new Background(myBI));
@@ -215,8 +129,7 @@ public class TestTable {
                 } else if (t.getTableCell(i, j).getLevel() != 0) {
                     //mettere immagine con solo livello con la seguente sintassi
                     //"images/.../I_" + t.getTableCell(i,j).getLevel() + ".png"
-                    Image im = new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Pan.png")), 58, 53, true, false);
-                    BackgroundImage myBI = new BackgroundImage(im,
+                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Pan.png")), 58, 53, true, false),
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j] = new Button();
@@ -236,12 +149,11 @@ public class TestTable {
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
-
-
                 }
             }
         }
     }
+
 
     /**
      * //TODO: DA SISTEMARE
@@ -249,30 +161,42 @@ public class TestTable {
      * Quando clicca sulla sua pedina gli si illuminano quelle attorno in cui può muoversi
      *
      * @param t       table da gioco
-     * @param image   tabella di immagini
+     * @param bt      tabella di bottoni
      * @param idGamer id del giocatore corrente
      */
-    public void lightMyPawns(Table t, ImageView[][] image, int idGamer) {
+    public void lightMyPawns(Table t, Button[][] bt, int idGamer) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 Cell cell = t.getTableCell(i, j);
                 if (cell.getPawn() != null && cell.getPawn().getIdGamer() == idGamer && cell.getPawn().getICanPlay()) {
                     //se: esiste la pedina nella cella && la pedina è della stessa squadra del gamer && la pedina può giocare
                     //rendere cliccabile e illuminata la cella
-                    image[i][j].setEffect(lighting);
-                    image[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    bt[i][j].setStyle("-fx-border-color:yellow");
+                    bt[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent e) {
-                            ImageView im;
-                            im = (ImageView) e.getSource();
-                            System.out.println("Row: " + GridPane.getRowIndex(im));
-                            System.out.println("Column: " + GridPane.getColumnIndex(im));
-                            int a = GridPane.getRowIndex(im);
-                            int b = GridPane.getColumnIndex(im);
-                            System.out.print("Id pedina: " + t.getTableCell(a, b).getPawn().getIdPawn());
-                            System.out.println("\tId Giocatore: " + t.getTableCell(a, b).getPawn().getIdGamer());
-                            image[a][b].setEffect(null);
-                            accessibleCells(t, t.getTableCell(a, b), image);
+                            Button bOne;
+                            bOne = (Button) e.getSource();
+                            int x = GridPane.getRowIndex(bOne);
+                            int y = GridPane.getColumnIndex(bOne);
+                            for (int i = 0; i < 5; i++) {
+                                for (int j = 0; j < 5; j++) {
+                                    Cell cell = t.getTableCell(i, j);
+                                    if (cell.getPawn() != null && cell.getPawn().getIdGamer() == idGamer) {
+                                        if (i == x && j == y) {
+                                            bt[i][j].setStyle("-fx-border-color:red");
+                                        } else {
+                                            bt[i][j].setStyle("-fx-border-color:blue");
+                                        }
+                                    } else {
+                                        bt[i][j].setStyle("-fx-border-color:transparent");
+                                        bt[i][j].setOnMouseClicked(null);
+                                    }
+                                }
+                            }
+                            System.out.print("***Id pedina: " + t.getTableCell(x, y).getPawn().getIdPawn());
+                            System.out.println("\tId Giocatore: " + t.getTableCell(x, y).getPawn().getIdGamer() + "***\n");
+                            accessibleCells(t, t.getTableCell(x, y), bt, bOne);
                         }
                     });
                 }
@@ -283,83 +207,21 @@ public class TestTable {
     /**
      * //TODO: DA SISTEMARE
      * Metodo che illumina le caselle adiacenti possibili al movimento
-     *
      * @param t      tavolo da gioco
      * @param myCell posizione della pedina scelta
-     * @param image  tabella di immagini
+     * @param bt     tabella di immagini
      */
     //Chiamo il metodo in lightMyPawns
-    public void accessibleCells(Table t, Cell myCell, ImageView[][] image) {
+    public void accessibleCells(Table t, Cell myCell, Button[][] bt, Button myButton) {
         ArrayList<Cell> cells = new ArrayList<>();
         int x = myCell.getX();
         int y = myCell.getY();
+        myButton.setStyle("-fx-border-color:red");
         for (int i = x - 1; i < x + 2; i++) {
             for (int j = y - 1; j < y + 2; j++) {
                 //controllo se la casella esiste
                 if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
                     //controllo se non c'è la cupola
-                    //TODO potevo fare anche il controllo del livello di salita di livello e di posizione già occupata,
-                    // non posso farlo però, per colpa delle divinità
-                    if ((!t.getTableCell(i, j).isComplete())) {
-                        cells.add(t.getTableCell(i, j));
-                    }
-                }
-            }
-        }
-        for (Cell lightMe : cells) {
-            image[lightMe.getX()][lightMe.getY()].setEffect(lighting);
-            image[lightMe.getX()][lightMe.getY()].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-                    ImageView im;
-                    im = (ImageView) e.getSource();
-                    System.out.println("Row: " + GridPane.getRowIndex(im));
-                    System.out.println("Column: " + GridPane.getColumnIndex(im));
-                }
-            });
-
-        }
-    }
-
-    public void lightMyPawnsB(Table t, Button[][] bt, int idGamer) {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                Cell cell = t.getTableCell(i, j);
-                if (cell.getPawn() != null && cell.getPawn().getIdGamer() == idGamer && cell.getPawn().getICanPlay()) {
-                    //se: esiste la pedina nella cella && la pedina è della stessa squadra del gamer && la pedina può giocare
-                    //rendere cliccabile e illuminata la cella
-                    bt[i][j].setEffect(lighting);
-                    bt[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent e) {
-                            Button b;
-                            b = (Button) e.getSource();
-                            System.out.println("Row: " + GridPane.getRowIndex(b));
-                            System.out.println("Column: " + GridPane.getColumnIndex(b));
-                            int x = GridPane.getRowIndex(b);
-                            int y = GridPane.getColumnIndex(b);
-                            System.out.print("Id pedina: " + t.getTableCell(x, y).getPawn().getIdPawn());
-                            System.out.println("\tId Giocatore: " + t.getTableCell(x, y).getPawn().getIdGamer());
-                            bt[x][y].setEffect(null);
-                            accessibleCellsB(t, t.getTableCell(x, y), bt);
-                        }
-                    });
-                }
-            }
-        }
-    }
-
-    public void accessibleCellsB(Table t, Cell myCell, Button[][] bt) {
-        ArrayList<Cell> cells = new ArrayList<>();
-        int x = myCell.getX();
-        int y = myCell.getY();
-        for (int i = x - 1; i < x + 2; i++) {
-            for (int j = y - 1; j < y + 2; j++) {
-                //controllo se la casella esiste
-                if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
-                    //controllo se non c'è la cupola
-                    //TODO potevo fare anche il controllo del livello di salita di livello e di posizione già occupata,
-                    // non posso farlo però, per colpa delle divinità
                     if ((!t.getTableCell(i, j).isComplete())) {
                         cells.add(t.getTableCell(i, j));
                     }
@@ -368,18 +230,102 @@ public class TestTable {
         }
         for (Cell lightMe : cells) {
             bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-            //bt[lightMe.getX()][lightMe.getY()].setEffect(lighting);
             bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
-                    Button b;
-                    b = (Button) e.getSource();
-                    System.out.println("Row: " + GridPane.getRowIndex(b));
-                    System.out.println("Column: " + GridPane.getColumnIndex(b));
+                    Button bTwo;
+                    bTwo = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(bTwo);
+                    int y = GridPane.getColumnIndex(bTwo);
+                    bt[myCell.getX()][myCell.getY()].setStyle("-fx-border-color:red");
+                    int l = cells.size();
+                    for (int k = 0; k < l; k++) {
+                        if (cells.get(k).getX() == x && cells.get(k).getY() == y) {
+                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:red");
+                        } else {
+                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:yellow");
+                        }
+                    }
+                    mySelection(bt, t.getTableCell(x, y), t);
+                    //Building per ora commentata
+                    //Building(t,bt,t.getTableCell(x,y));
                 }
             });
 
         }
     }
 
+    /**
+     * Metodo che printa la casella cliccata
+     *
+     * @param bt       tavola di bottoni
+     * @param moveCell cella cliccata
+     * @param t        table
+     */
+    public void mySelection(Button[][] bt, Cell moveCell, Table t) {
+        Button buttonMovement;
+        buttonMovement = bt[moveCell.getX()][moveCell.getY()];
+        System.out.println("Row: " + GridPane.getRowIndex(buttonMovement));
+        System.out.println("Column: " + GridPane.getColumnIndex(buttonMovement));
+    }
+
+    /**
+     * Metodo Building
+     * Dopo il movimento prende la casella in cui si è spostata la pedina (start) e cerca le caselle adaicenti per la costruzione
+     *
+     * @param t     tavolo
+     * @param bt    tabella di bottoni
+     * @param start nuova posizione della pedina
+     */
+    public void Building(Table t, Button[][] bt, Cell start) {
+        System.out.println("**Costruzione**\n");
+        int x = start.getX();
+        int y = start.getY();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (i == x && j == y) {
+                    bt[i][j].setStyle("-fx-border-color:white");
+                } else {
+                    bt[i][j].setStyle("-fx-border-color:trasparent");
+                    bt[i][j].setOnMouseClicked(null);
+                }
+            }
+        }
+        ArrayList<Cell> cells = new ArrayList<>();
+        for (int i = x - 1; i < x + 2; i++) {
+            for (int j = y - 1; j < y + 2; j++) {
+                //controllo se la casella esiste
+                if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
+                    //controllo se non c'è la cupola
+                    if ((!t.getTableCell(i, j).isComplete())) {
+                        cells.add(t.getTableCell(i, j));
+                    }
+                }
+            }
+        }
+        for (Cell lightMe : cells) {
+            bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:blue");
+            bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent e) {
+                    Button bTwo;
+                    bTwo = (Button) e.getSource();
+                    int xs = GridPane.getRowIndex(bTwo);
+                    int ys = GridPane.getColumnIndex(bTwo);
+                    bt[start.getX()][start.getY()].setStyle("-fx-border-color:white");
+                    bt[start.getX()][start.getY()].setOnMouseClicked(null);
+                    int l = cells.size();
+                    for (int k = 0; k < l; k++) {
+                        if (cells.get(k).getX() == xs && cells.get(k).getY() == ys) {
+                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:red");
+                        } else {
+                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:blue");
+                        }
+                    }
+                    mySelection(bt, t.getTableCell(xs, ys), t);
+                }
+            });
+        }
+
+    }
 }
