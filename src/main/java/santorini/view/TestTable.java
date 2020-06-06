@@ -105,11 +105,12 @@ public class TestTable {
             for (int j = 0; j < 5; j++) {
                 if (t.getTableCell(i, j).isComplete()) {
                     bt[i][j] = new Button();
-                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/Levels/Tower.png")), 58, 53, true, false),
+                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/Levels/L" + t.getTableCell(i, j).getLevel() + "+Dome.png")), 75, 75, true, false),
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j].setBackground(new Background(myBI));
-                    bt[i][j].setMaxSize(60, 60);
+                    bt[i][j].setMaxSize(75, 75);
+                    bt[i][j].setMinSize(75, 75);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
@@ -117,25 +118,25 @@ public class TestTable {
                     //mettere immagine con livello + cupola con la seguente sintassi
                     //"images/.../I_" + t.getTableCell(i,j).getLevel() + "_" + t.getTableCell(i,j).getPawn().getIdGamer()" + "_" + t.getTableCell(i,j).getPawn().getIdPawn() + ".png"
                     bt[i][j] = new Button();
-                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Ares.png")), 58, 53, true, false),
+                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/LevelAndPawns/L" + t.getTableCell(i, j).getLevel() + "+" + t.getTableCell(i, j).getPawn().getIdGamer() + "+" + t.getTableCell(i, j).getPawn().getIdPawn() + ".png")), 75, 75, true, false),
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j].setBackground(new Background(myBI));
-                    bt[i][j].setMaxSize(60, 60);
-                    bt[i][j].setMinSize(60, 60);
+                    bt[i][j].setMaxSize(75, 75);
+                    bt[i][j].setMinSize(75, 75);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
                 } else if (t.getTableCell(i, j).getLevel() != 0) {
                     //mettere immagine con solo livello con la seguente sintassi
                     //"images/.../I_" + t.getTableCell(i,j).getLevel() + ".png"
-                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/GodCards/Pan.png")), 58, 53, true, false),
+                    BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/Levels/L" + t.getTableCell(i, j).getLevel() + ".png")), 75, 75, true, false),
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j] = new Button();
                     bt[i][j].setBackground(new Background(myBI));
-                    bt[i][j].setMaxSize(60, 60);
-                    bt[i][j].setMinSize(60, 60);
+                    bt[i][j].setMaxSize(75, 75);
+                    bt[i][j].setMinSize(75, 75);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
@@ -144,8 +145,8 @@ public class TestTable {
                     bt[i][j] = new Button();
                     bt[i][j].setAlignment(Pos.BOTTOM_CENTER);
                     bt[i][j].setBackground(Background.EMPTY);
-                    bt[i][j].setMaxSize(60, 60);
-                    bt[i][j].setMinSize(60, 60);
+                    bt[i][j].setMaxSize(75, 75);
+                    bt[i][j].setMinSize(75, 75);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
