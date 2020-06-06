@@ -24,6 +24,7 @@ public class Turno implements Runnable {
      * @param gamer player that has to play
      * @param table game field
      */
+    //TODO rivedere condizione prometehus
     public Turno(ArrayList<God> cards, Gamer gamer, Table table, NetworkHandlerServer handler) {
         cards.removeIf(g -> g.equals(gamer.getMyGodCard()));
         this.otherCards = cards;

@@ -59,12 +59,13 @@ public class Prometheus extends God {
                     turno.getGamer().setBuilds(1);
                     control++;
                     turno.setCount(0);
+                    turno.setValidationBuild(false);
                 }
             } while (!promEffect && turno.getCount() < 3);
-            turno.methodLoser(promEffect, turno.getCount(), turno.getGamer());
-            if (turno.getGamer().getLoser()) {
+            if (!promEffect && turno.getCount() >= 3) {
                 turno.getGamer().setSteps(0);
-                turno.setValidationMove(true);
+                //condition for exclude the gamer
+                turno.setValidationMove(false);
                 turno.getGamer().setBuilds(0);
                 turno.setValidationBuild(true);
             }

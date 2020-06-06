@@ -119,6 +119,8 @@ public class Hephaestus extends God {
                 turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Hephaestus" + "\u001B[0m");
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                turno.printTableStatusTurn(true);
+
             }
             turno.methodLoser(HEffect, turno.getCount(), turno.getGamer());
             printerStatus = true;
