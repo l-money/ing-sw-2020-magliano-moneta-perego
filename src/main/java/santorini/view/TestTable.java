@@ -99,49 +99,37 @@ public class TestTable {
         printTableStatus(t, bt);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                bt[i][j].setOnMousePressed(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        Button button;
-                        button = (Button) e.getSource();
-                        int x = GridPane.getRowIndex(button);
-                        int y = GridPane.getColumnIndex(button);
-                        bt[x][y].setOnMouseEntered(null);
-                        bt[x][y].setOnMouseExited(null);
-                        bt[x][y].setStyle("-fx-border-color:blue");
-                        System.out.println("x:" + x + "\ty:" + y);
-                    }
+                bt[i][j].setOnMousePressed(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setOnMouseEntered(null);
+                    bt[x][y].setOnMouseExited(null);
+                    bt[x][y].setStyle("-fx-border-color:blue");
+                    System.out.println("x:" + x + "\ty:" + y);
                 });
-                bt[i][j].setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        Button button;
-                        button = (Button) e.getSource();
-                        int x = GridPane.getRowIndex(button);
-                        int y = GridPane.getColumnIndex(button);
-                        bt[x][y].setStyle("-fx-border-color:yellow");
-                    }
+                bt[i][j].setOnMouseEntered(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setStyle("-fx-border-color:yellow");
                 });
-                bt[i][j].setOnMouseExited(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        Button button;
-                        button = (Button) e.getSource();
-                        int x = GridPane.getRowIndex(button);
-                        int y = GridPane.getColumnIndex(button);
-                        bt[x][y].setStyle("-fx-border-color:trasparent");
-                    }
+                bt[i][j].setOnMouseExited(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setStyle("-fx-border-color:trasparent");
                 });
-                bt[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        Button button;
-                        button = (Button) e.getSource();
-                        int x = GridPane.getRowIndex(button);
-                        int y = GridPane.getColumnIndex(button);
-                        bt[x][y].setOnMousePressed(null);
-                        bt[x][y].setStyle("-fx-border-color:red");
-                    }
+                bt[i][j].setOnMouseClicked(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setOnMousePressed(null);
+                    bt[x][y].setStyle("-fx-border-color:red");
                 });
             }
         }

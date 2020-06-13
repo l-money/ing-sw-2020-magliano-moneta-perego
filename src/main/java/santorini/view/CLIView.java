@@ -284,10 +284,13 @@ public class CLIView extends View {
      * Requests init pawn positions before game starts
      * The gamer has 3 attempts for place each of his pawn
      * If he failed with attempts, the game positions the pawns in a random cell of the table
-     *
      */
     @Override
-    public synchronized void setInitializePawn() {
+    public void setInitializePawn() {
+        new Thread(this::initpwns).start();
+    }
+
+    public synchronized void initpwns() {
         int countDown;
         try {
             Thread.sleep(500);

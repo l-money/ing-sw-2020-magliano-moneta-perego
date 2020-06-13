@@ -14,6 +14,15 @@ public abstract class View {
     protected boolean[] pawnEnabled = new boolean[2];
     protected Thread listen;
     protected NetworkHandlerClient handlerClient;
+    protected String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getID() {
+        return ID;
+    }
 
     public void setID(int ID) {
         this.ID = ID;
