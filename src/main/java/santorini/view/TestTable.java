@@ -74,19 +74,20 @@ public class TestTable {
         p5.setIdPawn(1);
         p5.setIdGamer(2);
 
-
-        table.setACell(1, 1, 0, false, false, p0);
-        table.setACell(1, 3, 1, false, false, p1);
-
-        table.setACell(1, 2, 0, false, false, p2);
-        table.setACell(2, 3, 1, false, false, p3);
-
-        table.setACell(0, 0, 3, false, true, null);
-        table.setACell(0, 4, 2, false, true, null);
-        table.setACell(4, 0, 1, false, true, null);
-        table.setACell(4, 4, 0, false, true, null);
-        table.setACell(3, 3, 2, true, false, null);
-        table.setACell(3, 4, 2, true, false, null);
+        table.setACell(0, 3, 2, false, false, p0);
+        table.setACell(0, 0, 0, false, false, p1);
+        table.setACell(1, 1, 1, false, false, p2);
+        table.setACell(2, 2, 2, false, false, p3);
+        table.setACell(2, 3, 3, false, false, p4);
+        table.setACell(2, 1, 1, false, false, p5);
+        table.setACell(4, 4, 3, false, true, null);
+        table.setACell(0, 4, 3, false, true, null);
+        table.setACell(1, 4, 2, false, true, null);
+        table.setACell(0, 4, 1, false, true, null);
+        table.setACell(4, 0, 0, false, true, null);
+        table.setACell(1, 2, 1, true, false, null);
+        table.setACell(3, 0, 2, true, false, null);
+        table.setACell(4, 2, 3, true, false, null);
 
 
         //startTable(table,buttons);
