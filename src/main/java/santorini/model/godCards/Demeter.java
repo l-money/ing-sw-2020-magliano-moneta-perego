@@ -12,7 +12,9 @@ public class Demeter extends God {
     private boolean printerStatus = true;
 
     public Demeter() {
-        super("Demeter", "Tua costruzione: il tuo lavoratore\npuò costruire una volta in più\nma non nella stessa cella");
+        super("Demeter", "Tua costruzione:\n" +
+                "il tuo lavoratore può costruire una volta in più\n" +
+                "ma non nella stessa cella");
     }
 
     /**

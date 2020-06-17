@@ -7,8 +7,9 @@ import santorini.model.Gamer;
 public class Pan extends God {
 
     public Pan() {
-        super("Pan", "Condizione di vittoria: vinci\n" +
-                "anche se il tuo lavoratore scende di due o più livelli");
+        super("Pan", "Condizione di vittoria:\n" +
+                "vinci anche se il tuo lavoratore\n" +
+                "scende di due o più livelli");
     }
 
     /**

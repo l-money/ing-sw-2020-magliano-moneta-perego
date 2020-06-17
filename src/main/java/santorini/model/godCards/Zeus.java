@@ -12,8 +12,10 @@ public class Zeus extends God {
     private Mossa zeusBuild;
 
     public Zeus() {
-        super("Zeus", "Tua costruzione: il tuo lavoratore può costruire\n" +
-                "sotto di se nella casella attuale, aumentandola di un livello");
+        super("Zeus", "Tua costruzione:\n" +
+                "il tuo lavoratore può costruire\n" +
+                "sotto di se nella casella attuale,\n" +
+                "aumentandola di un livello");
     }
 
     /**

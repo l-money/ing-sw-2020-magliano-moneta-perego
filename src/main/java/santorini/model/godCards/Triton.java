@@ -16,7 +16,9 @@ public class Triton extends God {
     private int idM;
 
     public Triton() {
-        super("Triton", "Tuo spostamento: ogni volta che il tuo lavoratore si sposta su una casella perimentrale\n" +
+        super("Triton", "Tuo spostamento:\n" +
+                "ogni volta che il tuo lavoratore\n" +
+                "si sposta su una casella perimetrale\n" +
                 "(terreno o blocco), può subito spostarsi di nuovo");
     }
 

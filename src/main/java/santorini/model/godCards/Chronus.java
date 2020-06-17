@@ -7,7 +7,8 @@ import santorini.model.Table;
 public class Chronus extends God {
 
     public Chronus() {
-        super("Chronus", "Condizione di vittoria: vinci anche quando\n" +
+        super("Chronus", "Condizione di vittoria:\n" +
+                "vinci anche quando\n" +
                 "ci sono almeno cinque torri complete sul tabellone");
     }
 

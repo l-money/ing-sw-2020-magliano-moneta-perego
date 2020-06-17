@@ -23,7 +23,7 @@ public class ChooseCard1pl implements CardChoice {
     private God choosed = null;
     private ArrayList<God> cards;
     private Stage stage;
-    private DropShadow shadow;
+    DropShadow shadow = new DropShadow();
 
     public God getChoosed() {
         return this.choosed;
@@ -38,6 +38,8 @@ public class ChooseCard1pl implements CardChoice {
         label1.setText(cards.get(0).getName());
         descriptionGod.setText(cards.get(0).getDescription());
         powerGod.setImage(new Image("images/GodsPower/" + cards.get(0).getName() + "Power.png"));
+        firstGod.setEffect(shadow);
+        label1.setEffect(shadow);
         powerGod.setEffect(shadow);
     }
 
@@ -49,14 +51,14 @@ public class ChooseCard1pl implements CardChoice {
 
     @FXML
     void firstGodIn(MouseEvent event) {
-        firstGod.setEffect(shadow);
-        label1.setEffect(shadow);
+//        firstGod.setEffect(shadow);
+//        label1.setEffect(shadow);
     }
 
     @FXML
     void firstGodOut(MouseEvent event) {
-        firstGod.setEffect(null);
-        label1.setEffect(null);
+//        firstGod.setEffect(null);
+//        label1.setEffect(null);
     }
 
     public void setStage(Stage stage) {

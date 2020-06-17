@@ -14,8 +14,11 @@ public class Hestia extends God {
     private boolean printStatus;
 
     public Hestia() {
-        super("Hestia", "Tua costruzione: il tuo lavoratore può costruire una volta in più,\n" +
-                "anche nella stessa casella, una costruzione aggiuntiva, però, non può avvenire\n" +
+        super("Hestia", "Tua costruzione:\n" +
+                "il tuo lavoratore può costruire una volta in più,\n" +
+                "anche nella stessa casella,\n" +
+                "una costruzione aggiuntiva,\n" +
+                "però, non può avvenire\n" +
                 "su una casella perimetrale");
     }
 
