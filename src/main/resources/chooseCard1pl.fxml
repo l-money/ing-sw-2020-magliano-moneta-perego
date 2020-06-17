@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +12,11 @@
     <children>
         <ImageView fx:id="firstGod" fitHeight="247.0" fitWidth="165.0" layoutX="275.0" layoutY="35.0"
                    onMouseClicked="#clickFirstGod" onMouseEntered="#firstGodIn" onMouseExited="#firstGodOut"
-                   pickOnBounds="true" preserveRatio="true"/>
+                   pickOnBounds="true" preserveRatio="true">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </ImageView>
         <Label fx:id="label1" alignment="CENTER" layoutX="276.0" layoutY="297.0" prefHeight="26.0" prefWidth="163.0"
                style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold;"
                text="NOME DIO 1">
@@ -23,9 +28,9 @@
               style="-fx-background-radius: 30; -fx-background-color: #C0C0C0; -fx-border-color: gold; -fx-border-radius: 30; -fx-border-width: 1.8;">
             <children>
                 <Label fx:id="descriptionGod" alignment="TOP_CENTER" layoutY="1.0" prefHeight="183.0" prefWidth="378.0"
-                       text="PROVA CARTA">
+                       text="rgreg" textAlignment="CENTER">
                     <font>
-                        <Font size="16.0"/>
+                        <Font name="AR BLANCA" size="16.0"/>
                     </font>
                 </Label>
             </children>

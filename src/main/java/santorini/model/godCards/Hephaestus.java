@@ -11,7 +11,8 @@ public class Hephaestus extends God {
     boolean printerStatus = true;
 
     public Hephaestus() {
-        super("Hephaestus", "Tua costruzione: il tuo lavoratore\n" +
+        super("Hephaestus", "Tua costruzione:\n" +
+                "il tuo lavoratore\n" +
                 "può costruire un blocco aggiuntivo\n" +
                 "(non una cupola) al di sopra del primo blocco.");
     }

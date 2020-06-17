@@ -13,7 +13,8 @@ public class Prometheus extends God {
 
 
     public Prometheus() {
-        super("Prometheus", "Tuo turno: se il tuo lavoratore\n" +
+        super("Prometheus", "Tuo turno:\n" +
+                "se il tuo lavoratore\n" +
                 "non sale di livello, allora puoi\n" +
                 "costruire sia prima, sia dopo aver mosso\n" +
                 "il tuo lavoratore");

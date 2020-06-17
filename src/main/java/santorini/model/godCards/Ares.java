@@ -8,8 +8,10 @@ import java.util.ArrayList;
 public class Ares extends God {
 
     public Ares() {
-        super("Ares", "Fine del tuo turno: puoi rimuovere un blocco libero\n" +
-                "(non una cupola) adaicente al lavoratore che non hai mosso");
+        super("Ares", "Fine del tuo turno:\n" +
+                "puoi rimuovere un blocco libero\n" +
+                "(non una cupola)\n" +
+                "adiacente al lavoratore che non hai mosso");
     }
     /**
      * Initialize player variables with card

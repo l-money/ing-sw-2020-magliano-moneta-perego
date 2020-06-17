@@ -13,7 +13,8 @@ public class Atlas extends God {
     private int controller = 1;
 
     public Atlas() {
-        super("Atlas", "Tua costruzione: il tuo lavoratore può costruire una cupola\n" +
+        super("Atlas", "Tua costruzione:\n" +
+                "il tuo lavoratore può costruire una cupola\n" +
                 "su qualsiasi livello, compreso il terreno");
     }
 

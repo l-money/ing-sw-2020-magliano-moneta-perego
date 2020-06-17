@@ -11,8 +11,11 @@ public class Apollo extends God {
     private boolean apolloEffect;
 
     public Apollo() {
-        super("Apollo", "Tuo spostamento: il tuo lavoratore può spostarsi nella casella di un lavoratore avversario\n" +
-                "(usando le normali regole di spostamento) e costringerlo ad occupare la casella appena liberata\n " +
+        super("Apollo", "Tuo spostamento:\n" +
+                "il tuo lavoratore può spostarsi nella casella di\n" +
+                "un lavoratore avversario\n" +
+                "(usando le normali regole di spostamento) e\n" +
+                "costringerlo ad occupare la casella appena liberata\n " +
                 "scambiando le posizioni");
     }
 

@@ -8,8 +8,11 @@ public class Athena extends God {
     private boolean athenaEffect;
 
     public Athena() {
-        super("Athena", "Tuo avversario :se nel tuo ultimo turno uno dei tuoi lavoratori è salito di livello,\n" +
-                "in questo turno i lavoratori avversari non possono salire di livello");
+        super("Athena", "Tuo avversario:\n" +
+                "se nel tuo ultimo turno\n" +
+                "uno dei tuoi lavoratori è salito di livello,\n" +
+                "in questo turno i lavoratori avversari\n" +
+                "non possono salire di livello");
 
     }
 
