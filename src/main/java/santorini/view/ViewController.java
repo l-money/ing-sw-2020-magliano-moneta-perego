@@ -411,12 +411,25 @@ public class ViewController extends View {
 
     @Override
     public void vittoria() {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hai vinto");
+            alert.setHeaderText("Fine della partita");
+            alert.showAndWait();
+            System.exit(0);
+        });
 
     }
 
     @Override
     public void sconfitta(String winner) {
-
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Hai perso");
+            alert.setHeaderText("Ha vinto " + winner + "\nFine della partita");
+            alert.showAndWait();
+            System.exit(0);
+        });
     }
 
     @Override
