@@ -12,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
@@ -42,12 +45,31 @@ public class ViewController extends View {
     @FXML
     private Button submitAction;
 
+    @FXML
+    private Button buttonPl1;
+
+    @FXML
+    private Button buttonPl2;
+
+    @FXML
+    private Button buttonPl3;
+
+    @FXML
+    private ImageView firstPl;
+
+    @FXML
+    private ImageView secondPl;
+
+    @FXML
+    private ImageView thirdPl;
+
     private Button[][] bt = new Button[5][5];
 
     private Mossa currentMove = null;
 
     private int pawnPlacedCounter = 0;
     private String initCoords = "";
+    private DropShadow shadow = new DropShadow();
 
     public ViewController() {
 
@@ -98,6 +120,11 @@ public class ViewController extends View {
                 jumpMove.setDisable(true);
             }
         });
+
+        firstPl.setEffect(shadow);
+        secondPl.setEffect(shadow);
+        thirdPl.setEffect(shadow);
+
     }
 
     public void startTable(Table t, Button[][] bt) {
@@ -209,6 +236,19 @@ public class ViewController extends View {
             }
 
         });
+
+        God g = getGod();
+        buttonPl1.setTooltip(new Tooltip(
+                "g.getName()" +
+                        "g.getDescription()"));
+        buttonPl2.setTooltip(new Tooltip(
+                "g.getName()" +
+                        "g.getDescription()"));
+        buttonPl3.setTooltip(new Tooltip(
+                "g.getName()" +
+                        "g.getDescription()"));
+
+
     }
 
     public void initButtons() {
