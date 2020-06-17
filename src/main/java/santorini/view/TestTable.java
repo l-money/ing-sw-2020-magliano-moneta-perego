@@ -19,7 +19,6 @@ import santorini.model.Pawn;
 import santorini.model.Table;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TestTable {
 
@@ -32,7 +31,6 @@ public class TestTable {
     @FXML
     private TextArea textArea;
 
-    //private ImageView[][] imageView;
     private Button[][] buttons;
     private Stage stage;
     private int c1, c2;
@@ -48,9 +46,8 @@ public class TestTable {
     // Spostamento pedina con secondo click
 
     public void initialize() {
-        //imageView = new ImageView[5][5];
+        int x = -2, y = -2;
         buttons = new Button[5][5];
-        Scanner input = new Scanner(System.in);
         Table table = new Table();
         Gamer gamer = new Gamer(null, "Pippo", 0, null, null);
         Gamer gamer2 = new Gamer(null, "Pno", 1, null, null);
@@ -77,20 +74,69 @@ public class TestTable {
         p5.setIdPawn(1);
         p5.setIdGamer(2);
 
-        table.setACell(1, 1, 0, false, false, p0);
-        table.setACell(1, 3, 1, false, false, p1);
+        table.setACell(0, 3, 2, false, false, p0);
+        table.setACell(0, 0, 0, false, false, p1);
+        table.setACell(1, 1, 1, false, false, p2);
+        table.setACell(2, 2, 2, false, false, p3);
+        table.setACell(2, 3, 3, false, false, p4);
+        table.setACell(2, 1, 1, false, false, p5);
+        table.setACell(4, 4, 3, false, true, null);
+        table.setACell(0, 4, 3, false, true, null);
+        table.setACell(1, 4, 2, false, true, null);
+        table.setACell(0, 4, 1, false, true, null);
+        table.setACell(4, 0, 0, false, true, null);
+        table.setACell(1, 2, 1, true, false, null);
+        table.setACell(3, 0, 2, true, false, null);
+        table.setACell(4, 2, 3, true, false, null);
 
-        table.setACell(1, 2, 0, false, false, p2);
-        table.setACell(2, 3, 1, false, false, p3);
 
-        table.setACell(0, 0, 3, false, true, null);
-        table.setACell(0, 4, 2, false, true, null);
-        table.setACell(4, 0, 1, false, true, null);
-        table.setACell(4, 4, 0, false, true, null);
-        table.setACell(3, 3, 2, true, false, null);
-        table.setACell(3, 4, 2, true, false, null);
+        //startTable(table,buttons);
         printTableStatus(table, buttons);
         lightMyPawns(table, buttons, gamer.getId());
+    }
+
+    public void startTable(Table t, Button[][] bt) {
+        printTableStatus(t, bt);
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                bt[i][j].setOnMousePressed(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setOnMouseEntered(null);
+                    bt[x][y].setOnMouseExited(null);
+                    bt[x][y].setStyle("-fx-border-color:blue");
+                    System.out.println("x:" + x + "\ty:" + y);
+                });
+                bt[i][j].setOnMouseEntered(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setStyle("-fx-border-color:yellow");
+                });
+                bt[i][j].setOnMouseExited(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setStyle("-fx-border-color:trasparent");
+                });
+                bt[i][j].setOnMouseClicked(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    int x = GridPane.getRowIndex(button);
+                    int y = GridPane.getColumnIndex(button);
+                    bt[x][y].setOnMousePressed(null);
+                    bt[x][y].setStyle("-fx-border-color:red");
+                });
+            }
+        }
+    }
+
+    public int summ(int i) {
+        return i++;
     }
 
     /**
@@ -109,8 +155,8 @@ public class TestTable {
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j].setBackground(new Background(myBI));
-                    bt[i][j].setMaxSize(75, 75);
-                    bt[i][j].setMinSize(75, 75);
+                    bt[i][j].setMaxSize(65, 65);
+                    bt[i][j].setMinSize(65, 65);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
@@ -122,8 +168,8 @@ public class TestTable {
                             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                             BackgroundSize.DEFAULT);
                     bt[i][j].setBackground(new Background(myBI));
-                    bt[i][j].setMaxSize(75, 75);
-                    bt[i][j].setMinSize(75, 75);
+                    bt[i][j].setMaxSize(65, 65);
+                    bt[i][j].setMinSize(65, 65);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
@@ -135,8 +181,8 @@ public class TestTable {
                             BackgroundSize.DEFAULT);
                     bt[i][j] = new Button();
                     bt[i][j].setBackground(new Background(myBI));
-                    bt[i][j].setMaxSize(75, 75);
-                    bt[i][j].setMinSize(75, 75);
+                    bt[i][j].setMaxSize(65, 65);
+                    bt[i][j].setMinSize(65, 65);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);
@@ -145,8 +191,8 @@ public class TestTable {
                     bt[i][j] = new Button();
                     bt[i][j].setAlignment(Pos.BOTTOM_CENTER);
                     bt[i][j].setBackground(Background.EMPTY);
-                    bt[i][j].setMaxSize(75, 75);
-                    bt[i][j].setMinSize(75, 75);
+                    bt[i][j].setMaxSize(65, 65);
+                    bt[i][j].setMinSize(65, 65);
                     gridPane.add(bt[i][j], j, i);
                     gridPane.setHalignment(bt[i][j], HPos.CENTER);
                     gridPane.setValignment(bt[i][j], VPos.CENTER);

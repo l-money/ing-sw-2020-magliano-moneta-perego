@@ -49,7 +49,7 @@
                 <Image url="@images/Players/Gamer_3.png"/>
             </image>
         </ImageView>
-        <Button fx:id="sendMove" layoutX="329.0" layoutY="490.0" mnemonicParsing="false" prefHeight="35.0"
+        <Button fx:id="submitAction" layoutX="329.0" layoutY="490.0" mnemonicParsing="false" prefHeight="35.0"
                 prefWidth="110.0" style="-fx-background-radius: 30;" text="Manda Mossa">
             <cursor>
                 <Cursor fx:constant="HAND"/>
@@ -62,9 +62,9 @@
             </cursor>
         </Button>
         <TextArea fx:id="textArea" layoutX="736.0" layoutY="383.0" prefHeight="155.0" prefWidth="222.0"
-                  styleClass="text-area" stylesheets="@style.css" text="Prova a scrivere" wrapText="true">
+                  styleClass="text-area" stylesheets="@style.css" text="" wrapText="true" editable="false">
             <font>
-                <Font size="16.0"/>
+                <Font size="13.0"/>
             </font>
         </TextArea>
     </children>

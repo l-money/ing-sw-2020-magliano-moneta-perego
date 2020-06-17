@@ -88,7 +88,7 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case INITIALIZE_PAWNS:
                             /*Chiedi le coordinate iniziali delle pedine*/
-                            new Thread(() -> view.setInitializePawn()).start();
+                            view.setInitializePawn();
                             break;
                         case FAILED:
                             /*Invia errore al giocatore e resta subito pronto
