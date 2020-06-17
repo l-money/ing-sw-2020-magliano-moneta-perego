@@ -55,6 +55,15 @@ public class ViewController extends View {
     private Button buttonPl3;
 
     @FXML
+    private Button movePawn;
+
+    @FXML
+    private Button buildPawn;
+
+    @FXML
+    private Button stopPawn;
+
+    @FXML
     private ImageView firstPl;
 
     @FXML
@@ -129,15 +138,15 @@ public class ViewController extends View {
     }
 
     public void lightMove() {
-        buttonPl1.setStyle("-fx-background-color: YELLOW");
+        movePawn.setStyle("-fx-background-color: YELLOW");
     }
 
     public void lightBuild() {
-        buttonPl2.setStyle("-fx-background-color: YELLOW");
+        buildPawn.setStyle("-fx-background-color: YELLOW");
     }
 
     public void lightPause() {
-        buttonPl3.setStyle("-fx-background-color: RED");
+        stopPawn.setStyle("-fx-background-color: RED");
     }
 
     public void startTable(Table t, Button[][] bt) {
