@@ -168,8 +168,10 @@ public class ViewController extends View {
 
     @Override
     public void chooseCards(ArrayList<God> gods) {
+        System.out.println("Scelta della carta size: " + gods.size());
         Platform.runLater(() -> {
             overlayedStage.close();
+            System.out.println("Scelta della carta");
             Stage dialog = new Stage();
             dialog.setTitle("Scelta Carte Divinità");
             dialog.getIcons().add(new Image("images/cm_boardgame.png"));
@@ -214,6 +216,7 @@ public class ViewController extends View {
             }
 
         });
+
     }
 
     public void initButtons() {
@@ -286,7 +289,14 @@ public class ViewController extends View {
                 effetto = true;
                 currentMove = new Mossa();
                 currentMove.setAction(action);
-                lightMyPawns();
+                if (!inTurno) {
+                    lightMyPawns();
+                    inTurno = true;
+                } else {
+                    accessibleCells(table, table.getTableCell(table.getXYPawn(getID(), currentPawn, true),
+                            table.getXYPawn(getID(), currentPawn, false)), bt,
+                            bt[table.getXYPawn(getID(), currentPawn, true)][table.getXYPawn(getID(), currentPawn, false)]);
+                }
         }
     }
 
@@ -367,8 +377,13 @@ public class ViewController extends View {
 
     @Override
     public void printMessage(String msg) {
+        if (msg.contains("Turno di :")) {
+            inTurno = false;
+        }
         msg = editString(msg);
-        textArea.appendText(msg);
+        if (textArea != null) {
+            textArea.appendText(msg);
+        }
     }
 
     @Override
@@ -549,8 +564,8 @@ public class ViewController extends View {
      */
     public void Building(Table t, Button[][] bt, Cell start) {
         System.out.println("**Costruzione**\n");
-        int x = start.getX();
-        int y = start.getY();
+        int x = table.getXYPawn(getID(), currentPawn, true);
+        int y = table.getXYPawn(getID(), currentPawn, false);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (i == x && j == y) {
