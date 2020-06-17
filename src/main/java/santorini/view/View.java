@@ -15,6 +15,15 @@ public abstract class View {
     protected Thread listen;
     protected NetworkHandlerClient handlerClient;
     protected String name;
+    protected God god;
+
+    public God getGod() {
+        return god;
+    }
+
+    public void setGod(God god) {
+        this.god = god;
+    }
 
     public void setName(String name) {
         this.name = name;

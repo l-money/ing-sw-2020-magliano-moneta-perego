@@ -75,9 +75,18 @@ public class ViewController extends View {
         jumpMove.setDisable(true);
         submitAction.setOnAction(event -> {
             try {
+                System.out.println("Dettagli mossa: ");
+                System.out.println("Coords target:   " + currentMove.getTargetX() + ", " + currentMove.getTargetY());
+                System.out.println("Pawn:  " + currentMove.getIdPawn());
+                System.out.println("Action: " + currentMove.getAction());
                 handlerClient.sendAction(this.currentMove);
+
             } catch (IOException e) {
                 setFailed("Errore di rete");
+            } finally {
+                jumpMove.setDisable(true);
+                submitAction.setDisable(true);
+                disableButtons(true);
             }
         });
         jumpMove.setOnAction(ev -> {
@@ -133,11 +142,20 @@ public class ViewController extends View {
                             handlerClient.initializePawns(initCoords);
                             System.out.println("Invio coordinate al server:\n" + initCoords);
                             initButtons();
+                            disableButtons(true);
                         } catch (IOException ioException) {
                             setFailed("Errore di rete");
                         }
                     }
                 });
+            }
+        }
+    }
+
+    private void disableButtons(boolean b) {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                bt[i][j].setDisable(b);
             }
         }
     }
@@ -185,6 +203,7 @@ public class ViewController extends View {
                 //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
                 dialog.showAndWait();
                 handlerClient.setCard(cc.getChoosed());
+                setGod(cc.getChoosed());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -252,17 +271,18 @@ public class ViewController extends View {
     @Override
     public void setNewAction(Mossa.Action action) {
         jumpMove.setDisable(false);
+
         switch (action) {
             case BUILD:
                 Cell c = table.getTableCell(currentMove.getTargetX(), currentMove.getTargetY());
                 currentMove = new Mossa();
-                currentMove.setAction(Mossa.Action.BUILD);
+                currentMove.setAction(action);
                 currentMove.setIdPawn(currentPawn);
                 Building(table, bt, c);
                 break;
             case MOVE:
                 currentMove = new Mossa();
-                currentMove.setAction(Mossa.Action.BUILD);
+                currentMove.setAction(action);
                 lightMyPawns();
         }
     }
@@ -337,7 +357,7 @@ public class ViewController extends View {
             } catch (StringIndexOutOfBoundsException ex) {
                 continue;
             }
-            result.append(g);
+            result.append(g + "\n");
         }
         return result.toString();
     }
@@ -411,34 +431,34 @@ public class ViewController extends View {
                     //se: esiste la pedina nella cella && la pedina è della stessa squadra del gamer && la pedina può giocare
                     //rendere cliccabile e illuminata la cella
                     bt[i][j].setStyle("-fx-border-color:yellow");
-                    bt[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent e) {
-                            Button bOne;
-                            bOne = (Button) e.getSource();
-                            int x = GridPane.getRowIndex(bOne);
-                            int y = GridPane.getColumnIndex(bOne);
-                            for (int i = 0; i < 5; i++) {
-                                for (int j = 0; j < 5; j++) {
-                                    Cell cell = table.getTableCell(i, j);
-                                    if (cell.getPawn() != null && cell.getPawn().getIdGamer() == getID()) {
-                                        if (i == x && j == y) {
-                                            bt[i][j].setStyle("-fx-border-color:red");
-                                        } else {
-                                            bt[i][j].setStyle("-fx-border-color:blue");
-                                        }
+                    bt[i][j].setDisable(false);
+                    bt[i][j].setOnMouseClicked(e -> {
+
+                        Button bOne;
+                        bOne = (Button) e.getSource();
+                        int x = GridPane.getRowIndex(bOne);
+                        int y = GridPane.getColumnIndex(bOne);
+                        for (int i1 = 0; i1 < 5; i1++) {
+                            for (int j1 = 0; j1 < 5; j1++) {
+                                Cell cell1 = table.getTableCell(i1, j1);
+                                if (cell1.getPawn() != null && cell1.getPawn().getIdGamer() == getID()) {
+                                    if (i1 == x && j1 == y) {
+                                        bt[i1][j1].setStyle("-fx-border-color:red");
                                     } else {
-                                        bt[i][j].setStyle("-fx-border-color:transparent");
-                                        bt[i][j].setOnMouseClicked(null);
+                                        bt[i1][j1].setStyle("-fx-border-color:blue");
                                     }
+                                } else {
+                                    bt[i1][j1].setStyle("-fx-border-color:transparent");
+                                    bt[i1][j1].setDisable(true);
                                 }
                             }
-                            System.out.print("***Id pedina: " + table.getTableCell(x, y).getPawn().getIdPawn());
-                            System.out.println("\tId Giocatore: " + table.getTableCell(x, y).getPawn().getIdGamer() + "***\n");
-                            currentMove.setIdPawn(table.getTableCell(x, y).getPawn().getIdPawn());
-                            currentPawn = currentMove.getIdPawn();
-                            accessibleCells(table, cell, bt, bOne);
                         }
+
+                        System.out.print("***Id pedina: " + table.getTableCell(x, y).getPawn().getIdPawn());
+                        System.out.println("\tId Giocatore: " + table.getTableCell(x, y).getPawn().getIdGamer() + "***\n");
+                        currentMove.setIdPawn(table.getTableCell(x, y).getPawn().getIdPawn());
+                        currentPawn = currentMove.getIdPawn();
+                        accessibleCells(table, cell, bt, bOne);
                     });
                 }
             }
@@ -472,6 +492,7 @@ public class ViewController extends View {
         }
         for (Cell lightMe : cells) {
             bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
+            bt[lightMe.getX()][lightMe.getY()].setDisable(false);
             bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent e) {
@@ -550,28 +571,26 @@ public class ViewController extends View {
         }
         for (Cell lightMe : cells) {
             bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:blue");
-            bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-                    Button bTwo;
-                    bTwo = (Button) e.getSource();
-                    int xs = GridPane.getRowIndex(bTwo);
-                    int ys = GridPane.getColumnIndex(bTwo);
-                    bt[start.getX()][start.getY()].setStyle("-fx-border-color:white");
-                    bt[start.getX()][start.getY()].setOnMouseClicked(null);
-                    int l = cells.size();
-                    for (int k = 0; k < l; k++) {
-                        if (cells.get(k).getX() == xs && cells.get(k).getY() == ys) {
-                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:red");
-                        } else {
-                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:blue");
-                        }
+            bt[lightMe.getX()][lightMe.getY()].setDisable(false);
+            bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(e -> {
+                Button bTwo;
+                bTwo = (Button) e.getSource();
+                int xs = GridPane.getRowIndex(bTwo);
+                int ys = GridPane.getColumnIndex(bTwo);
+                bt[start.getX()][start.getY()].setStyle("-fx-border-color:white");
+                bt[start.getX()][start.getY()].setOnMouseClicked(null);
+                int l = cells.size();
+                for (int k = 0; k < l; k++) {
+                    if (cells.get(k).getX() == xs && cells.get(k).getY() == ys) {
+                        bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:red");
+                    } else {
+                        bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:blue");
                     }
-                    mySelection(bt, t.getTableCell(xs, ys), t);
-                    currentMove.setTargetX(x);
-                    currentMove.setTargetY(y);
-                    submitAction.setDisable(false);
                 }
+                mySelection(bt, t.getTableCell(xs, ys), t);
+                currentMove.setTargetX(xs);
+                currentMove.setTargetY(ys);
+                submitAction.setDisable(false);
             });
         }
 

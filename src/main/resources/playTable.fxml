@@ -64,7 +64,7 @@
         <TextArea fx:id="textArea" layoutX="736.0" layoutY="383.0" prefHeight="155.0" prefWidth="222.0"
                   styleClass="text-area" stylesheets="@style.css" text="" wrapText="true" editable="false">
             <font>
-                <Font size="16.0"/>
+                <Font size="13.0"/>
             </font>
         </TextArea>
     </children>
