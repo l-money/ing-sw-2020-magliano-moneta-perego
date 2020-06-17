@@ -104,6 +104,7 @@ public class ViewController extends View {
             } finally {
                 jumpMove.setDisable(true);
                 effetto = false;
+                disableButtons(true);
             }
         });
     }
