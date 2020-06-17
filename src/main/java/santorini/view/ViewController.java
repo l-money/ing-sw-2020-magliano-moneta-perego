@@ -30,6 +30,7 @@ public class ViewController extends View {
 
     private Stage thisStage;
     private Stage overlayedStage;
+    private boolean firstAction = false;
     @FXML
     private GridPane gridPane;
 
@@ -279,7 +280,17 @@ public class ViewController extends View {
 
         switch (action) {
             case BUILD:
-                Cell c = table.getTableCell(currentMove.getTargetX(), currentMove.getTargetY());
+                Cell c = null;
+                if (!inTurno) {
+                    lightMyPawns();
+                    inTurno = true;
+                    c = table.getTableCell(table.getXYPawn(getID(), currentPawn, true),
+                            table.getXYPawn(getID(), currentPawn, false));
+                    firstAction = true;
+                } else {
+                    c = table.getTableCell(currentMove.getTargetX(), currentMove.getTargetY());
+                    firstAction = false;
+                }
                 currentMove = new Mossa();
                 currentMove.setAction(action);
                 currentMove.setIdPawn(currentPawn);
@@ -292,11 +303,13 @@ public class ViewController extends View {
                 if (!inTurno) {
                     lightMyPawns();
                     inTurno = true;
+                    firstAction = true;
                 } else {
-                    accessibleCells(table, table.getTableCell(table.getXYPawn(getID(), currentPawn, true),
-                            table.getXYPawn(getID(), currentPawn, false)), bt,
-                            bt[table.getXYPawn(getID(), currentPawn, true)][table.getXYPawn(getID(), currentPawn, false)]);
+                    firstAction = false;
                 }
+                accessibleCells(table, table.getTableCell(table.getXYPawn(getID(), currentPawn, true),
+                        table.getXYPawn(getID(), currentPawn, false)), bt,
+                        bt[table.getXYPawn(getID(), currentPawn, true)][table.getXYPawn(getID(), currentPawn, false)]);
         }
     }
 
@@ -357,6 +370,9 @@ public class ViewController extends View {
             alert.setHeaderText(msg);
             alert.showAndWait();
         });
+        if (firstAction) {
+            inTurno = false;
+        }
 
     }
 
@@ -477,7 +493,6 @@ public class ViewController extends View {
                         System.out.println("\tId Giocatore: " + table.getTableCell(x, y).getPawn().getIdGamer() + "***\n");
                         currentMove.setIdPawn(table.getTableCell(x, y).getPawn().getIdPawn());
                         currentPawn = currentMove.getIdPawn();
-                        accessibleCells(table, cell, bt, bOne);
                     });
                 }
             }
