@@ -83,14 +83,15 @@ public class ViewController extends View {
                 System.out.println("Coords target:   " + currentMove.getTargetX() + ", " + currentMove.getTargetY());
                 System.out.println("Pawn:  " + currentMove.getIdPawn());
                 System.out.println("Action: " + currentMove.getAction());
+                disableButtons(true);
                 handlerClient.sendAction(this.currentMove);
+                submitAction.setDisable(true);
 
             } catch (IOException e) {
                 setFailed("Errore di rete");
                 System.exit(1);
             } finally {
                 jumpMove.setDisable(true);
-                submitAction.setDisable(true);
                 disableButtons(true);
             }
         });
@@ -255,6 +256,9 @@ public class ViewController extends View {
                     int y = GridPane.getColumnIndex(button);
                     //bt[x][y].setStyle("-fx-border-color:red");
                     aggiornaMossa(table.getTableCell(x, y));
+                    Platform.runLater(() -> {
+                        submitAction.setDisable(false);
+                    });
                 });
             }
         }
@@ -264,18 +268,22 @@ public class ViewController extends View {
         currentMove.setIdPawn(currentPawn);
         currentMove.setTargetX(cella.getX());
         currentMove.setTargetY(cella.getY());
-        submitAction.setDisable(false);
-        jumpMove.setDisable(true);
-        submitAction.setDisable(true);
+        Platform.runLater(() -> {
+            jumpMove.setDisable(true);
+            submitAction.setDisable(true);
+        });
+
     }
 
     @Override
     public void setNewAction(Mossa.Action action) {
         jumpMove.setDisable(false);
+        Platform.runLater(() -> {
+            submitAction.setDisable(true);
 
+        });
         switch (action) {
             case BUILD:
-
                 if (!inTurno) {
                     lightMyPawns();
                     inTurno = true;
@@ -284,6 +292,8 @@ public class ViewController extends View {
                     c = table.getTableCell(table.getXYPawn(getID(), currentPawn, true),
                             table.getXYPawn(getID(), currentPawn, false));
                     firstAction = false;
+                    lightAvailable(c, bt[table.getXYPawn(getID(), currentPawn, true)][table.getXYPawn(getID(), currentPawn, true)]);
+
                 }
                 currentMove = new Mossa();
                 currentMove.setAction(action);
@@ -299,6 +309,8 @@ public class ViewController extends View {
                     firstAction = true;
                 } else {
                     firstAction = false;
+                    c = table.getTableCell(table.getXYPawn(getID(), currentPawn, true),
+                            table.getXYPawn(getID(), currentPawn, false));
                     lightAvailable(c, bt[table.getXYPawn(getID(), currentPawn, true)][table.getXYPawn(getID(), currentPawn, true)]);
 
                 }
@@ -473,7 +485,7 @@ public class ViewController extends View {
                     //rendere cliccabile e illuminata la cella
                     bt[i][j].setStyle("-fx-border-color:yellow");
                     bt[i][j].setDisable(false);
-                    bt[i][j].setOnMouseClicked(e -> {
+                    bt[i][j].setOnAction(e -> {
 
                         Button bOne;
                         bOne = (Button) e.getSource();
@@ -574,11 +586,8 @@ public class ViewController extends View {
                         }
                     }
                     mySelection(bt, t.getTableCell(x, y), t);
-                    //Building per ora commentata
-                    //Building(t,bt,t.getTableCell(x,y));
                     currentMove.setTargetX(x);
                     currentMove.setTargetY(y);
-                    submitAction.setDisable(false);
                 }
             });
 
@@ -639,7 +648,6 @@ public class ViewController extends View {
                 Button b = (Button) ev.getSource();
                 currentMove.setTargetX(GridPane.getRowIndex(b));
                 currentMove.setTargetY(GridPane.getColumnIndex(b));
-                submitAction.setDisable(false);
             });
         } else {
             for (Cell lightMe : cells) {
@@ -663,7 +671,6 @@ public class ViewController extends View {
                     mySelection(bt, t.getTableCell(xs, ys), t);
                     currentMove.setTargetX(xs);
                     currentMove.setTargetY(ys);
-                    submitAction.setDisable(false);
                 });
             }
         }
