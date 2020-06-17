@@ -16,7 +16,7 @@ public class Extraction implements Serializable {
 
     public Extraction() {
         gods = new ArrayList<God>();
-        gods.add(new Apollo());
+        /*gods.add(new Apollo());
         gods.add(new Artemis());
         gods.add(new Athena());
         gods.add(new Atlas());
@@ -27,7 +27,7 @@ public class Extraction implements Serializable {
         gods.add(new Prometheus());
         //avanzate
         gods.add(new Ares());
-        gods.add(new Chronus());
+        gods.add(new Chronus());*/
         gods.add(new Hestia());
         gods.add(new Triton());
         gods.add(new Zeus());

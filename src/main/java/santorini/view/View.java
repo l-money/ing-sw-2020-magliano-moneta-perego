@@ -16,6 +16,7 @@ public abstract class View {
     protected NetworkHandlerClient handlerClient;
     protected String name;
     protected God god;
+    protected boolean effetto = true;
 
     public God getGod() {
         return god;
