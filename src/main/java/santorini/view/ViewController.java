@@ -12,7 +12,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
@@ -46,12 +49,40 @@ public class ViewController extends View {
     @FXML
     private Button submitAction;
 
+    @FXML
+    private Button buttonPl1;
+
+    @FXML
+    private Button buttonPl2;
+
+    @FXML
+    private Button buttonPl3;
+
+    @FXML
+    private Button movePawn;
+
+    @FXML
+    private Button buildPawn;
+
+    @FXML
+    private Button stopPawn;
+
+    @FXML
+    private ImageView firstPl;
+
+    @FXML
+    private ImageView secondPl;
+
+    @FXML
+    private ImageView thirdPl;
+
     private Button[][] bt = new Button[5][5];
 
     private Mossa currentMove = null;
 
     private int pawnPlacedCounter = 0;
     private String initCoords = "";
+    private DropShadow shadow = new DropShadow();
 
     public ViewController() {
 
@@ -110,6 +141,29 @@ public class ViewController extends View {
                 disableButtons(true);
             }
         });
+
+        firstPl.setEffect(shadow);
+        secondPl.setEffect(shadow);
+        thirdPl.setEffect(shadow);
+        textArea.setEffect(shadow);
+        movePawn.setEffect(shadow);
+        buildPawn.setEffect(shadow);
+        stopPawn.setEffect(shadow);
+        submitAction.setEffect(shadow);
+        jumpMove.setEffect(shadow);
+
+    }
+
+    public void lightMove() {
+        movePawn.setStyle("-fx-background-color: YELLOW");
+    }
+
+    public void lightBuild() {
+        buildPawn.setStyle("-fx-background-color: YELLOW");
+    }
+
+    public void lightPause() {
+        stopPawn.setStyle("-fx-background-color: RED");
     }
 
     /**
@@ -243,6 +297,18 @@ public class ViewController extends View {
 
         });
 
+        God g = getGod();
+        buttonPl1.setTooltip(new Tooltip(
+                "g.getName()" +
+                        "g.getDescription()"));
+        buttonPl2.setTooltip(new Tooltip(
+                "g.getName()" +
+                        "g.getDescription()"));
+        buttonPl3.setTooltip(new Tooltip(
+                "g.getName()" +
+                        "g.getDescription()"));
+
+
     }
 
     /**
@@ -251,9 +317,6 @@ public class ViewController extends View {
     public void initButtons() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (!table.getTableCell(i, j).isFree()) {
-                    continue;
-                }
                 bt[i][j].setOnMousePressed(e -> {
                     Button button;
                     button = (Button) e.getSource();
@@ -700,7 +763,6 @@ public class ViewController extends View {
     }
 
     /**
-     * NON PIÙ USATO
      * Metodo Building
      * Dopo il movimento prende la casella in cui si è spostata la pedina (start) e cerca le caselle adaicenti per la costruzione
      *
