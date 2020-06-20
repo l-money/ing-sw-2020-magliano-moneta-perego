@@ -120,6 +120,7 @@ public class ViewController extends View {
                 disableButtons(true);
                 handlerClient.sendAction(this.currentMove);
                 submitAction.setDisable(true);
+                lightPause();
 
             } catch (IOException e) {
                 setFailed("Errore di rete");
@@ -384,6 +385,7 @@ public class ViewController extends View {
         });
         switch (action) {
             case BUILD:
+                lightBuild();
                 if (!inTurno) {
                     lightMyPawns();
                     inTurno = true;
@@ -400,6 +402,7 @@ public class ViewController extends View {
 
                 break;
             case MOVE:
+                lightMove();
                 effetto = true;
                 currentMove = new Mossa();
                 currentMove.setAction(action);
