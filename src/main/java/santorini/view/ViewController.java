@@ -61,6 +61,9 @@ public class ViewController extends View {
         this.thisStage = thisStage;
     }
 
+    /**
+     * Initializes all components of this stage
+     */
     @FXML
     public void initialize() {
         for (int i = 0; i < 5; i++) {
@@ -109,6 +112,12 @@ public class ViewController extends View {
         });
     }
 
+    /**
+     * Sets up listener to set initial pawn positions
+     *
+     * @param t  table
+     * @param bt buttons array referred to table
+     */
     public void startTable(Table t, Button[][] bt) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -162,6 +171,11 @@ public class ViewController extends View {
         }
     }
 
+    /**
+     * Set all buttons in the grid pane disabled or not
+     *
+     * @param b disable set
+     */
     private void disableButtons(boolean b) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -172,6 +186,12 @@ public class ViewController extends View {
     }
 
 
+    /**
+     * Creates a new dialog window that asks to user which god cards
+     * want to use
+     *
+     * @param gods available god cards
+     */
     @Override
     public void chooseCards(ArrayList<God> gods) {
         System.out.println("Scelta della carta size: " + gods.size());
@@ -225,9 +245,15 @@ public class ViewController extends View {
 
     }
 
+    /**
+     * Initializes buttons with default actions to do during the match
+     */
     public void initButtons() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
+                if (!table.getTableCell(i, j).isFree()) {
+                    continue;
+                }
                 bt[i][j].setOnMousePressed(e -> {
                     Button button;
                     button = (Button) e.getSource();
@@ -265,6 +291,11 @@ public class ViewController extends View {
         }
     }
 
+    /**
+     * Updates current action with parameters given by user
+     *
+     * @param cella Target cell of the action
+     */
     public void aggiornaMossa(Cell cella) {
         currentMove.setIdPawn(currentPawn);
         currentMove.setTargetX(cella.getX());
@@ -276,6 +307,11 @@ public class ViewController extends View {
 
     }
 
+    /**
+     * Enables action request from window to user
+     *
+     * @param action type of action (MOVE or BUILD)
+     */
     @Override
     public void setNewAction(Mossa.Action action) {
         jumpMove.setDisable(false);
@@ -319,6 +355,10 @@ public class ViewController extends View {
     }
 
 
+    /**
+     * Creates a dialog window that make user to decide the
+     * number of players in this match
+     */
     @Override
     public void setNumeroGiocatori() {
         Platform.runLater(() -> {
@@ -348,6 +388,11 @@ public class ViewController extends View {
 
     }
 
+    /**
+     * Creates a wait dialog
+     *
+     * @param title
+     */
     public void waitDialog(String title) {
         Stage dialog = new Stage();
         Parent root = null;
@@ -368,6 +413,11 @@ public class ViewController extends View {
     }
 
 
+    /**
+     * Creates a dialog to notify an error to user
+     *
+     * @param msg message contained in the dialog
+     */
     @Override
     public void setFailed(String msg) {
         Platform.runLater(() -> {
@@ -382,6 +432,13 @@ public class ViewController extends View {
 
     }
 
+    /**
+     * Removes ANSI color tag from a string
+     * DA SISTEMARE
+     *
+     * @param s input string
+     * @return string without ANSI
+     */
     private String editString(String s) {
         String[] arr = s.split("\\[");
         StringBuilder result = new StringBuilder();
@@ -397,6 +454,12 @@ public class ViewController extends View {
         return result.toString();
     }
 
+    /**
+     * Show messages provided from server to player
+     * Message are shown in a text area in main window
+     *
+     * @param msg message to send to user
+     */
     @Override
     public void printMessage(String msg) {
         if (msg.contains("Turno di :")) {
@@ -408,6 +471,9 @@ public class ViewController extends View {
         }
     }
 
+    /**
+     * Handle the server request to place the initial position of user pawns
+     */
     @Override
     public void setInitializePawn() {
         //overlayedStage.close();
@@ -415,6 +481,9 @@ public class ViewController extends View {
         startTable(this.getTable(), bt);
     }
 
+    /**
+     * Notify to user that have won this match
+     */
     @Override
     public void vittoria() {
         Platform.runLater(() -> {
@@ -427,6 +496,11 @@ public class ViewController extends View {
 
     }
 
+    /**
+     * Notify to user that has lost the match and who is the winnner
+     *
+     * @param winner winner's name
+     */
     @Override
     public void sconfitta(String winner) {
         Platform.runLater(() -> {
@@ -438,12 +512,20 @@ public class ViewController extends View {
         });
     }
 
+    /**
+     * Notify to user that a player has just disconnected
+     *
+     * @param player disconnected player's name
+     */
     @Override
     public void networkError(String player) {
         setFailed("Errore di rete\n" + player + "si è disconnesso");
         System.exit(1);
     }
 
+    /**
+     * Update table status on main stage
+     */
     @Override
     public void printTable() {
         Platform.runLater(() -> {
@@ -477,6 +559,9 @@ public class ViewController extends View {
         });
     }
 
+    /**
+     * Highlights current user's pawns
+     */
     public void lightMyPawns() {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -520,6 +605,10 @@ public class ViewController extends View {
         }
     }
 
+    /**
+     * @param myCell
+     * @param myButton
+     */
     private void lightAvailable(Cell myCell, Button myButton) {
         ArrayList<Cell> cells = new ArrayList<>();
         int x = myCell.getX();
@@ -543,7 +632,7 @@ public class ViewController extends View {
     }
 
     /**
-     * //TODO: DA SISTEMARE
+     * NON PIÙ USATO
      * Metodo che illumina le caselle adiacenti possibili al movimento
      *
      * @param t      tavolo da gioco
@@ -596,6 +685,7 @@ public class ViewController extends View {
     }
 
     /**
+     * NON PIÙ USATO
      * Metodo che printa la casella cliccata
      *
      * @param bt       tavola di bottoni
@@ -610,6 +700,7 @@ public class ViewController extends View {
     }
 
     /**
+     * NON PIÙ USATO
      * Metodo Building
      * Dopo il movimento prende la casella in cui si è spostata la pedina (start) e cerca le caselle adaicenti per la costruzione
      *
