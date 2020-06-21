@@ -103,6 +103,7 @@ public class LoginUser2 {
             loader.setController(vc);
             Parent root = loader.load();
             Scene s = new Scene(root);
+            stage.setTitle("Tavolo Da Gioco");
             stage.setScene(s);
             stage.show();
             vc.waitDialog("Attendi...");

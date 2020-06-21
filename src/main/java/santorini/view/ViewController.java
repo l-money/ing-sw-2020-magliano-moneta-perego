@@ -144,14 +144,20 @@ public class ViewController extends View {
 
     public void lightMove() {
         movePawn.setStyle("-fx-background-color: YELLOW");
+        buildPawn.setStyle("-fx-background-color: null");
+        stopPawn.setStyle("-fx-background-color: null");
     }
 
     public void lightBuild() {
         buildPawn.setStyle("-fx-background-color: YELLOW");
+        movePawn.setStyle("-fx-background-color: null");
+        stopPawn.setStyle("-fx-background-color: null");
     }
 
     public void lightPause() {
         stopPawn.setStyle("-fx-background-color: RED");
+        movePawn.setStyle("-fx-background-color: null");
+        buildPawn.setStyle("-fx-background-color: null");
     }
 
     public void startTable(Table t, Button[][] bt) {
