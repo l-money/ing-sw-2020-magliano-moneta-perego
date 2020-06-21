@@ -365,7 +365,7 @@ public class ViewController extends View {
         currentMove.setTargetX(cella.getX());
         currentMove.setTargetY(cella.getY());
         Platform.runLater(() -> {
-            jumpMove.setDisable(true);
+//            jumpMove.setDisable(true);
             submitAction.setDisable(true);
         });
 
