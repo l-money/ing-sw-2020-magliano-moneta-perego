@@ -19,6 +19,7 @@ import santorini.model.Pawn;
 import santorini.model.Table;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestTable {
 
@@ -91,8 +92,12 @@ public class TestTable {
 
 
         //startTable(table,buttons);
+        Pawn p = null;
         printTableStatus(table, buttons);
-        lightMyPawns(table, buttons, gamer.getId());
+        p = lightMyPawns(table, buttons, gamer.getId());
+        System.out.print("Id pedina: " + p.getIdPawn());
+        System.out.println("\tId Giocatore: " + p.getIdGamer());
+        //accessibleCells(table,buttons,p);
     }
 
     public void startTable(Table t, Button[][] bt) {
@@ -135,9 +140,6 @@ public class TestTable {
         }
     }
 
-    public int summ(int i) {
-        return i++;
-    }
 
     /**
      * //TODO: DA SISTEMARE CON LE IMMAGINI APPROPRIATE
@@ -211,7 +213,11 @@ public class TestTable {
      * @param bt      tabella di bottoni
      * @param idGamer id del giocatore corrente
      */
-    public void lightMyPawns(Table t, Button[][] bt, int idGamer) {
+    public Pawn lightMyPawns(Table t, Button[][] bt, int idGamer) {
+        AtomicInteger x1 = new AtomicInteger();
+        AtomicInteger y1 = new AtomicInteger();
+        AtomicInteger a = new AtomicInteger();
+        a.set(-1);
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 Cell cell = t.getTableCell(i, j);
@@ -219,86 +225,82 @@ public class TestTable {
                     //se: esiste la pedina nella cella && la pedina è della stessa squadra del gamer && la pedina può giocare
                     //rendere cliccabile e illuminata la cella
                     bt[i][j].setStyle("-fx-border-color:yellow");
-                    bt[i][j].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent e) {
+                    bt[i][j].setOnMouseClicked(e -> {
                             Button bOne;
                             bOne = (Button) e.getSource();
                             int x = GridPane.getRowIndex(bOne);
                             int y = GridPane.getColumnIndex(bOne);
-                            for (int i = 0; i < 5; i++) {
-                                for (int j = 0; j < 5; j++) {
-                                    Cell cell = t.getTableCell(i, j);
-                                    if (cell.getPawn() != null && cell.getPawn().getIdGamer() == idGamer) {
-                                        if (i == x && j == y) {
-                                            bt[i][j].setStyle("-fx-border-color:red");
+                        for (int i1 = 0; i1 < 5; i1++) {
+                            for (int j1 = 0; j1 < 5; j1++) {
+                                Cell cell1 = t.getTableCell(i1, j1);
+                                if (cell1.getPawn() != null && cell1.getPawn().getIdGamer() == idGamer) {
+                                    if (i1 == x && j1 == y) {
+                                        bt[i1][j1].setStyle("-fx-border-color:red");
+                                        a.set(t.getTableCell(i1, j1).getPawn().getIdPawn());
+                                        x1.set(i1);
+                                        y1.set(j1);
                                         } else {
-                                            bt[i][j].setStyle("-fx-border-color:blue");
-                                        }
-                                    } else {
-                                        bt[i][j].setStyle("-fx-border-color:transparent");
-                                        bt[i][j].setOnMouseClicked(null);
+                                        bt[i1][j1].setStyle("-fx-border-color:transparent");
+                                        bt[i1][j1].setOnMouseClicked(null);
                                     }
                                 }
                             }
-                            System.out.print("***Id pedina: " + t.getTableCell(x, y).getPawn().getIdPawn());
-                            System.out.println("\tId Giocatore: " + t.getTableCell(x, y).getPawn().getIdGamer() + "***\n");
-                            accessibleCells(t, t.getTableCell(x, y), bt, bOne);
                         }
                     });
+                } else {
+                    bt[i][j].setStyle("-fx-border-color:transparent");
+                    bt[i][j].setOnMouseClicked(null);
                 }
             }
         }
+        return t.getTableCell(x1.get(), y1.get()).getPawn();
     }
 
     /**
      * //TODO: DA SISTEMARE
      * Metodo che illumina le caselle adiacenti possibili al movimento
      * @param t      tavolo da gioco
-     * @param myCell posizione della pedina scelta
+     * @param pawn posizione della pedina scelta
      * @param bt     tabella di immagini
      */
     //Chiamo il metodo in lightMyPawns
-    public void accessibleCells(Table t, Cell myCell, Button[][] bt, Button myButton) {
-        ArrayList<Cell> cells = new ArrayList<>();
-        int x = myCell.getX();
-        int y = myCell.getY();
-        myButton.setStyle("-fx-border-color:red");
-        for (int i = x - 1; i < x + 2; i++) {
-            for (int j = y - 1; j < y + 2; j++) {
-                //controllo se la casella esiste
-                if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
-                    //controllo se non c'è la cupola
-                    if ((!t.getTableCell(i, j).isComplete())) {
-                        cells.add(t.getTableCell(i, j));
+    public void accessibleCells(Table t, Button[][] bt, Pawn pawn) {
+        if (pawn != null) {
+            ArrayList<Cell> cells = new ArrayList<>();
+            int x = pawn.getRow();
+            int y = pawn.getColumn();
+            bt[x][y].setStyle("-fx-border-color:red");
+            for (int i = x - 1; i < x + 2; i++) {
+                for (int j = y - 1; j < y + 2; j++) {
+                    //controllo se la casella esiste
+                    if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
+                        //controllo se non c'è la cupola
+                        if ((!t.getTableCell(i, j).isComplete())) {
+                            cells.add(t.getTableCell(i, j));
+                        }
                     }
                 }
             }
-        }
-        for (Cell lightMe : cells) {
-            bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-            bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
+            for (Cell lightMe : cells) {
+                bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
+                bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(e -> {
                     Button bTwo;
                     bTwo = (Button) e.getSource();
-                    int x = GridPane.getRowIndex(bTwo);
-                    int y = GridPane.getColumnIndex(bTwo);
-                    bt[myCell.getX()][myCell.getY()].setStyle("-fx-border-color:red");
+                    int x1 = GridPane.getRowIndex(bTwo);
+                    int y1 = GridPane.getColumnIndex(bTwo);
+                    bt[pawn.getRow()][pawn.getColumn()].setStyle("-fx-border-color:red");
                     int l = cells.size();
                     for (int k = 0; k < l; k++) {
-                        if (cells.get(k).getX() == x && cells.get(k).getY() == y) {
+                        if (cells.get(k).getX() == x1 && cells.get(k).getY() == y1) {
                             bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:red");
                         } else {
                             bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:yellow");
                         }
                     }
-                    mySelection(bt, t.getTableCell(x, y), t);
-                    //Building per ora commentata
-                    //Building(t,bt,t.getTableCell(x,y));
-                }
-            });
+                    mySelection(bt, t.getTableCell(x1, y1), t);
+                });
 
+            }
         }
     }
 
