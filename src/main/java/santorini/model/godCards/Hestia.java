@@ -88,7 +88,7 @@ public class Hestia extends God {
             do {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Hestia, puoi costruire una volta in più\n" +
                         "ma non su una casella perimetrale.\n" +
-                        "Se non vuoi costruire scegli l'opzione 'No'." + "\u001B[0m");
+                        "Se non vuoi costruire scegli l'opzione 'Salta'." + "\u001B[0m");
                 hestiaBuild = turno.buildingRequest();
                 if (turno.nullEffectForGodCards(hestiaBuild)) {
                     hestiaEffect = true;

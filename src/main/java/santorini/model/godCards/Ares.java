@@ -79,7 +79,7 @@ public class Ares extends God {
             } else {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Ares, puoi demolire una costruzione\n" +
                         "adiacente alla pedina che non hai mosso.\n" +
-                        "Se non vuoi demolire scegli l'opzione 'No'." + "\u001B[0m");
+                        "Se non vuoi demolire scegli l'opzione 'Salta'." + "\u001B[0m");
                 turno.setCount(0);
                 boolean aresEffect = false;
                 boolean printStatus = false;

@@ -61,7 +61,7 @@ public class Atlas extends God {
             turno.printTableStatusTurn(turno.isValidationMove());
             //Atlas effect
             turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Atlas, puoi costruire una cupola dove vuoi.\n" +
-                    "Se non vuoi costruire la cupola scegli l'opzione 'No'" + "\u001B[0m" + "\n");
+                    "Se non vuoi costruire la cupola scegli l'opzione 'Salta'" + "\u001B[0m" + "\n");
         }
     }
 

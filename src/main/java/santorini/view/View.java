@@ -30,6 +30,10 @@ public abstract class View {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getID() {
         return ID;
     }

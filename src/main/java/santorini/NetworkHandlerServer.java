@@ -78,8 +78,9 @@ public class NetworkHandlerServer implements Runnable {
     public int initializeFirstClient(Socket s) throws IOException, ClassNotFoundException {
         inputStream = new ObjectInputStream(s.getInputStream());
         outputStream = new ObjectOutputStream(s.getOutputStream());
-        players.add(new Gamer(s, inputStream.readObject().toString(), i, inputStream, outputStream));
-        outputStream.writeObject(i + "");
+        String name = inputStream.readObject().toString();
+        players.add(new Gamer(s, name, i, inputStream, outputStream));
+        outputStream.writeObject(i + "," + name);
         outputStream.flush();
         i++;
         outputStream.writeObject(Parameters.command.SET_PLAYERS_NUMBER);
@@ -98,8 +99,9 @@ public class NetworkHandlerServer implements Runnable {
         try {
             inputStream = new ObjectInputStream(s.getInputStream());
             outputStream = new ObjectOutputStream(s.getOutputStream());
-            players.add(new Gamer(s, handleDoubleName(inputStream.readObject().toString()), i, inputStream, outputStream));
-            outputStream.writeObject(i + "");
+            String newName = handleDoubleName(inputStream.readObject().toString());
+            players.add(new Gamer(s, newName, i, inputStream, outputStream));
+            outputStream.writeObject(i + "," + newName);
             outputStream.flush();
             //notifyAll();
         } catch (IOException | ClassNotFoundException e) {
@@ -108,6 +110,12 @@ public class NetworkHandlerServer implements Runnable {
         //}).start();
     }
 
+    /**
+     * Corrects duplicated name with a progressive number after last connected duplicated name
+     *
+     * @param name original name
+     * @return handled name
+     */
     private String handleDoubleName(String name) {
         int i = 0;
         for (Gamer g : players) {

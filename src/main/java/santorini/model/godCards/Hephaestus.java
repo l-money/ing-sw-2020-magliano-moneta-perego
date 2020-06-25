@@ -90,7 +90,7 @@ public class Hephaestus extends God {
                     turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Hephaestus, puoi costruire una volta in più\n" +
                             "nella casella precedentemente scelta. " +
                             "\nSe vuoi costruire, selezionala nuovamente." +
-                            "\nSe non vuoi costruire scegli l'opzione 'No'" + "\u001B[0m");
+                            "\nSe non vuoi costruire scegli l'opzione 'Salta'" + "\u001B[0m");
                     buildingPlus = turno.buildingRequest();
                     if (turno.nullEffectForGodCards(buildingPlus)) {
                         HEffect = true;
