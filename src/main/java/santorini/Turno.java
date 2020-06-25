@@ -5,6 +5,7 @@ import santorini.model.godCards.God;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class Turno implements Runnable {
     private ArrayList<God> otherCards;
@@ -196,49 +197,53 @@ public class Turno implements Runnable {
      * all god cards features
      */
     public void run() {
-        int maxAttempts = 3;
         try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if (!getGamer().getLoser()) {
-            firstLockdown(getGamer());
-            getGameHandler().getGame().broadcastMessage("\n|*****************************************************|\n" +
-                    "Turno di :" + getGamer().getName());
-            getGameHandler().sendMessage(getGamer(), "E' il tuo turno\n" +
-                    "Carta: " + "\u001B[34m" + getGamer().getMyGodCard().getName() + "\u001B[0m" +
-                    "\nColore: " + printMyColor(getGamer()));
-            validationMove = false;
-            validationBuild = false;
-            getGamer().setSteps(1);
-            getGamer().setBuilds(1);
-            count = 0;
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            gamer.getMyGodCard().initializeOwner(this);
-            while (!validationMove && count < maxAttempts) {
-                move = moveRequest();
-                myMovement();
-            }
-            methodLoser(validationMove, count, getGamer());
-            controlWin();
-            count = 0;
+            int maxAttempts = 3;
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             if (!getGamer().getLoser()) {
-                while (!validationBuild && count < maxAttempts) {
-                    move = buildingRequest();
-                    myBuilding();
+                firstLockdown(getGamer());
+                getGameHandler().getGame().broadcastMessage("\n|*****************************************************|\n" +
+                        "Turno di :" + getGamer().getName());
+                getGameHandler().sendMessage(getGamer(), "E' il tuo turno\n" +
+                        "Carta: " + "\u001B[34m" + getGamer().getMyGodCard().getName() + "\u001B[0m" +
+                        "\nColore: " + printMyColor(getGamer()));
+                validationMove = false;
+                validationBuild = false;
+                getGamer().setSteps(1);
+                getGamer().setBuilds(1);
+                count = 0;
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                methodLoser(validationBuild, count, getGamer());
+                gamer.getMyGodCard().initializeOwner(this);
+                while (!validationMove && count < maxAttempts) {
+                    move = moveRequest();
+                    myMovement();
+                }
+                methodLoser(validationMove, count, getGamer());
+                controlWin();
+                count = 0;
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (!getGamer().getLoser()) {
+                    while (!validationBuild && count < maxAttempts) {
+                        move = buildingRequest();
+                        myBuilding();
+                    }
+                    methodLoser(validationBuild, count, getGamer());
+                }
             }
+        } catch (ConcurrentModificationException ex) {
+            Thread.currentThread().stop();
         }
     }
 

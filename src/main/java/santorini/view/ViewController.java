@@ -140,6 +140,7 @@ public class ViewController extends View {
                 jumpMove.setDisable(true);
                 effetto = false;
                 disableButtons(true);
+                lightPause();
             }
         });
 
@@ -577,6 +578,18 @@ public class ViewController extends View {
             alert.setTitle("Hai vinto");
             alert.setHeaderText("Fine della partita");
             alert.showAndWait();
+            /*Parent root = null;
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
+                Scene s = new Scene(root);
+                overlayedStage.setScene(s);
+                overlayedStage.initOwner(thisStage);
+                overlayedStage.initModality(Modality.APPLICATION_MODAL);
+                overlayedStage.setResizable(false);
+                overlayedStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
             System.exit(0);
         });
 
@@ -594,6 +607,18 @@ public class ViewController extends View {
             alert.setTitle("Hai perso");
             alert.setHeaderText("Ha vinto " + winner + "\nFine della partita");
             alert.showAndWait();
+           /* Parent root = null;
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
+                Scene s = new Scene(root);
+                overlayedStage.setScene(s);
+                overlayedStage.initOwner(thisStage);
+                overlayedStage.initModality(Modality.APPLICATION_MODAL);
+                overlayedStage.setResizable(false);
+                overlayedStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
             System.exit(0);
         });
     }
