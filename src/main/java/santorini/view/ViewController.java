@@ -144,8 +144,6 @@ public class ViewController extends View {
         });
 
         firstPl.setEffect(shadow);
-        secondPl.setEffect(shadow);
-        thirdPl.setEffect(shadow);
         textArea.setEffect(shadow);
         movePawn.setEffect(shadow);
         buildPawn.setEffect(shadow);
