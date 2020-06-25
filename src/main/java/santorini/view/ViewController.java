@@ -152,6 +152,7 @@ public class ViewController extends View {
         stopPawn.setEffect(shadow);
         submitAction.setEffect(shadow);
         jumpMove.setEffect(shadow);
+        lightPause();
 
     }
 
@@ -233,6 +234,7 @@ public class ViewController extends View {
                                 System.out.println("Invio coordinate al server:\n" + initCoords);
                                 initButtons();
                                 disableButtons(true);
+                                lightPause();
                             } catch (IOException ioException) {
                                 setFailed("Errore di rete");
                                 System.exit(1);
@@ -421,10 +423,10 @@ public class ViewController extends View {
                 break;
             case MOVE:
                 lightMove();
-                effetto = true;
                 currentMove = new Mossa();
                 currentMove.setAction(action);
                 if (!inTurno) {
+                    effetto = true;
                     lightMyPawns();
                     inTurno = true;
                     firstAction = true;
@@ -562,6 +564,7 @@ public class ViewController extends View {
     public void setInitializePawn() {
         //overlayedStage.close();
         System.out.println("ciaociao");
+        lightMove();
         startTable(this.getTable(), bt);
     }
 
@@ -708,61 +711,57 @@ public class ViewController extends View {
      * @param myButton
      */
     private void lightAvailable(Cell myCell, Button myButton) {
-        ArrayList<Cell> cells = new ArrayList<>();
-        int x = myCell.getX();
-        int y = myCell.getY();
-        myButton.setStyle("-fx-border-color:red");
-        myButton.setOnMouseClicked(null);
-        for (int i = x - 1; i < x + 2; i++) {
-            for (int j = y - 1; j < y + 2; j++) {
-                //controllo se la casella esiste
-                if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
-                    //controllo se non c'è la cupola
-                    if ((!getTable().getTableCell(i, j).isComplete())) {
-                        cells.add(getTable().getTableCell(i, j));
+        Platform.runLater(() -> {
+            ArrayList<Cell> cells = new ArrayList<>();
+            int x = myCell.getX();
+            int y = myCell.getY();
+            myButton.setStyle("-fx-border-color:red");
+            for (int i = x - 1; i < x + 2; i++) {
+                for (int j = y - 1; j < y + 2; j++) {
+                    //controllo se la casella esiste
+                    if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
+                        //controllo se non c'è la cupola
+                        if ((!getTable().getTableCell(i, j).isComplete())) {
+                            cells.add(getTable().getTableCell(i, j));
+                        }
                     }
                 }
             }
-        }
-        if (getGod().getName().equalsIgnoreCase("zeus") && effetto) {
-            bt[x][y].setStyle("-fx-border-color:yellow");
-            bt[x][y].setDisable(false);
-            bt[x][y].setOnAction(ev -> {
-                Button b = (Button) ev.getSource();
-                currentMove.setTargetX(GridPane.getRowIndex(b));
-                currentMove.setTargetY(GridPane.getColumnIndex(b));
-            });
-        } else {
-            for (Cell lightMe : cells) {
-                int a = lightMe.getX();
-                int b = lightMe.getY();
-                bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-                bt[lightMe.getX()][lightMe.getY()].setDisable(false);
-                bt[a][b].setOnMouseEntered(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    button.setStyle("-fx-border-color:yellow");
-                });
-                bt[a][b].setOnMouseExited(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    button.setStyle("-fx-border-color:trasparent");
-                });
-                bt[a][b].setOnAction(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    button.setStyle("-fx-border-color:red");
-                    bt[x][y].setOnMouseClicked(null);
-                    int x1 = GridPane.getRowIndex(button);
-                    int y1 = GridPane.getColumnIndex(button);
-                    aggiornaMossa(table.getTableCell(x1, y1));
-                    Platform.runLater(() -> {
-                        submitAction.setDisable(false);
+            if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
+                myButton.setStyle("-fx-border-color:yellow");
+                myButton.setDisable(false);
+            } else {
+                for (Cell lightMe : cells) {
+                    int a = lightMe.getX();
+                    int b = lightMe.getY();
+                    bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
+                    bt[lightMe.getX()][lightMe.getY()].setDisable(false);
+                    bt[a][b].setOnMouseEntered(e -> {
+                        Button button;
+                        button = (Button) e.getSource();
+                        button.setStyle("-fx-border-color:yellow");
                     });
-                });
+                    bt[a][b].setOnMouseExited(e -> {
+                        Button button;
+                        button = (Button) e.getSource();
+                        button.setStyle("-fx-border-color:trasparent");
+                    });
+                    bt[a][b].setOnAction(e -> {
+                        Button button;
+                        button = (Button) e.getSource();
+                        button.setStyle("-fx-border-color:red");
+                        bt[x][y].setOnMouseClicked(null);
+                        int x1 = GridPane.getRowIndex(button);
+                        int y1 = GridPane.getColumnIndex(button);
+                        aggiornaMossa(table.getTableCell(x1, y1));
+                        Platform.runLater(() -> {
+                            submitAction.setDisable(false);
+                        });
+                    });
+                }
+                //initButtons();
             }
-            //initButtons();
-        }
+        });
     }
 
     /**
