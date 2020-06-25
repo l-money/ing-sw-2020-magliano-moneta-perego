@@ -9,10 +9,7 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -45,6 +42,9 @@ public class ViewController extends View {
     private TextArea textArea;
 
     private Cell c = null;
+
+    @FXML
+    private Label userName;
 
     @FXML
     private Button submitAction;
@@ -310,21 +310,12 @@ public class ViewController extends View {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            God g = getGod();
+            System.out.println(g.getDescription());
+            buttonPl1.setTooltip(new Tooltip(
+                    g.getName() + "\n" +
+                            g.getDescription()));
         });
-
-        God g = getGod();
-        buttonPl1.setTooltip(new Tooltip(
-                "g.getName()" +
-                        "g.getDescription()"));
-        buttonPl2.setTooltip(new Tooltip(
-                "g.getName()" +
-                        "g.getDescription()"));
-        buttonPl3.setTooltip(new Tooltip(
-                "g.getName()" +
-                        "g.getDescription()"));
-
-
     }
 
     /**

@@ -54,9 +54,7 @@
                 <Font size="13.0"/>
             </font>
         </TextArea>
-        <Label layoutX="40.0" layoutY="14.0" prefHeight="17.0" prefWidth="97.0" text="Giocatore 1"/>
-        <Label layoutX="39.0" layoutY="343.0" prefHeight="17.0" prefWidth="107.0" text="Giocatore 2"/>
-        <Label layoutX="811.0" layoutY="14.0" prefHeight="17.0" prefWidth="93.0" text="Giocatore 3"/>
+        <Label fx:id="userName" layoutX="40.0" layoutY="14.0" prefHeight="17.0" prefWidth="97.0" text="Giocatore 1"/>
         <Button fx:id="buttonPl1" layoutX="34.0" layoutY="34.0" mnemonicParsing="false" prefHeight="123.0"
                 prefWidth="70.0" style="-fx-background-color: transparent;">
             <graphic>
