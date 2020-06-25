@@ -451,7 +451,7 @@ public class CLIView extends View {
                     break;
             }
             System.out.println("7: \uD83E\uDC54\t8: \uD83E\uDC51\t9: \uD83E\uDC55");
-            System.out.println("4: \uD83E\uDC50\t5: No\t6: \uD83E\uDC52");
+            System.out.println("4: \uD83E\uDC50\t5: Salta\t6: \uD83E\uDC52");
             System.out.println("1: \uD83E\uDC57\t2: \uD83E\uDC53\t3: \uD83E\uDC56");
             System.out.print("Inserisci direzione: ");
             Cell[][] target = t.getAroundCells(xPawn, yPawn);

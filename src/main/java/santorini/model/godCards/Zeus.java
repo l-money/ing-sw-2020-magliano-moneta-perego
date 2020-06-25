@@ -63,7 +63,7 @@ public class Zeus extends God {
                 myCell = turno.getTable().getTableCell(turno.getMove().getTargetX(), turno.getMove().getTargetY());
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Zeus, puoi costruire un livello sotto di te.\n" +
                         "Se vuoi costruire scegli una casella adiacente qualsiasi." +
-                        "\nSe non vuoi costruire sotto di te scegli l'opzione 'No'." + "\u001B[0m");
+                        "\nSe non vuoi costruire sotto di te scegli l'opzione 'Salta'." + "\u001B[0m");
             }
         }
     }

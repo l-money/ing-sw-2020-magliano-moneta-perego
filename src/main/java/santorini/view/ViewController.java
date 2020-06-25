@@ -682,7 +682,6 @@ public class ViewController extends View {
                                 if (cell1.getPawn() != null && cell1.getPawn().getIdGamer() == getID()) {
                                     if (i1 == x && j1 == y) {
                                         bt[i1][j1].setStyle("-fx-border-color:red");
-                                        //??
                                         bt[i1][j1].setOnMouseClicked(null);
                                         bt[i1][j1].setOnAction(null);
                                         bt[i1][j1].setOnMouseEntered(null);
@@ -729,8 +728,18 @@ public class ViewController extends View {
                 }
             }
             if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
-                myButton.setStyle("-fx-border-color:yellow");
+                myButton.setStyle("-fx-border-color:blue");
                 myButton.setDisable(false);
+                myButton.setOnMouseEntered(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    button.setStyle("-fx-border-color:yellow");
+                });
+                myButton.setOnMouseExited(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    button.setStyle("-fx-border-color:blue");
+                });
             } else {
                 for (Cell lightMe : cells) {
                     int a = lightMe.getX();

@@ -32,7 +32,7 @@ public class Prometheus extends God {
             do {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Prometheus, se costruisci sia prima,\n" +
                         "sia dopo il movimento, non puoi salire di livello." +
-                        "\nSe non vuoi attivare l'effetto, scegli l'opzione 'No'" + "\u001B[0m");
+                        "\nSe non vuoi attivare l'effetto, scegli l'opzione 'Salta'" + "\u001B[0m");
                 promBuild = turno.buildingRequest();
                 if (turno.nullEffectForGodCards(promBuild)) {
                     promEffect = true;

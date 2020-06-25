@@ -80,7 +80,7 @@ public class Demeter extends God {
             do {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Demeter, puoi costruire una volta in più, ma\n" +
                         "non nella stessa casella precedente. " +
-                        "\nSe non vuoi costruire scegli l'opzione 'No'" + "\u001B[0m");
+                        "\nSe non vuoi costruire scegli l'opzione 'Salta'" + "\u001B[0m");
                 build2 = turno.buildingRequest();
                 if (turno.nullEffectForGodCards(build2)) {
                     demeterEffect = true;
