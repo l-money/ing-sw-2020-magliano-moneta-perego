@@ -271,6 +271,7 @@ public class ViewController extends View {
     public void chooseCards(ArrayList<God> gods) {
         System.out.println("Scelta della carta size: " + gods.size());
         Platform.runLater(() -> {
+            userName.setText(getName());
             overlayedStage.close();
             System.out.println("Scelta della carta");
             Stage dialog = new Stage();

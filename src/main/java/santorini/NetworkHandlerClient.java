@@ -32,8 +32,11 @@ public class NetworkHandlerClient implements Runnable {
             inputStream = new ObjectInputStream(server.getInputStream());
             outputStream.writeObject(name);
             outputStream.flush();
-            int id = Integer.parseInt(inputStream.readObject().toString());
+            String idname = inputStream.readObject().toString();
+            String[] params = idname.split(",");
+            int id = Integer.parseInt(params[0]);
             view.setID(id);
+            view.setName(params[1]);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
