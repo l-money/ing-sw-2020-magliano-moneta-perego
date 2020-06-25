@@ -724,33 +724,43 @@ public class ViewController extends View {
                 }
             }
         }
-        for (Cell lightMe : cells) {
-            int a = lightMe.getX();
-            int b = lightMe.getY();
-            bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-            bt[lightMe.getX()][lightMe.getY()].setDisable(false);
-            bt[a][b].setOnMouseEntered(e -> {
-                Button button;
-                button = (Button) e.getSource();
-                button.setStyle("-fx-border-color:yellow");
+        if (getGod().getName().equalsIgnoreCase("zeus") && effetto) {
+            bt[x][y].setStyle("-fx-border-color:yellow");
+            bt[x][y].setDisable(false);
+            bt[x][y].setOnAction(ev -> {
+                Button b = (Button) ev.getSource();
+                currentMove.setTargetX(GridPane.getRowIndex(b));
+                currentMove.setTargetY(GridPane.getColumnIndex(b));
             });
-            bt[a][b].setOnMouseExited(e -> {
-                Button button;
-                button = (Button) e.getSource();
-                button.setStyle("-fx-border-color:trasparent");
-            });
-            bt[a][b].setOnAction(e -> {
-                Button button;
-                button = (Button) e.getSource();
-                button.setStyle("-fx-border-color:red");
-                bt[x][y].setOnMouseClicked(null);
-                int x1 = GridPane.getRowIndex(button);
-                int y1 = GridPane.getColumnIndex(button);
-                aggiornaMossa(table.getTableCell(x1, y1));
-                Platform.runLater(() -> {
-                    submitAction.setDisable(false);
+        } else {
+            for (Cell lightMe : cells) {
+                int a = lightMe.getX();
+                int b = lightMe.getY();
+                bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
+                bt[lightMe.getX()][lightMe.getY()].setDisable(false);
+                bt[a][b].setOnMouseEntered(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    button.setStyle("-fx-border-color:yellow");
                 });
-            });
+                bt[a][b].setOnMouseExited(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    button.setStyle("-fx-border-color:trasparent");
+                });
+                bt[a][b].setOnAction(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    button.setStyle("-fx-border-color:red");
+                    bt[x][y].setOnMouseClicked(null);
+                    int x1 = GridPane.getRowIndex(button);
+                    int y1 = GridPane.getColumnIndex(button);
+                    aggiornaMossa(table.getTableCell(x1, y1));
+                    Platform.runLater(() -> {
+                        submitAction.setDisable(false);
+                    });
+                });
+            }
             //initButtons();
         }
     }
