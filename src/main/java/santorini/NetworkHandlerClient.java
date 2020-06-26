@@ -101,10 +101,16 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case WINNER:
                             view.vittoria();
+                            //server.close();
                             break;
                         case LOSER:
-                            String winner = inputStream.readObject().toString();
-                            view.sconfitta(winner);
+                            try {
+                                String winner = inputStream.readObject().toString();
+                                view.sconfitta(winner);
+                                //server.close();
+                            } catch (IOException ex) {
+                                System.out.println("Sconfitta, chiudo connessione");
+                            }
                             break;
                         case NETWORK_ERROR:
                             String player = inputStream.readObject().toString();
@@ -126,8 +132,9 @@ public class NetworkHandlerClient implements Runnable {
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {
-                System.out.println("Connessione al server persa\nFine della partita");
-                System.exit(1);
+                /*System.out.println("Connessione al server persa\nFine della partita");
+                System.exit(1);*/
+                view.networkError("Server di gioco");
             }
         }
     }

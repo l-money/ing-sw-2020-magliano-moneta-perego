@@ -192,6 +192,9 @@ public class ViewController extends View {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 if (t.getTableCell(i, j).getPawn() == null) {
+                    if (!table.getTableCell(i, j).isFree()) {
+                        continue;
+                    }
                     bt[i][j].setOnMousePressed(e -> {
                         Button button;
                         button = (Button) e.getSource();
@@ -574,25 +577,31 @@ public class ViewController extends View {
     @Override
     public void vittoria() {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Hai vinto");
             alert.setHeaderText("Fine della partita");
-            alert.showAndWait();
-            /*Parent root = null;
+            alert.showAndWait();*/
+            Parent root = null;
+            Stage dialog = new Stage();
             try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("winner.fxml")));
                 Scene s = new Scene(root);
-                overlayedStage.setScene(s);
+                dialog.setScene(s);
+                overlayedStage = dialog;
                 overlayedStage.initOwner(thisStage);
                 overlayedStage.initModality(Modality.APPLICATION_MODAL);
                 overlayedStage.setResizable(false);
                 overlayedStage.showAndWait();
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
             System.exit(0);
         });
-
+        try {
+            handlerClient.getServer().close();
+        } catch (IOException e) {
+            System.out.println();
+        }
     }
 
     /**
@@ -603,12 +612,31 @@ public class ViewController extends View {
     @Override
     public void sconfitta(String winner) {
         Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            /*Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Hai perso");
             alert.setHeaderText("Ha vinto " + winner + "\nFine della partita");
-            alert.showAndWait();
+            alert.showAndWait();*/
+            Parent root = null;
+            Stage dialog = new Stage();
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("loser.fxml")));
+                Scene s = new Scene(root);
+                dialog.setScene(s);
+                overlayedStage = dialog;
+                overlayedStage.initOwner(thisStage);
+                overlayedStage.initModality(Modality.APPLICATION_MODAL);
+                overlayedStage.setResizable(false);
+                overlayedStage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.exit(0);
         });
+        try {
+            handlerClient.getServer().close();
+        } catch (IOException e) {
+            System.out.println();
+        }
     }
 
     /**
@@ -618,8 +646,14 @@ public class ViewController extends View {
      */
     @Override
     public void networkError(String player) {
-        setFailed("Errore di rete\n" + player + "si è disconnesso");
-        System.exit(1);
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore di rete");
+            alert.setHeaderText("Partita terminata\n" + player + " si è disconnesso");
+            alert.showAndWait();
+            System.exit(1);
+        });
+
     }
 
     /**
