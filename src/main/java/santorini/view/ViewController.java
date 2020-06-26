@@ -553,6 +553,9 @@ public class ViewController extends View {
     public void printMessage(String msg) {
         if (msg.contains("Turno di :")) {
             inTurno = false;
+            for (boolean b : pawnEnabled) {
+                b = true;
+            }
         }
         msg = editString(msg);
         if (textArea != null) {
