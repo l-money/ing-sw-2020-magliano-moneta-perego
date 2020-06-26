@@ -25,7 +25,6 @@ public class Turno implements Runnable {
      * @param gamer player that has to play
      * @param table game field
      */
-    //TODO rivedere condizione prometehus
     public Turno(ArrayList<God> cards, Gamer gamer, Table table, NetworkHandlerServer handler) {
         cards.removeIf(g -> g.equals(gamer.getMyGodCard()));
         this.otherCards = cards;
@@ -478,7 +477,7 @@ public class Turno implements Runnable {
      * method firstLockdown
      *
      * @param gamer the current gamer
-     *              control if the pawns are locked or not
+     * control if the pawns are locked or not
      */
     private void firstLockdown(Gamer gamer) {
         if (!gamer.getLoser()) {
@@ -486,12 +485,12 @@ public class Turno implements Runnable {
             Pawn p1 = gamer.getPawn(1);
             Cell p0Cell = table.getTableCell(p0.getRow(), p0.getColumn());
             Cell p1Cell = table.getTableCell(p1.getRow(), p1.getColumn());
+            //control if my pawns can move or not
             boolean b0 = table.iCanMove(p0Cell);
             boolean b1 = table.iCanMove(p1Cell);
             if (!b0 && !b1) {
                 gamer.getPawn(0).setICanPlay(false);
                 gamer.getPawn(1).setICanPlay(false);
-                //controllo che sono proprio bloccato??
                 //message for the gamer
                 getGameHandler().sendFailed(gamer, "##Hai entrambe le pedine bloccate.##\n" +
                         "##Non puoi più muoverti.##\n");

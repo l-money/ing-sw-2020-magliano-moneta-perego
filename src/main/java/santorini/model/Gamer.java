@@ -288,7 +288,7 @@ public class Gamer {
     /**
      * method getSocket
      *
-     * @return
+     * @return socket
      */
     public Socket getSocket() {
         return socket;

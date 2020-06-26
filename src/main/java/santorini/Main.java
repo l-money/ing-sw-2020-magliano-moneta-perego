@@ -22,6 +22,7 @@ public class Main extends Application {
             String address = null, name = null;
             NetworkHandlerClient handlerClient = null;
             try {
+                System.out.println("\n\u001B[33m" + "CONNESSIONE" + "\u001B[0m");
                 System.out.print("Inserisci indirizzo server: ");
                 address = br.readLine();
                 System.out.print("Inserisci il tuo nome: ");
@@ -29,6 +30,7 @@ public class Main extends Application {
                 View v = new CLIView();
                 handlerClient = new NetworkHandlerClient(address, name, v);
                 v.setHandlerClient(handlerClient);
+                System.out.println("Attendi...");
             } catch (IOException ex) {
                 System.out.println("Connessione fallita");
                 System.exit(1);

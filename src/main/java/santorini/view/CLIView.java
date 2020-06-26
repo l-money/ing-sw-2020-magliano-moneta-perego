@@ -116,12 +116,12 @@ public class CLIView extends View {
             int number = -1;
             System.out.println("\nSCEGLI LA TUA DIVINITA'");
             for (God g : gods) {
-                System.out.println("\u001B[33m" + "**********************************************************************" + "\u001B[0m");
+                System.out.println("\u001B[33m" + "******************************************************" + "\u001B[0m");
                 System.out.println(gods.indexOf(g) + ":\t" + "\u001B[34m" + g.getName() + "\u001B[0m");
                 System.out.println();
                 System.out.println("\u001B[34m" + "**" + "\u001B[0m" + g.getDescription() + "\u001B[34m" + "**" + "\u001B[0m");
             }
-            System.out.println("\u001B[33m" + "**********************************************************************" + "\u001B[0m");
+            System.out.println("\u001B[33m" + "******************************************************" + "\u001B[0m");
             try {
                 if (gods.size() > 1) {
                     do {
@@ -277,6 +277,7 @@ public class CLIView extends View {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            System.out.println("Attendi...");
         }).start();
     }
 
@@ -450,9 +451,9 @@ public class CLIView extends View {
                     System.out.println("Nuova costruzione:");
                     break;
             }
-            System.out.println("7: \uD83E\uDC54\t8: \uD83E\uDC51\t9: \uD83E\uDC55");
+            System.out.println("7: \uD83E\uDC54\t8: \uD83E\uDC51\t\t9: \uD83E\uDC55");
             System.out.println("4: \uD83E\uDC50\t5: Salta\t6: \uD83E\uDC52");
-            System.out.println("1: \uD83E\uDC57\t2: \uD83E\uDC53\t3: \uD83E\uDC56");
+            System.out.println("1: \uD83E\uDC57\t2: \uD83E\uDC53\t\t3: \uD83E\uDC56");
             System.out.print("Inserisci direzione: ");
             Cell[][] target = t.getAroundCells(xPawn, yPawn);
             String s = null;
@@ -504,7 +505,6 @@ public class CLIView extends View {
                 countDown--;
                 if (countDown == 0) {
                     printMessage("Hai esaurito i tentativi\nDisconnessione");
-                    //TODO gestire eccezione EOFException lato server
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
@@ -578,7 +578,7 @@ public class CLIView extends View {
     /**
      * Network error notify
      *
-     * @param player
+     * @param player the current player
      */
     @Override
     public void networkError(String player) {
