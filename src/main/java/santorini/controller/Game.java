@@ -1,5 +1,6 @@
-package santorini;
+package santorini.controller;
 
+import santorini.network.NetworkHandlerServer;
 import santorini.model.Color;
 import santorini.model.Extraction;
 import santorini.model.Gamer;

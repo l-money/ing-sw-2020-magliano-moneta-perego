@@ -1,4 +1,4 @@
-package santorini;
+package santorini.controller;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import santorini.network.NetworkHandlerClient;
+import santorini.network.NetworkHandlerServer;
 import santorini.view.*;
 
 import java.io.BufferedReader;

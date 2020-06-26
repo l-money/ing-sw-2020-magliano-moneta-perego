@@ -1,6 +1,6 @@
 package santorini.model.godCards;
 
-import santorini.Turno;
+import santorini.controller.Turno;
 import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;

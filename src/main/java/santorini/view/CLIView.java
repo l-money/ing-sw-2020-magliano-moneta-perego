@@ -1,6 +1,6 @@
 package santorini.view;
 
-import santorini.NetworkHandlerClient;
+import santorini.network.NetworkHandlerClient;
 import santorini.model.*;
 import santorini.model.godCards.*;
 
@@ -132,22 +132,13 @@ public class CLIView extends View {
                         } catch (NumberFormatException ex) {
                             number = -1;
                         }
-                        if (number == 8) {
-                            number = gods.size();
-                            gods.add(new Pdor());
-                            break;
-                        }
-                        if (number == 10) {
-                            number = gods.size();
-                            gods.add(new Prometheus());
-                            break;
-                        }
-                        if (number == 11) {
-                            number = gods.size();
-                            gods.add(new Hephaestus());
-                            break;
-                        }
-
+                        /**
+                         if (number == 8) {
+                         number = gods.size();
+                         gods.add(new Pdor());
+                         break;
+                         }
+                         */
                         if (number < 0 || number >= gods.size()) {
                             System.err.println("Errore carta scelta!");
                             countDown--;

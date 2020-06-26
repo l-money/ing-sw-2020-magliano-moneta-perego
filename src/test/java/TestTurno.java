@@ -1,7 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
-import santorini.NetworkHandlerServer;
-import santorini.Turno;
+import santorini.network.NetworkHandlerServer;
+import santorini.controller.Turno;
 import santorini.model.*;
 import santorini.model.godCards.Athena;
 import santorini.model.godCards.God;

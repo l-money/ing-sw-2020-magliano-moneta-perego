@@ -1,6 +1,6 @@
 package santorini.view;
 
-import santorini.NetworkHandlerClient;
+import santorini.network.NetworkHandlerClient;
 import santorini.model.Mossa;
 import santorini.model.Table;
 import santorini.model.godCards.God;

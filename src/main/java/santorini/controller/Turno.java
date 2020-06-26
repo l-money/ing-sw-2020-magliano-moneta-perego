@@ -1,5 +1,6 @@
-package santorini;
+package santorini.controller;
 
+import santorini.network.NetworkHandlerServer;
 import santorini.model.*;
 import santorini.model.godCards.God;
 
