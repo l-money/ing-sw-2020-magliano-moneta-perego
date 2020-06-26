@@ -64,7 +64,8 @@ public class NetworkHandlerClient implements Runnable {
      * from game server
      */
     private void listen() {
-        while (true) {
+        boolean continua = true;
+        while (continua) {
             try {
                 Object o = inputStream.readObject();
                 if (o instanceof ArrayList) {
@@ -101,13 +102,13 @@ public class NetworkHandlerClient implements Runnable {
                             break;
                         case WINNER:
                             view.vittoria();
-                            //server.close();
+                            continua = false;
                             break;
                         case LOSER:
                             try {
                                 String winner = inputStream.readObject().toString();
                                 view.sconfitta(winner);
-                                //server.close();
+                                continua = false;
                             } catch (IOException ex) {
                                 System.out.println("Sconfitta, chiudo connessione");
                             }
@@ -115,6 +116,7 @@ public class NetworkHandlerClient implements Runnable {
                         case NETWORK_ERROR:
                             String player = inputStream.readObject().toString();
                             view.networkError(player);
+                            continua = false;
                             break;
                         case MESSAGE:
                             String msgs = inputStream.readObject().toString();
