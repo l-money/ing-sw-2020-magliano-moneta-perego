@@ -526,18 +526,18 @@ public class ViewController extends View {
      * @return string without ANSI
      */
     private String editString(String s) {
-        String[] arr = s.split("\\[");
-        StringBuilder result = new StringBuilder();
-        for (String f : arr) {
-            String g = "";
-            try {
-                g = f.substring(3);
-            } catch (StringIndexOutOfBoundsException ex) {
-                continue;
-            }
-            result.append(g + "\n");
-        }
-        return result.toString();
+        s = s.replace("[31m", "");
+        s = s.replace("[0m", "");
+        s = s.replace("[33m", "");
+        s = s.replace("[36m", "");
+        s = s.replace("[34m", "");
+        s = s.replace("*", "");
+        s = s.replace("|", "");
+        //s = s.replace("]", "]\n");
+        s = s.replace("\t", "\n");
+
+
+        return s;
     }
 
     /**
@@ -553,7 +553,7 @@ public class ViewController extends View {
         }
         msg = editString(msg);
         if (textArea != null) {
-            textArea.appendText(msg);
+            textArea.appendText(msg + "\n");
         }
     }
 
@@ -607,18 +607,6 @@ public class ViewController extends View {
             alert.setTitle("Hai perso");
             alert.setHeaderText("Ha vinto " + winner + "\nFine della partita");
             alert.showAndWait();
-           /* Parent root = null;
-            try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
-                Scene s = new Scene(root);
-                overlayedStage.setScene(s);
-                overlayedStage.initOwner(thisStage);
-                overlayedStage.initModality(Modality.APPLICATION_MODAL);
-                overlayedStage.setResizable(false);
-                overlayedStage.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
             System.exit(0);
         });
     }
