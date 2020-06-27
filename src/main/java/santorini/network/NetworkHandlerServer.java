@@ -1,5 +1,7 @@
-package santorini;
+package santorini.network;
 
+import santorini.Parameters;
+import santorini.controller.Game;
 import santorini.model.Gamer;
 import santorini.model.godCards.God;
 import santorini.model.Mossa;

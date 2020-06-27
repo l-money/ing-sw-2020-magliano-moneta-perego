@@ -1,6 +1,6 @@
 package santorini.model.godCards;
 
-import santorini.Turno;
+import santorini.controller.Turno;
 import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
@@ -86,11 +86,11 @@ public class Hephaestus extends God {
                         "completa" + "\u001B[0m");
             } else {
                 //I could build on it again
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Hephaestus, puoi costruire una volta in più\n" +
+                        "nella casella precedentemente scelta. " +
+                        "\nSe vuoi costruire, selezionala nuovamente." +
+                        "\nSe non vuoi costruire scegli l'opzione 'Salta'" + "\u001B[0m");
                 do {
-                    turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Hephaestus, puoi costruire una volta in più\n" +
-                            "nella casella precedentemente scelta. " +
-                            "\nSe vuoi costruire, selezionala nuovamente." +
-                            "\nSe non vuoi costruire scegli l'opzione 'Salta'" + "\u001B[0m");
                     buildingPlus = turno.buildingRequest();
                     if (turno.nullEffectForGodCards(buildingPlus)) {
                         HEffect = true;

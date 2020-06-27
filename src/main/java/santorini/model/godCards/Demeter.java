@@ -1,6 +1,6 @@
 package santorini.model.godCards;
 
-import santorini.Turno;
+import santorini.controller.Turno;
 import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
@@ -77,10 +77,10 @@ public class Demeter extends God {
             demeterEffect = false;
             turno.setCount(0);
             turno.getGamer().setBuilds(1);
+            turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Demeter, puoi costruire una volta in più, ma\n" +
+                    "non nella stessa casella precedente. " +
+                    "\nSe non vuoi costruire scegli l'opzione 'Salta'" + "\u001B[0m");
             do {
-                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Demeter, puoi costruire una volta in più, ma\n" +
-                        "non nella stessa casella precedente. " +
-                        "\nSe non vuoi costruire scegli l'opzione 'Salta'" + "\u001B[0m");
                 build2 = turno.buildingRequest();
                 if (turno.nullEffectForGodCards(build2)) {
                     demeterEffect = true;
@@ -100,7 +100,7 @@ public class Demeter extends God {
                         printerStatus = demeterEffect;
                     }
                 }
-            } while (!demeterEffect && turno.getCount() < 5);
+            } while (!demeterEffect && turno.getCount() < 3);
             if (demeterEffect && printerStatus) {
                 turno.setMove(build2);
                 //broadcast message of building

@@ -1,20 +1,17 @@
-package santorini;
+package santorini.controller;
 
-import santorini.model.*;
-import santorini.model.godCards.*;
+import santorini.network.NetworkHandlerServer;
+import santorini.model.Color;
+import santorini.model.Extraction;
+import santorini.model.Gamer;
+import santorini.model.Table;
+import santorini.model.godCards.God;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.ArrayList;
 
-//TODO Accortezze
-// Quando metto input non corretto mi stampa nuovamente la table e richiede la mossa
-// limitare questo input a 5 tentativi o con un timer
 public class Game implements Runnable {
     private final ArrayList<Gamer> playersInGame;
-    /*god cards sono quelle attive nella matchGame
-     * passa una copia di questa lista al turno
-     * rifai la classe extraction con la shuffle della collection*/
     private ArrayList<God> godCards;
     private Table table = new Table();
     private final NetworkHandlerServer handler;
@@ -43,9 +40,27 @@ public class Game implements Runnable {
      * Generates a new game in a new Thread
      */
     public void run() {
+        doubleName(playersInGame);
         cardChoice();
         placePawns();
         matchGame();
+    }
+
+    /**
+     * method that announces the name is already present and it's changed
+     *
+     * @param playersInGame players in game
+     */
+    private void doubleName(ArrayList<Gamer> playersInGame) {
+        String n = playersInGame.get(0).getName();
+        int l = playersInGame.size();
+        for (int i = 1; i < l; i++) {
+            Gamer g = playersInGame.get(i);
+            if ((g.getName().contains(n)) && (g.getName().contains("-1") || (g.getName().contains("-2")))) {
+                handler.sendMessage(g, "\u001B[31m" + "Il nome che hai scelto\nè già stato utilizzato!!\nIl tuo nuovo nome è: \u001B[0m" + g.getName());
+            }
+        }
+        broadcastMessage("\n" + "\u001B[33m" + "SELEZIONE CARTE" + "\u001B[0m");
     }
 
     /**
@@ -53,6 +68,7 @@ public class Game implements Runnable {
      */
     private void placePawns() {
         handler.updateField(playersInGame.get(0));
+        broadcastMessage("\n" + "\u001B[33m" + "POSIZIONAMENTO PEDINE" + "\u001B[0m");
         for (Gamer g : playersInGame) {
             broadcastMessage(g.getName() + " sta posizionando le sue pedine");
             try {
@@ -100,7 +116,11 @@ public class Game implements Runnable {
         ArrayList<God> cards = new ArrayList<>();
         cards.addAll(godCards);
         for (Gamer g : playersInGame) {
-            broadcastMessage(g.getName() + " sta scegliendo la carta");
+            for (Gamer gamer : playersInGame) {
+                if (gamer != g) {
+                    handler.sendMessage(gamer, g.getName() + " sta scegliendo la carta...\n");
+                }
+            }
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -118,7 +138,14 @@ public class Game implements Runnable {
                 System.out.println("problema con cast della carta");
                 e.printStackTrace();
             }
-            broadcastMessage(g.getName() + " ha scelto: " + "\u001B[34m" + g.getMyGodCard().getName() + "\u001B[0m");
+            for (Gamer gamer : playersInGame) {
+                if (gamer != g) {
+                    handler.sendMessage(gamer, g.getName() + " ha scelto:\n" + "\u001B[34m" + g.getMyGodCard().getName() + "\u001B[0m" + "\n\u001B[33m" + g.getMyGodCard().getDescription() + "\u001B[0m\n");
+                } else {
+                    handler.sendMessage(gamer, "\n" + "Hai scelto:\n" + "\u001B[34m" + g.getMyGodCard().getName() + "\u001B[0m\n");
+                }
+            }
+
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -136,14 +163,13 @@ public class Game implements Runnable {
      * Cicle continue until someone wins
      */
     public void matchGame() {
-        broadcastMessage("\nINIZIO PARTITA");
+        broadcastMessage("\n" + "\u001B[33m" + "INIZIO PARTITA" + "\u001B[0m\n");
         try {
             Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         playersInMatch(playersInGame);
-        //broadcastMessage("\n");
         while (true) {
             for (Gamer g : playersInGame) {
                 ArrayList<God> gods = new ArrayList<God>(godCards);

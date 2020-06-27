@@ -1,11 +1,11 @@
-package santorini;
+package santorini.network;
 
-import santorini.model.godCards.God;
+import santorini.Parameters;
 import santorini.model.Mossa;
 import santorini.model.Table;
+import santorini.model.godCards.God;
 import santorini.view.View;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

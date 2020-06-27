@@ -1,6 +1,6 @@
 package santorini.model.godCards;
 
-import santorini.Turno;
+import santorini.controller.Turno;
 import santorini.model.*;
 
 import java.util.ArrayList;
