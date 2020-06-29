@@ -24,9 +24,9 @@
 <br>
 1. Download the <a href="https://github.com/l-money/ing-sw-2020-magliano-moneta-perego/raw/master/deliveries/JAR/Santorini-1.0-SNAPSHOT.jar">application package</a>
 <br>
-2. Launch server providing command
+2. Launch server providing command:
 <br> 
 
-----
+```
 java -jar Santorini.jar --server
-----
+```
