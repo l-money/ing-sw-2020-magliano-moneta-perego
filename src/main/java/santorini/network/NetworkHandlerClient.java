@@ -80,11 +80,11 @@ public class NetworkHandlerClient implements Runnable {
                     switch (cmd) {
                         case BUILD:
                             /*Chiedi una nuova myBuilding*/
-                            new Thread(() -> view.setNewAction(Mossa.Action.BUILD)).start();
+                            view.setNewAction(Mossa.Action.BUILD);
                             break;
                         case MOVE:
                             /*Chiedi una nuova myMovement*/
-                            new Thread(() -> view.setNewAction(Mossa.Action.MOVE)).start();
+                            view.setNewAction(Mossa.Action.MOVE);
                             break;
                         case SET_PLAYERS_NUMBER:
                             /*Chiedi il numero di giocatori*/
