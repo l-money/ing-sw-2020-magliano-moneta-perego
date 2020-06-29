@@ -20,13 +20,24 @@
 | Advanced Gods  | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
 <br><hr><br>
-###Application start
+### System requirements
+To work properly this application requires java 11 or higher
+<br><hr><br>
+### Application start
 <br>
-1. Download the <a href="https://github.com/l-money/ing-sw-2020-magliano-moneta-perego/raw/master/deliveries/JAR/Santorini-1.0-SNAPSHOT.jar">application package</a>
-<br>
-2. Launch server providing command:
-<br> 
+
+- Download the <a href="https://github.com/l-money/ing-sw-2020-magliano-moneta-perego/raw/master/deliveries/JAR/Santorini-1.0-SNAPSHOT.jar">application package</a>
+
+- Launch application providing command:
 
 ```
-java -jar Santorini.jar --server
+java -jar Santorini.jar --option
 ```
+
+| Option  | Description                              | 
+|:-----------------------|:------------------|
+|     | Start  client with Graphic interface (default)                  
+| --cli    | Start client with command line interface
+| --server      | Start application server services
+                          
+
