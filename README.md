@@ -16,9 +16,9 @@
 | CLI | ✅|
 | GUI | ✅|
 | Multiple games| ✅ |
-| Persistence | ❌|
+| Persistence | ❎|
 | Advanced Gods  | ✅ |
-| Undo | ❌ |
+| Undo | ❎ |
 
 
 <br><br>
