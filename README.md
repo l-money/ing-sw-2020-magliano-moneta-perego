@@ -10,15 +10,15 @@
 
 | Functionality | State |
 |:-----------------------|:------------------------------------:|
-| Basic rules | ✅|
-| Complete rules | ✅|
-| Socket | ✅|
-| CLI | ✅|
-| GUI | ✅|
-| Multiple games| ✅ |
-| Persistence | ❎|
-| Advanced Gods  | ✅ |
-| Undo | ❎ |
+| Basic rules | ✔|
+| Complete rules | ✔|
+| Socket | ✔|
+| CLI | ✔|
+| GUI | ✔|
+| Multiple games| ✔|
+| Persistence | 𐄂|
+| Advanced Gods  | ✔ |
+| Undo | 𐄂 |
 
 
 <br><br>
