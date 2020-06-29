@@ -57,7 +57,7 @@ public class CLIView extends View {
     @Override
     public synchronized void printTable() {
         table = getTable();
-        System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n" + "\u001B[0m");
+        System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t* 0 \t * 1 \t * 2 \t * 3 \t * 4 \t *\n" + "\u001B[0m");
         System.out.print("[riga]\t------------------------------------------\n");
         for (int i = 0; i <= 4; i++) {
             System.out.print("\u001B[34m" + "* " + i + " *\t" + "\u001B[0m");
@@ -66,7 +66,7 @@ public class CLIView extends View {
                     System.out.print(" |");
                     colorCellPawn(table.getTableCell(i, j).getPawn());
                 } else {
-                    System.out.print(" |\t");
+                    System.out.print(" |");
                     if (table.getTableCell(i, j).isComplete()) {
                         System.out.print("\u001B[45m" /*+ "\u001B[0m"*/);
                     } else {
@@ -76,7 +76,7 @@ public class CLIView extends View {
                 System.out.print(" " + table.getTableCell(i, j).getLevel() + "\u001B[0m" + "\t");
             }
             System.out.print(" |\n");
-            System.out.print("\t\t------------------------------------------");
+            System.out.print("\t------------------------------------------");
             System.out.println();
         }
     }
@@ -578,3 +578,32 @@ public class CLIView extends View {
     }
 
 }
+/**
+ * Print tabulata per la cli di maven
+ *
+ * @Override public synchronized void printTable() {
+ * table = getTable();
+ * System.out.print("\t\t\t\t\t\t[colonna]\n" + "\u001B[34m" + "\t\t*\t 0 \t *\t 1 \t *\t 2 \t *\t 3 \t *\t 4 \t *\n" + "\u001B[0m");
+ * System.out.print("[riga]\t------------------------------------------\n");
+ * for (int i = 0; i <= 4; i++) {
+ * System.out.print("\u001B[34m" + "* " + i + " *\t" + "\u001B[0m");
+ * for (int j = 0; j <= 4; j++) {
+ * if (table.getTableCell(i, j).getPawn() != null) {
+ * System.out.print(" |");
+ * colorCellPawn(table.getTableCell(i, j).getPawn());
+ * } else {
+ * System.out.print(" |\t");
+ * if (table.getTableCell(i, j).isComplete()) {
+ * System.out.print("\u001B[45m" /*+ "\u001B[0m");
+ * }else{
+ * System.out.print("\u001B[0m");
+ * }
+ * }
+ * System.out.print(" "+table.getTableCell(i,j).getLevel()+"\u001B[0m"+"\t");
+ * }
+ * System.out.print(" |\n");
+ * System.out.print("\t\t------------------------------------------");
+ * System.out.println();
+ * }
+ * }
+ */
