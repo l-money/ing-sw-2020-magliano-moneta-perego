@@ -2,8 +2,12 @@ package santorini.model.godCards;
 
 import santorini.controller.Turno;
 import santorini.model.*;
-
 import java.util.ArrayList;
+
+/**
+ * Class Apollo
+ */
+
 public class Apollo extends God {
     private Cell start;
     private Cell end;
@@ -36,24 +40,28 @@ public class Apollo extends God {
      */
     public void beforeOwnerMoving(Turno turno) {
         apolloEffect = false;
-            int i = turno.getMove().getIdPawn();
-            int x = turno.getMove().getTargetX();
-            int y = turno.getMove().getTargetY();
-            end = turno.getTable().getTableCell(x, y);//save end cell
-            otherPawn = turno.getTable().getTableCell(x, y).getPawn();//save other pawn
-        Pawn myPawn = turno.getGamer().getPawn(i);//save myPawn
-        start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());//save myCell
-            ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
-            if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
-                    (otherPawn.getIdGamer() != myPawn.getIdGamer()) &&
-                    (end.getLevel() - start.getLevel() <= 1)) {
-                if ((end.getLevel() - start.getLevel() == 1) && turno.getGamer().getLevelsUp() == 0) {
-                    //apolloEffect = false;
-                } else {
-                    turno.getTable().setACell(x, y, end.getLevel(), true, end.isComplete(), null);
-                    apolloEffect = true;
-                }
+        int i = turno.getMove().getIdPawn();
+        int x = turno.getMove().getTargetX();
+        int y = turno.getMove().getTargetY();
+        //save end cell
+        end = turno.getTable().getTableCell(x, y);
+        //save other pawn
+        otherPawn = turno.getTable().getTableCell(x, y).getPawn();
+        //save myPawn
+        Pawn myPawn = turno.getGamer().getPawn(i);
+        //save my cell
+        start = turno.getTable().getTableCell(myPawn.getRow(), myPawn.getColumn());
+        //save near cells around my cell
+        ArrayList<Cell> nearCells = turno.getTable().searchAdjacentCells(start);
+        if ((nearCells.contains(end)) && (!end.isFree()) && (end.getPawn() == otherPawn) && (end.getPawn() != null) &&
+                (otherPawn.getIdGamer() != myPawn.getIdGamer()) && (end.getLevel() - start.getLevel() <= 1)) {
+            if ((end.getLevel() - start.getLevel() == 1) && turno.getGamer().getLevelsUp() == 0) {
+                apolloEffect = false;
+            } else {
+                turno.getTable().setACell(x, y, end.getLevel(), true, end.isComplete(), null);
+                apolloEffect = true;
             }
+        }
     }
 
     /**
@@ -94,8 +102,10 @@ public class Apollo extends God {
      */
     public void afterOwnerBuilding(Turno turno) {
         if (turno.isValidationBuild()) {
+            //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print status of the table
             turno.printTableStatusTurn(true);
         }
     }

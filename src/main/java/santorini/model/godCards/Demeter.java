@@ -5,6 +5,10 @@ import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
 
+/**
+ * Class Demeter
+ */
+
 public class Demeter extends God {
     private Cell firstBuilding;
     private boolean demeterEffect;
@@ -14,7 +18,7 @@ public class Demeter extends God {
     public Demeter() {
         super("Demeter", "Tua costruzione:\n" +
                 "il tuo lavoratore può costruire una volta in più\n" +
-                "ma non nella stessa cella");
+                "ma non nella stessa casella");
     }
 
     /**
@@ -69,7 +73,7 @@ public class Demeter extends God {
                 //broadcast message of building
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-                //print table
+                //print table status
                 turno.printTableStatusTurn(printerStatus);
                 printerStatus = false;
             }
@@ -107,7 +111,7 @@ public class Demeter extends God {
                 turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Demeter. " + "\u001B[0m");
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-                //print status of the table
+                //print table status
                 turno.printTableStatusTurn(true);
             }
         }

@@ -5,6 +5,10 @@ import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
 
+/**
+ * Class Hephaestus
+ */
+
 public class Hephaestus extends God {
     private boolean HEffect;
     private Mossa buildingPlus;
@@ -46,7 +50,7 @@ public class Hephaestus extends God {
             //broadcast message of movement
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            //print status of the table
+            //print table status
             turno.printTableStatusTurn(turno.isValidationMove());
         }
 
@@ -72,7 +76,7 @@ public class Hephaestus extends God {
                 //broadcast message of building
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-                //print table
+                //print table status
                 turno.printTableStatusTurn(printerStatus);
                 printerStatus = false;
             }
@@ -120,6 +124,7 @@ public class Hephaestus extends God {
                 turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Hephaestus" + "\u001B[0m");
                 turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                         "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+                //print table status
                 turno.printTableStatusTurn(true);
 
             }

@@ -5,6 +5,10 @@ package santorini.model;
 
 import java.io.Serializable;
 
+/**
+ * Class Cell
+ */
+
 public class Cell implements Serializable {
 
     private int level;
@@ -14,10 +18,9 @@ public class Cell implements Serializable {
     private int y;
     private final int MAX_LEVEL = 3;
     private Pawn pawn;
-    //hierarchies :
-    //complete > pawn > free
+
     /**
-     * Cell with param x,y that i will use to initialize
+     * Cell with param x,y that I will use to initialize
      */
     public Cell() {
         this.level = 0;
@@ -39,7 +42,7 @@ public class Cell implements Serializable {
      * method setLevel
      * this method see if the level is 4 is completed
      *
-     * @param newLevel
+     * @param newLevel new level of the brick
      */
     public void setLevel(int newLevel) {
         level = newLevel;
@@ -63,7 +66,7 @@ public class Cell implements Serializable {
     /**
      * method setFree
      *
-     * @param free
+     * @param free .
      */
     public void setFree(boolean free) {
         this.free = free;
@@ -79,7 +82,7 @@ public class Cell implements Serializable {
      * @return operation success or failure
      */
     public void setPawn(Pawn pawn) {
-            this.pawn = pawn;
+        this.pawn = pawn;
         if (this.pawn == null) {
             setFree(true);
         } else {
@@ -90,7 +93,7 @@ public class Cell implements Serializable {
     /**
      * method getPawn
      *
-     * @return
+     * @return pawn
      */
     public Pawn getPawn() {
         return pawn;
@@ -98,6 +101,7 @@ public class Cell implements Serializable {
 
     /**
      * method isComplete
+     *
      * @return complete
      */
     public boolean isComplete() {
@@ -106,6 +110,7 @@ public class Cell implements Serializable {
 
     /**
      * method setComplete
+     *
      * @param complete true or false
      */
     public void setComplete(boolean complete) {
@@ -118,6 +123,7 @@ public class Cell implements Serializable {
 
     /**
      * method getX
+     *
      * @return row
      */
     public int getX() {
@@ -126,6 +132,7 @@ public class Cell implements Serializable {
 
     /**
      * method getY
+     *
      * @return column
      */
     public int getY() {
@@ -134,6 +141,7 @@ public class Cell implements Serializable {
 
     /**
      * method setX
+     *
      * @param newX new row
      */
     public void setX(int newX) {
@@ -142,6 +150,7 @@ public class Cell implements Serializable {
 
     /**
      * method setY
+     *
      * @param newY new column
      */
     public void setY(int newY) {

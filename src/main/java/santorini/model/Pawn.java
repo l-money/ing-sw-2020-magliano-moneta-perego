@@ -3,7 +3,6 @@ import java.io.Serializable;
 
 /**
  * Class Pawn
- * @author G. Perego
  */
 
 public class Pawn implements Serializable {
@@ -17,24 +16,20 @@ public class Pawn implements Serializable {
     private boolean iCanPlay;
 
     /**
-     * constructor of class Pawn
+     * Pawn initialized
      */
-
-
     public Pawn() {
         this.idPawn = -2;
         this.idGamer = -2;
-        //this.row = -2;
-        //this.column = -2;
         this.presentLevel = 0;
         this.pastLevel = 0;
         this.color = null;
         this.iCanPlay = true;
-
     }
 
     /**
      * method getIdPawn
+     *
      * @return the identification number of the pawn
      */
 
@@ -44,6 +39,7 @@ public class Pawn implements Serializable {
 
     /**
      * method getIdGamer
+     *
      * @return the identification number of the gamer
      */
 
@@ -53,6 +49,7 @@ public class Pawn implements Serializable {
 
     /**
      * method getPresentLevel
+     *
      * @return the present level of the pawn
      */
 
@@ -62,6 +59,7 @@ public class Pawn implements Serializable {
 
     /**
      * method getPastLevel
+     *
      * @return the past level of the pawn
      */
 
@@ -71,6 +69,7 @@ public class Pawn implements Serializable {
 
     /**
      * method getColorPawn
+     *
      * @return the color (team) of the pawn
      */
 
@@ -100,6 +99,7 @@ public class Pawn implements Serializable {
 
     /**
      * method setIdPawn
+     *
      * @param newIdPawn the identification number of the pawn
      */
 
@@ -110,6 +110,7 @@ public class Pawn implements Serializable {
 
     /**
      * method setIdGamer
+     *
      * @param newIdGamer .
      */
 
@@ -138,6 +139,7 @@ public class Pawn implements Serializable {
 
     /**
      * method setPastLevel
+     *
      * @param newPastLevel .
      */
 
@@ -147,6 +149,7 @@ public class Pawn implements Serializable {
 
     /**
      * method setColorPawn
+     *
      * @param newColor .
      */
 
@@ -156,6 +159,7 @@ public class Pawn implements Serializable {
 
     /**
      * method getRow
+     *
      * @return the row position of the pawn
      */
     public int getRow() {
@@ -173,6 +177,7 @@ public class Pawn implements Serializable {
 
     /**
      * method setRow
+     *
      * @param newRow the new row position of the pawn
      */
     public void setRow(int newRow) {
@@ -181,6 +186,7 @@ public class Pawn implements Serializable {
 
     /**
      * method setColumn
+     *
      * @param newColumn the new column position of the pawn
      */
     public void setColumn(int newColumn) {

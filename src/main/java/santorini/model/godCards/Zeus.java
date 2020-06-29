@@ -5,6 +5,10 @@ import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
 
+/**
+ * Class Zeus
+ */
+
 public class Zeus extends God {
     private Cell myCell;
     private boolean zeusEffect = false;
@@ -37,7 +41,6 @@ public class Zeus extends God {
     public void beforeOwnerMoving(Turno turno) {
         zeusEffect = false;
         printStatus = true;
-
     }
 
     /**
@@ -62,7 +65,7 @@ public class Zeus extends God {
                 zeusEffect = false;
                 myCell = turno.getTable().getTableCell(turno.getMove().getTargetX(), turno.getMove().getTargetY());
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Zeus, puoi costruire un livello sotto di te.\n" +
-                        "Se vuoi costruire scegli una casella adiacente qualsiasi." +
+                        "Per costruire seleziona una casella disponibile." +
                         "\nSe non vuoi costruire sotto di te scegli l'opzione 'Salta'." + "\u001B[0m");
             }
         }

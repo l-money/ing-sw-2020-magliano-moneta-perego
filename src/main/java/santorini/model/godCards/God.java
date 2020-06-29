@@ -4,9 +4,12 @@ import santorini.controller.Turno;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
 import santorini.model.Table;
-
 import java.io.Serializable;
 import java.util.ArrayList;
+
+/**
+ * Class God
+ */
 
 public abstract class God implements Serializable {
     protected Gamer owner;
@@ -15,40 +18,82 @@ public abstract class God implements Serializable {
     protected Mossa effectMove;
     protected ArrayList<Gamer> others;
 
+    /**
+     * constructor of God
+     *
+     * @param n    name of the god
+     * @param desc description of the power of the god
+     */
+
     public God(String n, String desc) {
         this.name = n;
         this.description = desc;
     }
 
+    /**
+     * method getOwner
+     * @return the player
+     */
     public Gamer getOwner() {
         return owner;
     }
 
+    /**
+     * method setOwner
+     * @param newOwner .
+     */
     public void setOwner(Gamer newOwner) {
         this.owner = newOwner;
     }
 
+    /**
+     * method setTable
+     * @param table .
+     */
     public void setTable(Table table) {
         this.table = table;
     }
 
+    /**
+     * method getName
+     * @return the name of the god
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * method getDescription
+     * @return the description of the power of the god
+     */
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * method getEffectMove
+     *
+     * @return effect move
+     */
     public Mossa getEffectMove() {
         return effectMove;
     }
 
+    /**
+     * method setOthers
+     *
+     * @param gamers .
+     */
     public void setOthers(ArrayList<Gamer> gamers) {
         others = new ArrayList<>(gamers);
         others.remove(getOwner());
     }
 
+    /**
+     * method setEffectMove
+     *
+     * @param effectMove .
+     */
     public void setEffectMove(Mossa effectMove) {
         this.effectMove = effectMove;
     }

@@ -1,7 +1,6 @@
 package santorini.view;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
@@ -13,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -772,7 +770,11 @@ public class ViewController extends View {
                     if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
                         //controllo se non c'è la cupola
                         if ((!getTable().getTableCell(i, j).isComplete())) {
-                            cells.add(getTable().getTableCell(i, j));
+                            //controllo che non ci sia una mia pedina nella cella adiacente
+                            if (!((getTable().getTableCell(i, j).getPawn() != null) &&
+                                    (getTable().getTableCell(i, j).getPawn().getIdGamer() == myCell.getPawn().getIdGamer()))) {
+                                cells.add(getTable().getTableCell(i, j));
+                            }
                         }
                     }
                 }
@@ -819,145 +821,9 @@ public class ViewController extends View {
                         });
                     });
                 }
-                //initButtons();
             }
         });
     }
-
-    /**
-     * NON PIÙ USATO
-     * Metodo che illumina le caselle adiacenti possibili al movimento
-     *
-     * @param t      tavolo da gioco
-     * @param myCell posizione della pedina scelta
-     * @param bt     tabella di immagini
-     */
-    //Chiamo il metodo in lightMyPawns
-    public void accessibleCells(Table t, Cell myCell, Button[][] bt, Button myButton) {
-        ArrayList<Cell> cells = new ArrayList<>();
-        int x = myCell.getX();
-        int y = myCell.getY();
-        myButton.setStyle("-fx-border-color:red");
-        for (int i = x - 1; i < x + 2; i++) {
-            for (int j = y - 1; j < y + 2; j++) {
-                //controllo se la casella esiste
-                if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
-                    //controllo se non c'è la cupola
-                    if ((!t.getTableCell(i, j).isComplete())) {
-                        cells.add(t.getTableCell(i, j));
-                    }
-                }
-            }
-        }
-        for (Cell lightMe : cells) {
-            bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-            bt[lightMe.getX()][lightMe.getY()].setDisable(false);
-            bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent e) {
-                    Button bTwo;
-                    bTwo = (Button) e.getSource();
-                    int x = GridPane.getRowIndex(bTwo);
-                    int y = GridPane.getColumnIndex(bTwo);
-                    bt[myCell.getX()][myCell.getY()].setStyle("-fx-border-color:red");
-                    int l = cells.size();
-                    for (int k = 0; k < l; k++) {
-                        if (cells.get(k).getX() == x && cells.get(k).getY() == y) {
-                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:red");
-                        } else {
-                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:yellow");
-                        }
-                    }
-                    mySelection(bt, t.getTableCell(x, y), t);
-                    currentMove.setTargetX(x);
-                    currentMove.setTargetY(y);
-                }
-            });
-
-        }
-    }
-
-    /**
-     * NON PIÙ USATO
-     * Metodo che printa la casella cliccata
-     *
-     * @param bt       tavola di bottoni
-     * @param moveCell cella cliccata
-     * @param t        table
-     */
-    public void mySelection(Button[][] bt, Cell moveCell, Table t) {
-        Button buttonMovement;
-        buttonMovement = bt[moveCell.getX()][moveCell.getY()];
-        System.out.println("Row: " + GridPane.getRowIndex(buttonMovement));
-        System.out.println("Column: " + GridPane.getColumnIndex(buttonMovement));
-    }
-
-    /**
-     * Metodo Building
-     * Dopo il movimento prende la casella in cui si è spostata la pedina (start) e cerca le caselle adaicenti per la costruzione
-     *
-     * @param t     tavolo
-     * @param bt    tabella di bottoni
-     * @param start nuova posizione della pedina
-     */
-    public void Building(Table t, Button[][] bt, Cell start) {
-        System.out.println("**Costruzione**\n");
-        int x = table.getXYPawn(getID(), currentPawn, true);
-        int y = table.getXYPawn(getID(), currentPawn, false);
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (i == x && j == y) {
-                    bt[i][j].setStyle("-fx-border-color:white");
-                } else {
-                    bt[i][j].setStyle("-fx-border-color:trasparent");
-                }
-            }
-        }
-        ArrayList<Cell> cells = new ArrayList<>();
-        for (int i = x - 1; i < x + 2; i++) {
-            for (int j = y - 1; j < y + 2; j++) {
-                //controllo se la casella esiste
-                if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
-                    //controllo se non c'è la cupola
-                    if ((!t.getTableCell(i, j).isComplete())) {
-                        cells.add(t.getTableCell(i, j));
-                    }
-                }
-            }
-        }
-        if (getGod().getName().equalsIgnoreCase("zeus") && effetto) {
-            bt[x][y].setStyle("-fx-border-color:blue");
-            bt[x][y].setDisable(false);
-            bt[x][y].setOnAction(ev -> {
-                Button b = (Button) ev.getSource();
-                currentMove.setTargetX(GridPane.getRowIndex(b));
-                currentMove.setTargetY(GridPane.getColumnIndex(b));
-            });
-        } else {
-            for (Cell lightMe : cells) {
-                bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:blue");
-                bt[lightMe.getX()][lightMe.getY()].setDisable(false);
-                bt[lightMe.getX()][lightMe.getY()].setOnMouseClicked(e -> {
-                    Button bTwo;
-                    bTwo = (Button) e.getSource();
-                    int xs = GridPane.getRowIndex(bTwo);
-                    int ys = GridPane.getColumnIndex(bTwo);
-                    bt[start.getX()][start.getY()].setStyle("-fx-border-color:white");
-                    //bt[start.getX()][start.getY()].setOnMouseClicked(null);
-                    int l = cells.size();
-                    for (int k = 0; k < l; k++) {
-                        if (cells.get(k).getX() == xs && cells.get(k).getY() == ys) {
-                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:red");
-                        } else {
-                            bt[cells.get(k).getX()][cells.get(k).getY()].setStyle("-fx-border-color:blue");
-                        }
-                    }
-                    mySelection(bt, t.getTableCell(xs, ys), t);
-                    currentMove.setTargetX(xs);
-                    currentMove.setTargetY(ys);
-                });
-            }
-        }
-
-    }
 }
+
+

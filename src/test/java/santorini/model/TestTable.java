@@ -285,7 +285,7 @@ public class TestTable implements Serializable {
     @Test
     public void testPerimetralCells() {
         ArrayList<Cell> pCells;
-        pCells = table.tablePerimetralCells(table);
+        pCells = table.tablePerimeterCells(table);
         assertEquals(16, pCells.size());
         assertTrue(pCells.contains(table.getTableCell(0, 0)));
         assertTrue(pCells.contains(table.getTableCell(1, 0)));

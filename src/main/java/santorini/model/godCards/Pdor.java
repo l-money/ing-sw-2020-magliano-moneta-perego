@@ -3,7 +3,11 @@ package santorini.model.godCards;
 import santorini.controller.Turno;
 import santorini.model.Gamer;
 
-//P
+/**
+ * Class Pdor
+ * God test class
+ */
+
 public class Pdor extends God {
 
     public Pdor() {
@@ -23,17 +27,29 @@ public class Pdor extends God {
                 "Popolo che comunicava solo con peti al profumo di gelso.");
     }
 
+    /**
+     * Initialize player variables with card
+     *
+     * @param turno player owner of card
+     */
     @Override
     public void initializeOwner(Turno turno) {
-
-
     }
 
+    /**
+     * Features added by card before its owner does his moves
+     *
+     * @param turno .
+     */
     @Override
     public void beforeOwnerMoving(Turno turno) {
-
     }
 
+    /**
+     * Features added by card after its owner does his moves
+     *
+     * @param turno .
+     */
     @Override
     public void afterOwnerMoving(Turno turno) {
 
@@ -46,11 +62,21 @@ public class Pdor extends God {
 
     }
 
+    /**
+     * Features added by card before its owner starts building
+     *
+     * @param turno .
+     */
     @Override
     public void beforeOwnerBuilding(Turno turno) {
 
     }
 
+    /**
+     * Features added by card after its owner starts building
+     *
+     * @param turno .
+     */
     @Override
     public void afterOwnerBuilding(Turno turno) {
 
@@ -71,27 +97,39 @@ public class Pdor extends God {
 
     }
 
+    /**
+     * Features added by card before other player does his moves
+     *
+     * @param other player to customize
+     */
     @Override
     public void beforeOtherMoving(Gamer other) {
-
-
     }
 
+    /**
+     * Features added by card after other player does his moves
+     *
+     * @param other player to customize
+     */
     @Override
     public void afterOtherMoving(Gamer other) {
-
-
     }
 
+    /**
+     * Features added by card before other player starts building
+     *
+     * @param other player to customize
+     */
     @Override
     public void beforeOtherBuilding(Gamer other) {
-
-
     }
 
+    /**
+     * Features added by card before other player starts building
+     *
+     * @param other player to customize
+     */
     @Override
     public void afterOtherBuilding(Gamer other) {
-
-
     }
 }

@@ -4,9 +4,12 @@ import santorini.controller.Turno;
 import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Pawn;
-
 import java.util.ArrayList;
-//P
+
+/**
+ * Class Minotaur
+ */
+
 public class Minotaur extends God {
     Cell start;
     Cell end;
@@ -103,14 +106,13 @@ public class Minotaur extends God {
                 int y = nextCell.getY();
                 otherPawn.setPastLevel(end.getLevel());
                 turno.getTable().setACell(x, y, nextCell.getLevel(), false, nextCell.isComplete(), otherPawn);
-                //turno.printTableStatusTurn(true);
                 printerStatus = false;
                 turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Minotaur" + "\u001B[0m");
             }
             //broadcast message of movement
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            //print status of the table
+            //print table status
             turno.printTableStatusTurn(true);
         } else if (!turno.isValidationMove() && minoEffect) {
             turno.getTable().setACell(end.getX(), end.getY(), end.getLevel(), false, end.isComplete(), otherPawn);
@@ -187,7 +189,8 @@ public class Minotaur extends God {
     }
 
     /**
-     * method coordinateNextCell: for the Minotaur Effect
+     * method coordinateNextCell
+     * search the next cell for Minotaur's effect
      *
      * @param start my position
      * @param end   my destination
@@ -268,6 +271,9 @@ public class Minotaur extends God {
     }
 
     /**
+     * method possiblePush
+     * control if Minotaur's effect is possible or not
+     *
      * @param x the two coordinate of the next cell
      * @return true if: the next cell has row and column and, the next cell exists; or return false
      */

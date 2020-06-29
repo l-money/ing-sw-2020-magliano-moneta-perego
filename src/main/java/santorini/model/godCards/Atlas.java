@@ -5,7 +5,10 @@ import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
 
-//P
+/**
+ * Class Atlas
+ */
+
 public class Atlas extends God {
     private Mossa buildDome;
     private boolean atlasEffect;
@@ -18,11 +21,21 @@ public class Atlas extends God {
                 "su qualsiasi livello, compreso il terreno");
     }
 
+    /**
+     * method getEffectMove
+     *
+     * @return buildDome
+     */
     @Override
     public Mossa getEffectMove() {
         return buildDome;
     }
 
+    /**
+     * method setEffectMove
+     *
+     * @param effectMove .
+     */
     @Override
     public void setEffectMove(Mossa effectMove) {
         this.buildDome = effectMove;
@@ -35,7 +48,6 @@ public class Atlas extends God {
      */
     public void initializeOwner(Turno turno) {
         controller = 0;
-
     }
 
     /**

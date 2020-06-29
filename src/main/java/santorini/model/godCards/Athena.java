@@ -3,7 +3,10 @@ package santorini.model.godCards;
 import santorini.controller.Turno;
 import santorini.model.Gamer;
 
-//FINITA
+/**
+ * Class Athena
+ */
+
 public class Athena extends God {
     private boolean athenaEffect;
 
@@ -15,7 +18,6 @@ public class Athena extends God {
                 "non possono salire di livello");
 
     }
-
 
     /**
      * Initialize player variables with card

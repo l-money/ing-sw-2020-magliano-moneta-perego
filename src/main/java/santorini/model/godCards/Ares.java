@@ -2,8 +2,11 @@ package santorini.model.godCards;
 
 import santorini.controller.Turno;
 import santorini.model.*;
-
 import java.util.ArrayList;
+
+/**
+ * Class Ares
+ */
 
 public class Ares extends God {
 
@@ -13,6 +16,7 @@ public class Ares extends God {
                 "(non una cupola)\n" +
                 "adiacente al lavoratore che non hai mosso");
     }
+
     /**
      * Initialize player variables with card
      *
@@ -71,12 +75,17 @@ public class Ares extends God {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print table status
             turno.printTableStatusTurn(true);
+            //change pawn reference
             turno.getGameHandler().switchPawn(turno.getGamer());
+            //save start cell
             Cell start = otherPawnPosition(turno.getGamer(), turno.getMove(), turno.getTable());
+            //control if I can remove buildings
             if (floorCells(start, turno.getTable()) == 0) {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Non puoi demolire nulla intorno a te" + "\u001B[0m");
             } else {
+                //Ares's effect
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Ares, puoi demolire una costruzione\n" +
                         "adiacente alla pedina che non hai mosso.\n" +
                         "Se non vuoi demolire scegli l'opzione 'Salta'." + "\u001B[0m");
@@ -158,18 +167,18 @@ public class Ares extends God {
 
     /**
      * method floorCells
+     * control if there are cells with buildings
      *
      * @param start my cell
-     * @param t     the table
-     * @return
+     * @param t the table
+     * @return number of cells with buildings
      */
     private int floorCells(Cell start, Table t) {
         int k = 0;
         ArrayList<Cell> adjacentCells;
         adjacentCells = t.searchAdjacentCells(start);
-        int l = adjacentCells.size();
-        for (int i = 0; i < l; i++) {
-            if (adjacentCells.get(i).getLevel() > 0 && adjacentCells.get(i).getLevel() <= 3 && adjacentCells.get(i).getPawn() == null && !adjacentCells.get(i).isComplete()) {
+        for (Cell adjacentCell : adjacentCells) {
+            if (adjacentCell.getLevel() > 0 && adjacentCell.getLevel() <= 3 && adjacentCell.getPawn() == null && !adjacentCell.isComplete()) {
                 k++;
             }
         }

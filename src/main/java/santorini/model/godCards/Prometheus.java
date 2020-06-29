@@ -4,13 +4,14 @@ import santorini.controller.Turno;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
 
-//G
+/**
+ * Class Prometheus
+ */
 public class Prometheus extends God {
     private boolean promEffect = false;
     private boolean printStatus = false;
     private Mossa promBuild;
     private int control = 0;
-
 
     public Prometheus() {
         super("Prometheus", "Tuo turno:\n" +
@@ -76,7 +77,7 @@ public class Prometheus extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerMoving(Turno turno) {
 
@@ -85,7 +86,7 @@ public class Prometheus extends God {
     /**
      * Features added by card after its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerMoving(Turno turno) {
         if (turno.isValidationMove()) {
@@ -101,7 +102,7 @@ public class Prometheus extends God {
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void beforeOwnerBuilding(Turno turno) {
 
@@ -110,13 +111,13 @@ public class Prometheus extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     public void afterOwnerBuilding(Turno turno) {
         if (turno.isValidationBuild()) {
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            //print status of the table
+            //print table status
             turno.printTableStatusTurn(true);
         }
     }

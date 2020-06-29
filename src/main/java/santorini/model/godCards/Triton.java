@@ -4,8 +4,11 @@ import santorini.controller.Turno;
 import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
-
 import java.util.ArrayList;
+
+/**
+ * Class Triton
+ */
 
 public class Triton extends God {
     private Cell myCell;
@@ -73,7 +76,7 @@ public class Triton extends God {
     /**
      * Features added by card before its owner does his moves
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerMoving(Turno turno) {
@@ -103,7 +106,7 @@ public class Triton extends God {
             int x = turno.getMove().getTargetX();
             int y = turno.getMove().getTargetY();
             myCell = turno.getTable().getTableCell(x, y);
-            ArrayList<Cell> perimetralCells = turno.getTable().tablePerimetralCells(turno.getTable());
+            ArrayList<Cell> perimetralCells = turno.getTable().tablePerimeterCells(turno.getTable());
             if (perimetralCells.contains(myCell)) {
                 tritonEffect = false;
                 turno.setCount(0);
@@ -156,7 +159,7 @@ public class Triton extends God {
     /**
      * Features added by card before its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void beforeOwnerBuilding(Turno turno) {
@@ -166,7 +169,7 @@ public class Triton extends God {
     /**
      * Features added by card after its owner starts building
      *
-     * @param turno
+     * @param turno current turn
      */
     @Override
     public void afterOwnerBuilding(Turno turno) {

@@ -4,6 +4,10 @@ import santorini.controller.Turno;
 import santorini.model.Gamer;
 import santorini.model.Table;
 
+/**
+ * Class Chronus
+ */
+
 public class Chronus extends God {
 
     public Chronus() {
@@ -20,7 +24,7 @@ public class Chronus extends God {
      */
     @Override
     public void initializeOwner(Turno turno) {
-        if (ChronosWins(turno.getTable())) {
+        if (ChronusWins(turno.getTable())) {
             turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto di Chronus " + "\u001B[0m");
             turno.getGamer().setWinner(true);
             turno.getGameHandler().getGame().setWinner(turno.getGamer());
@@ -72,7 +76,7 @@ public class Chronus extends God {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            if (ChronosWins(turno.getTable())) {
+            if (ChronusWins(turno.getTable())) {
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto di Chronus " + "\u001B[0m");
                 turno.getGamer().setWinner(true);
                 turno.getGameHandler().getGame().setWinner(turno.getGamer());
@@ -124,12 +128,12 @@ public class Chronus extends God {
     }
 
     /**
-     * method ChronosWins
+     * method ChronusWins
      *
      * @param t the current table
      * @return true if there are at least five towers (complete building) on the table, otherwise false
      */
-    private boolean ChronosWins(Table t) {
+    private boolean ChronusWins(Table t) {
         int towers = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {

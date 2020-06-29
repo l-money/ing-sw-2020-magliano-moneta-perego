@@ -6,6 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * Class Gamer
+ */
 
 public class Gamer {
     private final ObjectOutputStream outputStream;
@@ -161,6 +164,7 @@ public class Gamer {
 
     /**
      * method getSteps
+     *
      * @return steps
      */
     public int getSteps() {
@@ -169,6 +173,7 @@ public class Gamer {
 
     /**
      * method setSteps
+     *
      * @param steps of the gamer
      */
     public void setSteps(int steps) {
@@ -177,6 +182,7 @@ public class Gamer {
 
     /**
      * method getLevelsUp
+     *
      * @return levelsUp
      */
     public int getLevelsUp() {
@@ -194,6 +200,7 @@ public class Gamer {
 
     /**
      * method getLevelsDown
+     *
      * @return levelsDown
      */
     public int getLevelsDown() {
@@ -230,6 +237,7 @@ public class Gamer {
 
     /**
      * method getBuilds
+     *
      * @return builds
      */
     public int getBuilds() {
@@ -238,6 +246,7 @@ public class Gamer {
 
     /**
      * method setBuilds
+     *
      * @param builds of the gamer
      */
     public void setBuilds(int builds) {
@@ -246,6 +255,7 @@ public class Gamer {
 
     /**
      * method getIdGamer
+     *
      * @return idGamer
      */
     public int getIdGamer() {
@@ -254,6 +264,7 @@ public class Gamer {
 
     /**
      * method setIdGamer
+     *
      * @param idGamer of the gamer
      */
     public void setIdGamer(int idGamer) {
@@ -262,6 +273,7 @@ public class Gamer {
 
     /**
      * method getColorGamer
+     *
      * @return colorGamer
      */
     public Color getColorGamer() {
@@ -270,6 +282,7 @@ public class Gamer {
 
     /**
      * method isWinner
+     *
      * @return winner
      */
     public boolean isWinner() {

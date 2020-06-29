@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 /**
  * Class Brick
- * @author G. Perego
  */
 
 public class Brick  implements Serializable {
@@ -12,6 +11,7 @@ public class Brick  implements Serializable {
 
     /**
      * constructor of class Brick
+     *
      * @param level level of the Brick in height
      */
     public Brick(int level) {

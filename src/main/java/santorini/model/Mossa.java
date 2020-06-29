@@ -1,29 +1,37 @@
 package santorini.model;
 
-import santorini.view.View;
-
 import java.io.Serializable;
 
+/**
+ * Class Mossa
+ */
+
 public class Mossa implements Serializable {
+
     public static enum Action {
         MOVE,
         BUILD,
     }
+
     private Action action;
     private int targetX;
     private int targetY;
     private int idPawn;
-    private View view;
 
+    /**
+     * constructor of Mossa
+     *
+     * @param action  of the pawn : MOVE or BUILD
+     * @param idPawn  id of the pawn
+     * @param targetX row destination
+     * @param targetY column destination
+     */
 
     public Mossa(Action action, int idPawn, int targetX, int targetY) {
         this.action = action;
         this.targetX = targetX;
         this.targetY = targetY;
         this.idPawn = idPawn;
-    }
-
-    public Mossa() {
     }
 
     /**
@@ -37,6 +45,7 @@ public class Mossa implements Serializable {
 
     /**
      * method getTargetX
+     *
      * @return row
      */
     public int getTargetX() {
@@ -45,6 +54,7 @@ public class Mossa implements Serializable {
 
     /**
      * method getTargetY
+     *
      * @return column
      */
     public int getTargetY() {
@@ -53,6 +63,7 @@ public class Mossa implements Serializable {
 
     /**
      * method getIdPawn
+     *
      * @return id of the pawn
      */
     public int getIdPawn() {
@@ -61,20 +72,25 @@ public class Mossa implements Serializable {
 
     /**
      * method setAction
+     *
      * @param action .
      */
     public void setAction(Action action) {
         this.action = action;
     }
+
     /**
      * method setTargetX
+     *
      * @param  targetX .
      */
     public void setTargetX(int targetX) {
         this.targetX = targetX;
     }
+
     /**
      * method setIdPawn
+     *
      * @param targetY .
      */
     public void setTargetY(int targetY) {
@@ -83,6 +99,7 @@ public class Mossa implements Serializable {
 
     /**
      * method setIdPawn
+     *
      * @param idPawn id pawn
      */
     public void setIdPawn(int idPawn) {
@@ -92,21 +109,22 @@ public class Mossa implements Serializable {
 
     /**
      * method setMyMossa
+     *
      * @param a action MOVE or BUILD
      * @param i id Pawn
      * @param x row
      * @param y column
-     * @return my Mossa
+     * @return my move
      */
     public Mossa setMyMossa(Action a, int i, int x, int y) {
-        Mossa m;
+        Mossa move;
         if (a.equals(Action.MOVE)) {
-            return m = new Mossa(Action.MOVE, i, x, y);
+            return move = new Mossa(Action.MOVE, i, x, y);
         } else {
             if (a.equals(Action.BUILD)) {
-                return m = new Mossa(Action.BUILD, i, x, y);
+                return move = new Mossa(Action.BUILD, i, x, y);
             } else {
-                return m = null;
+                return move = null;
             }
         }
     }

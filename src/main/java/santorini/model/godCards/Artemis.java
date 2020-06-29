@@ -5,7 +5,9 @@ import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
 
-//FINITA
+/**
+ * Class Artemis
+ */
 public class Artemis extends God {
     private Cell start;
     private boolean artemisEffect;
@@ -33,6 +35,7 @@ public class Artemis extends God {
 
     /**
      * method setEffectMove
+     *
      * @param effectMove move
      */
     @Override
@@ -42,6 +45,7 @@ public class Artemis extends God {
 
     /**
      * method getIdM
+     *
      * @return the id pawn of the movement
      */
     public int getIdM() {
@@ -50,6 +54,7 @@ public class Artemis extends God {
 
     /**
      * method setIdM
+     *
      * @param idM sets the id pawn of the movement
      */
     public void setIdM(int idM) {
@@ -161,6 +166,7 @@ public class Artemis extends God {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print table status
             turno.printTableStatusTurn(true);
         }
     }

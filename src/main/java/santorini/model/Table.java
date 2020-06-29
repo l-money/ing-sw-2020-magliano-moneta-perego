@@ -6,6 +6,10 @@ package santorini.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Class Table
+ */
+
 public class Table implements Serializable {
     private int row = 5;
     private int column = 5;
@@ -26,8 +30,9 @@ public class Table implements Serializable {
         }
     }
 
-
     /**
+     * method getTableCell
+     *
      * @param x cell with coordinate x.
      * @param y cell with coordinate y.
      * @return all the cell with specific coordinates.
@@ -38,10 +43,11 @@ public class Table implements Serializable {
 
 
     /**
+     * method searchAdjacentCells
+     *
      * @param pointCell is the parameter that find where my pawn is in the cell.
      * @return searchCell that is all near cells from cell where my pawn is.
      */
-    //metodo per riconoscere le celle adiacenti
     public ArrayList<Cell> searchAdjacentCells(Cell pointCell) {
         int x;
         int y;
@@ -62,25 +68,27 @@ public class Table implements Serializable {
     }
 
     /**
-     * method tablePerimetralCells
+     * method tablePerimeterCells
      *
      * @param t my table
-     * @return perimetralCells
+     * @return perimeterCells, the cells on the perimeter of the table
      */
-    public ArrayList<Cell> tablePerimetralCells(Table t) {
-        ArrayList<Cell> perimetralCells = new ArrayList<>();
+    public ArrayList<Cell> tablePerimeterCells(Table t) {
+        ArrayList<Cell> perimeterCells = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            perimetralCells.add(t.getTableCell(0, i));
-            perimetralCells.add(t.getTableCell(4, i));
+            perimeterCells.add(t.getTableCell(0, i));
+            perimeterCells.add(t.getTableCell(4, i));
         }
         for (int i = 1; i < 4; i++) {
-            perimetralCells.add(t.getTableCell(i, 0));
-            perimetralCells.add(t.getTableCell(i, 4));
+            perimeterCells.add(t.getTableCell(i, 0));
+            perimeterCells.add(t.getTableCell(i, 4));
         }
-        return perimetralCells;
+        return perimeterCells;
     }
 
     /**
+     * method walkNearCell
+     *
      * @param c1 is the cell c1(x1,y1).
      * @param c2 is the cell c2(x2,y2).
      * @return the max module between the difference of every coordinate (x,y) when i must
@@ -95,7 +103,7 @@ public class Table implements Serializable {
     }
 
     /**
-     * method setACell for set a cell
+     * method setACell
      *
      * @param x        row
      * @param y        column
@@ -119,7 +127,8 @@ public class Table implements Serializable {
     }
 
     /**
-     * method iCanMove : control my pawn can move
+     * method iCanMove
+     * control my pawn can move
      *
      * @param myCell the position of my pawn
      * @return true if the pawn can move, else return false
@@ -149,7 +158,8 @@ public class Table implements Serializable {
     }
 
     /**
-     * method iCanBuild : control my pawn can build
+     * method iCanBuild
+     * control my pawn can build
      *
      * @param myCell the position of my pawn
      * @return true if the pawn can build, else return false
@@ -173,7 +183,8 @@ public class Table implements Serializable {
     }
 
     /**
-     * method controlBaseMovement : control the pawn can do the move respecting the rules
+     * method controlBaseMovement
+     * control the pawn can do the move respecting the rules
      *
      * @param start the position of the pawn
      * @param end   the destination of the movement
@@ -184,21 +195,21 @@ public class Table implements Serializable {
         ArrayList<Cell> nearCells = new ArrayList<>();
         nearCells = searchAdjacentCells(start);
         if (!nearCells.contains(end)) {
-            System.out.println("not nearcells");
+            //not near cells
             return false;
         } else {
             if (end.isComplete()) {
-                System.out.println("is complete");
+                //is complete
                 return false;
             } else {
                 if (end.getPawn() != null || !end.isFree()) {
-                    System.out.println("not null");
+                    //not null
                     return false;
                 } else {
                     if (k <= 1) {
                         return true;
                     } else {
-                        System.out.println("salire di più livelli");
+                        //level up more
                         return false;
                     }
                 }
@@ -207,7 +218,8 @@ public class Table implements Serializable {
     }
 
     /**
-     * method controlBaseBuild : control the pawn can build into a cell respecting the rules
+     * method controlBaseBuild
+     * control the pawn can build into a cell respecting the rules
      *
      * @param start the position of the pawn
      * @param end   the destination of the building
@@ -216,12 +228,15 @@ public class Table implements Serializable {
     public boolean controlBaseBuilding(Cell start, Cell end) {
         ArrayList<Cell> nearCells = searchAdjacentCells(start);
         if (!nearCells.contains(end)) {
+            //not near cells
             return false;
         } else {
             if (!end.isFree() || (end.getPawn() != null)) {
+                //not null
                 return false;
             } else {
                 if (end.isComplete()) {
+                    //is complete
                     return false;
                 } else {
                     if ((end.getPawn() == null) && (end.getLevel() >= 0) && (end.getLevel() <= 3)) {

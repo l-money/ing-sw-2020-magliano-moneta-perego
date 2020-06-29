@@ -4,8 +4,11 @@ import santorini.controller.Turno;
 import santorini.model.Cell;
 import santorini.model.Gamer;
 import santorini.model.Mossa;
-
 import java.util.ArrayList;
+
+/**
+ * Class Hestia
+ */
 
 public class Hestia extends God {
     private Cell end;
@@ -52,7 +55,7 @@ public class Hestia extends God {
             //broadcast message of movement
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha mosso: " + turno.getMove().getIdPawn() +
                     " in [" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-            //print status of the table
+            //print table status
             turno.printTableStatusTurn(turno.isValidationMove());
         }
     }
@@ -78,6 +81,7 @@ public class Hestia extends God {
             //broadcast message of building
             turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                     "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
+            //print table status
             turno.printTableStatusTurn(true);
         }
         if (turno.isValidationBuild()) {
@@ -96,7 +100,7 @@ public class Hestia extends God {
                     turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato" + "\u001B[0m");
                 } else {
                     end = turno.getTable().getTableCell(hestiaBuild.getTargetX(), hestiaBuild.getTargetY());
-                    ArrayList<Cell> perimetralCells = turno.getTable().tablePerimetralCells(turno.getTable());
+                    ArrayList<Cell> perimetralCells = turno.getTable().tablePerimeterCells(turno.getTable());
                     if (perimetralCells.contains(end)) {
                         hestiaEffect = false;
                         turno.getValidation(false);
@@ -114,10 +118,10 @@ public class Hestia extends God {
                     turno.getGameHandler().getGame().broadcastMessage("\u001B[34m" + "Effetto di Hestia" + "\u001B[0m");
                     turno.getGameHandler().getGame().broadcastMessage(turno.getGamer().getName() + " ha costruito in: " +
                             "[" + turno.getMove().getTargetX() + "," + turno.getMove().getTargetY() + "]");
-                    //print status of the table
+                    //print table status
                     turno.printTableStatusTurn(true);
                 }
-            } while (!hestiaEffect && turno.getCount() < 5);
+            } while (!hestiaEffect && turno.getCount() < 3);
             turno.methodLoser(hestiaEffect, turno.getCount(), turno.getGamer());
         }
     }
