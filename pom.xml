@@ -28,7 +28,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>santorini.Main</mainClass>
+                    <mainClass>santorini.controller.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -186,7 +186,7 @@
                             <transformers>
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>santorini.GUIstarter</mainClass>
+                                    <mainClass>santorini.controller.GUIstarter</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

@@ -323,6 +323,8 @@ public class ViewController extends View {
             buttonPl1.setTooltip(new Tooltip(
                     g.getName() + "\n" +
                             g.getDescription()));
+            Image i = new Image("images/GodCards/" + g.getName() + ".png", 172, 109, true, false);
+            firstPl.setImage(i);
         });
     }
 
