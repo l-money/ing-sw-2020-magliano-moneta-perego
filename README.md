@@ -30,10 +30,10 @@ To work properly this application requires java 11 or higher
 
 - Download the <a href="https://github.com/l-money/ing-sw-2020-magliano-moneta-perego/raw/master/deliveries/JAR/Santorini-1.0-SNAPSHOT.jar">application package</a>
 
-- Launch application providing command:
+- Launch application executing:
 
 ```
-java -jar Santorini.jar <--option>
+$ java -jar Santorini.jar <--option>
 ```
 
 | Option  | Description                              | 
