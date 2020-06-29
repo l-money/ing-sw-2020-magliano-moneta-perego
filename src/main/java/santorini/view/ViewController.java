@@ -778,48 +778,48 @@ public class ViewController extends View {
                         }
                     }
                 }
-            }
-            if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
-                myButton.setStyle("-fx-border-color:blue");
-                myButton.setDisable(false);
-                myButton.setOnMouseEntered(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    button.setStyle("-fx-border-color:yellow");
-                });
-                myButton.setOnMouseExited(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    button.setStyle("-fx-border-color:blue");
-                });
-            } else {
-                for (Cell lightMe : cells) {
-                    int a = lightMe.getX();
-                    int b = lightMe.getY();
-                    bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-                    bt[lightMe.getX()][lightMe.getY()].setDisable(false);
-                    bt[a][b].setOnMouseEntered(e -> {
+                if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
+                    myButton.setStyle("-fx-border-color:blue");
+                    myButton.setDisable(false);
+                    myButton.setOnMouseEntered(e -> {
                         Button button;
                         button = (Button) e.getSource();
                         button.setStyle("-fx-border-color:yellow");
                     });
-                    bt[a][b].setOnMouseExited(e -> {
+                    myButton.setOnMouseExited(e -> {
                         Button button;
                         button = (Button) e.getSource();
-                        button.setStyle("-fx-border-color:trasparent");
+                        button.setStyle("-fx-border-color:blue");
                     });
-                    bt[a][b].setOnAction(e -> {
-                        Button button;
-                        button = (Button) e.getSource();
-                        button.setStyle("-fx-border-color:red");
-                        bt[x][y].setOnMouseClicked(null);
-                        int x1 = GridPane.getRowIndex(button);
-                        int y1 = GridPane.getColumnIndex(button);
-                        aggiornaMossa(table.getTableCell(x1, y1));
-                        Platform.runLater(() -> {
-                            submitAction.setDisable(false);
+                } else {
+                    for (Cell lightMe : cells) {
+                        int a = lightMe.getX();
+                        int b = lightMe.getY();
+                        bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
+                        bt[lightMe.getX()][lightMe.getY()].setDisable(false);
+                        bt[a][b].setOnMouseEntered(e -> {
+                            Button button;
+                            button = (Button) e.getSource();
+                            button.setStyle("-fx-border-color:yellow");
                         });
-                    });
+                        bt[a][b].setOnMouseExited(e -> {
+                            Button button;
+                            button = (Button) e.getSource();
+                            button.setStyle("-fx-border-color:trasparent");
+                        });
+                        bt[a][b].setOnAction(e -> {
+                            Button button;
+                            button = (Button) e.getSource();
+                            button.setStyle("-fx-border-color:red");
+                            bt[x][y].setOnMouseClicked(null);
+                            int x1 = GridPane.getRowIndex(button);
+                            int y1 = GridPane.getColumnIndex(button);
+                            aggiornaMossa(table.getTableCell(x1, y1));
+                            Platform.runLater(() -> {
+                                submitAction.setDisable(false);
+                            });
+                        });
+                    }
                 }
             }
         });

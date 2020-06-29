@@ -49,7 +49,6 @@ public class CLIView extends View {
         pawnEnabled[1] = true;
     }
 
-    //public void setColor(String newColor) { }
 
     /**
      * Prints field status on CLI
