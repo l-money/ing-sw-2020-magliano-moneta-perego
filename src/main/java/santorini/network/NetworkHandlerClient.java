@@ -148,10 +148,10 @@ public class NetworkHandlerClient implements Runnable {
      * @param table playing field just sent
      */
     private void updateField(Table table) {
-        new Thread(() -> {
+        //new Thread(() -> {
             view.setTable(table);
             view.printTable();
-        }).start();
+        //}).start();
     }
 
 
