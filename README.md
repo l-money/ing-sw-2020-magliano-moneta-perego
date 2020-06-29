@@ -33,7 +33,7 @@ To work properly this application requires java 11 or higher
 - Launch application providing command:
 
 ```
-java -jar Santorini.jar --option
+java -jar Santorini.jar <--option>
 ```
 
 | Option  | Description                              | 
