@@ -1,4 +1,4 @@
-package santorini.controller;
+package santorini;
 
 public class GUIstarter {
     public static void main(String[] args) {

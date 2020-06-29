@@ -1,4 +1,4 @@
-package santorini.controller;
+package santorini;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
