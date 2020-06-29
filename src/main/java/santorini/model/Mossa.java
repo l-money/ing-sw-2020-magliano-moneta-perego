@@ -34,6 +34,9 @@ public class Mossa implements Serializable {
         this.idPawn = idPawn;
     }
 
+    public Mossa() {
+    }
+
     /**
      * method getAction
      *
