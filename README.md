@@ -19,7 +19,9 @@
 | Persistence | [![RED](https://placehold.it/15/f03c15/f03c15)](#)|
 | Advanced Gods  | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Undo | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
-<br><hr><br>
+
+
+<br><br>
 ### System requirements
 To work properly this application requires java 11 or higher
 <br><hr><br>
