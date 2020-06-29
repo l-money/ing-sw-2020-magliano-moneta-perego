@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>santorini.model</OriginalElement>
+  <nodes>
+    <node x="899.0" y="584.0">santorini.model.Pawn</node>
+    <node x="259.0" y="1022.0">santorini.model.Color</node>
+    <node x="0.0" y="1022.0">santorini.model.TestPawn</node>
+    <node x="565.0" y="0.0">santorini.model.Table</node>
+    <node x="1094.0" y="584.0">santorini.model.TestMossa</node>
+    <node x="682.0" y="584.0">santorini.model.Cell</node>
+    <node x="0.0" y="0.0">santorini.model.Gamer</node>
+    <node x="205.0" y="1268.0">santorini.model.utils</node>
+    <node x="495.0" y="1022.0">santorini.model.TestExtraction</node>
+    <node x="0.0" y="1268.0">santorini.model.godCards</node>
+    <node x="962.0" y="1022.0">santorini.model.Extraction</node>
+    <node x="380.5" y="836.0">santorini.model.Mossa.Action</node>
+    <node x="386.0" y="1268.0">santorini.model.TestCell</node>
+    <node x="739.0" y="1022.0">santorini.model.TestBrick</node>
+    <node x="1000.0" y="0.0">santorini.model.TestGamer</node>
+    <node x="323.0" y="584.0">santorini.model.Mossa</node>
+    <node x="0.0" y="584.0">santorini.model.TestTable</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="santorini.model.Mossa.Action" target="santorini.model.Mossa">
+      <point x="0.0" y="-64.5" />
+      <point x="0.0" y="101.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.36725978647686836" x="692.5" y="661.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
