@@ -5,7 +5,7 @@
 - Lorenzo Moneta
 - Gabriele Perego
 <br><hr><br>
-###Implemented features
+### Available features
 <br>
 
 | Functionality | State |
