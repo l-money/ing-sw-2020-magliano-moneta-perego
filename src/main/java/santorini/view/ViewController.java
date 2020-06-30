@@ -765,10 +765,7 @@ public class ViewController extends View {
                                 if (cell1.getPawn() != null && cell1.getPawn().getIdGamer() == getID()) {
                                     if (i1 == x && j1 == y) {
                                         bt[i1][j1].setStyle("-fx-border-color:red");
-                                        bt[i1][j1].setOnMouseClicked(null);
-                                        bt[i1][j1].setOnAction(null);
-                                        bt[i1][j1].setOnMouseEntered(null);
-                                        bt[i1][j1].setOnMouseExited(null);
+                                        bt[i1][j1].setDisable(true);
 
                                     } else {
                                         bt[i1][j1].setStyle("-fx-border-color:transparent");
@@ -792,15 +789,23 @@ public class ViewController extends View {
     /**
      * method lightAvailable
      * shows adjacent cells for movement or building
+     *
      * @param myCell my current position
      * @param myButton button of the current position
      */
     private void lightAvailable(Cell myCell, Button myButton) {
         Platform.runLater(() -> {
             ArrayList<Cell> cells = new ArrayList<>();
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    bt[i][j].setDisable(true);
+                }
+            }
             int x = myCell.getX();
             int y = myCell.getY();
+            myButton.setDisable(false);
             myButton.setStyle("-fx-border-color:red");
+            myButton.setDisable(true);
             for (int i = x - 1; i < x + 2; i++) {
                 for (int j = y - 1; j < y + 2; j++) {
                     //control if the cell exists
@@ -815,6 +820,7 @@ public class ViewController extends View {
                         }
                     }
                 }
+            }
                 if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
                     myButton.setStyle("-fx-border-color:blue");
                     myButton.setDisable(false);
@@ -830,10 +836,10 @@ public class ViewController extends View {
                     });
                 } else {
                     for (Cell lightMe : cells) {
+                        bt[lightMe.getX()][lightMe.getY()].setDisable(false);
+                        bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
                         int a = lightMe.getX();
                         int b = lightMe.getY();
-                        bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-                        bt[lightMe.getX()][lightMe.getY()].setDisable(false);
                         bt[a][b].setOnMouseEntered(e -> {
                             Button button;
                             button = (Button) e.getSource();
@@ -844,10 +850,21 @@ public class ViewController extends View {
                             button = (Button) e.getSource();
                             button.setStyle("-fx-border-color:trasparent");
                         });
-                        bt[a][b].setOnAction(e -> {
+                        bt[a][b].setOnMouseClicked(e -> {
+                            for (int c = 0; c < 5; c++) {
+                                for (int d = 0; d < 5; d++) {
+                                    bt[c][d].setStyle("-fx-border-color:trasparent");
+                                }
+                            }
                             Button button;
                             button = (Button) e.getSource();
                             button.setStyle("-fx-border-color:red");
+                        });
+                        bt[a][b].setOnAction(e -> {
+                            Button button;
+                            button = (Button) e.getSource();
+                            //button.setStyle("-fx-border-color:red");
+                            bt[x][y].setStyle("-fx-border-color:red");
                             bt[x][y].setOnMouseClicked(null);
                             int x1 = GridPane.getRowIndex(button);
                             int y1 = GridPane.getColumnIndex(button);
@@ -858,7 +875,6 @@ public class ViewController extends View {
                         });
                     }
                 }
-            }
         });
     }
 }
