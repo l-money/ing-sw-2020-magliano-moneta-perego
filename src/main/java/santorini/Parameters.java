@@ -1,5 +1,9 @@
 package santorini;
 
+/**
+ * Class Parameters
+ */
+
 public class Parameters {
     public static final int PORT = 3467;
 

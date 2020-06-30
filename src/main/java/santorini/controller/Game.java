@@ -10,6 +10,20 @@ import santorini.model.godCards.God;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class Game
+ */
+
+/**
+ * Implementation choices
+ * <p>
+ * The client has 3 attempts for doing a correct action in game (especially in CLI).
+ * During the choice of the cards: if client ends his attempts, controller chooses a card for him.
+ * During the placement of the pawns: the client has 3 attempts for each pawns,
+ * if client ends the attempts the controller places the pawns in a random position of the table.
+ * During the game: if client ends his attempts the controller sets loser the client who is out of the game.
+ */
+
 public class Game implements Runnable {
     private final ArrayList<Gamer> playersInGame;
     private ArrayList<God> godCards;
@@ -47,7 +61,8 @@ public class Game implements Runnable {
     }
 
     /**
-     * method that announces the name is already present and it's changed
+     * method doubleName
+     * announces the name is already present and it's changed
      *
      * @param playersInGame players in game
      */
@@ -64,7 +79,8 @@ public class Game implements Runnable {
     }
 
     /**
-     * Requests to all clients to place their pawns
+     * method placePawns
+     * requests to all clients to place their pawns
      */
     private void placePawns() {
         handler.updateField(playersInGame.get(0));
@@ -107,7 +123,8 @@ public class Game implements Runnable {
     }
 
     /**
-     * Extracts number of players of random cards and requests
+     * method cardChoice
+     * extracts number of players of random cards and requests
      * to clients in order to choose one
      */
     public void cardChoice() {
@@ -159,8 +176,10 @@ public class Game implements Runnable {
     }
 
     /**
-     * Game loop.  Each cicle ask to a player to do his moves
-     * Cicle continue until someone wins
+     * method matchGame
+     * game loop.
+     * each cicle ask to a player to do his moves
+     * cicle continue until someone wins
      */
     public void matchGame() {
         broadcastMessage("\n" + "\u001B[33m" + "INIZIO PARTITA" + "\u001B[0m\n");
@@ -188,7 +207,8 @@ public class Game implements Runnable {
     }
 
     /**
-     * Sends to all clients the game field status
+     * method updateField
+     * sends to all clients the game field status
      */
     public void updateField() {
         for (Gamer g : playersInGame) {
@@ -197,7 +217,8 @@ public class Game implements Runnable {
     }
 
     /**
-     * Sends to all player who is the winner
+     * method setWinner
+     * sends to all player who is the winner
      *
      * @param winner winner player
      */
@@ -213,7 +234,8 @@ public class Game implements Runnable {
     }
 
     /**
-     * Notify to all clients that one user has disconnected
+     * method networkError
+     * notify to all clients that one user has disconnected
      *
      * @param disconnected disconnected player
      */
@@ -234,7 +256,8 @@ public class Game implements Runnable {
     }
 
     /**
-     * Sends a message to all players connected in this match
+     * method broadcastMessage
+     * sends a message to all players connected in this match
      *
      * @param message message to send
      */
@@ -244,6 +267,12 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * method printColor
+     *
+     * @param color .
+     * @return string name of the color
+     */
     private String printColor(Color color) {
         if (color == Color.YELLOW) {
             return "Giallo";
@@ -260,6 +289,11 @@ public class Game implements Runnable {
         }
     }
 
+    /**
+     * method playersInMatch
+     *
+     * @param gamers the players in the game
+     */
     private void playersInMatch(ArrayList<Gamer> gamers) {
         for (Gamer g : gamers) {
             broadcastMessage("Giocatore : " + g.getName() + "\t\t\t" +

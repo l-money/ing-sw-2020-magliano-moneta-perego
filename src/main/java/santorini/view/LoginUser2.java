@@ -12,8 +12,11 @@ import santorini.network.NetworkHandlerClient;
 
 import java.io.IOException;
 import java.util.Objects;
+
+/**
+ * Class LoginUser2
+ */
 /*
-ROBA BELLA
 https://code.makery.ch/blog/javafx-dialogs-official/
 */
 
@@ -27,13 +30,15 @@ public class LoginUser2 {
 
     private Stage stage;
 
+    /**
+     * initialization of user
+     */
     @FXML
     public void initialize() {
         System.out.println("LoginUser");
         connect.setOnAction(event -> readParameters());
     }
 
-    //prova finestra da aprire: FUNZIONA
 //    private void windowPlayers() {
 //        stage.close();
 //
@@ -80,9 +85,12 @@ public class LoginUser2 {
 //        }
 //    }
 
+    /**
+     * method windowPlayers
+     */
     private void windowPlayers() {
         try {
-            /*Aggiungi qua il file fxml della finestra da aprire*/
+            /*Add here the file fxml of the stage to open*/
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("playTable.fxml")));
             ViewController vc = (ViewController) handlerClient.getView();
             vc.setThisStage(stage);
@@ -98,11 +106,18 @@ public class LoginUser2 {
         }
     }
 
-
+    /**
+     * method setStage
+     *
+     * @param stage .
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * method readParameters
+     */
     public void readParameters() {
         System.out.println("BUTTON EVENT");
         String n = name.getText();

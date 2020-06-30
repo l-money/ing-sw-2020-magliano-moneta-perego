@@ -3,6 +3,10 @@ package santorini.view;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
+/**
+ * Class Winner
+ */
+
 public class Winner {
     private Stage stage;
 

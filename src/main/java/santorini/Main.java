@@ -15,8 +15,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Objects;
 
+/**
+ * Class Main
+ */
 public class Main extends Application {
     public static boolean test = false;
+
     public static void main(String[] a) {
         //System.out.println(a[0]);
         if (a.length > 0 && a[0].equals("--cli")) {

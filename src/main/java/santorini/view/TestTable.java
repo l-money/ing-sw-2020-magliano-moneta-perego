@@ -21,6 +21,11 @@ import santorini.model.Table;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Class TestTable
+ * class for test table status
+ */
+
 public class TestTable {
 
     @FXML
@@ -41,10 +46,6 @@ public class TestTable {
     public void setStage(Stage primaryStage) {
         this.stage = primaryStage;
     }
-    //TODO :
-    // Popolare la table iniziale di imageView vuote
-    // Illuminare le imageView adiacenti
-    // Spostamento pedina con secondo click
 
     public void initialize() {
         int x = -2, y = -2;
@@ -140,14 +141,6 @@ public class TestTable {
         }
     }
 
-
-    /**
-     * //TODO: DA SISTEMARE CON LE IMMAGINI APPROPRIATE
-     * Metodo per popolare la table
-     *
-     * @param t  table da gioco
-     * @param bt tabella di bottoni
-     */
     public void printTableStatus(Table t, Button[][] bt) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -203,16 +196,6 @@ public class TestTable {
         }
     }
 
-
-    /**
-     * //TODO: DA SISTEMARE
-     * Metodo che mi illumina solo le pedine del giocatore che sta giocando
-     * Quando clicca sulla sua pedina gli si illuminano quelle attorno in cui può muoversi
-     *
-     * @param t       table da gioco
-     * @param bt      tabella di bottoni
-     * @param idGamer id del giocatore corrente
-     */
     public Pawn lightMyPawns(Table t, Button[][] bt, int idGamer) {
         AtomicInteger x1 = new AtomicInteger();
         AtomicInteger y1 = new AtomicInteger();
@@ -226,10 +209,10 @@ public class TestTable {
                     //rendere cliccabile e illuminata la cella
                     bt[i][j].setStyle("-fx-border-color:yellow");
                     bt[i][j].setOnMouseClicked(e -> {
-                            Button bOne;
-                            bOne = (Button) e.getSource();
-                            int x = GridPane.getRowIndex(bOne);
-                            int y = GridPane.getColumnIndex(bOne);
+                        Button bOne;
+                        bOne = (Button) e.getSource();
+                        int x = GridPane.getRowIndex(bOne);
+                        int y = GridPane.getColumnIndex(bOne);
                         for (int i1 = 0; i1 < 5; i1++) {
                             for (int j1 = 0; j1 < 5; j1++) {
                                 Cell cell1 = t.getTableCell(i1, j1);
@@ -239,7 +222,7 @@ public class TestTable {
                                         a.set(t.getTableCell(i1, j1).getPawn().getIdPawn());
                                         x1.set(i1);
                                         y1.set(j1);
-                                        } else {
+                                    } else {
                                         bt[i1][j1].setStyle("-fx-border-color:transparent");
                                         bt[i1][j1].setOnMouseClicked(null);
                                     }
@@ -256,14 +239,6 @@ public class TestTable {
         return t.getTableCell(x1.get(), y1.get()).getPawn();
     }
 
-    /**
-     * //TODO: DA SISTEMARE
-     * Metodo che illumina le caselle adiacenti possibili al movimento
-     * @param t      tavolo da gioco
-     * @param pawn posizione della pedina scelta
-     * @param bt     tabella di immagini
-     */
-    //Chiamo il metodo in lightMyPawns
     public void accessibleCells(Table t, Button[][] bt, Pawn pawn) {
         if (pawn != null) {
             ArrayList<Cell> cells = new ArrayList<>();
@@ -304,13 +279,6 @@ public class TestTable {
         }
     }
 
-    /**
-     * Metodo che printa la casella cliccata
-     *
-     * @param bt       tavola di bottoni
-     * @param moveCell cella cliccata
-     * @param t        table
-     */
     public void mySelection(Button[][] bt, Cell moveCell, Table t) {
         Button buttonMovement;
         buttonMovement = bt[moveCell.getX()][moveCell.getY()];
@@ -318,14 +286,6 @@ public class TestTable {
         System.out.println("Column: " + GridPane.getColumnIndex(buttonMovement));
     }
 
-    /**
-     * Metodo Building
-     * Dopo il movimento prende la casella in cui si è spostata la pedina (start) e cerca le caselle adaicenti per la costruzione
-     *
-     * @param t     tavolo
-     * @param bt    tabella di bottoni
-     * @param start nuova posizione della pedina
-     */
     public void Building(Table t, Button[][] bt, Cell start) {
         System.out.println("**Costruzione**\n");
         int x = start.getX();

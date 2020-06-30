@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/**
+ * Class CLIView
+ */
+
 public class CLIView extends View {
 
 
@@ -20,7 +24,7 @@ public class CLIView extends View {
     /**
      * method setID
      *
-     * @param ID curretn ID pawn
+     * @param ID current ID pawn
      */
     public void setID(int ID) {
         this.ID = ID;
@@ -51,7 +55,8 @@ public class CLIView extends View {
 
 
     /**
-     * Prints field status on CLI
+     * method printTable
+     * prints field status on CLI
      */
     @Override
     public synchronized void printTable() {
@@ -80,6 +85,12 @@ public class CLIView extends View {
         }
     }
 
+    /**
+     * method colorCellPawn
+     * color the pawn with the same color of its gamer
+     *
+     * @param pawn .
+     */
     public void colorCellPawn(Pawn pawn) {
         if (pawn.getColorPawn().equals(Color.YELLOW)) {
             System.out.print("\u001B[34m" + "\u001B[43m" + "(" + pawn.getIdPawn() + ")" + "\u001B[0m");
@@ -98,6 +109,7 @@ public class CLIView extends View {
     }
 
     /**
+     * method chooseCards
      * Shows to user available card with description
      * Then request a choice
      * The gamer has 3 attempts to choose the card
@@ -166,7 +178,8 @@ public class CLIView extends View {
     }
 
     /**
-     * Requests to user a new action
+     * method setNewAction
+     * requests to user a new action
      *
      * @param action action type BUILD or MOVE
      */
@@ -206,7 +219,8 @@ public class CLIView extends View {
     }
 
     /**
-     * Requests to user which pawn wants to use in this turn
+     * method readPawn
+     * requests to user which pawn wants to use in this turn
      *
      * @return pawn id
      */
@@ -241,8 +255,9 @@ public class CLIView extends View {
     }
 
     /**
-     * Requests to player how many user has to be in the match
-     * The game assigns two players of default
+     * method setNumeroGiocatori
+     * requests to player how many user has to be in the match
+     * the game assigns two players of default
      */
     @Override
     public void setNumeroGiocatori() {
@@ -252,7 +267,7 @@ public class CLIView extends View {
             System.out.print("Scegli numero partecipanti [Default 2]: ");
             try {
                 partecipanti = br.readLine();
-                players = Integer.parseInt(partecipanti);//Se scelgo di usare il metodo devo mettere int al posto di string?
+                players = Integer.parseInt(partecipanti);
                 if (players != 2 && players != 3) {
                     throw new NumberFormatException();
                 }
@@ -272,9 +287,10 @@ public class CLIView extends View {
     }
 
     /**
-     * Requests init pawn positions before game starts
-     * The gamer has 3 attempts for place each of his pawn
-     * If he failed with attempts, the game positions the pawns in a random cell of the table
+     * method setInitializePawn
+     * requests init pawn positions before game starts.
+     * the gamer has 3 attempts for place each of his pawn
+     * if he failed with attempts, the game positions the pawns in a random cell of the table
      */
     @Override
     public void setInitializePawn() {
@@ -363,7 +379,8 @@ public class CLIView extends View {
     }
 
     /**
-     * This method validates an input as String coordinates
+     * method validaCoordinate
+     * this method validates an input as String coordinates
      *
      * @param coords coordinates in format x,y
      * @return true if string format is x,y and x,y are int ∈{0,4}; false otherwise
@@ -392,7 +409,8 @@ public class CLIView extends View {
     }
 
     /**
-     * This method is called if server sends an error message
+     * method setFailed
+     * this method is called if server sends an error message
      */
     @Override
     public void setFailed(String msg) {
@@ -400,7 +418,8 @@ public class CLIView extends View {
     }
 
     /**
-     * Prints on CLI a generic nofitication message
+     * method printMessage
+     * prints on CLI a generic notification message
      *
      * @param msg message text
      */
@@ -418,10 +437,11 @@ public class CLIView extends View {
     }
 
     /**
-     * Requests to user a directional input centered in choosed pawn
-     * Return coordinates of a target cell in format x,y
-     * The gamer has 3 attempts for move or build correctly
-     * If he failed with attempts, the game disconnects the gamer
+     * method getCoords
+     * requests to user a directional input centered in choosed pawn
+     * return coordinates of a target cell in format x,y
+     * the gamer has 3 attempts for move or build correctly
+     * if he failed with attempts, the game disconnects the gamer
      *
      * @param t     table play field
      * @param xPawn xcoord of pawn
@@ -524,7 +544,8 @@ public class CLIView extends View {
     }
 
     /**
-     * Win notify
+     * method vittoria
+     * win notify
      */
     public void vittoria() {
         try {
@@ -543,9 +564,10 @@ public class CLIView extends View {
     }
 
     /**
-     * Lose notify
+     * method sconfitta
+     * lose notify
      *
-     * @param winner
+     * @param winner .
      */
     @Override
     public void sconfitta(String winner) {
@@ -566,7 +588,8 @@ public class CLIView extends View {
     }
 
     /**
-     * Network error notify
+     * method networkError
+     * network error notify
      *
      * @param player the current player
      */
@@ -578,7 +601,7 @@ public class CLIView extends View {
 
 }
 /**
- * Print tabulata per la cli di maven
+ * Print con tabulazione per la CLI di maven
  *
  * @Override public synchronized void printTable() {
  * table = getTable();
