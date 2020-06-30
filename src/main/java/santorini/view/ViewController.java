@@ -68,11 +68,6 @@ public class ViewController extends View {
     @FXML
     private ImageView firstPl;
 
-    @FXML
-    private ImageView secondPl;
-
-    @FXML
-    private ImageView thirdPl;
 
     private Button[][] bt = new Button[5][5];
 
@@ -489,6 +484,7 @@ public class ViewController extends View {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("wait.fxml")));
             Scene s1 = new Scene(root);
             dialog.setScene(s1);
+            dialog.getIcons().add(new Image("images/cm_boardgame.png"));
             overlayedStage = dialog;
             overlayedStage.initOwner(thisStage);
             overlayedStage.initModality(Modality.APPLICATION_MODAL);
@@ -590,6 +586,8 @@ public class ViewController extends View {
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("winner.fxml")));
                 Scene s = new Scene(root);
                 dialog.setScene(s);
+                dialog.setTitle("Vittoria!");
+                dialog.getIcons().add(new Image("images/cm_boardgame.png"));
                 overlayedStage = dialog;
                 overlayedStage.initOwner(thisStage);
                 overlayedStage.initModality(Modality.APPLICATION_MODAL);
@@ -625,6 +623,8 @@ public class ViewController extends View {
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("loser.fxml")));
                 Scene s = new Scene(root);
                 dialog.setScene(s);
+                dialog.setTitle("Sconfitta!");
+                dialog.getIcons().add(new Image("images/cm_boardgame.png"));
                 overlayedStage = dialog;
                 overlayedStage.initOwner(thisStage);
                 overlayedStage.initModality(Modality.APPLICATION_MODAL);
