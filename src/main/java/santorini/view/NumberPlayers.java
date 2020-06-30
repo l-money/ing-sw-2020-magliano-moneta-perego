@@ -1,17 +1,14 @@
 package santorini.view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Objects;
+/**
+ * Class NumberPlayers
+ */
 
 public class NumberPlayers {
 
@@ -22,6 +19,11 @@ public class NumberPlayers {
     private Button threePlayers;
     private Stage stage;
 
+    /**
+     * method getPlayers
+     *
+     * @return players
+     */
     public int getPlayers() {
         return players;
     }
@@ -38,15 +40,25 @@ public class NumberPlayers {
         threePlayers.setOnAction(event -> chooseCard3());
     }
 
+    /**
+     * method chooseCard2
+     */
     public void chooseCard2() {
         this.players = 2;
         stage.close();
     }
 
+    /**
+     * NumberPlayers
+     * @param stage .
+     */
     public NumberPlayers(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * chooseCard3
+     */
     public void chooseCard3() {
         this.players = 3;
         stage.close();
@@ -74,6 +86,10 @@ public class NumberPlayers {
         twoPlayers.setEffect(null);
     }
 
+    /**
+     * method setStage
+     * @param stage .
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

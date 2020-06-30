@@ -1,28 +1,19 @@
 package santorini.view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import santorini.model.godCards.God;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Objects;
+
+/**
+ * Class ChooseCard2pl
+ */
 
 public class ChooseCard2pl implements CardChoice {
 
@@ -45,6 +36,11 @@ public class ChooseCard2pl implements CardChoice {
         label2.setText(cards.get(1).getName());
     }
 
+    /**
+     * method getChoosed
+     *
+     * @return god card choose
+     */
     public God getChoosed() {
         return choosed;
     }
@@ -68,6 +64,11 @@ public class ChooseCard2pl implements CardChoice {
 
     }
 
+    /**
+     * method ChooseCard2pl
+     *
+     * @param cards .
+     */
     public ChooseCard2pl(ArrayList<God> cards) {
         this.cards = cards;
     }
@@ -108,7 +109,10 @@ public class ChooseCard2pl implements CardChoice {
         label2.setEffect(null);
     }
 
-
+    /**
+     * method setStage
+     * @param stage .
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

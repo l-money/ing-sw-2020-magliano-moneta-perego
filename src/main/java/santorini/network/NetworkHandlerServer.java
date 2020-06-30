@@ -12,6 +12,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Class NetworkHandlerServer
+ */
 
 public class NetworkHandlerServer implements Runnable {
     private ServerSocket serverSocket;
@@ -22,22 +25,35 @@ public class NetworkHandlerServer implements Runnable {
     private Thread partita;
     private int i = 0, max = 0;
 
-
+    /**
+     * method getGame
+     *
+     * @return game
+     */
     public Game getGame() {
         return game;
     }
 
+    /**
+     * method getPartita
+     *
+     * @return partita
+     */
     public Thread getPartita() {
         return partita;
     }
 
+    /**
+     * initialization NetworkHandlerServer
+     * @throws IOException
+     */
     public NetworkHandlerServer() throws IOException {
         serverSocket = new ServerSocket(Parameters.PORT);
     }
 
     /**
-     * Starts listening to clients
-     * The first client connected will choose the number of players
+     * Starts listening to clients.
+     * The first client connected will choose the number of players.
      * Until player numbers is reached, the game starts.
      */
     public void run() {
@@ -69,7 +85,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Initialize parameter of first client connected and asks him the number of players
+     * method initializeFirstClient
+     * initialize parameter of first client connected and asks him the number of players
      * in the match
      *
      * @param s first connected client's socket
@@ -92,7 +109,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Initialize all parameters to gamer class after user is connected
+     * method initializeClient
+     * initialize all parameters to gamer class after user is connected
      *
      * @param s just connected client's socket
      */
@@ -113,7 +131,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Corrects duplicated name with a progressive number after last connected duplicated name
+     * method handleDoubleName
+     * corrects duplicated name with a progressive number after last connected duplicated name
      *
      * @param name original name
      * @return handled name
@@ -139,7 +158,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Starts a new game and becomes handler for socket and
+     * method startGame
+     * starts a new game and becomes handler for socket and
      * network data transmissions
      */
     public void startGame() {
@@ -156,7 +176,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Sends field status to a specific player
+     * method updateField
+     * sends field status to a specific player
      *
      * @param gamer player to send field
      */
@@ -173,7 +194,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Requests to a specific player to choose a card from a pool
+     * method chooseCard
+     * requests to a specific player to choose a card from a pool
      *
      * @param cards  pool of cards
      * @param player player that has to make the choice
@@ -192,7 +214,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Request to a specific client to do his moves
+     * method richiediMossa
+     * request to a specific client to do his moves
      *
      * @param tipo  Type of action (e.g. move, build)
      * @param gamer Player that has to do action
@@ -224,7 +247,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Generic error message that means "action failed" for a specified player
+     * method sendFailed
+     * generic error message that means "action failed" for a specified player
      *
      * @param gamer player to send error message
      */
@@ -244,7 +268,8 @@ public class NetworkHandlerServer implements Runnable {
 
 
     /**
-     * Requests initial pawn coords to players
+     * method placePawns
+     * requests initial pawn coordinates to players
      *
      * @param gamer player to request to put pawns
      * @return String containing 2 positions in format "x1,y1,x2,y2"
@@ -262,7 +287,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Sends who is the winner to a specified player
+     * method winner
+     * sends who is the winner to a specified player
      *
      * @param to     specified player
      * @param winner winner player
@@ -284,7 +310,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Notify a network error to a specified player
+     * method notifyNetworkError
+     * notify a network error to a specified player
      *
      * @param to  notification receiver
      * @param who player disconnected
@@ -301,7 +328,8 @@ public class NetworkHandlerServer implements Runnable {
     }
 
     /**
-     * Sends a text message to a specified player
+     * method sendMessage
+     * sends a text message to a specified player
      *
      * @param to  specified player
      * @param msg text message
@@ -321,6 +349,15 @@ public class NetworkHandlerServer implements Runnable {
         }
     }
 
+    /**
+     * method sendLockedPawn
+     * sends the pawn which is locked
+     *
+     * @param i id pawn
+     * @param g gamer
+     * @param locked it is locked or not
+     */
+
     public void sendLockedPawn(int i, Gamer g, boolean locked) {
         outputStream = g.getOutputStream();
         try {
@@ -336,6 +373,13 @@ public class NetworkHandlerServer implements Runnable {
 
     }
 
+    /**
+     * method switchPawn
+     * changes the reference of the pawn
+     * uses for Ares effect
+     *
+     * @param g gamer
+     */
     public void switchPawn(Gamer g) {
         outputStream = g.getOutputStream();
         try {

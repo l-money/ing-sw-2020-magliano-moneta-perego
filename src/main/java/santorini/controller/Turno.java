@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
+/**
+ * Class turno
+ */
+
 public class Turno implements Runnable {
     private ArrayList<God> otherCards;
     private Gamer gamer;
@@ -64,7 +68,7 @@ public class Turno implements Runnable {
 
     /**
      * method getCount
-     * It will substitute by a timer
+     * it will substitute by a timer
      *
      * @return the number of a wrong mossa
      */
@@ -249,6 +253,7 @@ public class Turno implements Runnable {
 
     /**
      * method myMovement
+     * controls the phases of the action movement
      */
     private void myMovement() {
         validationMove = false;
@@ -274,6 +279,7 @@ public class Turno implements Runnable {
 
     /**
      * method myBuilding
+     * controls the phases of the action building
      */
     private void myBuilding() {
         validationBuild = false;
@@ -297,7 +303,8 @@ public class Turno implements Runnable {
     }
 
     /**
-     * Standard move
+     * method baseMovement
+     * controls if the action movement is correct
      */
     public void baseMovement(Mossa move) {
         Pawn p = getGamer().getPawn(move.getIdPawn());//save my pawn
@@ -326,7 +333,7 @@ public class Turno implements Runnable {
 
     /**
      * method getValidation
-     * Control if the movement is valid
+     * controls if the movement is valid
      */
     public void getValidation(boolean v) {
         if (!v) {
@@ -338,7 +345,8 @@ public class Turno implements Runnable {
     }
 
     /**
-     * Standard build on game field
+     * method baseBuilding
+     * controls if the action building is correct
      */
     public void baseBuilding(Mossa move) {
         Pawn p = getGamer().getPawn(move.getIdPawn());
@@ -362,6 +370,7 @@ public class Turno implements Runnable {
 
     /**
      * Standard win
+     * controls if the gamer wins the match
      */
     private void controlWin() {
         int idP = getMove().getIdPawn();
@@ -401,6 +410,7 @@ public class Turno implements Runnable {
 
     /**
      * method getMyStep
+     * method for do a movement
      *
      * @param startCell the start cell
      * @param endCell   the destination of the movment
@@ -476,9 +486,9 @@ public class Turno implements Runnable {
 
     /**
      * method firstLockdown
+     * controls if the pawns are locked or not
      *
      * @param gamer the current gamer
-     * control if the pawns are locked or not
      */
     private void firstLockdown(Gamer gamer) {
         if (!gamer.getLoser()) {
@@ -528,8 +538,8 @@ public class Turno implements Runnable {
     /**
      * method endOfTheMatch
      *
+     * controls if the match will end for pawns locked or number of attempts exhausted of the gamers
      * @param h the networkHandlerServer
-     * The method controls if the match will end for pawns locked or number of attempts exhausted of the gamers
      */
     private void endOfTheMatch(NetworkHandlerServer h) {
         int p = h.getGame().getPlayersInGame().size();

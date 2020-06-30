@@ -24,6 +24,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Class ViewController
+ */
+
 public class ViewController extends View {
 
     private Stage thisStage;
@@ -77,10 +81,18 @@ public class ViewController extends View {
     private String initCoords = "";
     private DropShadow shadow = new DropShadow();
 
+    /**
+     * constructor of ViewController
+     */
     public ViewController() {
 
     }
 
+    /**
+     * method setThisStage
+     *
+     * @param thisStage
+     */
     public void setThisStage(Stage thisStage) {
         this.thisStage = thisStage;
     }
@@ -148,6 +160,10 @@ public class ViewController extends View {
 
     }
 
+    /**
+     * method lightMove
+     * lights the button Move
+     */
     public void lightMove() {
         movePawn.setStyle("-fx-background-color: YELLOW;"
                 + "-fx-background-radius: 30;"
@@ -157,6 +173,10 @@ public class ViewController extends View {
         stopPawn.setStyle("-fx-background-color: null");
     }
 
+    /**
+     * method lightBuild
+     * lights the button Build
+     */
     public void lightBuild() {
         buildPawn.setStyle("-fx-background-color: YELLOW;"
                 + "-fx-background-radius: 30;"
@@ -166,6 +186,10 @@ public class ViewController extends View {
         stopPawn.setStyle("-fx-background-color: null");
     }
 
+    /**
+     * method lightPause
+     * lights the button Pause
+     */
     public void lightPause() {
         stopPawn.setStyle("-fx-background-color: RED;"
                 + "-fx-background-radius: 30;"
@@ -176,7 +200,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Sets up listener to set initial pawn positions
+     * method startTable
+     * sets up listener to set initial pawn positions
      *
      * @param t  table
      * @param bt buttons array referred to table
@@ -242,7 +267,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Set all buttons in the grid pane disabled or not
+     * method disableButtons
+     * set all buttons in the grid pane disabled or not
      *
      * @param b disable set
      */
@@ -257,7 +283,8 @@ public class ViewController extends View {
 
 
     /**
-     * Creates a new dialog window that asks to user which god cards
+     * method chooseCards
+     * creates a new dialog window that asks to user which god cards
      * want to use
      *
      * @param gods available god cards
@@ -322,7 +349,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Initializes buttons with default actions to do during the match
+     * method initButtons
+     * initializes buttons with default actions to do during the match
      */
     public void initButtons() {
         for (int i = 0; i < 5; i++) {
@@ -374,7 +402,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Updates current action with parameters given by user
+     * method aggiornaMossa
+     * updates current action with parameters given by user
      *
      * @param cella Target cell of the action
      */
@@ -390,6 +419,7 @@ public class ViewController extends View {
     }
 
     /**
+     * method setNewAction
      * Enables action request from window to user
      *
      * @param action type of action (MOVE or BUILD)
@@ -440,7 +470,8 @@ public class ViewController extends View {
 
 
     /**
-     * Creates a dialog window that make user to decide the
+     * method setNumeroGiocatori
+     * creates a dialog window that make user to decide the
      * number of players in this match
      */
     @Override
@@ -473,9 +504,10 @@ public class ViewController extends View {
     }
 
     /**
-     * Creates a wait dialog
+     * method waitDialog
+     * creates a wait dialog
      *
-     * @param title
+     * @param title .
      */
     public void waitDialog(String title) {
         Stage dialog = new Stage();
@@ -499,7 +531,8 @@ public class ViewController extends View {
 
 
     /**
-     * Creates a dialog to notify an error to user
+     * method setFailed
+     * creates a dialog to notify an error to user
      *
      * @param msg message contained in the dialog
      */
@@ -518,8 +551,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Removes ANSI color tag from a string
-     * DA SISTEMARE
+     * method  editString
+     * removes ANSI color tag from a string
      *
      * @param s input string
      * @return string without ANSI
@@ -540,8 +573,9 @@ public class ViewController extends View {
     }
 
     /**
-     * Show messages provided from server to player
-     * Message are shown in a text area in main window
+     * method printMessage
+     * show messages provided from server to player
+     * message are shown in a text area in main window
      *
      * @param msg message to send to user
      */
@@ -560,18 +594,20 @@ public class ViewController extends View {
     }
 
     /**
-     * Handle the server request to place the initial position of user pawns
+     * method setInitializePawn
+     * handle the server request to place the initial position of user pawns
      */
     @Override
     public void setInitializePawn() {
         //overlayedStage.close();
-        System.out.println("ciaociao");
+        System.out.println("-Welcome-");
         lightMove();
         startTable(this.getTable(), bt);
     }
 
     /**
-     * Notify to user that have won this match
+     * method vittoria
+     * notify to user that have won this match
      */
     @Override
     public void vittoria() {
@@ -606,7 +642,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Notify to user that has lost the match and who is the winnner
+     * method sconfitta
+     * notify to user that has lost the match and who is the winner
      *
      * @param winner winner's name
      */
@@ -643,7 +680,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Notify to user that a player has just disconnected
+     * method networkError
+     * notify to user that a player has just disconnected
      *
      * @param player disconnected player's name
      */
@@ -660,7 +698,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Update table status on main stage
+     * method printTable
+     * update table status on main stage
      */
     @Override
     public void printTable() {
@@ -673,21 +712,16 @@ public class ViewController extends View {
                                 BackgroundSize.DEFAULT);
                         bt[i][j].setBackground(new Background(myBI));
                     } else if (table.getTableCell(i, j).getPawn() != null) {
-                        //mettere immagine con livello + cupola con la seguente sintassi
-                        //"images/.../I_" + t.getTableCell(i,j).getLevel() + "_" + t.getTableCell(i,j).getPawn().getIdGamer()" + "_" + t.getTableCell(i,j).getPawn().getIdPawn() + ".png"
                         BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/LevelAndPawns/L" + table.getTableCell(i, j).getLevel() + "+" + table.getTableCell(i, j).getPawn().getIdGamer() + "+" + table.getTableCell(i, j).getPawn().getIdPawn() + ".png")), 75, 75, true, false),
                                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                                 BackgroundSize.DEFAULT);
                         bt[i][j].setBackground(new Background(myBI));
                     } else if (table.getTableCell(i, j).getLevel() != 0) {
-                        //mettere immagine con solo livello con la seguente sintassi
-                        //"images/.../I_" + t.getTableCell(i,j).getLevel() + ".png"
                         BackgroundImage myBI = new BackgroundImage(new Image(String.valueOf(getClass().getClassLoader().getResource("images/Levels/L" + table.getTableCell(i, j).getLevel() + ".png")), 75, 75, true, false),
                                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                                 BackgroundSize.DEFAULT);
                         bt[i][j].setBackground(new Background(myBI));
                     } else {
-                        //mettere immagine vuota se il livello è 0
                         bt[i][j].setBackground(Background.EMPTY);
                     }
                 }
@@ -696,7 +730,8 @@ public class ViewController extends View {
     }
 
     /**
-     * Highlights current user's pawns
+     * method lightMyPawns
+     * highlights current user's pawns
      */
     public void lightMyPawns() {
         for (int i = 0; i < 5; i++) {
@@ -755,8 +790,10 @@ public class ViewController extends View {
     }
 
     /**
-     * @param myCell
-     * @param myButton
+     * method lightAvailable
+     * shows adjacent cells for movement or building
+     * @param myCell my current position
+     * @param myButton button of the current position
      */
     private void lightAvailable(Cell myCell, Button myButton) {
         Platform.runLater(() -> {
@@ -766,11 +803,11 @@ public class ViewController extends View {
             myButton.setStyle("-fx-border-color:red");
             for (int i = x - 1; i < x + 2; i++) {
                 for (int j = y - 1; j < y + 2; j++) {
-                    //controllo se la casella esiste
+                    //control if the cell exists
                     if (((i != x) || (j != y)) && (i >= 0) && (i <= 4) && (j >= 0) && (j <= 4)) {
-                        //controllo se non c'è la cupola
+                        //control there is not dome
                         if ((!getTable().getTableCell(i, j).isComplete())) {
-                            //controllo che non ci sia una mia pedina nella cella adiacente
+                            //control there is not a pawn of my same team
                             if (!((getTable().getTableCell(i, j).getPawn() != null) &&
                                     (getTable().getTableCell(i, j).getPawn().getIdGamer() == myCell.getPawn().getIdGamer()))) {
                                 cells.add(getTable().getTableCell(i, j));
@@ -778,48 +815,48 @@ public class ViewController extends View {
                         }
                     }
                 }
-            }
-            if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
-                myButton.setStyle("-fx-border-color:blue");
-                myButton.setDisable(false);
-                myButton.setOnMouseEntered(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    button.setStyle("-fx-border-color:yellow");
-                });
-                myButton.setOnMouseExited(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    button.setStyle("-fx-border-color:blue");
-                });
-            } else {
-                for (Cell lightMe : cells) {
-                    int a = lightMe.getX();
-                    int b = lightMe.getY();
-                    bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
-                    bt[lightMe.getX()][lightMe.getY()].setDisable(false);
-                    bt[a][b].setOnMouseEntered(e -> {
+                if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
+                    myButton.setStyle("-fx-border-color:blue");
+                    myButton.setDisable(false);
+                    myButton.setOnMouseEntered(e -> {
                         Button button;
                         button = (Button) e.getSource();
                         button.setStyle("-fx-border-color:yellow");
                     });
-                    bt[a][b].setOnMouseExited(e -> {
+                    myButton.setOnMouseExited(e -> {
                         Button button;
                         button = (Button) e.getSource();
-                        button.setStyle("-fx-border-color:trasparent");
+                        button.setStyle("-fx-border-color:blue");
                     });
-                    bt[a][b].setOnAction(e -> {
-                        Button button;
-                        button = (Button) e.getSource();
-                        button.setStyle("-fx-border-color:red");
-                        bt[x][y].setOnMouseClicked(null);
-                        int x1 = GridPane.getRowIndex(button);
-                        int y1 = GridPane.getColumnIndex(button);
-                        aggiornaMossa(table.getTableCell(x1, y1));
-                        Platform.runLater(() -> {
-                            submitAction.setDisable(false);
+                } else {
+                    for (Cell lightMe : cells) {
+                        int a = lightMe.getX();
+                        int b = lightMe.getY();
+                        bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
+                        bt[lightMe.getX()][lightMe.getY()].setDisable(false);
+                        bt[a][b].setOnMouseEntered(e -> {
+                            Button button;
+                            button = (Button) e.getSource();
+                            button.setStyle("-fx-border-color:yellow");
                         });
-                    });
+                        bt[a][b].setOnMouseExited(e -> {
+                            Button button;
+                            button = (Button) e.getSource();
+                            button.setStyle("-fx-border-color:trasparent");
+                        });
+                        bt[a][b].setOnAction(e -> {
+                            Button button;
+                            button = (Button) e.getSource();
+                            button.setStyle("-fx-border-color:red");
+                            bt[x][y].setOnMouseClicked(null);
+                            int x1 = GridPane.getRowIndex(button);
+                            int y1 = GridPane.getColumnIndex(button);
+                            aggiornaMossa(table.getTableCell(x1, y1));
+                            Platform.runLater(() -> {
+                                submitAction.setDisable(false);
+                            });
+                        });
+                    }
                 }
             }
         });

@@ -14,6 +14,10 @@ import santorini.network.NetworkHandlerClient;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Class StartGame
+ */
+
 public class StartGame {
 
     @FXML
@@ -101,6 +105,11 @@ public class StartGame {
         System.out.println("Start Game");
     }
 
+    /**
+     * method setStage
+     *
+     * @param stage .
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
