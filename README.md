@@ -40,6 +40,6 @@ $ java -jar Santorini.jar [option]
 |:-----------------------|:------------------|
 |     | Start  client with Graphic interface (default)                  
 | --cli    | Start client with command line interface
-| --server      | Start application server services
+| --server      | Start application server service
                           
 
