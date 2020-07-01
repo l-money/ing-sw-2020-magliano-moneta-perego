@@ -11,21 +11,21 @@ public class Extraction implements Serializable {
 
     public Extraction() {
         gods = new ArrayList<>();
-        gods.add(new Apollo());
+        //gods.add(new Apollo());
         gods.add(new Artemis());
-        gods.add(new Athena());
-        gods.add(new Atlas());
+        //gods.add(new Athena());
+        //gods.add(new Atlas());
         gods.add(new Demeter());
-        gods.add(new Hephaestus());
-        gods.add(new Minotaur());
-        gods.add(new Pan());
-        gods.add(new Prometheus());
+        //gods.add(new Hephaestus());
+        //gods.add(new Minotaur());
+        //gods.add(new Pan());
+        //gods.add(new Prometheus());
         //avanzate
         gods.add(new Ares());
-        gods.add(new Chronus());
-        gods.add(new Hestia());
-        gods.add(new Triton());
-        gods.add(new Zeus());
+        //gods.add(new Chronus());
+        //gods.add(new Hestia());
+        //gods.add(new Triton());
+        //gods.add(new Zeus());
         Collections.shuffle(gods);
     }
 

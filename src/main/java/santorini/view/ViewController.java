@@ -538,10 +538,13 @@ public class ViewController extends View {
                 b = true;
             }
         }
-        msg = editString(msg);
-        if (textArea != null) {
-            textArea.appendText(msg + "\n");
-        }
+        final String msgapp = editString(msg);
+        Platform.runLater(() -> {
+            if (textArea != null) {
+                textArea.appendText(msgapp + "\n");
+            }
+        });
+
     }
 
     /**
