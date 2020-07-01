@@ -34,7 +34,7 @@
         </GridPane>
         <Button fx:id="submitAction" layoutX="329.0" layoutY="490.0" mnemonicParsing="false" prefHeight="35.0"
                 prefWidth="110.0"
-                style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: ddc585; -fx-border-width: 2;"
+                style="-fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: ddc585; -fx-border-width: 2; -fx-font-family: LillyBelle"
                 text="Manda Mossa">
             <cursor>
                 <Cursor fx:constant="HAND"/>
@@ -42,7 +42,7 @@
         </Button>
         <Button fx:id="jumpMove" layoutX="528.0" layoutY="489.0" mnemonicParsing="false" prefHeight="34.0"
                 prefWidth="109.0"
-                style="-fx-background-radius: 30; -fx-border-color: ddc585; -fx-border-radius: 30; -fx-border-width: 2;"
+                style="-fx-background-radius: 30; -fx-border-color: ddc585; -fx-border-radius: 30; -fx-border-width: 2; -fx-font-family: LillyBelle"
                 text="Salta Mossa">
             <cursor>
                 <Cursor fx:constant="HAND"/>
@@ -55,9 +55,9 @@
             </font>
         </TextArea>
         <Label fx:id="userName" alignment="CENTER" layoutX="25.0" layoutY="15.0" prefHeight="34.0" prefWidth="154.0"
-               text="Giocatore" textAlignment="CENTER" textFill="#0e5706">
+               text="Giocatore" textAlignment="CENTER" textFill="#0e5706" style="-fx-font-family: LillyBelle">
             <font>
-                <Font name="Algerian" size="20.0"/>
+                <Font name="LillyBelle,Algerian" size="20.0"/>
             </font>
         </Label>
         <Button fx:id="buttonPl1" layoutX="38.0" layoutY="48.0" mnemonicParsing="false" prefHeight="174.0"

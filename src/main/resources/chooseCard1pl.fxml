@@ -18,10 +18,10 @@
             </cursor>
         </ImageView>
         <Label fx:id="label1" alignment="CENTER" layoutX="276.0" layoutY="297.0" prefHeight="26.0" prefWidth="163.0"
-               style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold;"
+               style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-font-family: LillyBelle"
                text="NOME DIO 1">
             <font>
-                <Font name="AR BLANCA" size="20.0"/>
+                <Font name="LillyBelle,AR BLANCA" size="20.0"/>
             </font>
         </Label>
         <Pane layoutX="301.0" layoutY="343.0" prefHeight="183.0" prefWidth="378.0"

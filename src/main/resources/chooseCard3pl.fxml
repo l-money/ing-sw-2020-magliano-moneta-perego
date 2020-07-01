@@ -39,24 +39,24 @@
          </children>
       </Pane>
       <Label fx:id="label1" alignment="CENTER" layoutX="57.0" layoutY="302.0" prefHeight="26.0" prefWidth="163.0"
-             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2;"
+             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2; -fx-font-family: LillyBelle"
              text="NOME DIO 1" textFill="#0a0a0a">
          <font>
-            <Font name="AR BLANCA" size="20.0"/>
+            <Font name="LilyBelle,AR BLANCA" size="20.0"/>
          </font>
       </Label>
       <Label fx:id="label3" alignment="CENTER" layoutX="508.0" layoutY="302.0" prefHeight="26.0" prefWidth="163.0"
-             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2;"
+             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2; -fx-font-family: LillyBelle"
              text="NOME DIO 3" textFill="#0a0a0a">
          <font>
-            <Font name="AR BLANCA" size="20.0"/>
+            <Font name="LillyBelle,AR BLANCA" size="20.0"/>
          </font>
       </Label>
       <Label fx:id="label2" alignment="CENTER" layoutX="289.0" layoutY="302.0" prefHeight="26.0" prefWidth="163.0"
-             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2;"
+             style="-fx-background-color: #C0C0C0; -fx-background-radius: 30; -fx-border-radius: 30; -fx-border-color: Gold; -fx-border-width: 2; -fx-font-family: LillyBelle"
              text="NOME DIO 2" textFill="#0a0a0a">
          <font>
-            <Font name="AR BLANCA" size="20.0"/>
+            <Font name="LillyBelle,AR BLANCA" size="20.0"/>
          </font>
       </Label>
       <Pane layoutX="302.0" layoutY="341.0" prefHeight="183.0" prefWidth="378.0"
