@@ -205,7 +205,7 @@ public class Turno implements Runnable {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                throw new NullPointerException();
             }
             if (!getGamer().getLoser()) {
                 firstLockdown(getGamer());
@@ -222,7 +222,7 @@ public class Turno implements Runnable {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    throw new NullPointerException();
                 }
                 gamer.getMyGodCard().initializeOwner(this);
                 while (!validationMove && count < maxAttempts) {
@@ -235,7 +235,7 @@ public class Turno implements Runnable {
                 try {
                     Thread.sleep(200);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    throw new NullPointerException();
                 }
                 if (!getGamer().getLoser()) {
                     while (!validationBuild && count < maxAttempts) {

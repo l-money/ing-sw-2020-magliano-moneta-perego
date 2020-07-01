@@ -9,6 +9,7 @@ import santorini.model.godCards.God;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 /**
  * Class Game
@@ -57,7 +58,11 @@ public class Game implements Runnable {
         doubleName(playersInGame);
         cardChoice();
         placePawns();
-        matchGame();
+        try {
+            matchGame();
+        } catch (ConcurrentModificationException ex) {
+            System.out.println("Fine partita forzata");
+        }
     }
 
     /**
