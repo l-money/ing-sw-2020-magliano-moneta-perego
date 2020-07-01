@@ -6,32 +6,35 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="468.0" maxWidth="276.0" minHeight="400.0" minWidth="276.0" prefHeight="468.0" prefWidth="276.0"
+<AnchorPane maxHeight="468.0" maxWidth="273.0" minHeight="400.0" minWidth="273.0" prefHeight="468.0" prefWidth="276.0"
             styleClass="root5" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Button fx:id="twoPlayers" layoutX="24.0" layoutY="341.0" mnemonicParsing="false" onMouseEntered="#twoPlayersIn"
                 onMouseExited="#twoPlayersOut" prefHeight="78.0" prefWidth="80.0"
-                style="-fx-background-radius: 60; -fx-background-color: #EEE8AA;" text="2" textFill="#978d8d">
+                style="-fx-background-radius: 60; -fx-background-color: #EEE8AA; -fx-font-family: LillyBelle; -fx-font-size: 28"
+                text="2" textFill="#978d8d">
             <font>
-                <Font name="AR CHRISTY" size="28.0"/>
+                <Font name="LillyBelle,AR CHRISTY" size="28.0"/>
             </font>
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </Button>
         <Label alignment="CENTER" layoutX="7.0" layoutY="14.0" prefHeight="47.0" prefWidth="263.0"
-               style="-fx-background-color: #9e7ea1; -fx-background-radius: 30;" text="Scegli Numero di Partecipanti"
+               style="-fx-background-color: #9e7ea1; -fx-background-radius: 30; -fx-font-family: LillyBelle"
+               text="Scegli Numero di Partecipanti"
                textAlignment="CENTER" textFill="WHITE">
             <font>
-                <Font name="AR BERKLEY" size="20.0"/>
+                <Font name="LillyBelle, AR BERKLEY" size="18.0"/>
             </font>
         </Label>
         <Button fx:id="threePlayers" layoutX="164.0" layoutY="341.0" mnemonicParsing="false"
                 onMouseEntered="#threePlayersIn" onMouseExited="#threePlayersOut" prefHeight="78.0" prefWidth="80.0"
-                style="-fx-background-radius: 60; -fx-background-color: #EEE8AA;" text="3" textFill="#978d8d">
+                style="-fx-background-radius: 60; -fx-background-color: #EEE8AA; -fx-font-family: LillyBelle; -fx-font-size: 28"
+                text="3" textFill="#978d8d">
             <font>
-                <Font name="AR CHRISTY" size="28.0"/>
+                <Font name="LillyBelle,AR CHRISTY" size="28.0"/>
             </font>
             <cursor>
                 <Cursor fx:constant="HAND"/>

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import santorini.network.NetworkHandlerClient;
 import santorini.network.NetworkHandlerServer;
@@ -90,6 +91,7 @@ public class Main extends Application {
             primaryStage.setScene(s);
             primaryStage.show();
         } else {
+            Font.loadFont(Objects.requireNonNull(getClass().getClassLoader().getResource("LillyBelle.ttf")).toExternalForm(), 20);
             primaryStage.setTitle("Start Game");
             primaryStage.getIcons().add(new Image("images/cm_boardgame.png"));
             System.out.println("####\t" + getClass().getClassLoader().getResource("startGame.fxml"));

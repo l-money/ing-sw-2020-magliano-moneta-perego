@@ -10,15 +10,18 @@
             stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Button fx:id="connect" layoutX="144.0" layoutY="338.0" mnemonicParsing="false" prefHeight="50.0"
-                prefWidth="101.0" style="-fx-background-radius: 30;" text="START" textFill="#0b4696">
+                prefWidth="101.0" style="-fx-background-radius: 30; -fx-font-family: LillyBelle; -fx-font-size: 22"
+                text="START" textFill="#0b4696">
             <font>
-                <Font name="Arial Black" size="18.0"/>
+                <Font name="LillyBelle,Arial Black" size="22.0"/>
             </font>
         </Button>
         <Label alignment="CENTER" layoutX="62.0" layoutY="183.0" prefHeight="32.0" prefWidth="76.0"
-               style="-fx-background-color: #0b4696; -fx-background-radius: 30;" text="Name:" textFill="WHITE">
+               style="-fx-background-color: #0b4696; -fx-background-radius: 30; -fx-font-family: LillyBelle"
+               text="Name:" textFill="WHITE">
             <font>
-                <Font name="AR BLANCA" size="23.0"/>
+                <Font name="LillyBelle,Arial Black" size="23.0"/>
+                <!--<Font name="AR BLANCA" size="23.0"/>-->
             </font>
         </Label>
         <TextField fx:id="address" alignment="CENTER" layoutX="158.0" layoutY="123.0" prefHeight="32.0"
@@ -26,9 +29,10 @@
         <TextField fx:id="name" alignment="CENTER" layoutX="158.0" layoutY="183.0" prefHeight="32.0" prefWidth="171.0"
                    promptText="Pippo" style="-fx-background-radius: 30;"/>
         <Label alignment="CENTER" layoutX="43.0" layoutY="123.0" prefHeight="32.0" prefWidth="101.0"
-               style="-fx-background-color: #0b4696; -fx-background-radius: 30;" text="Address:" textFill="WHITE">
+               style="-fx-background-color: #0b4696; -fx-background-radius: 30; -fx-font-family: LillyBelle"
+               text="Address:" textFill="WHITE">
             <font>
-                <Font name="AR BLANCA" size="23.0"/>
+                <Font name="LillyBelle,AR BLANCA" size="23.0"/>
             </font>
         </Label>
     </children>
