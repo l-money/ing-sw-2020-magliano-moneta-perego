@@ -1,0 +1,7 @@
+module:santorini
+santorini
+santorini.controller
+santorini.model
+santorini.model.godCards
+santorini.network
+santorini.view

@@ -1,0 +1,1770 @@
+memberSearchIndex = [{
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "accessibleCells(Table, Button[][], Pawn)",
+    "url": "accessibleCells(santorini.model.Table,javafx.scene.control.Button[][],santorini.model.Pawn)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "afterOtherBuilding(Gamer)",
+    "url": "afterOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "afterOtherMoving(Gamer)",
+    "url": "afterOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "afterOwnerBuilding(Turno)",
+    "url": "afterOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "afterOwnerMoving(Turno)",
+    "url": "afterOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "aggiornaMossa(Cell)",
+    "url": "aggiornaMossa(santorini.model.Cell)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "Apollo()",
+    "url": "%3Cinit%3E()"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "Ares()",
+    "url": "%3Cinit%3E()"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "Artemis()",
+    "url": "%3Cinit%3E()"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "Athena()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.model.godCards", "c": "Atlas", "l": "Atlas()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "baseBuilding(Mossa)",
+    "url": "baseBuilding(santorini.model.Mossa)"
+}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "baseMovement(Mossa)",
+    "url": "baseMovement(santorini.model.Mossa)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "beforeOtherBuilding(Gamer)",
+    "url": "beforeOtherBuilding(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "beforeOtherMoving(Gamer)",
+    "url": "beforeOtherMoving(santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "beforeOwnerBuilding(Turno)",
+    "url": "beforeOwnerBuilding(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "beforeOwnerMoving(Turno)",
+    "url": "beforeOwnerMoving(santorini.controller.Turno)"
+}, {"p": "santorini.model", "c": "Color", "l": "BLACK"}, {
+    "p": "santorini",
+    "c": "Parameters.Color",
+    "l": "BLUE"
+}, {"p": "santorini.model", "c": "Color", "l": "BLUE"}, {
+    "p": "santorini.controller",
+    "c": "Game",
+    "l": "broadcastMessage(String)",
+    "url": "broadcastMessage(java.lang.String)"
+}, {"p": "santorini", "c": "Parameters.command", "l": "BUILD"}, {
+    "p": "santorini.model",
+    "c": "Mossa.Action",
+    "l": "BUILD"
+}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "build(Cell)",
+    "url": "build(santorini.model.Cell)"
+}, {
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "Building(Table, Button[][], Cell)",
+    "url": "Building(santorini.model.Table,javafx.scene.control.Button[][],santorini.model.Cell)"
+}, {"p": "santorini.controller", "c": "Turno", "l": "buildingRequest()"}, {
+    "p": "santorini.controller",
+    "c": "Game",
+    "l": "cardChoice()"
+}, {"p": "santorini.model", "c": "Cell", "l": "Cell()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "chooseCard(ArrayList<God>, Gamer)",
+    "url": "chooseCard(java.util.ArrayList,santorini.model.Gamer)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard1pl",
+    "l": "ChooseCard1pl(ArrayList<God>)",
+    "url": "%3Cinit%3E(java.util.ArrayList)"
+}, {"p": "santorini.view", "c": "NumberPlayers", "l": "chooseCard2()"}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "ChooseCard2pl(ArrayList<God>)",
+    "url": "%3Cinit%3E(java.util.ArrayList)"
+}, {"p": "santorini.view", "c": "NumberPlayers", "l": "chooseCard3()"}, {
+    "p": "santorini.view",
+    "c": "ChooseCard3pl",
+    "l": "ChooseCard3pl(ArrayList<God>)",
+    "url": "%3Cinit%3E(java.util.ArrayList)"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "chooseCards(ArrayList<God>)",
+    "url": "chooseCards(java.util.ArrayList)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "chooseCards(ArrayList<God>)",
+    "url": "chooseCards(java.util.ArrayList)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "chooseCards(ArrayList<God>)",
+    "url": "chooseCards(java.util.ArrayList)"
+}, {"p": "santorini.model.godCards", "c": "Chronus", "l": "Chronus()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "clickFirstGod(MouseEvent)",
+    "url": "clickFirstGod(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "clickSecondGod(MouseEvent)",
+    "url": "clickSecondGod(javafx.scene.input.MouseEvent)"
+}, {"p": "santorini.view", "c": "CLIView", "l": "CLIView()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "CLIView(NetworkHandlerClient)",
+    "url": "%3Cinit%3E(santorini.network.NetworkHandlerClient)"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "colorCellPawn(Pawn)",
+    "url": "colorCellPawn(santorini.model.Pawn)"
+}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "controlBaseBuilding(Cell, Cell)",
+    "url": "controlBaseBuilding(santorini.model.Cell,santorini.model.Cell)"
+}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "controlBaseMovement(Cell, Cell)",
+    "url": "controlBaseMovement(santorini.model.Cell,santorini.model.Cell)"
+}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "controlStandardParameter(Mossa)",
+    "url": "controlStandardParameter(santorini.model.Mossa)"
+}, {"p": "santorini.view", "c": "View", "l": "counter"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "currentPawn"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "Demeter()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.model.godCards", "c": "God", "l": "description"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "disablePawn(int, boolean)",
+    "url": "disablePawn(int,boolean)"
+}, {"p": "santorini.network", "c": "NetworkHandlerClient", "l": "disconnect()"}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "effectMove"
+}, {"p": "santorini.view", "c": "View", "l": "effetto"}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "equals(Object)",
+    "url": "equals(java.lang.Object)"
+}, {"p": "santorini.model", "c": "Extraction", "l": "Extraction()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.model",
+    "c": "Extraction",
+    "l": "extractionGods(int)"
+}, {"p": "santorini", "c": "Parameters.command", "l": "FAILED"}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "firstGodDescription(MouseEvent)",
+    "url": "firstGodDescription(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "firstGodOut(MouseEvent)",
+    "url": "firstGodOut(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "santorini.controller",
+    "c": "Game",
+    "l": "Game(ArrayList<Gamer>, NetworkHandlerServer)",
+    "url": "%3Cinit%3E(java.util.ArrayList,santorini.network.NetworkHandlerServer)"
+}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "Gamer(Socket, String, int, ObjectInputStream, ObjectOutputStream)",
+    "url": "%3Cinit%3E(java.net.Socket,java.lang.String,int,java.io.ObjectInputStream,java.io.ObjectOutputStream)"
+}, {"p": "santorini.model", "c": "Mossa", "l": "getAction()"}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "getAroundCells(int, int)",
+    "url": "getAroundCells(int,int)"
+}, {"p": "santorini.model", "c": "Gamer", "l": "getBuilds()"}, {
+    "p": "santorini.view",
+    "c": "CardChoice",
+    "l": "getChoosed()"
+}, {"p": "santorini.view", "c": "ChooseCard1pl", "l": "getChoosed()"}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "getChoosed()"
+}, {"p": "santorini.view", "c": "ChooseCard3pl", "l": "getChoosed()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getColorGamer()"
+}, {"p": "santorini.model", "c": "Pawn", "l": "getColorPawn()"}, {
+    "p": "santorini.model",
+    "c": "Pawn",
+    "l": "getColumn()"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "getCoords(Table, int, int, Mossa.Action)",
+    "url": "getCoords(santorini.model.Table,int,int,santorini.model.Mossa.Action)"
+}, {"p": "santorini.controller", "c": "Turno", "l": "getCount()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "getCurrentPawn()"
+}, {"p": "santorini.model.godCards", "c": "God", "l": "getDescription()"}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "getEffectMove()"
+}, {"p": "santorini.model.godCards", "c": "Atlas", "l": "getEffectMove()"}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "getEffectMove()"
+}, {"p": "santorini.model.godCards", "c": "Triton", "l": "getEffectMove()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "getGame()"
+}, {"p": "santorini.controller", "c": "Turno", "l": "getGameHandler()"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "getGamer()"
+}, {"p": "santorini.view", "c": "View", "l": "getGod()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "getHandlerClient()"
+}, {"p": "santorini.model", "c": "Pawn", "l": "getICanPlay()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getId()"
+}, {"p": "santorini.view", "c": "View", "l": "getID()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getIdGamer()"
+}, {"p": "santorini.model", "c": "Pawn", "l": "getIdGamer()"}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "getIdM()"
+}, {"p": "santorini.model.godCards", "c": "Triton", "l": "getIdM()"}, {
+    "p": "santorini.model",
+    "c": "Mossa",
+    "l": "getIdPawn()"
+}, {"p": "santorini.model", "c": "Pawn", "l": "getIdPawn()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getInputStream()"
+}, {"p": "santorini.model", "c": "Cell", "l": "getLevel()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getLevelsDown()"
+}, {"p": "santorini.model", "c": "Gamer", "l": "getLevelsUp()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getLoser()"
+}, {"p": "santorini.controller", "c": "Turno", "l": "getMove()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getMyGodCard()"
+}, {"p": "santorini.model", "c": "Gamer", "l": "getName()"}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "getName()"
+}, {"p": "santorini.view", "c": "View", "l": "getName()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getOutputStream()"
+}, {"p": "santorini.model.godCards", "c": "God", "l": "getOwner()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "getPartita()"
+}, {"p": "santorini.model", "c": "Pawn", "l": "getPastLevel()"}, {
+    "p": "santorini.model",
+    "c": "Cell",
+    "l": "getPawn()"
+}, {"p": "santorini.model", "c": "Gamer", "l": "getPawn(int)"}, {
+    "p": "santorini.view",
+    "c": "NumberPlayers",
+    "l": "getPlayers()"
+}, {"p": "santorini.controller", "c": "Game", "l": "getPlayersInGame()"}, {
+    "p": "santorini.model",
+    "c": "Pawn",
+    "l": "getPresentLevel()"
+}, {"p": "santorini.model", "c": "Pawn", "l": "getRow()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerClient",
+    "l": "getServer()"
+}, {"p": "santorini.model", "c": "Gamer", "l": "getSocket()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "getSteps()"
+}, {"p": "santorini.controller", "c": "Game", "l": "getTable()"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "getTable()"
+}, {"p": "santorini.view", "c": "View", "l": "getTable()"}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "getTableCell(int, int)",
+    "url": "getTableCell(int,int)"
+}, {"p": "santorini.model", "c": "Mossa", "l": "getTargetX()"}, {
+    "p": "santorini.model",
+    "c": "Mossa",
+    "l": "getTargetY()"
+}, {"p": "santorini.controller", "c": "Turno", "l": "getValidation(boolean)"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerClient",
+    "l": "getView()"
+}, {"p": "santorini.model", "c": "Cell", "l": "getX()"}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "getXYPawn(int, int, boolean)",
+    "url": "getXYPawn(int,int,boolean)"
+}, {"p": "santorini.model", "c": "Cell", "l": "getY()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "god"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "God(String, String)",
+    "url": "%3Cinit%3E(java.lang.String,java.lang.String)"
+}, {"p": "santorini.model", "c": "Color", "l": "GREEN"}, {
+    "p": "santorini",
+    "c": "GUIstarter",
+    "l": "GUIstarter()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.view", "c": "View", "l": "handlerClient"}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "Hephaestus()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.model.godCards", "c": "Hestia", "l": "Hestia()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "iCanBuild(Cell)",
+    "url": "iCanBuild(santorini.model.Cell)"
+}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "iCanMove(Cell)",
+    "url": "iCanMove(santorini.model.Cell)"
+}, {"p": "santorini.view", "c": "View", "l": "ID"}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "initButtons()"
+}, {"p": "santorini.network", "c": "NetworkHandlerServer", "l": "initGameConnections()"}, {
+    "p": "santorini",
+    "c": "Parameters.command",
+    "l": "INITIALIZE_PAWNS"
+}, {"p": "santorini.view", "c": "ChooseCard1pl", "l": "initialize()"}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "initialize()"
+}, {"p": "santorini.view", "c": "ChooseCard3pl", "l": "initialize()"}, {
+    "p": "santorini.view",
+    "c": "InsertPawns",
+    "l": "initialize()"
+}, {"p": "santorini.view", "c": "LoginUser2", "l": "initialize()"}, {
+    "p": "santorini.view",
+    "c": "NumberPlayers",
+    "l": "initialize()"
+}, {"p": "santorini.view", "c": "PlayTable", "l": "initialize()"}, {
+    "p": "santorini.view",
+    "c": "StartGame",
+    "l": "initialize()"
+}, {"p": "santorini.view", "c": "TestTable", "l": "initialize()"}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "initialize()"
+}, {"p": "santorini.view", "c": "Wait", "l": "initialize()"}, {
+    "p": "santorini.view",
+    "c": "Winner",
+    "l": "initialize()"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "initializeClient(Socket)",
+    "url": "initializeClient(java.net.Socket)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "initializeFirstClient(Socket)",
+    "url": "initializeFirstClient(java.net.Socket)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Apollo",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Ares",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Athena",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Chronus",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Demeter",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hephaestus",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Hestia",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pan",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Pdor",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Zeus",
+    "l": "initializeOwner(Turno)",
+    "url": "initializeOwner(santorini.controller.Turno)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerClient",
+    "l": "initializePawns(String)",
+    "url": "initializePawns(java.lang.String)"
+}, {"p": "santorini.view", "c": "CLIView", "l": "initpwns()"}, {
+    "p": "santorini.view",
+    "c": "InsertPawns",
+    "l": "InsertPawns()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.view", "c": "View", "l": "inTurno"}, {
+    "p": "santorini.model",
+    "c": "Cell",
+    "l": "isComplete()"
+}, {"p": "santorini.model", "c": "Cell", "l": "isFree()"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "isValidationBuild()"
+}, {"p": "santorini.controller", "c": "Turno", "l": "isValidationMove()"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "isWinner()"
+}, {"p": "santorini.view", "c": "ViewController", "l": "lightBuild()"}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "lightMove()"
+}, {"p": "santorini.view", "c": "ViewController", "l": "lightMyPawns()"}, {
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "lightMyPawns(Table, Button[][], int)",
+    "url": "lightMyPawns(santorini.model.Table,javafx.scene.control.Button[][],int)"
+}, {"p": "santorini.view", "c": "ViewController", "l": "lightPause()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "listen"
+}, {"p": "santorini", "c": "Parameters.command", "l": "LOCKED_PAWN"}, {
+    "p": "santorini.view",
+    "c": "LoginUser2",
+    "l": "LoginUser2()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini", "c": "Parameters.command", "l": "LOSER"}, {
+    "p": "santorini.view",
+    "c": "Loser",
+    "l": "Loser()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini", "c": "Main", "l": "Main()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini",
+    "c": "GUIstarter",
+    "l": "main(String[])",
+    "url": "main(java.lang.String[])"
+}, {
+    "p": "santorini",
+    "c": "Main",
+    "l": "main(String[])",
+    "url": "main(java.lang.String[])"
+}, {"p": "santorini.controller", "c": "Game", "l": "matchGame()"}, {
+    "p": "santorini",
+    "c": "Parameters.command",
+    "l": "MESSAGE"
+}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "methodLoser(boolean, int, Gamer)",
+    "url": "methodLoser(boolean,int,santorini.model.Gamer)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Minotaur",
+    "l": "Minotaur()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.model", "c": "Mossa", "l": "Mossa()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.model",
+    "c": "Mossa",
+    "l": "Mossa(Mossa.Action, int, int, int)",
+    "url": "%3Cinit%3E(santorini.model.Mossa.Action,int,int,int)"
+}, {"p": "santorini", "c": "Parameters.command", "l": "MOVE"}, {
+    "p": "santorini.model",
+    "c": "Mossa.Action",
+    "l": "MOVE"
+}, {"p": "santorini.controller", "c": "Turno", "l": "moveRequest()"}, {
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "mySelection(Button[][], Cell, Table)",
+    "url": "mySelection(javafx.scene.control.Button[][],santorini.model.Cell,santorini.model.Table)"
+}, {"p": "santorini.model.godCards", "c": "God", "l": "name"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "name"
+}, {"p": "santorini", "c": "Parameters.command", "l": "NETWORK_ERROR"}, {
+    "p": "santorini.controller",
+    "c": "Game",
+    "l": "networkError(Gamer)",
+    "url": "networkError(santorini.model.Gamer)"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "networkError(String)",
+    "url": "networkError(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "networkError(String)",
+    "url": "networkError(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "networkError(String)",
+    "url": "networkError(java.lang.String)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerClient",
+    "l": "NetworkHandlerClient(String, String, View)",
+    "url": "%3Cinit%3E(java.lang.String,java.lang.String,santorini.view.View)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "NetworkHandlerServer()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini", "c": "Parameters.command", "l": "NO"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "notifyNetworkError(Gamer, Gamer)",
+    "url": "notifyNetworkError(santorini.model.Gamer,santorini.model.Gamer)"
+}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "nullEffectForGodCards(Mossa)",
+    "url": "nullEffectForGodCards(santorini.model.Mossa)"
+}, {
+    "p": "santorini.view",
+    "c": "NumberPlayers",
+    "l": "NumberPlayers(Stage)",
+    "url": "%3Cinit%3E(javafx.stage.Stage)"
+}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "otherPawn(Pawn)",
+    "url": "otherPawn(santorini.model.Pawn)"
+}, {"p": "santorini.model.godCards", "c": "God", "l": "others"}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "owner"
+}, {"p": "santorini.model.godCards", "c": "Pan", "l": "Pan()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini",
+    "c": "Parameters",
+    "l": "Parameters()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.model", "c": "Pawn", "l": "Pawn()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "pawnEnabled"
+}, {"p": "santorini.model.godCards", "c": "Pdor", "l": "Pdor()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "placePawns(Gamer)",
+    "url": "placePawns(santorini.model.Gamer)"
+}, {"p": "santorini.view", "c": "PlayTable", "l": "PlayTable()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini",
+    "c": "Parameters",
+    "l": "PORT"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "printMessage(String)",
+    "url": "printMessage(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "printMessage(String)",
+    "url": "printMessage(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "printMessage(String)",
+    "url": "printMessage(java.lang.String)"
+}, {"p": "santorini.view", "c": "CLIView", "l": "printTable()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "printTable()"
+}, {"p": "santorini.view", "c": "ViewController", "l": "printTable()"}, {
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "printTableStatus(Table, Button[][])",
+    "url": "printTableStatus(santorini.model.Table,javafx.scene.control.Button[][])"
+}, {"p": "santorini.controller", "c": "Turno", "l": "printTableStatusTurn(boolean)"}, {
+    "p": "santorini.model.godCards",
+    "c": "Prometheus",
+    "l": "Prometheus()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.view", "c": "LoginUser2", "l": "readParameters()"}, {
+    "p": "santorini",
+    "c": "Parameters.Color",
+    "l": "RED"
+}, {"p": "santorini.model", "c": "Color", "l": "RED"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "richiediMossa(Mossa.Action, Gamer)",
+    "url": "richiediMossa(santorini.model.Mossa.Action,santorini.model.Gamer)"
+}, {"p": "santorini.controller", "c": "Game", "l": "run()"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "run()"
+}, {"p": "santorini.network", "c": "NetworkHandlerClient", "l": "run()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "run()"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "sconfitta(String)",
+    "url": "sconfitta(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "sconfitta(String)",
+    "url": "sconfitta(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "sconfitta(String)",
+    "url": "sconfitta(java.lang.String)"
+}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "searchAdjacentCells(Cell)",
+    "url": "searchAdjacentCells(santorini.model.Cell)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "secondGodDescription(MouseEvent)",
+    "url": "secondGodDescription(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "secondGodOut(MouseEvent)",
+    "url": "secondGodOut(javafx.scene.input.MouseEvent)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerClient",
+    "l": "sendAction(Mossa)",
+    "url": "sendAction(santorini.model.Mossa)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "sendFailed(Gamer, String)",
+    "url": "sendFailed(santorini.model.Gamer,java.lang.String)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "sendLockedPawn(int, Gamer, boolean)",
+    "url": "sendLockedPawn(int,santorini.model.Gamer,boolean)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "sendMessage(Gamer, String)",
+    "url": "sendMessage(santorini.model.Gamer,java.lang.String)"
+}, {"p": "santorini", "c": "Parameters.command", "l": "SET_PLAYERS_NUMBER"}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "setACell(int, int, int, boolean, boolean, Pawn)",
+    "url": "setACell(int,int,int,boolean,boolean,santorini.model.Pawn)"
+}, {
+    "p": "santorini.model",
+    "c": "Mossa",
+    "l": "setAction(Mossa.Action)",
+    "url": "setAction(santorini.model.Mossa.Action)"
+}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "setAPawn(int, int, int, int, int)",
+    "url": "setAPawn(int,int,int,int,int)"
+}, {"p": "santorini.model", "c": "Gamer", "l": "setBuilds(int)"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerClient",
+    "l": "setCard(God)",
+    "url": "setCard(santorini.model.godCards.God)"
+}, {
+    "p": "santorini.model",
+    "c": "Pawn",
+    "l": "setColorPawn(Color)",
+    "url": "setColorPawn(santorini.model.Color)"
+}, {"p": "santorini.model", "c": "Pawn", "l": "setColumn(int)"}, {
+    "p": "santorini.model",
+    "c": "Cell",
+    "l": "setComplete(boolean)"
+}, {"p": "santorini.controller", "c": "Turno", "l": "setCount(int)"}, {
+    "p": "santorini.model.godCards",
+    "c": "Artemis",
+    "l": "setEffectMove(Mossa)",
+    "url": "setEffectMove(santorini.model.Mossa)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Atlas",
+    "l": "setEffectMove(Mossa)",
+    "url": "setEffectMove(santorini.model.Mossa)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "setEffectMove(Mossa)",
+    "url": "setEffectMove(santorini.model.Mossa)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "setEffectMove(Mossa)",
+    "url": "setEffectMove(santorini.model.Mossa)"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "setFailed(String)",
+    "url": "setFailed(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setFailed(String)",
+    "url": "setFailed(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "setFailed(String)",
+    "url": "setFailed(java.lang.String)"
+}, {"p": "santorini.model", "c": "Cell", "l": "setFree(boolean)"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "setGamer(Gamer)",
+    "url": "setGamer(santorini.model.Gamer)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setGod(God)",
+    "url": "setGod(santorini.model.godCards.God)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setHandlerClient(NetworkHandlerClient)",
+    "url": "setHandlerClient(santorini.network.NetworkHandlerClient)"
+}, {"p": "santorini.model", "c": "Pawn", "l": "setICanPlay(boolean)"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "setId(int)"
+}, {"p": "santorini.view", "c": "CLIView", "l": "setID(int)"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setID(int)"
+}, {"p": "santorini.model", "c": "Gamer", "l": "setIdGamer(int)"}, {
+    "p": "santorini.model",
+    "c": "Pawn",
+    "l": "setIdGamer(int)"
+}, {"p": "santorini.model.godCards", "c": "Artemis", "l": "setIdM(int)"}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "setIdM(int)"
+}, {"p": "santorini.model", "c": "Mossa", "l": "setIdPawn(int)"}, {
+    "p": "santorini.model",
+    "c": "Pawn",
+    "l": "setIdPawn(int)"
+}, {"p": "santorini.view", "c": "CLIView", "l": "setInitializePawn()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setInitializePawn()"
+}, {"p": "santorini.view", "c": "ViewController", "l": "setInitializePawn()"}, {
+    "p": "santorini.model",
+    "c": "Cell",
+    "l": "setLevel(int)"
+}, {"p": "santorini.model", "c": "Gamer", "l": "setLevelsDown(int)"}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "setLevelsUp(int)"
+}, {"p": "santorini.model", "c": "Gamer", "l": "setLoser(boolean)"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "setMove(Mossa)",
+    "url": "setMove(santorini.model.Mossa)"
+}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "setMyGodCard(God)",
+    "url": "setMyGodCard(santorini.model.godCards.God)"
+}, {
+    "p": "santorini.model",
+    "c": "Mossa",
+    "l": "setMyMossa(Mossa.Action, int, int, int)",
+    "url": "setMyMossa(santorini.model.Mossa.Action,int,int,int)"
+}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "setName(String)",
+    "url": "setName(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setName(String)",
+    "url": "setName(java.lang.String)"
+}, {
+    "p": "santorini.view",
+    "c": "CLIView",
+    "l": "setNewAction(Mossa.Action)",
+    "url": "setNewAction(santorini.model.Mossa.Action)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setNewAction(Mossa.Action)",
+    "url": "setNewAction(santorini.model.Mossa.Action)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "setNewAction(Mossa.Action)",
+    "url": "setNewAction(santorini.model.Mossa.Action)"
+}, {"p": "santorini.view", "c": "CLIView", "l": "setNumeroGiocatori()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setNumeroGiocatori()"
+}, {"p": "santorini.view", "c": "ViewController", "l": "setNumeroGiocatori()"}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "setOthers(ArrayList<Gamer>)",
+    "url": "setOthers(java.util.ArrayList)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "setOwner(Gamer)",
+    "url": "setOwner(santorini.model.Gamer)"
+}, {"p": "santorini.network", "c": "NetworkHandlerClient", "l": "setPartecipanti(int)"}, {
+    "p": "santorini.model",
+    "c": "Pawn",
+    "l": "setPastLevel(int)"
+}, {
+    "p": "santorini.model",
+    "c": "Cell",
+    "l": "setPawn(Pawn)",
+    "url": "setPawn(santorini.model.Pawn)"
+}, {"p": "santorini.model", "c": "Pawn", "l": "setPresentLevel(int)"}, {
+    "p": "santorini.model",
+    "c": "Pawn",
+    "l": "setRow(int)"
+}, {
+    "p": "santorini.model",
+    "c": "Gamer",
+    "l": "setSocket(Socket)",
+    "url": "setSocket(java.net.Socket)"
+}, {
+    "p": "santorini.view",
+    "c": "CardChoice",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard1pl",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard2pl",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "ChooseCard3pl",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "InsertPawns",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "LoginUser2",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "NumberPlayers",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "PlayTable",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "StartGame",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "Wait",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {
+    "p": "santorini.view",
+    "c": "Winner",
+    "l": "setStage(Stage)",
+    "url": "setStage(javafx.stage.Stage)"
+}, {"p": "santorini.model", "c": "Gamer", "l": "setSteps(int)"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "setTable(Table)",
+    "url": "setTable(santorini.model.Table)"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "God",
+    "l": "setTable(Table)",
+    "url": "setTable(santorini.model.Table)"
+}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "setTable(Table)",
+    "url": "setTable(santorini.model.Table)"
+}, {"p": "santorini.model", "c": "Mossa", "l": "setTargetX(int)"}, {
+    "p": "santorini.model",
+    "c": "Mossa",
+    "l": "setTargetY(int)"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "setThisStage(Stage)",
+    "url": "setThisStage(javafx.stage.Stage)"
+}, {"p": "santorini.controller", "c": "Turno", "l": "setValidationBuild(boolean)"}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "setValidationMove(boolean)"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerClient",
+    "l": "setView(View)",
+    "url": "setView(santorini.view.View)"
+}, {"p": "santorini.model", "c": "Gamer", "l": "setWinner(boolean)"}, {
+    "p": "santorini.controller",
+    "c": "Game",
+    "l": "setWinner(Gamer)",
+    "url": "setWinner(santorini.model.Gamer)"
+}, {"p": "santorini.model", "c": "Cell", "l": "setX(int)"}, {
+    "p": "santorini.model",
+    "c": "Cell",
+    "l": "setY(int)"
+}, {"p": "santorini", "c": "Main", "l": "start(Stage)", "url": "start(javafx.stage.Stage)"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "startGame()"
+}, {"p": "santorini.view", "c": "StartGame", "l": "StartGame()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "startTable(Table, Button[][])",
+    "url": "startTable(santorini.model.Table,javafx.scene.control.Button[][])"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "startTable(Table, Button[][])",
+    "url": "startTable(santorini.model.Table,javafx.scene.control.Button[][])"
+}, {"p": "santorini", "c": "Main", "l": "stop()"}, {
+    "p": "santorini",
+    "c": "Parameters.command",
+    "l": "SWITCH_PAWN"
+}, {"p": "santorini.view", "c": "View", "l": "switchCurrentPawn()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "switchPawn(Gamer)",
+    "url": "switchPawn(santorini.model.Gamer)"
+}, {"p": "santorini.model.godCards", "c": "God", "l": "table"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "table"
+}, {"p": "santorini.model", "c": "Table", "l": "Table()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "tablePerimeterCells(Table)",
+    "url": "tablePerimeterCells(santorini.model.Table)"
+}, {"p": "santorini", "c": "Main", "l": "test"}, {
+    "p": "santorini.view",
+    "c": "TestTable",
+    "l": "TestTable()",
+    "url": "%3Cinit%3E()"
+}, {
+    "p": "santorini.model.godCards",
+    "c": "Triton",
+    "l": "Triton()",
+    "url": "%3Cinit%3E()"
+}, {
+    "p": "santorini.controller",
+    "c": "Turno",
+    "l": "Turno(ArrayList<God>, Gamer, Table, NetworkHandlerServer)",
+    "url": "%3Cinit%3E(java.util.ArrayList,santorini.model.Gamer,santorini.model.Table,santorini.network.NetworkHandlerServer)"
+}, {"p": "santorini.controller", "c": "Game", "l": "updateField()"}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "updateField(Gamer)",
+    "url": "updateField(santorini.model.Gamer)"
+}, {
+    "p": "santorini",
+    "c": "Parameters.Color",
+    "l": "valueOf(String)",
+    "url": "valueOf(java.lang.String)"
+}, {
+    "p": "santorini",
+    "c": "Parameters.command",
+    "l": "valueOf(String)",
+    "url": "valueOf(java.lang.String)"
+}, {
+    "p": "santorini.model",
+    "c": "Color",
+    "l": "valueOf(String)",
+    "url": "valueOf(java.lang.String)"
+}, {
+    "p": "santorini.model",
+    "c": "Mossa.Action",
+    "l": "valueOf(String)",
+    "url": "valueOf(java.lang.String)"
+}, {"p": "santorini", "c": "Parameters.Color", "l": "values()"}, {
+    "p": "santorini",
+    "c": "Parameters.command",
+    "l": "values()"
+}, {"p": "santorini.model", "c": "Color", "l": "values()"}, {
+    "p": "santorini.model",
+    "c": "Mossa.Action",
+    "l": "values()"
+}, {"p": "santorini.view", "c": "View", "l": "View()", "url": "%3Cinit%3E()"}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "ViewController()",
+    "url": "%3Cinit%3E()"
+}, {"p": "santorini.view", "c": "CLIView", "l": "vittoria()"}, {
+    "p": "santorini.view",
+    "c": "View",
+    "l": "vittoria()"
+}, {"p": "santorini.view", "c": "ViewController", "l": "vittoria()"}, {
+    "p": "santorini.view",
+    "c": "Wait",
+    "l": "Wait()",
+    "url": "%3Cinit%3E()"
+}, {
+    "p": "santorini.view",
+    "c": "ViewController",
+    "l": "waitDialog(String)",
+    "url": "waitDialog(java.lang.String)"
+}, {
+    "p": "santorini.model",
+    "c": "Table",
+    "l": "walkNearCell(Cell, Cell)",
+    "url": "walkNearCell(santorini.model.Cell,santorini.model.Cell)"
+}, {"p": "santorini", "c": "Parameters.command", "l": "WINNER"}, {
+    "p": "santorini.view",
+    "c": "Winner",
+    "l": "Winner()",
+    "url": "%3Cinit%3E()"
+}, {
+    "p": "santorini.network",
+    "c": "NetworkHandlerServer",
+    "l": "winner(Gamer, Gamer)",
+    "url": "winner(santorini.model.Gamer,santorini.model.Gamer)"
+}, {"p": "santorini", "c": "Parameters.Color", "l": "YELLOW"}, {
+    "p": "santorini.model",
+    "c": "Color",
+    "l": "YELLOW"
+}, {"p": "santorini.model.godCards", "c": "Zeus", "l": "Zeus()", "url": "%3Cinit%3E()"}]
