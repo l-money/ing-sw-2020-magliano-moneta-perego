@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import santorini.model.Cell;
 import santorini.model.Mossa;
 import santorini.model.Table;
@@ -331,6 +332,7 @@ public class ViewController extends View {
                 dialog.setScene(s);
                 dialog.initOwner(thisStage);
                 dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initStyle(StageStyle.UNDECORATED);
                 //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
                 dialog.showAndWait();
                 handlerClient.setCard(cc.getChoosed());
@@ -492,6 +494,7 @@ public class ViewController extends View {
                 dialog.setScene(s);
                 dialog.initOwner(thisStage);
                 dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initStyle(StageStyle.UNDECORATED);
                 //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
                 dialog.showAndWait();
                 handlerClient.setPartecipanti(numberPlayersController.getPlayers());
@@ -522,6 +525,7 @@ public class ViewController extends View {
             overlayedStage.initModality(Modality.APPLICATION_MODAL);
             overlayedStage.setTitle(title);
             overlayedStage.setResizable(false);
+            overlayedStage.initStyle(StageStyle.UNDECORATED);
             dialog.show();
         } catch (IOException e) {
             e.printStackTrace();
