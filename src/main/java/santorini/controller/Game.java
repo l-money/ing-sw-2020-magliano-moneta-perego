@@ -61,7 +61,7 @@ public class Game implements Runnable {
         try {
             matchGame();
         } catch (ConcurrentModificationException ex) {
-            System.out.println("Fine partita forzata");
+            System.out.println("Fine partita");
         }
     }
 

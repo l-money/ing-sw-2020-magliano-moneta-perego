@@ -5,9 +5,6 @@ import santorini.model.godCards.*;
 import java.io.Serializable;
 import java.util.*;
 
-/**
- * Class Extraction
- */
 
 public class Extraction implements Serializable {
     private ArrayList<God> gods;
