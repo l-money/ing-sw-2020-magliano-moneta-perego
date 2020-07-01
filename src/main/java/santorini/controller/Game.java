@@ -113,10 +113,9 @@ public class Game implements Runnable {
                         updateField();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
                     networkError(g);
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    System.out.println();
                 }
             } while (!done);
         }
@@ -153,7 +152,6 @@ public class Game implements Runnable {
                 networkError(g);
             } catch (ClassNotFoundException e) {
                 System.out.println("problema con cast della carta");
-                e.printStackTrace();
             }
             for (Gamer gamer : playersInGame) {
                 if (gamer != g) {
@@ -197,7 +195,7 @@ public class Game implements Runnable {
                 try {
                     currentTurno.join();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Turno ucciso");
                 }
                 if (g.isWinner()) {
                     //handle winning
@@ -228,7 +226,7 @@ public class Game implements Runnable {
                 handler.updateField(g);
                 handler.winner(g, winner);
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Unreachable");
             }
         }
     }
@@ -246,7 +244,7 @@ public class Game implements Runnable {
                 try {
                     handler.notifyNetworkError(g, disconnected);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("Unreachable");
                 }
             }
         } finally {

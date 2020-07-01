@@ -169,7 +169,6 @@ public class Turno implements Runnable {
         try {
             return gameHandler.richiediMossa(action, gamer);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
             gameHandler.getGame().networkError(gamer);
         }
         return null;

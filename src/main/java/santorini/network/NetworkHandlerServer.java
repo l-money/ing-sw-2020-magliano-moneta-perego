@@ -45,6 +45,7 @@ public class NetworkHandlerServer implements Runnable {
 
     /**
      * initialization NetworkHandlerServer
+     *
      * @throws IOException
      */
     public NetworkHandlerServer() throws IOException {
@@ -79,7 +80,7 @@ public class NetworkHandlerServer implements Runnable {
             //wait();
             startGame();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Unreachable");
         }
 
     }
@@ -125,7 +126,7 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.flush();
             //notifyAll();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Unreachable");
         }
         //}).start();
     }
@@ -170,7 +171,7 @@ public class NetworkHandlerServer implements Runnable {
             try {
                 serverSocket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Unreachable");
             }
         }
     }
@@ -188,7 +189,6 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(game.getTable());
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
             game.networkError(gamer);
         }
     }
@@ -262,7 +262,7 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(message);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            game.networkError(gamer);
         }
     }
 
@@ -344,7 +344,6 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(msg);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
             game.networkError(to);
         }
     }
@@ -353,8 +352,8 @@ public class NetworkHandlerServer implements Runnable {
      * method sendLockedPawn
      * sends the pawn which is locked
      *
-     * @param i id pawn
-     * @param g gamer
+     * @param i      id pawn
+     * @param g      gamer
      * @param locked it is locked or not
      */
 
@@ -368,7 +367,7 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(i + "," + locked);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            game.networkError(g);
         }
 
     }
@@ -387,7 +386,7 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(Parameters.command.SWITCH_PAWN);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            game.networkError(g);
         }
     }
 
