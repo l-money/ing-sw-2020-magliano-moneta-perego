@@ -332,6 +332,7 @@ public class ViewController extends View {
                 dialog.setScene(s);
                 dialog.initOwner(thisStage);
                 dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initStyle(StageStyle.UNDECORATED);
                 //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
                 dialog.showAndWait();
                 handlerClient.setCard(cc.getChoosed());
@@ -493,6 +494,7 @@ public class ViewController extends View {
                 dialog.setScene(s);
                 dialog.initOwner(thisStage);
                 dialog.initModality(Modality.APPLICATION_MODAL);
+                dialog.initStyle(StageStyle.UNDECORATED);
                 //dialog.setOnCloseRequest(event -> returnNumber(numberPlayersController));
                 dialog.showAndWait();
                 handlerClient.setPartecipanti(numberPlayersController.getPlayers());
@@ -522,6 +524,7 @@ public class ViewController extends View {
             overlayedStage.initOwner(thisStage);
             overlayedStage.initModality(Modality.APPLICATION_MODAL);
             overlayedStage.setTitle(title);
+            overlayedStage.initStyle(StageStyle.UNDECORATED);
             overlayedStage.setResizable(false);
             dialog.show();
         } catch (IOException e) {
