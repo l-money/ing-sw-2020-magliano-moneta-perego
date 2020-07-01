@@ -9,6 +9,7 @@ import santorini.model.godCards.God;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 /**
  * Class Game
@@ -57,7 +58,13 @@ public class Game implements Runnable {
         doubleName(playersInGame);
         cardChoice();
         placePawns();
-        matchGame();
+        try {
+            matchGame();
+        } catch (InterruptedException | NullPointerException e) {
+            System.out.println("Partita terminata per disconnessione");
+        } catch (ConcurrentModificationException ex) {
+            System.out.println("Concurrent");
+        }
     }
 
     /**
@@ -113,10 +120,9 @@ public class Game implements Runnable {
                         updateField();
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
                     networkError(g);
                 } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
+                    System.out.println();
                 }
             } while (!done);
         }
@@ -181,13 +187,11 @@ public class Game implements Runnable {
      * each cicle ask to a player to do his moves
      * cicle continue until someone wins
      */
-    public void matchGame() {
+    public void matchGame() throws InterruptedException {
         broadcastMessage("\n" + "\u001B[33m" + "INIZIO PARTITA" + "\u001B[0m\n");
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        Thread.sleep(200);
+
         playersInMatch(playersInGame);
         while (true) {
             for (Gamer g : playersInGame) {
@@ -197,7 +201,7 @@ public class Game implements Runnable {
                 try {
                     currentTurno.join();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Turno crashato");
                 }
                 if (g.isWinner()) {
                     //handle winning
@@ -246,7 +250,7 @@ public class Game implements Runnable {
                 try {
                     handler.notifyNetworkError(g, disconnected);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("");
                 }
             }
         } finally {

@@ -79,7 +79,7 @@ public class NetworkHandlerServer implements Runnable {
             //wait();
             startGame();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Connessione fallita");
         }
 
     }
@@ -125,7 +125,7 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.flush();
             //notifyAll();
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Connessione fallita");
         }
         //}).start();
     }
@@ -188,7 +188,6 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(game.getTable());
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
             game.networkError(gamer);
         }
     }
@@ -203,7 +202,7 @@ public class NetworkHandlerServer implements Runnable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public God chooseCard(ArrayList<God> cards, Gamer player) throws IOException, ClassNotFoundException {
+    public God chooseCard(ArrayList<God> cards, Gamer player) throws IOException, ClassNotFoundException, EOFException {
         outputStream = player.getOutputStream();
         outputStream.reset();
         outputStream.writeObject(cards);
@@ -223,7 +222,7 @@ public class NetworkHandlerServer implements Runnable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public Mossa richiediMossa(Action tipo, Gamer gamer) throws IOException, ClassNotFoundException {
+    public Mossa richiediMossa(Action tipo, Gamer gamer) throws IOException, ClassNotFoundException, EOFException {
         outputStream = gamer.getOutputStream();
         Parameters.command command = null;
         switch (tipo) {
@@ -262,7 +261,7 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(message);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            game.networkError(gamer);
         }
     }
 
@@ -276,7 +275,7 @@ public class NetworkHandlerServer implements Runnable {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public String placePawns(Gamer gamer) throws IOException, ClassNotFoundException {
+    public String placePawns(Gamer gamer) throws IOException, ClassNotFoundException, EOFException {
         outputStream = gamer.getOutputStream();
         outputStream.reset();
         outputStream.writeObject(Parameters.command.INITIALIZE_PAWNS);
@@ -344,7 +343,6 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(msg);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
             game.networkError(to);
         }
     }
@@ -368,7 +366,7 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(i + "," + locked);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            game.networkError(g);
         }
 
     }
@@ -387,7 +385,8 @@ public class NetworkHandlerServer implements Runnable {
             outputStream.writeObject(Parameters.command.SWITCH_PAWN);
             outputStream.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            game.networkError(g);
+
         }
     }
 

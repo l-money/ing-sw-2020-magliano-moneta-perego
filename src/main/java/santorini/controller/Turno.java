@@ -169,7 +169,6 @@ public class Turno implements Runnable {
         try {
             return gameHandler.richiediMossa(action, gamer);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
             gameHandler.getGame().networkError(gamer);
         }
         return null;
@@ -248,6 +247,9 @@ public class Turno implements Runnable {
             }
         } catch (ConcurrentModificationException ex) {
             Thread.currentThread().stop();
+        } catch (NullPointerException e) {
+            Thread.currentThread().stop();
+            System.out.println("Kill turno");
         }
     }
 
@@ -255,7 +257,7 @@ public class Turno implements Runnable {
      * method myMovement
      * controls the phases of the action movement
      */
-    private void myMovement() {
+    private void myMovement() throws NullPointerException {
         validationMove = false;
         gamer.getMyGodCard().beforeOwnerMoving(this);
         for (God card : otherCards) {
@@ -281,7 +283,7 @@ public class Turno implements Runnable {
      * method myBuilding
      * controls the phases of the action building
      */
-    private void myBuilding() {
+    private void myBuilding() throws NullPointerException {
         validationBuild = false;
         gamer.getMyGodCard().beforeOwnerBuilding(this);
         for (God card : otherCards) {
