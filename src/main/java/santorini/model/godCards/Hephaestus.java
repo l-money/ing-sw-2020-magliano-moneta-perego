@@ -85,9 +85,10 @@ public class Hephaestus extends God {
             int x = turno.getMove().getTargetX();
             int y = turno.getMove().getTargetY();
             Cell pastB = turno.getTable().getTableCell(x, y);
-            if (pastB.isComplete()) {
-                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Costruzione " +
-                        "completa" + "\u001B[0m");
+            //I can not build a dome on the first brick
+            if (pastB.getLevel() == 3) {
+                turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Effetto annullato, " +
+                        "non puoi costruire cupole al di sopra del primo blocco " + "\u001B[0m");
             } else {
                 //I could build on it again
                 turno.getGameHandler().sendMessage(turno.getGamer(), "\u001B[34m" + "Hai Hephaestus, puoi costruire una volta in più\n" +
