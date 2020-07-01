@@ -224,6 +224,12 @@ public class ViewController extends View {
                         bt[x][y].setStyle("-fx-border-color:blue");
                         System.out.println("x:" + x + "\ty:" + y);
                     });
+                    bt[i][j].setOnMouseClicked(e -> {
+                        Button button;
+                        button = (Button) e.getSource();
+                        button.setStyle("-fx-border-color:red");
+                        button.setDisable(true);
+                    });
                     bt[i][j].setOnMouseEntered(e -> {
                         Button button;
                         button = (Button) e.getSource();
@@ -244,9 +250,8 @@ public class ViewController extends View {
                         button = (Button) e.getSource();
                         int x = GridPane.getRowIndex(button);
                         int y = GridPane.getColumnIndex(button);
-                        bt[x][y].setOnMousePressed(null);
                         bt[x][y].setStyle("-fx-border-color:red");
-                        bt[x][y].setDisable(true);
+                        bt[x][y].setOnMousePressed(null);
                         pawnPlacedCounter++;
                         initCoords = initCoords + x + "," + y + ",";
                         if (pawnPlacedCounter == 2) {
@@ -350,58 +355,6 @@ public class ViewController extends View {
         });
     }
 
-    /**
-     * method initButtons
-     * initializes buttons with default actions to do during the match
-     */
-    public void initButtons() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                bt[i][j].setOnMouseClicked(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    int x = GridPane.getRowIndex(button);
-                    int y = GridPane.getColumnIndex(button);
-                    for (int a = 0; a < 5; a++) {
-                        for (int b = 0; b < 5; b++) {
-                            if (a == x && b == y) {
-                                bt[a][b].setStyle("-fx-border-color:red");
-                            } else {
-                                bt[a][b].setStyle("-fx-border-color:trasparent");
-                            }
-                        }
-                    }
-                    bt[x][y].setStyle("-fx-border-color:red");
-                    System.out.println("x:" + x + "\ty:" + y);
-                });
-                bt[i][j].setOnMouseEntered(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    int x = GridPane.getRowIndex(button);
-                    int y = GridPane.getColumnIndex(button);
-                    bt[x][y].setStyle("-fx-border-color:yellow");
-                });
-                bt[i][j].setOnMouseExited(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    int x = GridPane.getRowIndex(button);
-                    int y = GridPane.getColumnIndex(button);
-                    bt[x][y].setStyle("-fx-border-color:trasparent");
-                });
-                bt[i][j].setOnAction(e -> {
-                    Button button;
-                    button = (Button) e.getSource();
-                    int x = GridPane.getRowIndex(button);
-                    int y = GridPane.getColumnIndex(button);
-                    //bt[x][y].setStyle("-fx-border-color:red");
-                    aggiornaMossa(table.getTableCell(x, y));
-                    Platform.runLater(() -> {
-                        submitAction.setDisable(false);
-                    });
-                });
-            }
-        }
-    }
 
     /**
      * method aggiornaMossa
@@ -748,14 +701,14 @@ public class ViewController extends View {
                         button = (Button) e.getSource();
                         int x = GridPane.getRowIndex(button);
                         int y = GridPane.getColumnIndex(button);
-                        bt[x][y].setStyle("-fx-border-color:yellow");
+                        bt[x][y].setStyle("-fx-border-color:red");
                     });
                     bt[i][j].setOnMouseExited(e -> {
                         Button button;
                         button = (Button) e.getSource();
                         int x = GridPane.getRowIndex(button);
                         int y = GridPane.getColumnIndex(button);
-                        bt[x][y].setStyle("-fx-border-color:red");
+                        bt[x][y].setStyle("-fx-border-color:yellow");
                     });
                     bt[i][j].setDisable(false);
                     bt[i][j].setOnAction(e -> {
@@ -783,7 +736,8 @@ public class ViewController extends View {
                         System.out.println("\tId Giocatore: " + table.getTableCell(x, y).getPawn().getIdGamer() + "***\n");
                         currentMove.setIdPawn(table.getTableCell(x, y).getPawn().getIdPawn());
                         currentPawn = currentMove.getIdPawn();
-                        lightAvailable(table.getTableCell(x, y), bOne);
+                        //lightAvailable(table.getTableCell(x, y), bOne);
+                        lightAvailable(cell, bOne);
                     });
                 }
             }
@@ -825,7 +779,7 @@ public class ViewController extends View {
                     }
                 }
             }
-                if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
+            if (getGod().getName().equalsIgnoreCase("zeus") && effetto && currentMove.getAction() == Mossa.Action.BUILD) {
                     myButton.setStyle("-fx-border-color:blue");
                     myButton.setDisable(false);
                     myButton.setOnMouseEntered(e -> {
@@ -840,36 +794,25 @@ public class ViewController extends View {
                     });
                 } else {
                     for (Cell lightMe : cells) {
+
                         bt[lightMe.getX()][lightMe.getY()].setDisable(false);
                         bt[lightMe.getX()][lightMe.getY()].setStyle("-fx-border-color:yellow");
                         int a = lightMe.getX();
                         int b = lightMe.getY();
-                        bt[a][b].setOnMouseEntered(e -> {
-                            Button button;
-                            button = (Button) e.getSource();
-                            button.setStyle("-fx-border-color:yellow");
-                        });
-                        bt[a][b].setOnMouseExited(e -> {
-                            Button button;
-                            button = (Button) e.getSource();
-                            button.setStyle("-fx-border-color:trasparent");
-                        });
-                        bt[a][b].setOnMouseClicked(e -> {
+                        initButtons();
+                        bt[a][b].setOnAction(e -> {
                             for (int c = 0; c < 5; c++) {
                                 for (int d = 0; d < 5; d++) {
                                     bt[c][d].setStyle("-fx-border-color:trasparent");
+                                    initButtons();
                                 }
                             }
                             Button button;
                             button = (Button) e.getSource();
                             button.setStyle("-fx-border-color:red");
-                        });
-                        bt[a][b].setOnAction(e -> {
-                            Button button;
-                            button = (Button) e.getSource();
-                            //button.setStyle("-fx-border-color:red");
-                            bt[x][y].setStyle("-fx-border-color:red");
-                            bt[x][y].setOnMouseClicked(null);
+                            button.setOnMouseClicked(null);
+                            button.setOnMouseEntered(null);
+                            button.setOnMouseExited(null);
                             int x1 = GridPane.getRowIndex(button);
                             int y1 = GridPane.getColumnIndex(button);
                             aggiornaMossa(table.getTableCell(x1, y1));
@@ -877,9 +820,32 @@ public class ViewController extends View {
                                 submitAction.setDisable(false);
                             });
                         });
+
                     }
                 }
         });
+    }
+
+    /**
+     * method initButtons
+     * initializes buttons with default actions (entered and exited)
+     */
+    public void initButtons() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                bt[i][j].setOnMouseEntered(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    button.setStyle("-fx-border-color:yellow");
+                });
+                bt[i][j].setOnMouseExited(e -> {
+                    Button button;
+                    button = (Button) e.getSource();
+                    button.setStyle("-fx-border-color:trasparent");
+                });
+
+            }
+        }
     }
 }
 

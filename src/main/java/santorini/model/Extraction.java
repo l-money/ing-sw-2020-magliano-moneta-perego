@@ -23,7 +23,7 @@ public class Extraction implements Serializable {
         gods.add(new Minotaur());
         gods.add(new Pan());
         gods.add(new Prometheus());
-        //avanzate
+        //advanced gods
         gods.add(new Ares());
         gods.add(new Chronus());
         gods.add(new Hestia());
