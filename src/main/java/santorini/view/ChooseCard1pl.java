@@ -11,6 +11,10 @@ import santorini.model.godCards.God;
 
 import java.util.ArrayList;
 
+/**
+ * Class ChooseCard1pl
+ */
+
 public class ChooseCard1pl implements CardChoice {
 
 
@@ -25,14 +29,28 @@ public class ChooseCard1pl implements CardChoice {
     private Stage stage;
     DropShadow shadow = new DropShadow();
 
+    /**
+     * method getChoosed
+     *
+     * @return god card choose
+     */
+
     public God getChoosed() {
         return this.choosed;
     }
 
+    /**
+     * method ChooseCard1pl
+     *
+     * @param cards .
+     */
     public ChooseCard1pl(ArrayList<God> cards) {
         this.cards = cards;
     }
 
+    /**
+     * view of the card in stage
+     */
     public void initialize() {
         firstGod.setImage(new Image("images/GodCards/" + cards.get(0).getName() + ".png", 165, 247, true, false));
         label1.setText(cards.get(0).getName());
@@ -61,6 +79,11 @@ public class ChooseCard1pl implements CardChoice {
 //        label1.setEffect(null);
     }
 
+    /**
+     * method setStage
+     *
+     * @param stage .
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Class InsertPawns
+ */
+
 public class InsertPawns {
 
     @FXML
@@ -23,16 +27,27 @@ public class InsertPawns {
     private Button playPawns;
     private Stage stage;
 
+    /**
+     * initialization of pawns
+     */
     public void initialize() {
         System.out.println("Inserisci Pedine");
         playPawns.setOnAction(event -> avviaTable());
     }
 
-
+    /**
+     * method setStage
+     *
+     * @param stage .
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * method avviaTable
+     * starts the table of the game
+     */
     private void avviaTable() {
         stage.close();
         try {

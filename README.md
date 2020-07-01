@@ -33,13 +33,13 @@ To work properly this application requires java 11 or higher
 - Launch application executing:
 
 ```
-$ java -jar Santorini.jar <--option>
+$ java -jar Santorini.jar [option]
 ```
 
 | Option  | Description                              | 
 |:-----------------------|:------------------|
 |     | Start  client with Graphic interface (default)                  
 | --cli    | Start client with command line interface
-| --server      | Start application server services
+| --server      | Start application server service
                           
 

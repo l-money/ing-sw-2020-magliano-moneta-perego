@@ -1,32 +1,19 @@
 package santorini.view;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.Tooltip;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import santorini.model.godCards.God;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+
+/**
+ * Class ChooseCard3pl
+ */
 
 public class ChooseCard3pl implements CardChoice {
     DropShadow shadow = new DropShadow();
@@ -44,11 +31,20 @@ public class ChooseCard3pl implements CardChoice {
     private God choosed = null;
     private ArrayList<God> cards;
 
+    /**
+     * method getChoosed
+     *
+     * @return god card choose
+     */
     public God getChoosed() {
         return this.choosed;
     }
 
-
+    /**
+     * method ChooseCard3pl
+     *
+     * @param cards .
+     */
     public ChooseCard3pl(ArrayList<God> cards) {
         this.cards = cards;
     }
@@ -152,6 +148,10 @@ public class ChooseCard3pl implements CardChoice {
         label3.setEffect(null);
     }
 
+    /**
+     * method setStage
+     * @param stage .
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

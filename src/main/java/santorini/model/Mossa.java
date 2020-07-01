@@ -13,6 +13,9 @@ public class Mossa implements Serializable {
         BUILD,
     }
 
+    public Mossa() {
+    }
+
     private Action action;
     private int targetX;
     private int targetY;
@@ -34,8 +37,6 @@ public class Mossa implements Serializable {
         this.idPawn = idPawn;
     }
 
-    public Mossa() {
-    }
 
     /**
      * method getAction

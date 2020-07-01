@@ -12,6 +12,10 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+/**
+ * Class NetworkHandlerClient
+ */
+
 public class NetworkHandlerClient implements Runnable {
     private Socket server;
     private ObjectOutputStream outputStream;
@@ -42,19 +46,37 @@ public class NetworkHandlerClient implements Runnable {
         }
     }
 
+    /**
+     * method getServer
+     *
+     * @return server
+     */
     public Socket getServer() {
         return server;
     }
 
+    /**
+     * method setView
+     *
+     * @param view .
+     */
     public void setView(View view) {
         this.view = view;
     }
 
+    /**
+     * run listen
+     */
     @Override
     public void run() {
         listen();
     }
 
+    /**
+     * method getView
+     *
+     * @return view
+     */
     public View getView() {
         return view;
     }
@@ -143,20 +165,22 @@ public class NetworkHandlerClient implements Runnable {
 
 
     /**
-     * Creates a new thread to update the playing field just sent from server
+     * method updateField
+     * creates a new thread to update the playing field just sent from server
      *
      * @param table playing field just sent
      */
     private void updateField(Table table) {
         //new Thread(() -> {
-            view.setTable(table);
-            view.printTable();
+        view.setTable(table);
+        view.printTable();
         //}).start();
     }
 
 
     /**
-     * Sends choosen god card to server
+     * method setCard
+     * sends choosen god card to server
      *
      * @param chooseCard choosen card
      * @throws IOException
@@ -167,7 +191,8 @@ public class NetworkHandlerClient implements Runnable {
     }
 
     /**
-     * Sends number of players to server
+     * method setPartecipanti
+     * sends number of players to server
      *
      * @param players number of players
      * @throws IOException
@@ -178,7 +203,8 @@ public class NetworkHandlerClient implements Runnable {
     }
 
     /**
-     * Sends initial coordinates of player pawns to server
+     * method initializePawns
+     * sends initial coordinates of player pawns to server
      *
      * @param coordinate initial coordinates in format x1,y1,x2,y2
      * @throws IOException
@@ -189,9 +215,10 @@ public class NetworkHandlerClient implements Runnable {
     }
 
     /**
-     * Sends a new move to server
+     * method setAction
+     * sends a new move to server
      *
-     * @param move
+     * @param move : my action
      * @throws IOException
      */
     public void sendAction(Mossa move) throws IOException {
@@ -202,7 +229,8 @@ public class NetworkHandlerClient implements Runnable {
 
 
     /**
-     * Close socket with server
+     * method disconnect
+     * close socket with server
      *
      * @throws IOException
      */
